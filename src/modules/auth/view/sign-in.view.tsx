@@ -28,7 +28,7 @@ const SignInView = () => {
     mutationKey: ["organization"],
     mutationFn: async () => {
       const r = await api.get(
-        "/api/Organization/org/temp/action/GetUserAllowedOrg"
+        "/api/OnlyUser/org/temp/action/GetUserAllowedOrg"
       );
       return r.data;
     },
