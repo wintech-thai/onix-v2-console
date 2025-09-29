@@ -98,6 +98,7 @@ async function proxy(req: Request, path: string[]) {
   headers.delete("authorization");
   headers.delete("cookie");
   headers.delete("host");
+  headers.delete("accept-encoding");
   headers.set("Authorization", `Bearer ${at}`);
 
   // (ออปชัน) บังคับ custom header เพื่อกัน CSRF สำหรับ methods ที่เปลี่ยน state
@@ -133,6 +134,11 @@ async function proxy(req: Request, path: string[]) {
   // ส่งต่อผลลัพธ์ (และกัน cache)
   const respHeaders = new Headers(upstream.headers);
   respHeaders.set("Cache-Control", "no-store");
+  respHeaders.delete("content-encoding");
+  respHeaders.delete("content-length");
+  respHeaders.delete("transfer-encoding");
+  respHeaders.delete("connection");
+
   return new Response(upstream.body, {
     status: upstream.status,
     headers: respHeaders,
