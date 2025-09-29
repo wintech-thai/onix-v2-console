@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
-    LayoutDashboardIcon,
-    Package2Icon,
-    KeyRoundIcon,
-    ChevronRight,
-    ChevronDown,
+  LayoutDashboardIcon,
+  Package2Icon,
+  KeyRoundIcon,
+  ChevronRight,
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -57,7 +57,7 @@ type Props = {
   setExpanded: (v: boolean) => void;
   isMobile: boolean;
 };
-export function Sidebar({ expanded, setExpanded, isMobile }: Props) {
+export function Sidebar({ expanded, setExpanded }: Props) {
   const pathname = usePathname();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
 

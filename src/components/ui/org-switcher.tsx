@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 "use client";
 
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
@@ -67,7 +68,7 @@ export function OrgSwitcher() {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {org.map((org: any, i: number) => (
+              {org.map((org: any) => (
                 <CommandItem
                   key={org.orgCustomId}
                   value={org.orgCustomId}

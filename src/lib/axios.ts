@@ -1,15 +1,20 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import axios from "axios";
+import { env } from "next-runtime-env";
 
 export const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: env("NEXT_PUBLIC_API_URL"),
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 // origin เดียวกัน ไม่ต้อง withCredentials ก็ได้
 export const api = axios.create({
   baseURL: "/api/bff",
+  withCredentials: true,
 });
 
 // แนะนำให้ใส่ default header นี้กับ “write methods” เพื่อผ่าน CSRF check ที่ BFF

@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { cookies } from "next/headers";
 
 const AUTH = process.env.NEXT_PUBLIC_API_URL!;
