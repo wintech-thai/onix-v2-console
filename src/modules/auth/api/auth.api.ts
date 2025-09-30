@@ -10,5 +10,6 @@ export const authApi = {
   logout: {
     keys: "logout",
     api: (orgId: string) => api.post(`/api/OnlyUser/org/${orgId}/action/Logout`),
+    clearCookies: () => axios.post("/api/auth/logout"),
   }
 }

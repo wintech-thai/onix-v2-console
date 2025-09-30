@@ -24,11 +24,18 @@ export const UserButton = () => {
     mutationFn: (orgId: string) => authApi.logout.api(orgId),
   });
 
+  const cleanCookies = useMutation({
+    mutationKey: ["clean-cookies"],
+    mutationFn: () => {
+      return authApi.logout.clearCookies();
+    }
+  })
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Hint message={userName}>
-          <Image src="/default-user.jpg" width={40} height={40} alt="User" className="rounded-full cursor-pointer" />
+          <Image src="/default-user.jpg" width={40} height={40} alt="User" className="rounded-full cursor-pointer flex-shrink-0" />
         </Hint>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -39,6 +46,10 @@ export const UserButton = () => {
           onClick={async () =>
             logoutMutation.mutateAsync(params.orgId, {
               onError: () => toast.error(t("common.error")),
+              onSuccess: async () => {
+                await cleanCookies.mutateAsync();
+                window.location.href = "/auth/sign-in";
+              }
             })
           }
           disabled={logoutMutation.isPending}
