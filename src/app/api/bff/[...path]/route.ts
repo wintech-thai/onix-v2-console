@@ -4,37 +4,24 @@ import { cookies } from "next/headers";
 const AUTH = process.env.NEXT_PUBLIC_API_URL!;
 const API = process.env.NEXT_PUBLIC_API_URL!;
 
-const REFRESH_TOKEN = "__Host-rt";
-const ACCESS_TOKEN = "__Host-at";
+const REFRESH_TOKEN = "refresh_token";
+const ACCESS_TOKEN = "access_token";
+const FOUR_MIN_MS = 4 * 60 * 1000;
 
-type CacheEntry = { at: string; exp: number };
-const AT_CACHE: Map<string, CacheEntry> =
-  (globalThis as any).__AT_CACHE__ || new Map();
-(globalThis as any).__AT_CACHE__ = AT_CACHE;
-
-async function getAccessToken(rt: string): Promise<string | null> {
-  const key = `rt:${rt}`;
-  const now = Date.now();
-  const cached = AT_CACHE.get(key);
+async function refreshAccessToken(rt: string): Promise<string | null> {
   const cookie = await cookies();
-  if (cached && cached.exp > now) return Buffer.from(cached.at, "utf-8").toString("base64");
 
   const r = await fetch(`${AUTH}/api/Auth/org/temp/action/Refresh`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      refreshToken: rt
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ refreshToken: rt }),
     cache: "no-store",
   });
 
   if (r.status === 401) {
+    // RT ใช้ไม่ได้แล้ว
     cookie.delete(ACCESS_TOKEN);
     cookie.delete(REFRESH_TOKEN);
-    AT_CACHE.delete(key);
-    // Refresh token หมดอายุหรือไม่ valid
     return null;
   }
 
@@ -44,23 +31,28 @@ async function getAccessToken(rt: string): Promise<string | null> {
   }
 
   const data = await r.json();
-  const at = data.token.access_token as string;
+  const at = data?.token?.access_token as string | undefined;
+  const newRt = data?.token?.refresh_token as string | undefined;
 
-  if (at) {
-    cookie.set({
-      name: "__Host-at",
-      value: at,
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      expires: new Date(now + data.token.expires_in * 1000),
-    })
-  }
+  if (!at) return null;
 
-  if (data.token.refresh_token) {
+  const now = Date.now();
+
+  cookie.set({
+    name: ACCESS_TOKEN,
+    value: at,
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(now + FOUR_MIN_MS),
+  });
+
+  // ถ้าได้ refresh_token ใหม่มาก็อัปเดตไว้
+  if (newRt) {
     cookie.set({
-      name: "__Host-rt",
-      value: String(data.token.refresh_token),
+      name: REFRESH_TOKEN,
+      value: String(newRt),
       httpOnly: true,
       secure: true,
       sameSite: "strict",
@@ -68,40 +60,45 @@ async function getAccessToken(rt: string): Promise<string | null> {
     });
   }
 
-  AT_CACHE.set(key, { at, exp: now + 60_000 }); // cache 60 วินาที
-  return Buffer.from(at, "utf-8").toString("base64")
+  return at;
+}
+
+/**
+ * ดึง AT จากคุกกี้ก่อน ถ้าไม่มีให้ใช้ RT ไปขอใหม่ (และตั้งคุกกี้ AT อายุ 4 นาที)
+ */
+async function ensureAccessToken(): Promise<string | null> {
+  const cookie = await cookies();
+  const at = cookie.get(ACCESS_TOKEN)?.value;
+  if (at) return at;
+
+  const rt = cookie.get(REFRESH_TOKEN)?.value;
+  if (!rt) return null;
+
+  return await refreshAccessToken(rt);
 }
 
 async function proxy(req: Request, path: string[]) {
   const cookie = await cookies();
-  const rt = cookie.get("__Host-rt")?.value;
-  if (!rt) return new Response("Unauthorized", { status: 401 });
 
-  // ขอ AT สด
-  const at = await getAccessToken(rt);
-
-  // ถ้า refresh token หมดอายุหรือไม่ valid
+  // เอา AT จากคุกกี้เป็นหลัก (อายุ 4 นาที), ถ้าไม่มีให้ refresh จาก RT
+  const at = await ensureAccessToken();
   if (!at) {
-    cookie.delete(ACCESS_TOKEN);
-    cookie.delete(REFRESH_TOKEN);
-    AT_CACHE.delete(`rt:${rt}`);
-    return new Response("Unauthorized - refresh token invalid", { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   // target upstream
   const url = new URL(req.url);
   const target = `${API}/${path.join("/")}${url.search}`;
-  console.log('target', target);
+  // console.log('target', target);
 
-  // จัดระเบียบ headers: ตัดของ client ที่ไม่ควร forward
+  // เตรียม headers สำหรับส่งต่อ
   const headers = new Headers(req.headers);
   headers.delete("authorization");
   headers.delete("cookie");
   headers.delete("host");
   headers.delete("accept-encoding");
-  headers.set("Authorization", `Bearer ${at}`);
+  headers.set("Authorization", `Bearer ${Buffer.from(at, "utf-8").toString("base64")}`);
 
-  // (ออปชัน) บังคับ custom header เพื่อกัน CSRF สำหรับ methods ที่เปลี่ยน state
   const method = req.method.toUpperCase();
   if (["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
     if (headers.get("x-requested-with") !== "XMLHttpRequest") {
@@ -112,26 +109,33 @@ async function proxy(req: Request, path: string[]) {
   const init: RequestInit = {
     method: req.method,
     headers,
-    body:
-      method === "GET" || method === "HEAD"
-        ? undefined
-        : await req.arrayBuffer(),
+    body: method === "GET" || method === "HEAD" ? undefined : await req.arrayBuffer(),
     cache: "no-store",
     redirect: "manual",
   };
 
-  const upstream = await fetch(target, init);
+  // ยิงรอบแรก
+  let upstream = await fetch(target, init);
 
-  // ถ้า upstream ส่ง 401 กลับมา แสดงว่า access token หมดอายุ
+  // ถ้าโดน 401 ให้ลอง refresh จาก RT แล้ว retry 1 ครั้ง
   if (upstream.status === 401) {
-    // ลบ cached access token
-    AT_CACHE.delete(`rt:${rt}`);
-    cookie.delete(ACCESS_TOKEN);
-    cookie.delete(REFRESH_TOKEN);
+    cookie.delete(ACCESS_TOKEN); // ลบ AT เก่า
+    const rt = cookie.get(REFRESH_TOKEN)?.value;
+    if (rt) {
+      const newAt = await refreshAccessToken(rt);
+      if (newAt) {
+        headers.set("Authorization", `Bearer ${newAt}`);
+        upstream = await fetch(target, { ...init, headers });
+      }
+    }
+  }
+
+  if (upstream.status === 401) {
+    // ยัง 401 อยู่หลังจาก retry
     return new Response("Unauthorized - access token invalid", { status: 401 });
   }
 
-  // ส่งต่อผลลัพธ์ (และกัน cache)
+  // ส่งต่อผลลัพธ์ (กัน cache + เคลียร์ hop-by-hop)
   const respHeaders = new Headers(upstream.headers);
   respHeaders.set("Cache-Control", "no-store");
   respHeaders.delete("content-encoding");

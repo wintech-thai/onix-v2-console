@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "noData": "No data available",
+    "welcome": "Welcome"
+  },
+  "navbar": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "sidebar": {
+    "dashboard": {
+      "label": "Dashboard",
+      "sub": {
+        "1": "Overview"
+      }
+    },
+    "general": {
+      "label": "General",
+      "sub": {
+        "1": "Products",
+        "2": "Customers",
+        "3": "Scan Items",
+        "4": "Jobs"
+      }
+    },
+    "admin": {
+      "label": "Administration",
+      "sub": {
+        "1": "API Keys",
+        "2": "Users"
+      }
+    }
+  },
+  "organization": {
+    "notFound": "No organization found.",
+    "selectOrganization": "Select organization"
+  },
+  "auth": {
+    "signInHeader": "Sign In to your account",
+    "username": "Username",
+    "password": "Password",
+    "signInLabel": "Sign In",
+    "success": {
+      "login": "Login successful"
+    },
+    "error": {
+      "invalidCredentials": "Invalid username or password",
+      "form": {
+        "username": "Please enter your username",
+        "password": "Please enter your password"
+      }
+    }
+  }
+}
