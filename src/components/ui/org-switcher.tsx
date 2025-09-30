@@ -65,7 +65,7 @@ export function OrgSwitcher({
     return (
       <div
         className={cn(
-          "w-[200px]",
+          "w-[150px] md:w-[200px]",
           withFull && "w-full",
           className
         )}
@@ -82,7 +82,7 @@ export function OrgSwitcher({
         variant="outline"
         disabled
         className={cn(
-          "w-[200px] justify-between text-destructive",
+          "w-[150px] md:w-[200px] justify-between text-destructive",
           withFull && "w-full",
           className
         )}
@@ -100,7 +100,7 @@ export function OrgSwitcher({
         variant="outline"
         disabled
         className={cn(
-          "w-[200px] justify-between",
+          "w-[150px] md:w-[200px] justify-between",
           withFull && "w-full",
           className
         )}
@@ -119,7 +119,7 @@ export function OrgSwitcher({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "w-[200px] justify-between gap-2",
+            "w-[150px] md:w-[200px] justify-between gap-2",
             withFull && "w-full",
             className
           )}
