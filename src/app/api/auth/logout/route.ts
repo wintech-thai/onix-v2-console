@@ -5,8 +5,8 @@ export async function POST() {
   const cookieStore = await cookies();
 
   // ลบ refresh token
-  cookieStore.delete("__Host-rt");
-  cookieStore.delete("__Host-at");
+  cookieStore.delete("refresh_token");
+  cookieStore.delete("access_token");
 
   return NextResponse.json({ success: true });
 }

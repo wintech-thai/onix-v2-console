@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthLayout } from "@/modules/auth/components/auth-layout";
-import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { loginSchema, LoginSchemaType } from "../schema/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,8 +10,11 @@ import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { authApi } from "../api/auth.api";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 const SignInView = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -39,13 +41,14 @@ const SignInView = () => {
       const r = await authApi.login(data);
 
       if (r.status !== 200) {
-        alert("Login failed");
+        return toast.error(t("auth.error.invalidCredentials"));
       }
 
       handleCheckAuthOrg();
+      return toast.success(t("auth.success.login"));
     } catch (error) {
       console.log("error", error);
-      alert("An error occurred during login");
+      return toast.error(t("auth.error.invalidCredentials"));
     }
   };
 
@@ -57,7 +60,7 @@ const SignInView = () => {
   };
 
   return (
-    <AuthLayout header="Sign In to your account">
+    <AuthLayout header={t("auth.signInHeader")}>
       <form
         className="flex flex-col space-y-4"
         onSubmit={form.handleSubmit(handleLogin)}
@@ -68,10 +71,14 @@ const SignInView = () => {
           render={({ field }) => {
             return (
               <Input
-                placeholder="username"
-                label="Username"
+                placeholder={t("auth.username")}
+                label={t("auth.username")}
                 {...field}
-                errorMessage={errors.UserName?.message}
+                errorMessage={
+                  errors.UserName?.message
+                    ? t("auth.error.form.username")
+                    : undefined
+                }
               />
             );
           }}
@@ -82,23 +89,24 @@ const SignInView = () => {
           render={({ field }) => {
             return (
               <Input
-                placeholder="Password"
-                label="Password"
+                type="password"
+                placeholder={t("auth.password")}
+                label={t("auth.password")}
                 {...field}
-                errorMessage={errors.Password?.message}
+                errorMessage={
+                  errors.Password?.message
+                    ? t("auth.error.form.password")
+                    : undefined
+                }
               />
             );
           }}
         />
 
         <Button type="submit" isPending={form.formState.isSubmitting}>
-          Sign In
+          {t("auth.signInLabel")}
         </Button>
       </form>
-
-      <Link href="/auth/forgot-password" className="text-primary">
-        Forgot your password?
-      </Link>
     </AuthLayout>
   );
 };

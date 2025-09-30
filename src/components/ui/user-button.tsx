@@ -2,19 +2,49 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
+import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
+import { authApi } from "@/modules/auth/api/auth.api";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
+import { Hint } from "./hint";
+import Cookie from "js-cookie";
+import Image from "next/image";
 
 export const UserButton = () => {
+  const { t } = useTranslation();
+  const userName = Cookie.get("user_name") || "User";
+  const params = useParams<{ orgId: string }>();
+
+  const logoutMutation = useMutation({
+    mutationKey: [authApi.logout.keys],
+    mutationFn: (orgId: string) => authApi.logout.api(orgId),
+  });
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="h-8 w-8 rounded-full bg-gray-300" />
+        <Hint message={userName}>
+          <Image src="/default-user.jpg" width={40} height={40} alt="User" className="rounded-full cursor-pointer" />
+        </Hint>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem>{t("navbar.profile")}</DropdownMenuItem>
+        <DropdownMenuItem>{t("navbar.settings")}</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={async () =>
+            logoutMutation.mutateAsync(params.orgId, {
+              onError: () => toast.error(t("common.error")),
+            })
+          }
+          disabled={logoutMutation.isPending}
+        >
+          {t("navbar.logout")}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import Link from "next/link";
@@ -6,18 +8,35 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   LayoutDashboardIcon,
-  Package2Icon,
-  KeyRoundIcon,
+  Package2Icon, UserCogIcon,
   ChevronRight,
-  ChevronDown,
+  ChevronDown
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
-type ChildItem = { name: string; href: string };
+// Type-safe i18n keys
+type SidebarKeys =
+  | "sidebar.dashboard.label"
+  | "sidebar.dashboard.sub.1"
+  | "sidebar.general.label"
+  | "sidebar.general.sub.1"
+  | "sidebar.general.sub.2"
+  | "sidebar.general.sub.3"
+  | "sidebar.general.sub.4"
+  | "sidebar.admin.label"
+  | "sidebar.admin.sub.1"
+  | "sidebar.admin.sub.2";
+
+type ChildItem = {
+  labelKey: SidebarKeys;
+  href: string;
+};
+
 type MenuItem = {
   key: string;
-  name: string;
+  labelKey: SidebarKeys;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   href?: string;
   children?: ChildItem[];
@@ -26,39 +45,44 @@ type MenuItem = {
 const MENU: MenuItem[] = [
   {
     key: "dashboard",
-    name: "Dashboard",
+    labelKey: "sidebar.dashboard.label",
     icon: LayoutDashboardIcon,
     href: "/admin/dashboard",
-    children: [{ name: "Overview", href: "/admin/dashboard/overview" }],
+    children: [
+      { labelKey: "sidebar.dashboard.sub.1", href: "/admin/dashboard/overview" }
+    ],
   },
   {
-    key: "products",
-    name: "Products",
+    key: "general",
+    labelKey: "sidebar.general.label",
     icon: Package2Icon,
-    href: "/admin/products",
     children: [
-      { name: "All Products", href: "/admin/products" },
-      { name: "Add New", href: "/admin/products/new" },
-      { name: "Categories", href: "/admin/products/categories" },
-      { name: "Tags", href: "/admin/products/tags" },
+      { labelKey: "sidebar.general.sub.1", href: "/admin/products" },
+      { labelKey: "sidebar.general.sub.2", href: "/admin/customers" },
+      { labelKey: "sidebar.general.sub.3", href: "/admin/scan-items" },
+      { labelKey: "sidebar.general.sub.4", href: "/admin/jobs" },
     ]
   },
   {
-    key: "api-keys",
-    name: "API Keys",
-    icon: KeyRoundIcon,
-    href: "/admin/api-keys",
-    children: [{ name: "All Keys", href: "/admin/api-keys" }],
+    key: "admin",
+    labelKey: "sidebar.admin.label",
+    icon: UserCogIcon,
+    children: [
+      { labelKey: "sidebar.admin.sub.1", href: "/admin/api-keys" },
+      { labelKey: "sidebar.admin.sub.2", href: "/admin/users" },
+    ],
   },
 ];
 
 type Props = {
   expanded: boolean;
   setExpanded: (v: boolean) => void;
-  isMobile: boolean;
+  isMobile?: boolean;
 };
+
 export function Sidebar({ expanded, setExpanded }: Props) {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
 
   const activeParents = useMemo(() => {
@@ -98,7 +122,7 @@ export function Sidebar({ expanded, setExpanded }: Props) {
       {/* Sidebar (animate width) */}
       <motion.aside
         initial={false}
-        animate={{ width: expanded ? 256 : 80 }}
+        animate={{ width: expanded ? 256 : 60 }}
         transition={{
           type: "spring",
           stiffness: 280,
@@ -110,8 +134,8 @@ export function Sidebar({ expanded, setExpanded }: Props) {
         )}
       >
         {/* Header */}
-        <div className="flex items-center gap-2 px-3 py-3 border-b">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white shadow overflow-hidden flex-shrink-0">
+        <div className="flex items-center gap-2 px-3 py-3">
+          <div className="grid size-6 md:size-10 place-items-center rounded-xl bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white shadow overflow-hidden flex-shrink-0">
             <Image src="/logo.png" alt="Logo" width={20} height={20} />
           </div>
 
@@ -172,7 +196,7 @@ export function Sidebar({ expanded, setExpanded }: Props) {
                   {expanded && (
                     <div className="ml-3 flex-1 flex items-center justify-between overflow-hidden min-w-0">
                       <span className="truncate text-left whitespace-nowrap">
-                        {m.name}
+                        {t(m.labelKey as any)}
                       </span>
                       {m.children?.length && (
                         <span
@@ -193,7 +217,7 @@ export function Sidebar({ expanded, setExpanded }: Props) {
                 <Link
                   href={m.href}
                   className="absolute inset-0"
-                  aria-label={m.name}
+                  aria-label={t(m.labelKey as any)}
                   onClick={(e) => {
                     if (expanded && m.children?.length) {
                       e.preventDefault();
@@ -228,7 +252,7 @@ export function Sidebar({ expanded, setExpanded }: Props) {
                                   : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
                               )}
                             >
-                              <span className="truncate">{c.name}</span>
+                              <span className="truncate">{t(c.labelKey as any)}</span>
                               <ChevronRight className="h-4 w-4 opacity-60" />
                             </Link>
                           </li>
@@ -250,7 +274,7 @@ export function Sidebar({ expanded, setExpanded }: Props) {
         aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
         title={expanded ? "Collapse" : "Expand"}
         initial={false}
-        animate={{ left: expanded ? 256 : 80 }} // ตรงขอบ sidebar พอดี: 256px (expanded) หรือ 80px (collapsed)
+        animate={{ left: expanded ? 256 : 60 }}
         transition={{ type: "spring", stiffness: 300, damping: 26 }}
         className={cn(
           "fixed top-28 z-50 h-8 w-8 rounded-full border bg-background text-muted-foreground shadow-md",
@@ -258,7 +282,7 @@ export function Sidebar({ expanded, setExpanded }: Props) {
         )}
         style={{
           pointerEvents: "auto",
-          transform: "translateX(-50%)", // จัดกลางตรงเส้นขอบ
+          transform: "translateX(-50%)",
         }}
       >
         <motion.div
