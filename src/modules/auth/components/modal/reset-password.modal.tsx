@@ -14,11 +14,12 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { authApi } from "../../api/auth.api";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { errorMessageAsLangKey } from "@/lib/utils";
+import { RouteConfig } from "@/config/route.config";
 
 interface ResetPasswordModalProps {
   open: boolean;
@@ -33,6 +34,7 @@ export const ResetPasswordModal = ({
 }: ResetPasswordModalProps) => {
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
+  const router = useRouter();
   const [updatePasswordError, setUpdatePasswordError] = useState(false);
   const form = useForm<ResetPasswordFormType>({
     resolver: zodResolver(resetPasswordSchema),
@@ -64,7 +66,10 @@ export const ResetPasswordModal = ({
     },
     onSuccess: async (data) => {
       if (data.data.status.toUpperCase() === "SUCCESS") {
-        await authApi.logout.clearAccessToken();
+        await authApi.logout.clearCookies();
+        onClose();
+        router.push(RouteConfig.LOGIN)
+        return;
       }
     }
   });
