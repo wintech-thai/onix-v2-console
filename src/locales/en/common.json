@@ -18,7 +18,7 @@
   "navbar": {
     "profile": "Profile",
     "settings": "Settings",
-    "updatePassword": "Update Password",
+    "updatePassword": "Change Password",
     "logout": "Logout"
   },
   "sidebar": {
@@ -51,7 +51,7 @@
   },
   "auth": {
     "signInHeader": "Sign In to your account",
-    "updatePasswordHeader": "Update Password",
+    "updatePasswordHeader": "Change Password",
     "updatePasswordesc": "Please update your password to continue.",
     "currentPassword": "Current Password",
     "newPassword": "New Password",

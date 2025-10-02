@@ -72,6 +72,7 @@ const SignInView = () => {
           render={({ field }) => {
             return (
               <Input
+                maxLength={20}
                 placeholder={t("auth.username")}
                 label={t("auth.username")}
                 {...field}
@@ -91,6 +92,7 @@ const SignInView = () => {
             return (
               <Input
                 type="password"
+                maxLength={20}
                 placeholder={t("auth.password")}
                 label={t("auth.password")}
                 {...field}
