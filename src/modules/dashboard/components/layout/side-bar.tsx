@@ -3,7 +3,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { RouteConfig } from "@/config/route.config";
 
 // Type-safe i18n keys
 type SidebarKeys =
@@ -42,38 +43,6 @@ type MenuItem = {
   children?: ChildItem[];
 };
 
-const MENU: MenuItem[] = [
-  {
-    key: "dashboard",
-    labelKey: "sidebar.dashboard.label",
-    icon: LayoutDashboardIcon,
-    href: "/admin/dashboard",
-    children: [
-      { labelKey: "sidebar.dashboard.sub.1", href: "/admin/dashboard/overview" }
-    ],
-  },
-  {
-    key: "general",
-    labelKey: "sidebar.general.label",
-    icon: Package2Icon,
-    children: [
-      { labelKey: "sidebar.general.sub.1", href: "/admin/products" },
-      { labelKey: "sidebar.general.sub.2", href: "/admin/customers" },
-      { labelKey: "sidebar.general.sub.3", href: "/admin/scan-items" },
-      { labelKey: "sidebar.general.sub.4", href: "/admin/jobs" },
-    ]
-  },
-  {
-    key: "admin",
-    labelKey: "sidebar.admin.label",
-    icon: UserCogIcon,
-    children: [
-      { labelKey: "sidebar.admin.sub.1", href: "/admin/api-keys" },
-      { labelKey: "sidebar.admin.sub.2", href: "/admin/users" },
-    ],
-  },
-];
-
 type Props = {
   expanded: boolean;
   setExpanded: (v: boolean) => void;
@@ -83,7 +52,39 @@ type Props = {
 export function Sidebar({ expanded, setExpanded }: Props) {
   const pathname = usePathname();
   const { t } = useTranslation();
+  const params = useParams<{ orgId: string }>();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
+
+  const MENU: MenuItem[] = [
+  {
+    key: "dashboard",
+    labelKey: "sidebar.dashboard.label",
+    icon: LayoutDashboardIcon,
+    children: [
+      { labelKey: "sidebar.dashboard.sub.1", href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId) }
+    ],
+  },
+  {
+    key: "general",
+    labelKey: "sidebar.general.label",
+    icon: Package2Icon,
+    children: [
+      { labelKey: "sidebar.general.sub.1", href: RouteConfig.GENERAL.PRODUCT(params.orgId) },
+      { labelKey: "sidebar.general.sub.2", href: RouteConfig.GENERAL.CUSTOMER(params.orgId) },
+      { labelKey: "sidebar.general.sub.3", href: RouteConfig.GENERAL.QRCODE(params.orgId) },
+      { labelKey: "sidebar.general.sub.4", href: RouteConfig.GENERAL.JOB(params.orgId) },
+    ]
+  },
+  {
+    key: "admin",
+    labelKey: "sidebar.admin.label",
+    icon: UserCogIcon,
+    children: [
+      { labelKey: "sidebar.admin.sub.1", href: RouteConfig.ADMIN.APIKEY(params.orgId) },
+      { labelKey: "sidebar.admin.sub.2", href: RouteConfig.ADMIN.USER(params.orgId) },
+    ],
+  },
+];
 
   const activeParents = useMemo(() => {
     const actives: Record<string, boolean> = {};

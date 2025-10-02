@@ -13,9 +13,12 @@ import { toast } from "sonner";
 import { Hint } from "./hint";
 import Cookie from "js-cookie";
 import Image from "next/image";
+import { useState } from "react";
+import { ResetPasswordModal } from "@/modules/auth/components/modal/reset-password.modal";
 
 export const UserButton = () => {
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
   const userName = Cookie.get("user_name") || "User";
   const params = useParams<{ orgId: string }>();
 
@@ -28,35 +31,47 @@ export const UserButton = () => {
     mutationKey: ["clean-cookies"],
     mutationFn: () => {
       return authApi.logout.clearCookies();
-    }
-  })
+    },
+  });
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Hint message={userName}>
-          <Image src="/default-user.jpg" width={40} height={40} alt="User" className="rounded-full cursor-pointer flex-shrink-0" />
-        </Hint>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem>{t("navbar.profile")}</DropdownMenuItem>
-        <DropdownMenuItem>{t("navbar.settings")}</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={async () =>
-            logoutMutation.mutateAsync(params.orgId, {
-              onError: () => toast.error(t("common.error")),
-              onSuccess: async () => {
-                await cleanCookies.mutateAsync();
-                window.location.href = "/auth/sign-in";
-              }
-            })
-          }
-          disabled={logoutMutation.isPending}
-        >
-          {t("navbar.logout")}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <ResetPasswordModal
+        open={open}
+        onClose={() => setOpen(false)}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Hint message={userName}>
+            <Image
+              src="/default-user.jpg"
+              width={40}
+              height={40}
+              alt="User"
+              className="rounded-full cursor-pointer flex-shrink-0"
+            />
+          </Hint>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>{t("navbar.profile")}</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>{t("navbar.updatePassword")}</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={async () =>
+              logoutMutation.mutateAsync(params.orgId, {
+                onError: () => toast.error(t("common.error")),
+                onSuccess: async () => {
+                  await cleanCookies.mutateAsync();
+                  window.location.href = "/auth/sign-in";
+                },
+              })
+            }
+            disabled={logoutMutation.isPending}
+          >
+            {t("navbar.logout")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };

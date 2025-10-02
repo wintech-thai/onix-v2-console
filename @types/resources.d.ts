@@ -1,6 +1,10 @@
 interface Resources {
   "common": {
     "auth": {
+      "confirmNewPassword": "Confirm New Password",
+      "confirmNewPasswordRequired": "Confirm new password is required",
+      "currentPassword": "Current Password",
+      "currentPasswordRequired": "Current password is required",
       "error": {
         "form": {
           "password": "Please enter your password",
@@ -8,24 +12,47 @@ interface Resources {
         },
         "invalidCredentials": "Invalid username or password"
       },
+      "newPassword": "New Password",
+      "newPasswordRequired": "New password is required",
       "password": "Password",
+      "passwordMismatch": "New password and confirm new password do not match",
       "signInHeader": "Sign In to your account",
       "signInLabel": "Sign In",
       "success": {
         "login": "Login successful"
       },
-      "username": "Username"
+      "updatePasswordHeader": "Update Password",
+      "updatePasswordesc": "Please update your password to continue.",
+      "username": "Username",
+      "validPassword": {
+        "1": "Length of password must be between 7-15",
+        "2": "At least 1 lowercase letter",
+        "3": "At least 1 uppercase letter",
+        "4": "At least 1 special character in this set {#, !, @, $}",
+        "IDP_UPDATE_PASSWORD_ERROR": "Unable to login with current password!!!"
+      }
     },
     "common": {
+      "cancel": "Cancel",
       "error": "An error occurred",
       "loading": "Loading...",
       "noData": "No data available",
+      "ok": "OK",
+      "save": "Save",
       "welcome": "Welcome"
     },
     "navbar": {
       "logout": "Logout",
       "profile": "Profile",
-      "settings": "Settings"
+      "settings": "Settings",
+      "updatePassword": "Update Password"
+    },
+    "not-found": {
+      "contactSupport": "If you think this is a bug, please contact support.",
+      "description": "Sorry, the page you are looking for does not exist.",
+      "goBack": "Go Back",
+      "home": "Go to Home",
+      "title": "404 - Page Not Found"
     },
     "organization": {
       "notFound": "No organization found.",

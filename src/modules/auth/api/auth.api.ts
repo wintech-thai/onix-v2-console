@@ -11,5 +11,16 @@ export const authApi = {
     keys: "logout",
     api: (orgId: string) => api.post(`/api/OnlyUser/org/${orgId}/action/Logout`),
     clearCookies: () => axios.post("/api/auth/logout"),
+    clearAccessToken: () => axios.post("/api/auth/clear-access-token"),
+  },
+  updatePassword: {
+    keys: "update-password",
+    api: ({
+      orgId,
+      data,
+    }: {
+      orgId: string;
+      data: { currentPassword: string; newPassword: string };
+    }) => api.post<{ status: string; description: string }>(`/api/OnlyUser/org/${orgId}/action/UpdatePassword`, data),
   }
 }
