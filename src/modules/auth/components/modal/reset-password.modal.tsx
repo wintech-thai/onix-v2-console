@@ -62,8 +62,10 @@ export const ResetPasswordModal = ({
         }
       });
     },
-    onSuccess: async () => {
-      await authApi.logout.clearAccessToken();
+    onSuccess: async (data) => {
+      if (data.data.status.toUpperCase() === "SUCCESS") {
+        await authApi.logout.clearAccessToken();
+      }
     }
   });
 
