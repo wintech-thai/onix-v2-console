@@ -3,11 +3,22 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "noData": "No data available",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "not-found": {
+    "title": "404 - Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist.",
+    "goBack": "Go Back",
+    "home": "Go to Home",
+    "contactSupport": "If you think this is a bug, please contact support."
   },
   "navbar": {
     "profile": "Profile",
     "settings": "Settings",
+    "updatePassword": "Change Password",
     "logout": "Logout"
   },
   "sidebar": {
@@ -40,6 +51,22 @@
   },
   "auth": {
     "signInHeader": "Sign In to your account",
+    "updatePasswordHeader": "Change Password",
+    "updatePasswordesc": "Please update your password to continue.",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "passwordMismatch": "New password and confirm new password do not match",
+    "newPasswordRequired": "New password is required",
+    "confirmNewPasswordRequired": "Confirm new password is required",
+    "currentPasswordRequired": "Current password is required",
+    "validPassword": {
+      "1": "Length of password must be between 7-15",
+      "2": "At least 1 lowercase letter",
+      "3": "At least 1 uppercase letter",
+      "4": "At least 1 special character in this set {#, !, @, $}",
+      "IDP_UPDATE_PASSWORD_ERROR": "Unable to login with current password!!!"
+    },
     "username": "Username",
     "password": "Password",
     "signInLabel": "Sign In",

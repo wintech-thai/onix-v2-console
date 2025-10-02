@@ -92,7 +92,7 @@ export default function Home() {
               <OrgSwitcher
                 withFull
                 onOrgChange={(orgId) =>
-                  router.push(RouteConfig.DASHBOARD(orgId))
+                  router.push(RouteConfig.DASHBOARD.OVERVIEW(orgId))
                 }
               />
             </div>

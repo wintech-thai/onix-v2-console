@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { authApi } from "../api/auth.api";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { RouteConfig } from "@/config/route.config";
 
 const SignInView = () => {
   const { t } = useTranslation();
@@ -55,7 +56,7 @@ const SignInView = () => {
   const handleCheckAuthOrg = async () => {
     const r = await organization.mutateAsync();
     if (r.length > 0) {
-      return router.push(`/dashboard/${r[0].orgCustomId}`);
+      return router.push(RouteConfig.DASHBOARD.OVERVIEW(r[0].orgCustomId));
     }
   };
 
@@ -71,6 +72,7 @@ const SignInView = () => {
           render={({ field }) => {
             return (
               <Input
+                maxLength={20}
                 placeholder={t("auth.username")}
                 label={t("auth.username")}
                 {...field}
@@ -90,6 +92,7 @@ const SignInView = () => {
             return (
               <Input
                 type="password"
+                maxLength={20}
                 placeholder={t("auth.password")}
                 label={t("auth.password")}
                 {...field}

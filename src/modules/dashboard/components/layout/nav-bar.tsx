@@ -31,7 +31,7 @@ export const Navbar = ({
       <div className="h-full flex items-center justify-between px-4">
         {showOrg ? (
           <OrgSwitcher
-            onOrgChange={(orgId) => router.push(RouteConfig.DASHBOARD(orgId))}
+            onOrgChange={(orgId) => router.push(RouteConfig.DASHBOARD.OVERVIEW(orgId))}
           />
         ) : null}
         {showIcon ? (
