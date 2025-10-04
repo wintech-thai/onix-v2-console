@@ -22,7 +22,7 @@ const ProductView = () => {
   const { page, limit, searchField, searchValue } = queryState;
 
   // Fetch products from API
-  const fetchProducts = fetchProductsApi.fetchProductQuery({
+  const fetchProducts = fetchProductsApi.useFetchProductQuery({
     orgId: params.orgId,
     fromDate: "",
     toDate: "",
@@ -32,7 +32,7 @@ const ProductView = () => {
     itemType: 0,
   });
 
-  const fetchProductsCount = fetchProductsApi.fetchProductCount({
+  const fetchProductsCount = fetchProductsApi.useFetchProductCount({
     orgId: params.orgId,
     fromDate: "",
     toDate: "",
@@ -49,6 +49,7 @@ const ProductView = () => {
     const idsToDelete = rows.map((row) => row.original.id);
     setDeletedIds((prev) => new Set([...prev, ...idsToDelete]));
     console.log("Deleted products:", idsToDelete);
+    console.log('deletedIds', deletedIds);
   };
 
   const handlePageChange = (newPage: number) => {

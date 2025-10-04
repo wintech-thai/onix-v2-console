@@ -69,7 +69,7 @@ export const productTableColumns: productTableColumns[] = [
   },
   {
     header: "Action",
-    cell: ({ row }) => {
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

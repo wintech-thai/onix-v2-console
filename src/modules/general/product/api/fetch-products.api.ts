@@ -47,7 +47,7 @@ export const fetchProductsApi = {
       params
     })
   },
-  fetchProductQuery: (params: GetProductsRequest) => {
+  useFetchProductQuery: (params: GetProductsRequest) => {
     return useQuery({
       queryKey: [...fetchProductsApi.fetchProductKey, params],
       queryFn: () => fetchProductsApi.fetchProductFunc(params),
@@ -55,7 +55,7 @@ export const fetchProductsApi = {
   },
 
   // fetch product count
-  fetchProductCount: (params: GetProductsRequest) => {
+  useFetchProductCount: (params: GetProductsRequest) => {
     return useQuery({
       queryKey: [...fetchProductsApi.fetchProductKey, "count", params],
       queryFn: async () => {
