@@ -29,9 +29,10 @@ const DashboardLayout = ({ children }: Props) => {
       <Navbar isExpand={isMobile ? false : expanded} />
       <Sidebar expanded={expanded} setExpanded={setExpanded} isMobile={isMobile} />
       <div style={{
-        marginLeft: isMobile ? 60 : (expanded ? 256 : 60), // mobile ไม่มี margin, desktop มี margin
+        paddingLeft: isMobile ? 60 : (expanded ? 256 : 60), // mobile ไม่มี margin, desktop มี margin
+        paddingTop: 64,
         transition: "margin-left 0.2s",
-      }} className="p-4">
+      }} className="h-full w-full">
         {children}
       </div>
     </div>

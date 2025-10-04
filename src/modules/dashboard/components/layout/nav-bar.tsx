@@ -26,7 +26,7 @@ export const Navbar = ({
         paddingLeft: layout === "nav" ? 0 : isExpand ? 256 : 60,
         transition: "padding-left 0.2s",
       }}
-      className="h-16 border-b"
+      className="h-16 border-b fixed top-0 left-0 bg-background w-full"
     >
       <div className="h-full flex items-center justify-between px-4">
         {showOrg ? (
