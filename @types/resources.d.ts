@@ -41,6 +41,16 @@ interface Resources {
       "save": "Save",
       "welcome": "Welcome"
     },
+    "error": {
+      "description": "We encountered an unexpected error. Please try again or contact support if the problem persists.",
+      "errorDetails": "Error Details",
+      "goBack": "Go Back",
+      "goHome": "Go to Home",
+      "hideDetails": "Hide Details",
+      "retry": "Try Again",
+      "showDetails": "Show Details",
+      "title": "Oops! Something went wrong"
+    },
     "navbar": {
       "logout": "Logout",
       "profile": "Profile",

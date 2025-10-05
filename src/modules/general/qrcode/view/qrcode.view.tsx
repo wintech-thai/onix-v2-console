@@ -57,6 +57,14 @@ const ScanItemsView = () => {
     fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
   });
 
+  if (fetchScanItems.isError) {
+    throw new Error(fetchScanItems.error.message);
+  }
+
+  if (fetchScanItemsCount.isError) {
+    throw new Error(fetchScanItemsCount.error.message);
+  }
+
   // Local state for scan items (to handle client-side delete)
 
   const handleDelete = async (rows: Row<IScanItems>[], callback: () => void) => {
@@ -107,10 +115,6 @@ const ScanItemsView = () => {
   const handleSearch = (field: string, value: string) => {
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
-
-  if (fetchScanItems.isError) {
-    throw new Error(fetchScanItems.error.message);
-  }
 
   // Get scan items list data
   const scanItemsListData = fetchScanItems.data?.data ?? [];
