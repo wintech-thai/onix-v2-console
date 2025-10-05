@@ -68,6 +68,7 @@ interface Resources {
         "action": "Action",
         "pin": "Pin",
         "productCode": "Product Code",
+        "scanCount": "Scan Count",
         "serial": "Serial",
         "url": "URL",
         "verified": "Verified",

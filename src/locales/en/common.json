@@ -89,6 +89,7 @@
       "verifiedDate": "Verified Date",
       "productCode": "Product Code",
       "url": "URL",
+      "scanCount": "Scan Count",
       "action": "Action"
     },
     "actions": {

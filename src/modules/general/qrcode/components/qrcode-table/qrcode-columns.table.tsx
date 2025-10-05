@@ -79,6 +79,10 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       header: t("qrcode.columns.url"),
     },
     {
+      accessorKey: "scanCount",
+      header: t("qrcode.columns.scanCount"),
+    },
+    {
       header: t("qrcode.columns.action"),
       cell: () => {
         return (

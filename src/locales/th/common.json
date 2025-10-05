@@ -89,6 +89,7 @@
       "verifiedDate": "วันที่ยืนยัน",
       "productCode": "รหัสสินค้า",
       "url": "ลิงก์",
+      "scanCount": "จำนวนการสแกน",
       "action": "การดำเนินการ"
     },
     "actions": {
