@@ -100,8 +100,8 @@ const ScanItemsView = () => {
     // Clear selection after delete attempt
     callback();
 
-    queryClient.invalidateQueries({ queryKey: ["fetch-qrcodes", { orgId: params.orgId }] });
-    queryClient.invalidateQueries({ queryKey: ["fetch-qrcodes", "count", { orgId: params.orgId }] });
+    queryClient.invalidateQueries({ queryKey: [fetchScanItemsApi.fetchScanItemsKey, { orgId: params.orgId }] });
+    queryClient.invalidateQueries({ queryKey: [fetchScanItemsApi.fetchScanItemsKey, "count", { orgId: params.orgId }] });
   };
 
   const handlePageChange = (newPage: number) => {
