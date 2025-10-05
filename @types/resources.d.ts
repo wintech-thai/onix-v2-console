@@ -21,7 +21,7 @@ interface Resources {
       "success": {
         "login": "Login successful"
       },
-      "updatePasswordHeader": "Update Password",
+      "updatePasswordHeader": "Change Password",
       "updatePasswordesc": "Please update your password to continue.",
       "username": "Username",
       "validPassword": {
@@ -45,7 +45,7 @@ interface Resources {
       "logout": "Logout",
       "profile": "Profile",
       "settings": "Settings",
-      "updatePassword": "Update Password"
+      "updatePassword": "Change Password"
     },
     "not-found": {
       "contactSupport": "If you think this is a bug, please contact support.",
@@ -57,6 +57,39 @@ interface Resources {
     "organization": {
       "notFound": "No organization found.",
       "selectOrganization": "Select organization"
+    },
+    "qrcode": {
+      "actions": {
+        "bindToCustomer": "Bind to Customer",
+        "bindToProduct": "Bind To Product",
+        "unVerifyScanItem": "Un-Verify Scan Item"
+      },
+      "columns": {
+        "action": "Action",
+        "pin": "Pin",
+        "productCode": "Product Code",
+        "serial": "Serial",
+        "url": "URL",
+        "verified": "Verified",
+        "verifiedDate": "Verified Date"
+      },
+      "delete": {
+        "error": "Failed to delete scan item",
+        "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
+        "success": "Deleted scan item successfully",
+        "title": "Confirm Deletion"
+      },
+      "filter": {
+        "add": "ADD",
+        "config": "CONFIG",
+        "delete": "DELETE",
+        "fullTextSearch": "Full Text Search",
+        "scanItemAction": "Scan Item Action",
+        "scanItemTemplate": "Scan Item Template",
+        "search": "Search",
+        "searchPlaceholder": "Enter search value",
+        "selectSearchField": "Select search field"
+      }
     },
     "sidebar": {
       "admin": {
@@ -81,6 +114,11 @@ interface Resources {
           "4": "Jobs"
         }
       }
+    },
+    "table": {
+      "noResults": "No results.",
+      "of": "of",
+      "rowsPerPage": "Rows per page:"
     }
   }
 }

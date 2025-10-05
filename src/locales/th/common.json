@@ -80,5 +80,43 @@
         "password": "กรุณากรอกรหัสผ่าน"
       }
     }
+  },
+  "qrcode": {
+    "columns": {
+      "serial": "ซีเรียล",
+      "pin": "พิน",
+      "verified": "ยืนยันแล้ว",
+      "verifiedDate": "วันที่ยืนยัน",
+      "productCode": "รหัสสินค้า",
+      "url": "ลิงก์",
+      "action": "การดำเนินการ"
+    },
+    "actions": {
+      "unVerifyScanItem": "ยกเลิกการยืนยันรายการสแกน",
+      "bindToCustomer": "ผูกกับลูกค้า",
+      "bindToProduct": "ผูกกับสินค้า"
+    },
+    "filter": {
+      "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+      "selectSearchField": "เลือกฟิลด์ค้นหา",
+      "fullTextSearch": "ค้นหาทั้งหมด",
+      "search": "ค้นหา",
+      "add": "เพิ่ม",
+      "delete": "ลบ",
+      "config": "ตั้งค่า",
+      "scanItemTemplate": "แม่แบบรายการสแกน",
+      "scanItemAction": "การดำเนินการรายการสแกน"
+    },
+    "delete": {
+      "title": "ยืนยันการลบ",
+      "message": "คุณแน่ใจหรือไม่ที่จะลบรายการสแกนที่เลือก? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+      "success": "ลบรายการสแกนสำเร็จ",
+      "error": "ลบรายการสแกนไม่สำเร็จ"
+    }
+  },
+  "table": {
+    "rowsPerPage": "แถวต่อหน้า:",
+    "noResults": "ไม่พบข้อมูล",
+    "of": "จาก"
   }
 }

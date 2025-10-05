@@ -80,5 +80,43 @@
         "password": "Please enter your password"
       }
     }
+  },
+  "qrcode": {
+    "columns": {
+      "serial": "Serial",
+      "pin": "Pin",
+      "verified": "Verified",
+      "verifiedDate": "Verified Date",
+      "productCode": "Product Code",
+      "url": "URL",
+      "action": "Action"
+    },
+    "actions": {
+      "unVerifyScanItem": "Un-Verify Scan Item",
+      "bindToCustomer": "Bind to Customer",
+      "bindToProduct": "Bind To Product"
+    },
+    "filter": {
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "add": "ADD",
+      "delete": "DELETE",
+      "config": "CONFIG",
+      "scanItemTemplate": "Scan Item Template",
+      "scanItemAction": "Scan Item Action"
+    },
+    "delete": {
+      "title": "Confirm Deletion",
+      "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
+      "success": "Deleted scan item successfully",
+      "error": "Failed to delete scan item"
+    }
+  },
+  "table": {
+    "rowsPerPage": "Rows per page:",
+    "noResults": "No results.",
+    "of": "of"
   }
 }
