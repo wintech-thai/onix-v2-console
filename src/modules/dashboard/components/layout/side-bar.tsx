@@ -49,7 +49,7 @@ type Props = {
   isMobile?: boolean;
 };
 
-export function Sidebar({ expanded, setExpanded }: Props) {
+export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const pathname = usePathname();
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
@@ -120,10 +120,24 @@ export function Sidebar({ expanded, setExpanded }: Props) {
 
   return (
     <>
-      {/* Sidebar (animate width) */}
+      {/* Backdrop for mobile */}
+      {isMobile && expanded && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setExpanded(false)}
+          className="fixed inset-0 bg-black/50 z-30"
+        />
+      )}
+
+      {/* Sidebar */}
       <motion.aside
         initial={false}
-        animate={{ width: expanded ? 256 : 60 }}
+        animate={{
+          width: isMobile ? 256 : expanded ? 256 : 75,
+          x: isMobile ? (expanded ? 0 : -256) : 0,
+        }}
         transition={{
           type: "spring",
           stiffness: 280,
@@ -131,7 +145,8 @@ export function Sidebar({ expanded, setExpanded }: Props) {
           mass: 0.8,
         }}
         className={cn(
-          "fixed inset-y-0 left-0 z-40 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-sm"
+          "fixed inset-y-0 left-0 z-40 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-sm",
+          isMobile && "w-64"
         )}
       >
         {/* Header */}
@@ -268,31 +283,33 @@ export function Sidebar({ expanded, setExpanded }: Props) {
         </nav>
       </motion.aside>
 
-      {/* ปุ่มกลมจับขอบ (animate ตำแหน่งซ้าย) */}
-      <motion.button
-        onClick={() => setExpanded(!expanded)}
-        aria-expanded={expanded}
-        aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
-        title={expanded ? "Collapse" : "Expand"}
-        initial={false}
-        animate={{ left: expanded ? 256 : 60 }}
-        transition={{ type: "spring", stiffness: 300, damping: 26 }}
-        className={cn(
-          "fixed top-28 z-50 h-8 w-8 rounded-full border bg-background text-muted-foreground shadow-md",
-          "flex items-center justify-center hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-        )}
-        style={{
-          pointerEvents: "auto",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <motion.div
-          animate={{ rotate: expanded ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      {/* ปุ่มกลมจับขอบ (desktop only) */}
+      {!isMobile && (
+        <motion.button
+          onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
+          aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
+          title={expanded ? "Collapse" : "Expand"}
+          initial={false}
+          animate={{ left: expanded ? 256 : 75 }}
+          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+          className={cn(
+            "fixed top-28 z-50 h-8 w-8 rounded-full border bg-background text-muted-foreground shadow-md",
+            "flex items-center justify-center hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          )}
+          style={{
+            pointerEvents: "auto",
+            transform: "translateX(-50%)",
+          }}
         >
-          <ChevronRight className="h-4 w-4" />
-        </motion.div>
-      </motion.button>
+          <motion.div
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </motion.div>
+        </motion.button>
+      )}
     </>
   );
 }

@@ -26,12 +26,16 @@ const DashboardLayout = ({ children }: Props) => {
 
   return (
     <div className="h-full">
-      <Navbar isExpand={isMobile ? false : expanded} />
+      <Navbar
+        isExpand={isMobile ? false : expanded}
+        isMobile={isMobile}
+        onMenuClick={() => setExpanded(!expanded)}
+      />
       <Sidebar expanded={expanded} setExpanded={setExpanded} isMobile={isMobile} />
       <div style={{
-        paddingLeft: isMobile ? 60 : (expanded ? 256 : 60), // mobile ไม่มี margin, desktop มี margin
+        paddingLeft: isMobile ? 0 : (expanded ? 256 : 75), // mobile ไม่มี padding, desktop มี padding ตาม sidebar
         paddingTop: 64,
-        transition: "margin-left 0.2s",
+        transition: "padding-left 0.2s",
       }} className="h-full w-full">
         {children}
       </div>
