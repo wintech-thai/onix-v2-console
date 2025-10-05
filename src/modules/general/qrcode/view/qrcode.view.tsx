@@ -100,8 +100,11 @@ const ScanItemsView = () => {
     // Clear selection after delete attempt
     callback();
 
-    queryClient.invalidateQueries({ queryKey: [fetchScanItemsApi.fetchScanItemsKey, { orgId: params.orgId }] });
-    queryClient.invalidateQueries({ queryKey: [fetchScanItemsApi.fetchScanItemsKey, "count", { orgId: params.orgId }] });
+    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
+    queryClient.invalidateQueries({
+      queryKey: fetchScanItemsApi.fetchScanItemsKey,
+      refetchType: 'active'
+    });
   };
 
   const handlePageChange = (newPage: number) => {
