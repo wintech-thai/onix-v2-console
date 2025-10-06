@@ -19,6 +19,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
+import { CreateScanItemModal } from "../modal/create-scan-item.modal";
 
 interface QrCodeFilterTableProps {
   onDelete: () => void;
@@ -34,7 +35,7 @@ export const QrCodeFilterTable = ({
   selected,
 }: QrCodeFilterTableProps) => {
   const { t } = useTranslation();
-    const [queryState,] = useQueryStates({
+  const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
   });
@@ -76,7 +77,9 @@ export const QrCodeFilterTable = ({
               <SelectValue placeholder={t("qrcode.filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fullTextSearch">{t("qrcode.filter.fullTextSearch")}</SelectItem>
+              <SelectItem value="fullTextSearch">
+                {t("qrcode.filter.fullTextSearch")}
+              </SelectItem>
               {/* เพิ่ม options อื่น ๆ ในอนาคตได้ */}
               {/* <SelectItem value="serial">Serial</SelectItem> */}
             </SelectContent>
@@ -100,7 +103,11 @@ export const QrCodeFilterTable = ({
 
         {/* Search button */}
         <div className="w-full md:w-auto">
-          <Button type="submit" className="w-full md:w-[80px]" aria-label={t("qrcode.filter.search")}>
+          <Button
+            type="submit"
+            className="w-full md:w-[80px]"
+            aria-label={t("qrcode.filter.search")}
+          >
             <Search className="size-4" />
           </Button>
         </div>
@@ -115,9 +122,9 @@ export const QrCodeFilterTable = ({
           md:flex md:items-center
         "
       >
-        <Button className="w-full md:w-auto">
-          {t("qrcode.filter.add")}
-        </Button>
+        <CreateScanItemModal>
+          <Button className="w-full md:w-auto col-span-3">{t("qrcode.filter.add")}</Button>
+        </CreateScanItemModal>
 
         <Button
           className="w-full md:w-auto"
@@ -135,7 +142,9 @@ export const QrCodeFilterTable = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Template")}>
+            <DropdownMenuItem
+              onSelect={() => console.log("Scan Item Template")}
+            >
               {t("qrcode.filter.scanItemTemplate")}
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => console.log("Scan Item Action")}>

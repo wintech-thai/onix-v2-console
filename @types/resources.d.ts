@@ -84,6 +84,19 @@ interface Resources {
         "verified": "Verified",
         "verifiedDate": "Verified Date"
       },
+      "create": {
+        "error": "Failed to create scan item",
+        "fields": {
+          "pin": "Pin",
+          "serial": "Serial"
+        },
+        "success": "Scan item created successfully",
+        "title": "Create Scan Item",
+        "validation": {
+          "pinRequired": "Pin is required",
+          "serialRequired": "Serial is required"
+        }
+      },
       "delete": {
         "error": "Failed to delete scan item",
         "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
@@ -100,6 +113,32 @@ interface Resources {
         "search": "Search",
         "searchPlaceholder": "Enter search value",
         "selectSearchField": "Select search field"
+      },
+      "modal": {
+        "error": "Error loading scan item details",
+        "fields": {
+          "applied": "Applied",
+          "createdDate": "Created Date",
+          "customerId": "Customer ID",
+          "itemGroup": "Item Group",
+          "itemId": "Item ID",
+          "no": "No",
+          "pin": "Pin",
+          "productCode": "Product Code",
+          "registeredDate": "Registered Date",
+          "runId": "Run ID",
+          "scanCount": "Scan Count",
+          "sequenceNo": "Sequence No",
+          "serial": "Serial",
+          "tags": "Tags",
+          "uploadPath": "Upload Path",
+          "url": "URL",
+          "used": "Used",
+          "verified": "Verified",
+          "yes": "Yes"
+        },
+        "loading": "Loading scan item details...",
+        "title": "Scan Item Detail"
       },
       "unverify": {
         "error": "Failed to un-verify scan item",

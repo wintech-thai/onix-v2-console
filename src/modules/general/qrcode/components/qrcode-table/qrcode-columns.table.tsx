@@ -18,6 +18,7 @@ import { unVerifyScanItemsApi } from "../../api/unverify-scan-items";
 import { useParams as Params } from "next/navigation";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { ScanItemDetailModal } from "../modal/scan-item-detial.modal";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
   accessorKey?: keyof IScanItems;
@@ -55,9 +56,14 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       header: t("qrcode.columns.serial"),
       cell: ({ row }) => {
         return (
-          <div className="text-primary underline cursor-pointer">
-            {row.getValue("serial")}
-          </div>
+          <ScanItemDetailModal
+            orgId={row.original.orgId}
+            scanItemId={row.original.id}
+          >
+            <div className="text-primary underline cursor-pointer">
+              {row.getValue("serial")}
+            </div>
+          </ScanItemDetailModal>
         );
       },
     },
@@ -97,10 +103,8 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       accessorKey: "scanCount",
       header: () => {
         return (
-          <div className="text-center">
-            {t("qrcode.columns.scanCount")}
-          </div>
-        )
+          <div className="text-center">{t("qrcode.columns.scanCount")}</div>
+        );
       },
       cell: ({ row }) => {
         return <div className="text-center">{row.getValue("scanCount")}</div>;
