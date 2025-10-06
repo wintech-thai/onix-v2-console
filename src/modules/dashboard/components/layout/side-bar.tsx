@@ -8,14 +8,16 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   LayoutDashboardIcon,
-  Package2Icon, UserCogIcon,
+  Package2Icon,
+  UserCogIcon,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { RouteConfig } from "@/config/route.config";
+import { Hint } from "@/components/ui/hint";
 
 // Type-safe i18n keys
 type SidebarKeys =
@@ -28,7 +30,8 @@ type SidebarKeys =
   | "sidebar.general.sub.4"
   | "sidebar.admin.label"
   | "sidebar.admin.sub.1"
-  | "sidebar.admin.sub.2";
+  | "sidebar.admin.sub.2"
+  | "sidebar.admin.sub.3";
 
 type ChildItem = {
   labelKey: SidebarKeys;
@@ -56,35 +59,60 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
 
   const MENU: MenuItem[] = [
-  {
-    key: "dashboard",
-    labelKey: "sidebar.dashboard.label",
-    icon: LayoutDashboardIcon,
-    children: [
-      { labelKey: "sidebar.dashboard.sub.1", href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId) }
-    ],
-  },
-  {
-    key: "general",
-    labelKey: "sidebar.general.label",
-    icon: Package2Icon,
-    children: [
-      { labelKey: "sidebar.general.sub.1", href: RouteConfig.GENERAL.PRODUCT(params.orgId) },
-      { labelKey: "sidebar.general.sub.2", href: RouteConfig.GENERAL.CUSTOMER(params.orgId) },
-      { labelKey: "sidebar.general.sub.3", href: RouteConfig.GENERAL.QRCODE(params.orgId) },
-      { labelKey: "sidebar.general.sub.4", href: RouteConfig.GENERAL.JOB(params.orgId) },
-    ]
-  },
-  {
-    key: "admin",
-    labelKey: "sidebar.admin.label",
-    icon: UserCogIcon,
-    children: [
-      { labelKey: "sidebar.admin.sub.1", href: RouteConfig.ADMIN.APIKEY(params.orgId) },
-      { labelKey: "sidebar.admin.sub.2", href: RouteConfig.ADMIN.USER(params.orgId) },
-    ],
-  },
-];
+    {
+      key: "dashboard",
+      labelKey: "sidebar.dashboard.label",
+      icon: LayoutDashboardIcon,
+      children: [
+        {
+          labelKey: "sidebar.dashboard.sub.1",
+          href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId),
+        },
+      ],
+    },
+    {
+      key: "general",
+      labelKey: "sidebar.general.label",
+      icon: Package2Icon,
+      children: [
+        {
+          labelKey: "sidebar.general.sub.1",
+          href: RouteConfig.GENERAL.PRODUCT(params.orgId),
+        },
+        {
+          labelKey: "sidebar.general.sub.2",
+          href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
+        },
+        {
+          labelKey: "sidebar.general.sub.3",
+          href: RouteConfig.GENERAL.QRCODE(params.orgId),
+        },
+        {
+          labelKey: "sidebar.general.sub.4",
+          href: RouteConfig.GENERAL.JOB(params.orgId),
+        },
+      ],
+    },
+    {
+      key: "admin",
+      labelKey: "sidebar.admin.label",
+      icon: UserCogIcon,
+      children: [
+        {
+          labelKey: "sidebar.admin.sub.1",
+          href: RouteConfig.ADMIN.APIKEY(params.orgId),
+        },
+        {
+          labelKey: "sidebar.admin.sub.2",
+          href: RouteConfig.ADMIN.USER(params.orgId),
+        },
+        {
+          labelKey: "sidebar.admin.sub.3",
+          href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
+        },
+      ],
+    },
+  ];
 
   const activeParents = useMemo(() => {
     const actives: Record<string, boolean> = {};
@@ -258,20 +286,24 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                           pathname === c.href ||
                           pathname.startsWith(c.href + "/");
                         return (
-                          <li key={c.href}>
-                            <Link
-                              href={c.href}
-                              className={cn(
-                                "flex items-center justify-between rounded-lg px-2 py-2 text-sm",
-                                childActive
-                                  ? "bg-accent text-foreground shadow"
-                                  : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
-                              )}
-                            >
-                              <span className="truncate">{t(c.labelKey as any)}</span>
-                              <ChevronRight className="h-4 w-4 opacity-60" />
-                            </Link>
-                          </li>
+                          <Hint message={t(c.labelKey as any)} key={c.href}>
+                            <li key={c.href}>
+                              <Link
+                                href={c.href}
+                                className={cn(
+                                  "flex items-center justify-between rounded-lg px-2 py-2 text-sm",
+                                  childActive
+                                    ? "bg-accent text-foreground shadow"
+                                    : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
+                                )}
+                              >
+                                <span className="truncate">
+                                  {t(c.labelKey as any)}
+                                </span>
+                                <ChevronRight className="h-4 w-4 opacity-60" />
+                              </Link>
+                            </li>
+                          </Hint>
                         );
                       })}
                     </ul>

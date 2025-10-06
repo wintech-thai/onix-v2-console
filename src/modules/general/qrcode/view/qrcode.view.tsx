@@ -10,8 +10,9 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { deleteScanItemsApi } from "../api/delete-scan-items";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import dayjs from "dayjs";
 
 const ScanItemsView = () => {
   const { t } = useTranslation();
@@ -38,11 +39,17 @@ const ScanItemsView = () => {
 
   const { page, limit, searchField, searchValue } = queryState;
 
+  // Memoize dates to prevent infinite refetch loop
+  const dateRange = useMemo(() => ({
+    fromDate: dayjs().subtract(1, 'day').toISOString(),
+    toDate: dayjs().toISOString(),
+  }), []); // Empty dependency array means dates are calculated only once
+
   // Fetch scan items from API
   const fetchScanItems = fetchScanItemsApi.useFetchScanItemsQuery({
     orgId: params.orgId,
-    fromDate: "",
-    toDate: "",
+    fromDate: dateRange.fromDate,
+    toDate: dateRange.toDate,
     offset: (page - 1) * limit,
     limit: limit,
     fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
@@ -50,8 +57,8 @@ const ScanItemsView = () => {
 
   const fetchScanItemsCount = fetchScanItemsApi.useFetchScanItemsCount({
     orgId: params.orgId,
-    fromDate: "",
-    toDate: "",
+    fromDate: dateRange.fromDate,
+    toDate: dateRange.toDate,
     offset: (page - 1) * limit,
     limit: limit,
     fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",

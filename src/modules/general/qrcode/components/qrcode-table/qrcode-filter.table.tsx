@@ -18,21 +18,29 @@ import {
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { parseAsString, useQueryStates } from "nuqs";
 
 interface QrCodeFilterTableProps {
   onDelete: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
+  selected: number;
 }
 
 export const QrCodeFilterTable = ({
   onDelete,
   isDisabled,
   onSearch,
+  selected,
 }: QrCodeFilterTableProps) => {
   const { t } = useTranslation();
+    const [queryState,] = useQueryStates({
+    searchField: parseAsString.withDefault("fullTextSearch"),
+    searchValue: parseAsString.withDefault(""),
+  });
+
   const [searchField, setSearchField] = useState("fullTextSearch");
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(queryState.searchValue);
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -76,7 +84,7 @@ export const QrCodeFilterTable = ({
         </div>
 
         {/* Search input */}
-        <div className="w-full md:w-auto md:flex-1">
+        <div className="w-full md:w-[500px]">
           <Input
             placeholder={t("qrcode.filter.searchPlaceholder")}
             className="w-full"
@@ -86,14 +94,14 @@ export const QrCodeFilterTable = ({
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
+            maxLength={50}
           />
         </div>
 
         {/* Search button */}
         <div className="w-full md:w-auto">
-          <Button type="submit" className="w-full md:w-auto" aria-label={t("qrcode.filter.search")}>
-            <Search className="h-4 w-4 mr-2" />
-            {t("qrcode.filter.search")}
+          <Button type="submit" className="w-full md:w-[80px]" aria-label={t("qrcode.filter.search")}>
+            <Search className="size-4" />
           </Button>
         </div>
       </div>
@@ -117,7 +125,7 @@ export const QrCodeFilterTable = ({
           onClick={onDelete}
           variant="destructive"
         >
-          {t("qrcode.filter.delete")}
+          {t("qrcode.filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
 
         <DropdownMenu>

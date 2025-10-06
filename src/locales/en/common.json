@@ -51,7 +51,8 @@
       "label": "Administration",
       "sub": {
         "1": "API Keys",
-        "2": "Users"
+        "2": "Users",
+        "3": "Audit Log"
       }
     }
   },
@@ -123,6 +124,12 @@
       "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
       "success": "Deleted scan item successfully",
       "error": "Failed to delete scan item"
+    },
+    "unverify": {
+      "title": "Confirm Un-Verification",
+      "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
+      "success": "Scan item un-verified successfully",
+      "error": "Failed to un-verify scan item"
     }
   },
   "table": {

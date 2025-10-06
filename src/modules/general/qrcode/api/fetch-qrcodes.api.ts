@@ -44,9 +44,7 @@ export interface IScanItems {
 export const fetchScanItemsApi = {
   fetchScanItemsKey: ["fetch-scan-items"],
   fetchScanItemsFunc: async (params: GetScanItemsRequest) => {
-    return api.post<GetScanItemsResponse>(`/api/ScanItem/org/${params.orgId}/action/GetScanItems`, {
-      params
-    })
+    return api.post<GetScanItemsResponse>(`/api/ScanItem/org/${params.orgId}/action/GetScanItems`, params)
   },
   useFetchScanItemsQuery: (params: GetScanItemsRequest) => {
     return useQuery({
@@ -63,9 +61,7 @@ export const fetchScanItemsApi = {
     return useQuery({
       queryKey: [...fetchScanItemsApi.fetchScanItemsKey, "count", params],
       queryFn: async () => {
-        return await api.post<number>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemCount`, {
-          params,
-        })
+        return await api.post<number>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemCount`, params)
       },
       staleTime: 0,
       refetchOnMount: true,

@@ -78,6 +78,7 @@ export function QrCodeTable<TData, TValue>({
     <div className="h-full flex flex-col">
       <QrCodeFilterTable
         onDelete={() => handleDelete()}
+        selected={rowSelected.length}
         isDisabled={!rowSelected.length}
         onSearch={onSearch}
       />

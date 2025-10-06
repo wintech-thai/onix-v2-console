@@ -106,10 +106,24 @@ async function proxy(req: Request, path: string[]) {
     }
   }
 
+  let body: any = undefined;
+  if (!["GET", "HEAD"].includes(method)) {
+    const textBody = await req.text();
+    if (textBody) {
+      try {
+        const jsonBody = JSON.parse(textBody);
+        body = JSON.stringify(jsonBody);
+        headers.set("Content-Type", "application/json");
+      } catch {
+        body = textBody;
+      }
+    }
+  }
+
   const init: RequestInit = {
     method: req.method,
     headers,
-    body: method === "GET" || method === "HEAD" ? undefined : await req.arrayBuffer(),
+    body,
     cache: "no-store",
     redirect: "manual",
   };

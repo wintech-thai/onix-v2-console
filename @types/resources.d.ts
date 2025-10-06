@@ -100,6 +100,12 @@ interface Resources {
         "search": "Search",
         "searchPlaceholder": "Enter search value",
         "selectSearchField": "Select search field"
+      },
+      "unverify": {
+        "error": "Failed to un-verify scan item",
+        "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
+        "success": "Scan item un-verified successfully",
+        "title": "Confirm Un-Verification"
       }
     },
     "sidebar": {
@@ -107,7 +113,8 @@ interface Resources {
         "label": "Administration",
         "sub": {
           "1": "API Keys",
-          "2": "Users"
+          "2": "Users",
+          "3": "Audit Log"
         }
       },
       "dashboard": {
