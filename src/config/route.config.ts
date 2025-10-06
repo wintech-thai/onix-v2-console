@@ -11,6 +11,7 @@ export const RouteConfig = {
   ADMIN: {
     APIKEY: (orgId: string) => `/${orgId}/admin/apikeys`,
     USER: (orgId: string) => `/${orgId}/admin/users`,
+    AUDIT_LOG: (orgId: string) => `/${orgId}/admin/auditlog`
   },
   LOGIN: "/auth/sign-in",
 }

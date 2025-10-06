@@ -8,14 +8,16 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   LayoutDashboardIcon,
-  Package2Icon, UserCogIcon,
+  Package2Icon,
+  UserCogIcon,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { RouteConfig } from "@/config/route.config";
+import { Hint } from "@/components/ui/hint";
 
 // Type-safe i18n keys
 type SidebarKeys =
@@ -28,7 +30,8 @@ type SidebarKeys =
   | "sidebar.general.sub.4"
   | "sidebar.admin.label"
   | "sidebar.admin.sub.1"
-  | "sidebar.admin.sub.2";
+  | "sidebar.admin.sub.2"
+  | "sidebar.admin.sub.3";
 
 type ChildItem = {
   labelKey: SidebarKeys;
@@ -49,42 +52,67 @@ type Props = {
   isMobile?: boolean;
 };
 
-export function Sidebar({ expanded, setExpanded }: Props) {
+export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const pathname = usePathname();
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
 
   const MENU: MenuItem[] = [
-  {
-    key: "dashboard",
-    labelKey: "sidebar.dashboard.label",
-    icon: LayoutDashboardIcon,
-    children: [
-      { labelKey: "sidebar.dashboard.sub.1", href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId) }
-    ],
-  },
-  {
-    key: "general",
-    labelKey: "sidebar.general.label",
-    icon: Package2Icon,
-    children: [
-      { labelKey: "sidebar.general.sub.1", href: RouteConfig.GENERAL.PRODUCT(params.orgId) },
-      { labelKey: "sidebar.general.sub.2", href: RouteConfig.GENERAL.CUSTOMER(params.orgId) },
-      { labelKey: "sidebar.general.sub.3", href: RouteConfig.GENERAL.QRCODE(params.orgId) },
-      { labelKey: "sidebar.general.sub.4", href: RouteConfig.GENERAL.JOB(params.orgId) },
-    ]
-  },
-  {
-    key: "admin",
-    labelKey: "sidebar.admin.label",
-    icon: UserCogIcon,
-    children: [
-      { labelKey: "sidebar.admin.sub.1", href: RouteConfig.ADMIN.APIKEY(params.orgId) },
-      { labelKey: "sidebar.admin.sub.2", href: RouteConfig.ADMIN.USER(params.orgId) },
-    ],
-  },
-];
+    {
+      key: "dashboard",
+      labelKey: "sidebar.dashboard.label",
+      icon: LayoutDashboardIcon,
+      children: [
+        {
+          labelKey: "sidebar.dashboard.sub.1",
+          href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId),
+        },
+      ],
+    },
+    {
+      key: "general",
+      labelKey: "sidebar.general.label",
+      icon: Package2Icon,
+      children: [
+        {
+          labelKey: "sidebar.general.sub.1",
+          href: RouteConfig.GENERAL.PRODUCT(params.orgId),
+        },
+        {
+          labelKey: "sidebar.general.sub.2",
+          href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
+        },
+        {
+          labelKey: "sidebar.general.sub.3",
+          href: RouteConfig.GENERAL.QRCODE(params.orgId),
+        },
+        {
+          labelKey: "sidebar.general.sub.4",
+          href: RouteConfig.GENERAL.JOB(params.orgId),
+        },
+      ],
+    },
+    {
+      key: "admin",
+      labelKey: "sidebar.admin.label",
+      icon: UserCogIcon,
+      children: [
+        {
+          labelKey: "sidebar.admin.sub.1",
+          href: RouteConfig.ADMIN.APIKEY(params.orgId),
+        },
+        {
+          labelKey: "sidebar.admin.sub.2",
+          href: RouteConfig.ADMIN.USER(params.orgId),
+        },
+        {
+          labelKey: "sidebar.admin.sub.3",
+          href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
+        },
+      ],
+    },
+  ];
 
   const activeParents = useMemo(() => {
     const actives: Record<string, boolean> = {};
@@ -120,10 +148,24 @@ export function Sidebar({ expanded, setExpanded }: Props) {
 
   return (
     <>
-      {/* Sidebar (animate width) */}
+      {/* Backdrop for mobile */}
+      {isMobile && expanded && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setExpanded(false)}
+          className="fixed inset-0 bg-black/50 z-30"
+        />
+      )}
+
+      {/* Sidebar */}
       <motion.aside
         initial={false}
-        animate={{ width: expanded ? 256 : 60 }}
+        animate={{
+          width: isMobile ? 256 : expanded ? 256 : 75,
+          x: isMobile ? (expanded ? 0 : -256) : 0,
+        }}
         transition={{
           type: "spring",
           stiffness: 280,
@@ -131,7 +173,8 @@ export function Sidebar({ expanded, setExpanded }: Props) {
           mass: 0.8,
         }}
         className={cn(
-          "fixed inset-y-0 left-0 z-40 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-sm"
+          "fixed inset-y-0 left-0 z-40 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-sm",
+          isMobile && "w-64"
         )}
       >
         {/* Header */}
@@ -243,20 +286,24 @@ export function Sidebar({ expanded, setExpanded }: Props) {
                           pathname === c.href ||
                           pathname.startsWith(c.href + "/");
                         return (
-                          <li key={c.href}>
-                            <Link
-                              href={c.href}
-                              className={cn(
-                                "flex items-center justify-between rounded-lg px-2 py-2 text-sm",
-                                childActive
-                                  ? "bg-accent text-foreground shadow"
-                                  : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
-                              )}
-                            >
-                              <span className="truncate">{t(c.labelKey as any)}</span>
-                              <ChevronRight className="h-4 w-4 opacity-60" />
-                            </Link>
-                          </li>
+                          <Hint message={t(c.labelKey as any)} key={c.href}>
+                            <li key={c.href}>
+                              <Link
+                                href={c.href}
+                                className={cn(
+                                  "flex items-center justify-between rounded-lg px-2 py-2 text-sm",
+                                  childActive
+                                    ? "bg-accent text-foreground shadow"
+                                    : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
+                                )}
+                              >
+                                <span className="truncate">
+                                  {t(c.labelKey as any)}
+                                </span>
+                                <ChevronRight className="h-4 w-4 opacity-60" />
+                              </Link>
+                            </li>
+                          </Hint>
                         );
                       })}
                     </ul>
@@ -268,31 +315,33 @@ export function Sidebar({ expanded, setExpanded }: Props) {
         </nav>
       </motion.aside>
 
-      {/* ปุ่มกลมจับขอบ (animate ตำแหน่งซ้าย) */}
-      <motion.button
-        onClick={() => setExpanded(!expanded)}
-        aria-expanded={expanded}
-        aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
-        title={expanded ? "Collapse" : "Expand"}
-        initial={false}
-        animate={{ left: expanded ? 256 : 60 }}
-        transition={{ type: "spring", stiffness: 300, damping: 26 }}
-        className={cn(
-          "fixed top-28 z-50 h-8 w-8 rounded-full border bg-background text-muted-foreground shadow-md",
-          "flex items-center justify-center hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-        )}
-        style={{
-          pointerEvents: "auto",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <motion.div
-          animate={{ rotate: expanded ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      {/* ปุ่มกลมจับขอบ (desktop only) */}
+      {!isMobile && (
+        <motion.button
+          onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
+          aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
+          title={expanded ? "Collapse" : "Expand"}
+          initial={false}
+          animate={{ left: expanded ? 256 : 75 }}
+          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+          className={cn(
+            "fixed top-28 z-50 h-8 w-8 rounded-full border bg-background text-muted-foreground shadow-md",
+            "flex items-center justify-center hover:bg-accent hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          )}
+          style={{
+            pointerEvents: "auto",
+            transform: "translateX(-50%)",
+          }}
         >
-          <ChevronRight className="h-4 w-4" />
-        </motion.div>
-      </motion.button>
+          <motion.div
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </motion.div>
+        </motion.button>
+      )}
     </>
   );
 }

@@ -15,6 +15,16 @@
     "home": "Go to Home",
     "contactSupport": "If you think this is a bug, please contact support."
   },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "description": "We encountered an unexpected error. Please try again or contact support if the problem persists.",
+    "retry": "Try Again",
+    "goHome": "Go to Home",
+    "goBack": "Go Back",
+    "errorDetails": "Error Details",
+    "showDetails": "Show Details",
+    "hideDetails": "Hide Details"
+  },
   "navbar": {
     "profile": "Profile",
     "settings": "Settings",
@@ -41,7 +51,8 @@
       "label": "Administration",
       "sub": {
         "1": "API Keys",
-        "2": "Users"
+        "2": "Users",
+        "3": "Audit Log"
       }
     }
   },
@@ -80,5 +91,50 @@
         "password": "Please enter your password"
       }
     }
+  },
+  "qrcode": {
+    "columns": {
+      "serial": "Serial",
+      "pin": "Pin",
+      "verified": "Verified",
+      "verifiedDate": "Verified Date",
+      "productCode": "Product Code",
+      "url": "URL",
+      "scanCount": "Scan Count",
+      "action": "Action"
+    },
+    "actions": {
+      "unVerifyScanItem": "Un-Verify Scan Item",
+      "bindToCustomer": "Bind to Customer",
+      "bindToProduct": "Bind To Product"
+    },
+    "filter": {
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "add": "ADD",
+      "delete": "DELETE",
+      "config": "CONFIG",
+      "scanItemTemplate": "Scan Item Template",
+      "scanItemAction": "Scan Item Action"
+    },
+    "delete": {
+      "title": "Confirm Deletion",
+      "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
+      "success": "Deleted scan item successfully",
+      "error": "Failed to delete scan item"
+    },
+    "unverify": {
+      "title": "Confirm Un-Verification",
+      "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
+      "success": "Scan item un-verified successfully",
+      "error": "Failed to un-verify scan item"
+    }
+  },
+  "table": {
+    "rowsPerPage": "Rows per page:",
+    "noResults": "No results.",
+    "of": "of"
   }
 }

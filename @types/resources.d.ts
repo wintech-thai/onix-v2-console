@@ -21,7 +21,7 @@ interface Resources {
       "success": {
         "login": "Login successful"
       },
-      "updatePasswordHeader": "Update Password",
+      "updatePasswordHeader": "Change Password",
       "updatePasswordesc": "Please update your password to continue.",
       "username": "Username",
       "validPassword": {
@@ -41,11 +41,21 @@ interface Resources {
       "save": "Save",
       "welcome": "Welcome"
     },
+    "error": {
+      "description": "We encountered an unexpected error. Please try again or contact support if the problem persists.",
+      "errorDetails": "Error Details",
+      "goBack": "Go Back",
+      "goHome": "Go to Home",
+      "hideDetails": "Hide Details",
+      "retry": "Try Again",
+      "showDetails": "Show Details",
+      "title": "Oops! Something went wrong"
+    },
     "navbar": {
       "logout": "Logout",
       "profile": "Profile",
       "settings": "Settings",
-      "updatePassword": "Update Password"
+      "updatePassword": "Change Password"
     },
     "not-found": {
       "contactSupport": "If you think this is a bug, please contact support.",
@@ -58,12 +68,53 @@ interface Resources {
       "notFound": "No organization found.",
       "selectOrganization": "Select organization"
     },
+    "qrcode": {
+      "actions": {
+        "bindToCustomer": "Bind to Customer",
+        "bindToProduct": "Bind To Product",
+        "unVerifyScanItem": "Un-Verify Scan Item"
+      },
+      "columns": {
+        "action": "Action",
+        "pin": "Pin",
+        "productCode": "Product Code",
+        "scanCount": "Scan Count",
+        "serial": "Serial",
+        "url": "URL",
+        "verified": "Verified",
+        "verifiedDate": "Verified Date"
+      },
+      "delete": {
+        "error": "Failed to delete scan item",
+        "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
+        "success": "Deleted scan item successfully",
+        "title": "Confirm Deletion"
+      },
+      "filter": {
+        "add": "ADD",
+        "config": "CONFIG",
+        "delete": "DELETE",
+        "fullTextSearch": "Full Text Search",
+        "scanItemAction": "Scan Item Action",
+        "scanItemTemplate": "Scan Item Template",
+        "search": "Search",
+        "searchPlaceholder": "Enter search value",
+        "selectSearchField": "Select search field"
+      },
+      "unverify": {
+        "error": "Failed to un-verify scan item",
+        "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
+        "success": "Scan item un-verified successfully",
+        "title": "Confirm Un-Verification"
+      }
+    },
     "sidebar": {
       "admin": {
         "label": "Administration",
         "sub": {
           "1": "API Keys",
-          "2": "Users"
+          "2": "Users",
+          "3": "Audit Log"
         }
       },
       "dashboard": {
@@ -81,6 +132,11 @@ interface Resources {
           "4": "Jobs"
         }
       }
+    },
+    "table": {
+      "noResults": "No results.",
+      "of": "of",
+      "rowsPerPage": "Rows per page:"
     }
   }
 }

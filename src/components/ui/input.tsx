@@ -11,7 +11,7 @@ function Input({
   helperText,
   ...props
 }: React.ComponentProps<"input"> & {
-  label: string;
+  label?: string;
   errorMessage?: string;
   helperText?: string;
 }) {
