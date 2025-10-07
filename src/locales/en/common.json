@@ -130,6 +130,51 @@
       "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
       "success": "Scan item un-verified successfully",
       "error": "Failed to un-verify scan item"
+    },
+    "modal": {
+      "title": "Scan Item Detail",
+      "loading": "Loading scan item details...",
+      "error": "Error loading scan item details",
+      "copySuccess": "Copied to clipboard",
+      "copyTooltip": "Copy scan item data to clipboard",
+      "fields": {
+        "serial": "Serial",
+        "pin": "Pin",
+        "url": "URL",
+        "uploadPath": "Upload Path",
+        "verified": "Verified",
+        "used": "Used",
+        "applied": "Applied",
+        "runId": "Run ID",
+        "sequenceNo": "Sequence No",
+        "productCode": "Product Code",
+        "itemGroup": "Item Group",
+        "itemId": "Item ID",
+        "customerId": "Customer ID",
+        "scanCount": "Scan Count",
+        "tags": "Tags",
+        "createdDate": "Created Date",
+        "registeredDate": "Registered Date",
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "create": {
+      "title": "Create Scan Item",
+      "fields": {
+        "serial": "Serial",
+        "pin": "Pin"
+      },
+      "validation": {
+        "serialRequired": "Serial is required",
+        "pinRequired": "Pin is required",
+        "serialDuplicate": "Serial {{serial}} already exist in our database!!!",
+        "pinDuplicate": "Pin {{pin}} already exist in our database!!!"
+      },
+      "success": "Scan item created successfully",
+      "error": "Failed to create scan item",
+      "copySuccess": "Copied to clipboard",
+      "copyTooltip": "Copy payload to clipboard"
     }
   },
   "table": {

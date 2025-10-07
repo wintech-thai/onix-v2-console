@@ -10,7 +10,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { deleteScanItemsApi } from "../api/delete-scan-items";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
@@ -18,6 +18,8 @@ const ScanItemsView = () => {
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [data, setData] = useState<IScanItems[]>([]);
+  const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("qrcode.delete.title"),
     message: t("qrcode.delete.message"),
@@ -27,7 +29,9 @@ const ScanItemsView = () => {
 
   const scanItemsTableColumns = useQrcodeTableColumns();
 
-  const deleteScanItems = deleteScanItemsApi.useDeleteScanItemsMutation(params.orgId);
+  const deleteScanItems = deleteScanItemsApi.useDeleteScanItemsMutation(
+    params.orgId
+  );
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -40,10 +44,13 @@ const ScanItemsView = () => {
   const { page, limit, searchField, searchValue } = queryState;
 
   // Memoize dates to prevent infinite refetch loop
-  const dateRange = useMemo(() => ({
-    fromDate: dayjs().subtract(1, 'day').toISOString(),
-    toDate: dayjs().toISOString(),
-  }), []); // Empty dependency array means dates are calculated only once
+  const dateRange = useMemo(
+    () => ({
+      fromDate: dayjs().subtract(1, "day").toISOString(),
+      toDate: dayjs().toISOString(),
+    }),
+    []
+  ); // Empty dependency array means dates are calculated only once
 
   // Fetch scan items from API
   const fetchScanItems = fetchScanItemsApi.useFetchScanItemsQuery({
@@ -54,6 +61,13 @@ const ScanItemsView = () => {
     limit: limit,
     fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
   });
+
+  useEffect(() => {
+    if (fetchScanItems.data?.data) {
+      setData(fetchScanItems.data.data);
+      setHasLoadedBefore(true);
+    }
+  }, [fetchScanItems.data]);
 
   const fetchScanItemsCount = fetchScanItemsApi.useFetchScanItemsCount({
     orgId: params.orgId,
@@ -74,7 +88,10 @@ const ScanItemsView = () => {
 
   // Local state for scan items (to handle client-side delete)
 
-  const handleDelete = async (rows: Row<IScanItems>[], callback: () => void) => {
+  const handleDelete = async (
+    rows: Row<IScanItems>[],
+    callback: () => void
+  ) => {
     const ok = await confirmDelete();
 
     if (!ok) return;
@@ -86,32 +103,43 @@ const ScanItemsView = () => {
     // Delete items one by one
     setIsDeleting(true);
     for (const id of idsToDelete) {
-      try {
-        await deleteScanItems.mutateAsync(id);
-        successCount++;
-      } catch (error) {
-        errorCount++;
-        console.error(`Error deleting QR code with ID: ${id}`, error);
-      }
+      await deleteScanItems.mutateAsync(id, {
+        onSuccess: ({ data }) => {
+          if (data.status !== "OK") {
+            errorCount++;
+            toast.error(data.description || t("qrcode.delete.error"));
+          }
+
+          successCount++;
+        },
+        onError: () => {
+          errorCount++;
+          toast.error(t("qrcode.delete.error"));
+        },
+      });
     }
     setIsDeleting(false);
 
     // Show summary toast
     if (successCount > 0) {
-      toast.success(`${t("qrcode.delete.success")} (${successCount}/${idsToDelete.length})`);
+      toast.success(
+        `${t("qrcode.delete.success")} (${successCount}/${idsToDelete.length})`
+      );
     }
     if (errorCount > 0) {
-      toast.error(`${t("qrcode.delete.error")} (${errorCount}/${idsToDelete.length})`);
+      toast.error(
+        `${t("qrcode.delete.error")} (${errorCount}/${idsToDelete.length})`
+      );
     }
+
+    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
+    await queryClient.invalidateQueries({
+      queryKey: fetchScanItemsApi.fetchScanItemsKey,
+      refetchType: "active",
+    });
 
     // Clear selection after delete attempt
     callback();
-
-    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
-    queryClient.invalidateQueries({
-      queryKey: fetchScanItemsApi.fetchScanItemsKey,
-      refetchType: 'active'
-    });
   };
 
   const handlePageChange = (newPage: number) => {
@@ -126,9 +154,6 @@ const ScanItemsView = () => {
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
-  // Get scan items list data
-  const scanItemsListData = fetchScanItems.data?.data ?? [];
-
   // Get total items count from API
   const totalItems = fetchScanItemsCount.data?.data ?? 0;
 
@@ -137,7 +162,7 @@ const ScanItemsView = () => {
       <DeleteConfirmationDialog />
       <QrCodeTable
         columns={scanItemsTableColumns}
-        data={scanItemsListData}
+        data={data}
         onDelete={handleDelete}
         totalItems={totalItems}
         currentPage={page}
@@ -145,7 +170,7 @@ const ScanItemsView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchScanItems.isLoading || isDeleting}
+        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore)}
       />
     </div>
   );

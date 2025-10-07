@@ -1,10 +1,16 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 
+export interface DeleteScanItemsResponse {
+  status: string;
+  description: string;
+  scanItem: null;
+}
+
 export const deleteScanItemsApi = {
   deleteScanItemsKey: ["delete-scan-items"],
   deleteScanItemsFunc: async (orgId: string, id: string) => {
-    return api.delete<void>(`/api/ScanItem/org/${orgId}/action/DeleteScanItemById/${id}`);
+    return api.delete<DeleteScanItemsResponse>(`/api/ScanItem/org/${orgId}/action/DeleteScanItemById/${id}`);
   },
   useDeleteScanItemsMutation: (orgId: string) => {
     return useMutation({
