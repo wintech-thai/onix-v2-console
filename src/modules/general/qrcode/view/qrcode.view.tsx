@@ -132,14 +132,14 @@ const ScanItemsView = () => {
       );
     }
 
-    // Clear selection after delete attempt
-    callback();
-
     // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
-    queryClient.invalidateQueries({
+    await queryClient.invalidateQueries({
       queryKey: fetchScanItemsApi.fetchScanItemsKey,
       refetchType: "active",
     });
+
+    // Clear selection after delete attempt
+    callback();
   };
 
   const handlePageChange = (newPage: number) => {
