@@ -118,6 +118,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
                 label={t("qrcode.create.fields.serial", "Serial")}
                 errorMessage={errorMessageAsLangKey(errors.serial?.message, t)}
                 disabled={isSubmitting}
+                maxLength={10}
               />
             )}
           />
@@ -130,6 +131,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
                 label={t("qrcode.create.fields.pin", "Pin")}
                 errorMessage={errorMessageAsLangKey(errors.pin?.message, t)}
                 disabled={isSubmitting}
+                maxLength={10}
               />
             )}
           />
