@@ -85,6 +85,8 @@ interface Resources {
         "verifiedDate": "Verified Date"
       },
       "create": {
+        "copySuccess": "Copied to clipboard",
+        "copyTooltip": "Copy payload to clipboard",
         "error": "Failed to create scan item",
         "fields": {
           "pin": "Pin",
@@ -93,7 +95,9 @@ interface Resources {
         "success": "Scan item created successfully",
         "title": "Create Scan Item",
         "validation": {
+          "pinDuplicate": "Pin {{pin}} already exist in our database!!!",
           "pinRequired": "Pin is required",
+          "serialDuplicate": "Serial {{serial}} already exist in our database!!!",
           "serialRequired": "Serial is required"
         }
       },
@@ -115,6 +119,8 @@ interface Resources {
         "selectSearchField": "Select search field"
       },
       "modal": {
+        "copySuccess": "Copied to clipboard",
+        "copyTooltip": "Copy scan item data to clipboard",
         "error": "Error loading scan item details",
         "fields": {
           "applied": "Applied",

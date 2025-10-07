@@ -167,7 +167,9 @@
       },
       "validation": {
         "serialRequired": "Serial is required",
-        "pinRequired": "Pin is required"
+        "pinRequired": "Pin is required",
+        "serialDuplicate": "Serial {{serial}} already exist in our database!!!",
+        "pinDuplicate": "Pin {{pin}} already exist in our database!!!"
       },
       "success": "Scan item created successfully",
       "error": "Failed to create scan item",

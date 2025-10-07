@@ -2,7 +2,7 @@ import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 
 export interface CreateScanItemRequest {
-  id?: string
+  id?: string;
   orgId?: string;
   serial: string;
   pin: string;
@@ -23,16 +23,25 @@ export interface CreateScanItemRequest {
   registeredDate?: Date;
 }
 
+export interface CreateScanItemResponse {
+  status: string;
+  description: string;
+  scanItem: CreateScanItemRequest | null;
+}
 
 export const createScanItemsApi = {
   createScanItemsKey: ["create-scan-items"],
   createScanItemsFunc: async (params: CreateScanItemRequest) => {
-    return api.post<void>(`/api/ScanItem/org/${params.orgId}/action/AddScanItem`, params);
+    return api.post<CreateScanItemResponse>(
+      `/api/ScanItem/org/${params.orgId}/action/AddScanItem`,
+      params
+    );
   },
   useCreateScanItemsMutation: () => {
     return useMutation({
       mutationKey: [...createScanItemsApi.createScanItemsKey],
-      mutationFn: (params: CreateScanItemRequest) => createScanItemsApi.createScanItemsFunc(params),
+      mutationFn: (params: CreateScanItemRequest) =>
+        createScanItemsApi.createScanItemsFunc(params),
     });
-  }
-}
+  },
+};

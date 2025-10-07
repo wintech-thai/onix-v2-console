@@ -167,7 +167,9 @@
       },
       "validation": {
         "serialRequired": "กรุณากรอกซีเรียล",
-        "pinRequired": "กรุณากรอกพิน"
+        "pinRequired": "กรุณากรอกพิน",
+        "serialDuplicate": "{{serial}} ซีเรียลซ้ำ",
+        "pinDuplicate": "{{pin}} พินซ้ำ"
       },
       "success": "สร้างรายการสแกนสำเร็จ",
       "error": "สร้างรายการสแกนไม่สำเร็จ",

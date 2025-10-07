@@ -18,6 +18,8 @@ import { createScanItemsApi } from "../../api/create-scan-items";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
 import { errorMessageAsLangKey } from "@/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { fetchScanItemsApi } from "../../api/fetch-qrcodes.api";
 
 type CreateScanItemType = z.infer<typeof createScanItemsSchema>;
 
@@ -29,6 +31,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
   const { t } = useTranslation();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const params = useParams<{ orgId: string }>();
+  const queryClient = useQueryClient();
 
   const form = useForm<CreateScanItemType>({
     resolver: zodResolver(createScanItemsSchema),
@@ -51,10 +54,32 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
           orgId: params.orgId,
         },
         {
-          onSuccess: () => {
+          onSuccess: ({ data }) => {
+            if (data.status !== "OK") {
+              if (data.status === "PIN_ALREADY_EXIST") {
+                return toast.error(
+                  t("qrcode.create.validation.pinDuplicate", {
+                    pin: values.pin,
+                  })
+                );
+              } else if (data.status === "SERIAL_ALREADY_EXIST") {
+                return toast.error(
+                  t("qrcode.create.validation.serialDuplicate", {
+                    serial: values.serial,
+                  })
+                );
+              }
+              return toast.error(data.description);
+            }
+
             toast.success(
               t("qrcode.create.success", "Scan item created successfully")
             );
+
+            queryClient.invalidateQueries({
+              queryKey: fetchScanItemsApi.fetchScanItemsKey,
+              refetchType: "active",
+            });
             handleClose(false);
           },
           onError: () => {
