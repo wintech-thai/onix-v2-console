@@ -23,6 +23,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm run build
 
 FROM node:20-alpine AS runner
+ARG version
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -44,6 +45,7 @@ COPY --from=builder /app/package.json ./
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
+ENV NEXT_PUBLIC_APP_VERSION=$version
 
 # Expose the port the app runs on
 EXPOSE 3000
