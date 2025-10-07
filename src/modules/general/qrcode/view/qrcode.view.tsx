@@ -170,7 +170,7 @@ const ScanItemsView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore) || isDeleting}
+        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore)}
       />
     </div>
   );
