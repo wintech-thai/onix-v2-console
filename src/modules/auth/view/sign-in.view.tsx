@@ -64,7 +64,10 @@ const SignInView = () => {
     <AuthLayout header={t("auth.signInHeader")}>
       <form
         className="flex flex-col space-y-4"
-        onSubmit={form.handleSubmit(handleLogin)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          form.handleSubmit(handleLogin)(e);
+        }}
       >
         <Controller
           control={form.control}
