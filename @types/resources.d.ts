@@ -176,6 +176,42 @@ interface Resources {
           "registeredAwareFlagRequired": "Registered Aware Flag is required"
         }
       },
+      "scanItemTemplate": {
+        "buttons": {
+          "defaultValue": "Default Value"
+        },
+        "error": {
+          "create": "Failed to create scan item template",
+          "loadDefault": "Error loading default values",
+          "update": "Failed to update scan item template"
+        },
+        "fields": {
+          "generatorCount": "Item Count",
+          "notificationEmail": "Notification Email",
+          "pinDigit": "Pin Length",
+          "serialDigit": "Serial Length",
+          "serialPrefixDigit": "Prefix Length",
+          "urlTemplate": "URL Template"
+        },
+        "success": {
+          "create": "Scan item template created successfully",
+          "update": "Scan item template updated successfully"
+        },
+        "title": "Scan Item Template",
+        "validation": {
+          "createdDateRequired": "Created Date is required",
+          "generatorCountRequired": "Item Count is required",
+          "invalidEmail": "Invalid email format",
+          "orgIdRequired": "Organization ID is required",
+          "pinDigitMax": "Pin Length must be at most 9",
+          "pinDigitMin": "Pin Length must be at least 7",
+          "serialDigitMax": "Serial Length must be at most 9",
+          "serialDigitMin": "Serial Length must be at least 7",
+          "serialPrefixDigitMax": "Prefix Length must be at most 3",
+          "serialPrefixDigitMin": "Prefix Length must be at least 2",
+          "urlTemplateRequired": "URL Template is required"
+        }
+      },
       "unverify": {
         "error": "Failed to un-verify scan item",
         "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",

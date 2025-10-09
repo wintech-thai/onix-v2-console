@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
 import { CreateScanItemModal } from "../modal/create-scan-item.modal";
 import { ScanItemActionModal } from "../modal/scan-item-action.modal";
+import { ScanItemTemplateModal } from "../modal/scan-item-template.modal";
 
 interface QrCodeFilterTableProps {
   onDelete: () => void;
@@ -50,6 +51,7 @@ export const QrCodeFilterTable = ({
   };
 
   const [openScanItemModal, setOpenScanItemModal] = useState(false);
+  const [openScanItemThemplateModal, setOpenScanItemThemplateModal] = useState(false);
 
   return (
     <form
@@ -64,6 +66,10 @@ export const QrCodeFilterTable = ({
       <ScanItemActionModal
         open={openScanItemModal}
         onOpenChange={setOpenScanItemModal}
+      />
+      <ScanItemTemplateModal
+        open={openScanItemThemplateModal}
+        onOpenChange={setOpenScanItemThemplateModal}
       />
       {/* Left side: search controls */}
       <div
@@ -154,7 +160,7 @@ export const QrCodeFilterTable = ({
             <DropdownMenuItem onSelect={() => setOpenScanItemModal(true)}>
               {t("qrcode.filter.scanItemTemplate")}
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Action")}>
+            <DropdownMenuItem onSelect={() => setOpenScanItemThemplateModal(true)}>
               {t("qrcode.filter.scanItemAction")}
             </DropdownMenuItem>
           </DropdownMenuContent>

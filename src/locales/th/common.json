@@ -205,6 +205,42 @@
         "update": "อัปเดตการดำเนินการรายการสแกนไม่สำเร็จ",
         "loadDefault": "โหลดค่าเริ่มต้นไม่สำเร็จ"
       }
+    },
+    "scanItemTemplate": {
+      "title": "แม่แบบรายการสแกน",
+      "fields": {
+        "serialPrefixDigit": "Prefix Length",
+        "generatorCount": "Item Count",
+        "serialDigit": "Serial Length",
+        "pinDigit": "Pin Length",
+        "urlTemplate": "URL Template",
+        "notificationEmail": "Notification Email"
+      },
+      "buttons": {
+        "defaultValue": "ค่าเริ่มต้น"
+      },
+      "validation": {
+        "orgIdRequired": "กรุณากรอกรหัสองค์กร",
+        "serialPrefixDigitMin": "Prefix Length ต้องมีค่าอย่างน้อย 2",
+        "serialPrefixDigitMax": "Prefix Length ต้องมีค่าไม่เกิน 3",
+        "generatorCountRequired": "กรุณากรอก Item Count",
+        "serialDigitMin": "Serial Length ต้องมีค่าอย่างน้อย 7",
+        "serialDigitMax": "Serial Length ต้องมีค่าไม่เกิน 9",
+        "pinDigitMin": "Pin Length ต้องมีค่าอย่างน้อย 7",
+        "pinDigitMax": "Pin Length ต้องมีค่าไม่เกิน 9",
+        "urlTemplateRequired": "กรุณากรอกแม่แบบลิงก์",
+        "invalidEmail": "รูปแบบอีเมลไม่ถูกต้อง",
+        "createdDateRequired": "กรุณากรอกวันที่สร้าง"
+      },
+      "success": {
+        "create": "สร้างแม่แบบรายการสแกนสำเร็จ",
+        "update": "อัปเดตแม่แบบรายการสแกนสำเร็จ"
+      },
+      "error": {
+        "create": "สร้างแม่แบบรายการสแกนไม่สำเร็จ",
+        "update": "อัปเดตแม่แบบรายการสแกนไม่สำเร็จ",
+        "loadDefault": "โหลดค่าเริ่มต้นไม่สำเร็จ"
+      }
     }
   },
   "table": {
