@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   Dialog,
   DialogContent,
@@ -12,13 +12,15 @@ import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import z from "zod";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { scanItemThemplateSchema } from "../../schema/scan-item-themplate.schema";
+import {
+  ScanItemTemplateSchemaType,
+  useScanItemThemplateSchema,
+} from "../../schema/scan-item-themplate.schema";
 import { scanItemThemplateApi } from "../../api/scan-item-themplete.api";
 import { toast } from "sonner";
 
@@ -28,7 +30,7 @@ interface ScanItemTemplateModalProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-type CreateScanItemTemplateType = z.infer<typeof scanItemThemplateSchema>;
+type CreateScanItemTemplateType = ScanItemTemplateSchemaType;
 
 export const ScanItemTemplateModal = ({
   children,
@@ -42,7 +44,7 @@ export const ScanItemTemplateModal = ({
   const [internalOpen, setInternalOpen] = useState(false);
   // Form setup
   const form = useForm<CreateScanItemTemplateType>({
-    resolver: zodResolver(scanItemThemplateSchema),
+    resolver: zodResolver(useScanItemThemplateSchema(t)),
     defaultValues: {
       serialPrefixDigit: 0,
       generatorCount: 0,
@@ -203,7 +205,7 @@ export const ScanItemTemplateModal = ({
                 {...field}
                 id={inputId}
                 value={field.value as string}
-                errorMessage={t(form.formState.errors[name]?.message as any)}
+                errorMessage={form.formState.errors[name]?.message}
                 className={className}
                 disabled={isSubmitting || getScanItemDefaultMutation.isPending}
                 maxLength={maxLength}
@@ -278,9 +280,9 @@ export const ScanItemTemplateModal = ({
                         if (isNaN(number)) return;
                         field.onChange(number);
                       }}
-                      errorMessage={t(
-                        form.formState.errors.serialPrefixDigit?.message as any
-                      )}
+                      errorMessage={
+                        form.formState.errors.serialPrefixDigit?.message
+                      }
                       className="w-full md:w-1/2"
                       disabled={
                         isSubmitting || getScanItemDefaultMutation.isPending
@@ -327,9 +329,7 @@ export const ScanItemTemplateModal = ({
                         if (isNaN(number)) return;
                         field.onChange(number);
                       }}
-                      errorMessage={t(
-                        form.formState.errors.serialDigit?.message as any
-                      )}
+                      errorMessage={form.formState.errors.serialDigit?.message}
                       className="w-full md:w-1/2"
                       disabled={
                         isSubmitting || getScanItemDefaultMutation.isPending
@@ -376,9 +376,9 @@ export const ScanItemTemplateModal = ({
                         if (isNaN(number)) return;
                         field.onChange(number);
                       }}
-                      errorMessage={t(
-                        form.formState.errors.generatorCount?.message as any
-                      )}
+                      errorMessage={
+                        form.formState.errors.generatorCount?.message
+                      }
                       className="w-full md:w-1/2"
                       disabled={
                         isSubmitting || getScanItemDefaultMutation.isPending
@@ -424,9 +424,7 @@ export const ScanItemTemplateModal = ({
                         if (isNaN(number)) return;
                         field.onChange(number);
                       }}
-                      errorMessage={t(
-                        form.formState.errors.pinDigit?.message as any
-                      )}
+                      errorMessage={form.formState.errors.pinDigit?.message}
                       className="w-full md:w-1/2"
                       disabled={
                         isSubmitting || getScanItemDefaultMutation.isPending

@@ -157,10 +157,10 @@ export const QrCodeFilterTable = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuItem onSelect={() => setOpenScanItemModal(true)}>
+            <DropdownMenuItem onSelect={() => setOpenScanItemThemplateModal(true)}>
               {t("qrcode.filter.scanItemTemplate")}
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setOpenScanItemThemplateModal(true)}>
+            <DropdownMenuItem onSelect={() => setOpenScanItemModal(true)}>
               {t("qrcode.filter.scanItemAction")}
             </DropdownMenuItem>
           </DropdownMenuContent>
