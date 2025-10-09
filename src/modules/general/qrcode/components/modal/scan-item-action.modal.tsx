@@ -44,7 +44,6 @@ export const ScanItemActionModal = ({
   const form = useForm<CreateScanItemActionType>({
     resolver: zodResolver(scanItemActionSchema),
     defaultValues: {
-      orgId: params.orgId,
       redirectUrl: "",
       encryptionKey: "",
       encryptionIV: "",
@@ -53,6 +52,8 @@ export const ScanItemActionModal = ({
       createdDate: "",
     },
   });
+  const errors = form.formState.errors;
+  console.log('errors', errors);
 
   const isSubmitting = form.formState.isSubmitting;
   const isControlled = open !== undefined && onOpenChange !== undefined;
@@ -85,7 +86,6 @@ export const ScanItemActionModal = ({
     if (existingData?.data && dialogOpen) {
       const data = existingData.data;
       form.reset({
-        orgId: data.orgId,
         redirectUrl: data.redirectUrl,
         encryptionKey: data.encryptionKey,
         encryptionIV: data.encryptionIV,
@@ -104,7 +104,6 @@ export const ScanItemActionModal = ({
       const defaultData = response.data;
 
       form.reset({
-        orgId: defaultData.orgId,
         redirectUrl: defaultData.redirectUrl,
         encryptionKey: defaultData.encryptionKey,
         encryptionIV: defaultData.encryptionIV,
@@ -137,6 +136,7 @@ export const ScanItemActionModal = ({
               }
 
               toast.success(t("qrcode.scanItemAction.success.update"));
+              handleClose(false);
             },
           }
         );
@@ -156,6 +156,7 @@ export const ScanItemActionModal = ({
               }
 
               toast.success(t("qrcode.scanItemAction.success.create"));
+              handleClose(false);
             },
           }
         );
@@ -164,8 +165,6 @@ export const ScanItemActionModal = ({
       await queryClient.invalidateQueries({
         queryKey: [scanItemActionApi.getScanItemAction.key, params.orgId],
       });
-
-      handleClose(false);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -183,7 +182,7 @@ export const ScanItemActionModal = ({
     maxLength: number;
   }) => (
     <div className="flex flex-col md:flex-row md:items-center gap-3">
-      <Label isRequired className="w-32">
+      <Label isRequired={name !== "themeVerify"} className="w-32">
         {label}
       </Label>
       <div className="w-full">
@@ -198,6 +197,7 @@ export const ScanItemActionModal = ({
               className={className}
               disabled={isSubmitting || getScanItemDefaultMutation.isPending}
               maxLength={maxLength}
+              minLength={name === "encryptionKey" || name === "encryptionIV" ? maxLength : undefined}
             />
           )}
         />
