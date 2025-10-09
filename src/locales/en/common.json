@@ -190,8 +190,11 @@
       },
       "validation": {
         "orgIdRequired": "Organization ID is required",
-        "encryptionKeyRequired": "Encryption Key is required",
-        "encryptionIVRequired": "Encryption IV is required",
+        "redirectUrlRequired": "Redirect URL is required",
+        "redirectUrlMax": "Redirect URL must be at most 80 characters",
+        "encryptionKeyLength": "Encryption Key must be exactly 16 characters",
+        "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+        "themeVerifyMax": "Theme must be at most 15 characters",
         "invalidUrl": "Invalid URL format",
         "registeredAwareFlagRequired": "Registered Aware Flag is required",
         "createdDateRequired": "Created Date is required"

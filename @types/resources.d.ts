@@ -169,11 +169,14 @@ interface Resources {
         "title": "Scan Item Action",
         "validation": {
           "createdDateRequired": "Created Date is required",
-          "encryptionIVRequired": "Encryption IV is required",
-          "encryptionKeyRequired": "Encryption Key is required",
+          "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+          "encryptionKeyLength": "Encryption Key must be exactly 16 characters",
           "invalidUrl": "Invalid URL format",
           "orgIdRequired": "Organization ID is required",
-          "registeredAwareFlagRequired": "Registered Aware Flag is required"
+          "redirectUrlMax": "Redirect URL must be at most 80 characters",
+          "redirectUrlRequired": "Redirect URL is required",
+          "registeredAwareFlagRequired": "Registered Aware Flag is required",
+          "themeVerifyMax": "Theme must be at most 15 characters"
         }
       },
       "scanItemTemplate": {

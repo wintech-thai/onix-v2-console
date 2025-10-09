@@ -1,7 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import z from "zod";
-import { scanItemActionSchema } from "../schema/scan-item-action.schema";
+import { ScanItemActionSchemaType } from "../schema/scan-item-action.schema";
 
 export interface ScanItemAction {
   id: string;
@@ -17,7 +16,7 @@ export interface ScanItemAction {
 export type GetScanItemActionResponse = ScanItemAction;
 export type GetScanItemDefaultResponse = ScanItemAction;
 
-export type AddScanItemActionRequest = z.infer<typeof scanItemActionSchema>;
+export type AddScanItemActionRequest = ScanItemActionSchemaType;
 
 export interface AddScanItemActionResponse {
   status: string;

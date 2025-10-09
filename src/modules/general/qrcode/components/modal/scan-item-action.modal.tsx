@@ -11,14 +11,16 @@ import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import z from "zod";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
-import { scanItemActionSchema } from "../../schema/scan-item-action.schema";
+import {
+  useScanItemActionSchema,
+  type ScanItemActionSchemaType,
+} from "../../schema/scan-item-action.schema";
 import { scanItemActionApi } from "../../api/scan-item-actions";
 import { toast } from "sonner";
 
@@ -27,8 +29,6 @@ interface ScanItemActionModalProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
-
-type CreateScanItemActionType = z.infer<typeof scanItemActionSchema>;
 
 export const ScanItemActionModal = ({
   children,
@@ -39,9 +39,11 @@ export const ScanItemActionModal = ({
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
 
+  const scanItemActionSchema = useScanItemActionSchema(t);
+
   const [internalOpen, setInternalOpen] = useState(false);
   // Form setup
-  const form = useForm<CreateScanItemActionType>({
+  const form = useForm<ScanItemActionSchemaType>({
     resolver: zodResolver(scanItemActionSchema),
     defaultValues: {
       redirectUrl: "",
@@ -53,7 +55,7 @@ export const ScanItemActionModal = ({
     },
   });
   const errors = form.formState.errors;
-  console.log('errors', errors);
+  console.log("errors", errors);
 
   const isSubmitting = form.formState.isSubmitting;
   const isControlled = open !== undefined && onOpenChange !== undefined;
@@ -117,7 +119,7 @@ export const ScanItemActionModal = ({
     }
   };
 
-  const handleSubmit = async (formData: CreateScanItemActionType) => {
+  const handleSubmit = async (formData: ScanItemActionSchemaType) => {
     try {
       if (hasExistingData) {
         await updateScanItemActionMutation.mutateAsync(
@@ -128,7 +130,9 @@ export const ScanItemActionModal = ({
           },
           {
             onError: (error) => {
-              toast.error(error.message || t("qrcode.scanItemAction.error.update"));
+              toast.error(
+                error.message || t("qrcode.scanItemAction.error.update")
+              );
             },
             onSuccess: ({ data }) => {
               if (data.status !== "OK") {
@@ -148,7 +152,9 @@ export const ScanItemActionModal = ({
           },
           {
             onError: (error) => {
-              toast.error(error.message || t("qrcode.scanItemAction.error.create"));
+              toast.error(
+                error.message || t("qrcode.scanItemAction.error.create")
+              );
             },
             onSuccess: ({ data }) => {
               if (data.status !== "OK") {
@@ -170,41 +176,6 @@ export const ScanItemActionModal = ({
     }
   };
 
-  const FormField = ({
-    name,
-    label,
-    className = "w-full md:w-1/2",
-    maxLength = 10,
-  }: {
-    name: keyof CreateScanItemActionType;
-    label: string;
-    className?: string;
-    maxLength: number;
-  }) => (
-    <div className="flex flex-col md:flex-row md:items-center gap-3">
-      <Label isRequired={name !== "themeVerify"} className="w-32">
-        {label}
-      </Label>
-      <div className="w-full">
-        <Controller
-          control={form.control}
-          name={name}
-          render={({ field }) => (
-            <Input
-              {...field}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              errorMessage={t(form.formState.errors[name]?.message as any)}
-              className={className}
-              disabled={isSubmitting || getScanItemDefaultMutation.isPending}
-              maxLength={maxLength}
-              minLength={name === "encryptionKey" || name === "encryptionIV" ? maxLength : undefined}
-            />
-          )}
-        />
-      </div>
-    </div>
-  );
-
   return (
     <Dialog open={dialogOpen} onOpenChange={handleClose}>
       {children && <DialogTrigger asChild>{children}</DialogTrigger>}
@@ -224,7 +195,7 @@ export const ScanItemActionModal = ({
             type="button"
             variant="outline"
             size="sm"
-            className="h-10 px-3 ml-auto flex"
+            className="h-10 px-3 ml-auto flex md:hidden"
             onClick={handleLoadDefaultValues}
             disabled={getScanItemDefaultMutation.isPending || isSubmitting}
           >
@@ -234,15 +205,116 @@ export const ScanItemActionModal = ({
           </Button>
 
           <div className="flex flex-col gap-2">
-            <FormField maxLength={16} name="encryptionKey" label={t("qrcode.scanItemAction.fields.key")} />
-            <FormField maxLength={16} name="encryptionIV" label={t("qrcode.scanItemAction.fields.iv")} />
-            <FormField maxLength={15} name="themeVerify" label={t("qrcode.scanItemAction.fields.theme")} />
-            <FormField
-              maxLength={80}
-              name="redirectUrl"
-              label={t("qrcode.scanItemAction.fields.redirectUrl")}
-              className="w-full"
-            />
+            {/* Encryption Key */}
+            <div className="flex flex-col md:flex-row md:items-center gap-3 relative">
+              <Label isRequired className="w-32">
+                {t("qrcode.scanItemAction.fields.key")}
+              </Label>
+              <div className="w-full">
+                <Controller
+                  control={form.control}
+                  name="encryptionKey"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      errorMessage={
+                        form.formState.errors.encryptionKey?.message
+                      }
+                      className="w-full md:w-1/2"
+                      disabled={
+                        isSubmitting || getScanItemDefaultMutation.isPending
+                      }
+                      maxLength={16}
+                    />
+                  )}
+                />
+              </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-12 px-3 hidden md:flex absolute right-0"
+                onClick={handleLoadDefaultValues}
+                disabled={getScanItemDefaultMutation.isPending || isSubmitting}
+              >
+                {getScanItemDefaultMutation.isPending
+                  ? t("common.loading")
+                  : t("qrcode.scanItemAction.buttons.defaultValue")}
+              </Button>
+            </div>
+
+            {/* Encryption IV */}
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              <Label isRequired className="w-32">
+                {t("qrcode.scanItemAction.fields.iv")}
+              </Label>
+              <div className="w-full">
+                <Controller
+                  control={form.control}
+                  name="encryptionIV"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      errorMessage={form.formState.errors.encryptionIV?.message}
+                      className="w-full md:w-1/2"
+                      disabled={
+                        isSubmitting || getScanItemDefaultMutation.isPending
+                      }
+                      maxLength={16}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Theme Verify */}
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              <Label className="w-32">
+                {t("qrcode.scanItemAction.fields.theme")}
+              </Label>
+              <div className="w-full">
+                <Controller
+                  control={form.control}
+                  name="themeVerify"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      errorMessage={form.formState.errors.themeVerify?.message}
+                      className="w-full md:w-1/2"
+                      disabled={
+                        isSubmitting || getScanItemDefaultMutation.isPending
+                      }
+                      maxLength={15}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Redirect URL */}
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              <Label isRequired className="w-32">
+                {t("qrcode.scanItemAction.fields.redirectUrl")}
+              </Label>
+              <div className="w-full">
+                <Controller
+                  control={form.control}
+                  name="redirectUrl"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      errorMessage={form.formState.errors.redirectUrl?.message}
+                      className="w-full"
+                      disabled={
+                        isSubmitting || getScanItemDefaultMutation.isPending
+                      }
+                      maxLength={80}
+                    />
+                  )}
+                />
+              </div>
+            </div>
 
             <div className="flex items-center gap-3">
               <div className="w-32 hidden md:block" />

@@ -1,7 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import z from "zod";
-import { scanItemThemplateSchema } from "../schema/scan-item-themplate.schema";
+import { ScanItemTemplateSchemaType } from "../schema/scan-item-themplate.schema";
 
 export interface ScanItemThemplate {
   id: string;
@@ -18,7 +17,7 @@ export interface ScanItemThemplate {
 export type GetScanItemThemplateResponse = ScanItemThemplate;
 export type GetScanItemThempleteDefaultResponse = ScanItemThemplate;
 
-export type AddScanItemThemplateRequest = z.infer<typeof scanItemThemplateSchema>;
+export type AddScanItemThemplateRequest = ScanItemTemplateSchemaType;
 
 export interface AddScanItemThemplateResponse {
   status: string;

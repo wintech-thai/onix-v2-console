@@ -1,4 +1,3 @@
-
 import {
   Dialog,
   DialogContent,
@@ -236,7 +235,7 @@ export const ScanItemTemplateModal = ({
             type="button"
             variant="outline"
             size="sm"
-            className="h-10 px-3 ml-auto flex"
+            className="h-10 px-3 ml-auto flex md:hidden"
             onClick={handleLoadDefaultValues}
             disabled={getScanItemDefaultMutation.isPending || isSubmitting}
           >
@@ -247,7 +246,7 @@ export const ScanItemTemplateModal = ({
 
           <div className="flex flex-col gap-2">
             {/* Serial Prefix Digit */}
-            <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <div className="flex flex-col md:flex-row md:items-center gap-3 relative">
               <Label htmlFor="serialPrefixDigit" isRequired className="w-40">
                 {t("qrcode.scanItemTemplate.fields.serialPrefixDigit")}
               </Label>
@@ -293,6 +292,19 @@ export const ScanItemTemplateModal = ({
                   )}
                 />
               </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-12 px-3 hidden md:flex absolute right-0"
+                onClick={handleLoadDefaultValues}
+                disabled={getScanItemDefaultMutation.isPending || isSubmitting}
+              >
+                {getScanItemDefaultMutation.isPending
+                  ? t("common.loading")
+                  : t("qrcode.scanItemTemplate.buttons.defaultValue")}
+              </Button>
             </div>
 
             {/* Serial Digit */}
@@ -437,19 +449,54 @@ export const ScanItemTemplateModal = ({
               </div>
             </div>
 
-            <TextField
-              name="notificationEmail"
-              label={t("qrcode.scanItemTemplate.fields.notificationEmail")}
-              isRequired={false}
-              maxLength={50}
-              key={"notificationEmail"}
-            />
-            <TextField
-              name="urlTemplate"
-              label={t("qrcode.scanItemTemplate.fields.urlTemplate")}
-              maxLength={80}
-              key={"urlTemplate"}
-            />
+            {/* Notification Email & URL Template */}
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              <Label isRequired={false} className="w-40">
+                {t("qrcode.scanItemTemplate.fields.notificationEmail")}
+              </Label>
+              <div className="w-full">
+                <Controller
+                  control={form.control}
+                  name="notificationEmail"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      value={field.value as string}
+                      errorMessage={
+                        form.formState.errors.notificationEmail?.message
+                      }
+                      disabled={
+                        isSubmitting || getScanItemDefaultMutation.isPending
+                      }
+                      maxLength={50}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-center gap-3">
+              <Label isRequired className="w-40">
+                {t("qrcode.scanItemTemplate.fields.urlTemplate")}
+              </Label>
+              <div className="w-full">
+                <Controller
+                  control={form.control}
+                  name="urlTemplate"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      value={field.value as string}
+                      errorMessage={form.formState.errors.urlTemplate?.message}
+                      disabled={
+                        isSubmitting || getScanItemDefaultMutation.isPending
+                      }
+                      maxLength={80}
+                    />
+                  )}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-end gap-2 mt-4">

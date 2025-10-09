@@ -190,8 +190,11 @@
       },
       "validation": {
         "orgIdRequired": "กรุณากรอกรหัสองค์กร",
-        "encryptionKeyRequired": "กรุณากรอกคีย์เข้ารหัส",
-        "encryptionIVRequired": "กรุณากรอกไอวีเข้ารหัส",
+        "redirectUrlRequired": "กรุณากรอกลิงก์เปลี่ยนเส้นทาง",
+        "redirectUrlMax": "ลิงก์เปลี่ยนเส้นทางต้องมีความยาวไม่เกิน 80 ตัวอักษร",
+        "encryptionKeyLength": "คีย์เข้ารหัสต้องมีความยาว 16 ตัวอักษร",
+        "encryptionIVLength": "ไอวีเข้ารหัสต้องมีความยาว 16 ตัวอักษร",
+        "themeVerifyMax": "ธีมต้องมีความยาวไม่เกิน 15 ตัวอักษร",
         "invalidUrl": "รูปแบบลิงก์ไม่ถูกต้อง",
         "registeredAwareFlagRequired": "กรุณากรอกสถานะการลงทะเบียน",
         "createdDateRequired": "กรุณากรอกวันที่สร้าง"
