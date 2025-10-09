@@ -146,6 +146,36 @@ interface Resources {
         "loading": "Loading scan item details...",
         "title": "Scan Item Detail"
       },
+      "scanItemAction": {
+        "buttons": {
+          "defaultValue": "Default Value"
+        },
+        "error": {
+          "create": "Failed to create scan item action",
+          "loadDefault": "Error loading default values",
+          "update": "Failed to update scan item action"
+        },
+        "fields": {
+          "iv": "IV",
+          "key": "Key",
+          "redirectUrl": "Redirect URL",
+          "rescanCheck": "Re-scan check",
+          "theme": "Theme"
+        },
+        "success": {
+          "create": "Scan item action created successfully",
+          "update": "Scan item action updated successfully"
+        },
+        "title": "Scan Item Action",
+        "validation": {
+          "createdDateRequired": "Created Date is required",
+          "encryptionIVRequired": "Encryption IV is required",
+          "encryptionKeyRequired": "Encryption Key is required",
+          "invalidUrl": "Invalid URL format",
+          "orgIdRequired": "Organization ID is required",
+          "registeredAwareFlagRequired": "Registered Aware Flag is required"
+        }
+      },
       "unverify": {
         "error": "Failed to un-verify scan item",
         "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
