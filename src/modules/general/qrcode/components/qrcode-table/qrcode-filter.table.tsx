@@ -20,6 +20,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
 import { CreateScanItemModal } from "../modal/create-scan-item.modal";
+import { ScanItemActionModal } from "../modal/scan-item-action.modal";
+import { ScanItemTemplateModal } from "../modal/scan-item-template.modal";
 
 interface QrCodeFilterTableProps {
   onDelete: () => void;
@@ -48,6 +50,9 @@ export const QrCodeFilterTable = ({
     onSearch(searchField, searchValue);
   };
 
+  const [openScanItemModal, setOpenScanItemModal] = useState(false);
+  const [openScanItemThemplateModal, setOpenScanItemThemplateModal] = useState(false);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -58,6 +63,14 @@ export const QrCodeFilterTable = ({
       "
       aria-label="QR Code filter controls"
     >
+      <ScanItemActionModal
+        open={openScanItemModal}
+        onOpenChange={setOpenScanItemModal}
+      />
+      <ScanItemTemplateModal
+        open={openScanItemThemplateModal}
+        onOpenChange={setOpenScanItemThemplateModal}
+      />
       {/* Left side: search controls */}
       <div
         className="
@@ -123,7 +136,9 @@ export const QrCodeFilterTable = ({
         "
       >
         <CreateScanItemModal>
-          <Button className="w-full md:w-auto col-span-3">{t("qrcode.filter.add")}</Button>
+          <Button className="w-full md:w-auto col-span-3">
+            {t("qrcode.filter.add")}
+          </Button>
         </CreateScanItemModal>
 
         <Button
@@ -142,12 +157,10 @@ export const QrCodeFilterTable = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuItem
-              onSelect={() => console.log("Scan Item Template")}
-            >
+            <DropdownMenuItem onSelect={() => setOpenScanItemThemplateModal(true)}>
               {t("qrcode.filter.scanItemTemplate")}
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Action")}>
+            <DropdownMenuItem onSelect={() => setOpenScanItemModal(true)}>
               {t("qrcode.filter.scanItemAction")}
             </DropdownMenuItem>
           </DropdownMenuContent>

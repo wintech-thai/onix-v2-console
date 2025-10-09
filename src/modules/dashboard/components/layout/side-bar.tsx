@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { RouteConfig } from "@/config/route.config";
 import { Hint } from "@/components/ui/hint";
+import { env } from "next-runtime-env";
 
 // Type-safe i18n keys
 type SidebarKeys =
@@ -313,6 +314,25 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
             })}
           </ul>
         </nav>
+
+        {/* Footer */}
+        {expanded && (
+          <motion.footer
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.2 }}
+            className="absolute bottom-0 w-full p-4 text-xs text-center text-muted-foreground border-t"
+          >
+            <div className="text-base">
+              versions: {env("NEXT_PUBLIC_APP_VERSION")}
+            </div>
+            <div className="text-sm">
+              &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All rights
+              reserved.
+            </div>
+          </motion.footer>
+        )}
       </motion.aside>
 
       {/* ปุ่มกลมจับขอบ (desktop only) */}

@@ -146,6 +146,75 @@ interface Resources {
         "loading": "Loading scan item details...",
         "title": "Scan Item Detail"
       },
+      "scanItemAction": {
+        "buttons": {
+          "defaultValue": "Default Value"
+        },
+        "error": {
+          "create": "Failed to create scan item action",
+          "loadDefault": "Error loading default values",
+          "update": "Failed to update scan item action"
+        },
+        "fields": {
+          "iv": "IV",
+          "key": "Key",
+          "redirectUrl": "Redirect URL",
+          "rescanCheck": "Re-scan check",
+          "theme": "Theme"
+        },
+        "success": {
+          "create": "Scan item action created successfully",
+          "update": "Scan item action updated successfully"
+        },
+        "title": "Scan Item Action",
+        "validation": {
+          "createdDateRequired": "Created Date is required",
+          "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+          "encryptionKeyLength": "Encryption Key must be exactly 16 characters",
+          "invalidUrl": "Invalid URL format",
+          "orgIdRequired": "Organization ID is required",
+          "redirectUrlMax": "Redirect URL must be at most 80 characters",
+          "redirectUrlRequired": "Redirect URL is required",
+          "registeredAwareFlagRequired": "Registered Aware Flag is required",
+          "themeVerifyMax": "Theme must be at most 15 characters"
+        }
+      },
+      "scanItemTemplate": {
+        "buttons": {
+          "defaultValue": "Default Value"
+        },
+        "error": {
+          "create": "Failed to create scan item template",
+          "loadDefault": "Error loading default values",
+          "update": "Failed to update scan item template"
+        },
+        "fields": {
+          "generatorCount": "Item Count",
+          "notificationEmail": "Notification Email",
+          "pinDigit": "Pin Length",
+          "serialDigit": "Serial Length",
+          "serialPrefixDigit": "Prefix Length",
+          "urlTemplate": "URL Template"
+        },
+        "success": {
+          "create": "Scan item template created successfully",
+          "update": "Scan item template updated successfully"
+        },
+        "title": "Scan Item Template",
+        "validation": {
+          "createdDateRequired": "Created Date is required",
+          "generatorCountRequired": "Item Count is required",
+          "invalidEmail": "Invalid email format",
+          "orgIdRequired": "Organization ID is required",
+          "pinDigitMax": "Pin Length must be at most 9",
+          "pinDigitMin": "Pin Length must be at least 7",
+          "serialDigitMax": "Serial Length must be at most 9",
+          "serialDigitMin": "Serial Length must be at least 7",
+          "serialPrefixDigitMax": "Prefix Length must be at most 3",
+          "serialPrefixDigitMin": "Prefix Length must be at least 2",
+          "urlTemplateRequired": "URL Template is required"
+        }
+      },
       "unverify": {
         "error": "Failed to un-verify scan item",
         "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
