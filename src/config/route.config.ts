@@ -3,7 +3,10 @@ export const RouteConfig = {
     OVERVIEW: (orgId: string) => `/dashboard/${orgId}/overview`,
   },
   GENERAL: {
-    PRODUCT: (orgId: string) => `/${orgId}/general/products`,
+    PRODUCT: {
+      LIST: (orgId: string) => `/${orgId}/general/products`,
+      CREATE: (orgId: string) => `/${orgId}/general/products/create`,
+    },
     CUSTOMER: (orgId: string) => `/${orgId}/general/customers`,
     QRCODE: (orgId: string) => `/${orgId}/general/qrcodes`,
     JOB: (orgId: string) => `/${orgId}/general/jobs`,

@@ -78,7 +78,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
       children: [
         {
           labelKey: "sidebar.general.sub.1",
-          href: RouteConfig.GENERAL.PRODUCT(params.orgId),
+          href: RouteConfig.GENERAL.PRODUCT.LIST(params.orgId),
         },
         {
           labelKey: "sidebar.general.sub.2",
