@@ -6,7 +6,6 @@ import { ProductSchemaType } from "../schema/product.schema";
 import { createProductApi } from "../api/create-product.api";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { getProductApi } from "../api/get-product.api";
 import { fetchProductsApi } from "../api/fetch-products.api";
 import { RouteConfig } from "@/config/route.config";
 
@@ -37,12 +36,8 @@ const CreateProductView = () => {
           }
 
           queryClient.invalidateQueries({
-            queryKey: [getProductApi.key],
-            refetchType: "active",
-          });
-          queryClient.invalidateQueries({
-            queryKey: [fetchProductsApi.fetchProductKey],
-            refetchType: "active",
+            queryKey: fetchProductsApi.fetchProductKey,
+            refetchType: "all",
           });
 
           toast.success("Create product successfully");

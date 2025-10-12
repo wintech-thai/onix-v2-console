@@ -43,22 +43,25 @@ const UpdateProductView = () => {
         productId: params.productId,
       },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: async ({ data }) => {
           if (data.status !== "OK") {
             return toast.error(data.description);
           }
 
+          // Invalidate and refetch specific product query (must match the queryKey structure)
           queryClient.invalidateQueries({
-            queryKey: [getProductApi.key],
-            refetchType: "active",
+            queryKey: [getProductApi.key, { orgId: params.orgId, productId: params.productId }],
+            refetchType: "all",
           });
+
+          // Invalidate ALL products list queries (including count)
           queryClient.invalidateQueries({
-            queryKey: [fetchProductsApi.fetchProductKey],
-            refetchType: "active"
-          })
+            queryKey: fetchProductsApi.fetchProductKey,
+            refetchType: "all",
+          });
 
           toast.success("Update product successfully");
-          return router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
+          router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
         },
         onError: (error) => {
           toast.error(error.message);
@@ -66,7 +69,6 @@ const UpdateProductView = () => {
       }
     );
   };
-
 
   if (!payload) {
     throw new Error("Product not found");
