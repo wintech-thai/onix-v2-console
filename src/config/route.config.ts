@@ -6,6 +6,7 @@ export const RouteConfig = {
     PRODUCT: {
       LIST: (orgId: string) => `/${orgId}/general/products`,
       CREATE: (orgId: string) => `/${orgId}/general/products/create`,
+      UPDATE: (orgId: string, productId: string) => `/${orgId}/general/products/${productId}/update`,
     },
     CUSTOMER: (orgId: string) => `/${orgId}/general/customers`,
     QRCODE: (orgId: string) => `/${orgId}/general/qrcodes`,

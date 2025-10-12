@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "next/navigation";
+import { RouteConfig } from "@/config/route.config";
+import Link from "next/link";
 
 interface ProductFilterTableProps {
   onDelete: () => void;
@@ -29,6 +32,7 @@ export const ProductFilterTable = ({
   isDisabled,
   onSearch,
 }: ProductFilterTableProps) => {
+  const params = useParams<{ orgId: string }>();
   const [searchField, setSearchField] = useState("fullTextSearch");
   const [searchValue, setSearchValue] = useState("");
 
@@ -105,9 +109,13 @@ export const ProductFilterTable = ({
           md:flex md:items-center
         "
       >
-        <Button className="w-full md:w-auto">
-          ADD
-        </Button>
+        <Link href={RouteConfig.GENERAL.PRODUCT.CREATE(params.orgId)}>
+          <Button
+            className="w-full md:w-auto"
+          >
+            ADD
+          </Button>
+        </Link>
 
         <Button
           className="w-full md:w-auto"
@@ -125,7 +133,9 @@ export const ProductFilterTable = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Template")}>
+            <DropdownMenuItem
+              onSelect={() => console.log("Scan Item Template")}
+            >
               Scan Item Template
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => console.log("Scan Item Action")}>

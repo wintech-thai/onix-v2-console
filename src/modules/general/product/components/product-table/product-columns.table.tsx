@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
 
 type productTableColumns = ColumnDef<IProduct> & {
   accessorKey?: keyof IProduct;
@@ -42,6 +44,19 @@ export const productTableColumns: productTableColumns[] = [
   {
     accessorKey: "code",
     header: "Product Code",
+    cell: ({ row }) => {
+      return (
+        <Link
+          href={RouteConfig.GENERAL.PRODUCT.UPDATE(
+            row.original.orgId,
+            row.original.id
+          )}
+          className="underline text-primary"
+        >
+          {row.original.code}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "description",

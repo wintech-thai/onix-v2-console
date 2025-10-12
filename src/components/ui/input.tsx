@@ -9,8 +9,10 @@ function Input({
   label,
   errorMessage,
   helperText,
+  isRequired,
   ...props
 }: React.ComponentProps<"input"> & {
+  isRequired?: boolean,
   label?: string;
   errorMessage?: string;
   helperText?: string;
@@ -18,9 +20,9 @@ function Input({
   const id = React.useId();
 
   return (
-    <div className="*:not-first:mt-2">
+    <div className="*:not-first:mt-2 w-full">
 
-      {label && <Label htmlFor={id}>{label}</Label>}
+      {label && <Label isRequired={isRequired} htmlFor={id}>{label}</Label>}
 
       <input
         id={id}

@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { Image } from "./create-product.api";
 
 export type GetProductsRequest = {
   orgId: string;
@@ -21,9 +22,11 @@ export interface IProduct {
   tags: string;
   itemType: number;
   narrative: string;
+  narratives: string[];
+  content: string;
   properties: string;
   propertiesObj: IPropertiesObj;
-  images: string[];
+  images: Image[];
   createdDate: Date;
   updatedDate: Date;
 }
