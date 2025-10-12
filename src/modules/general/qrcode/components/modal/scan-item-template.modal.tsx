@@ -5,7 +5,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -173,47 +173,6 @@ export const ScanItemTemplateModal = ({
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-  };
-
-  const TextField = ({
-    name,
-    label,
-    className = "w-full",
-    isRequired = true,
-    maxLength,
-  }: {
-    name: keyof CreateScanItemTemplateType;
-    label: string;
-    className?: string;
-    isRequired?: boolean;
-    maxLength?: number;
-  }) => {
-    const autoId = useId();
-    const inputId = `scan-template-${String(name)}-${autoId}`;
-    return (
-      <div className="flex flex-col md:flex-row md:items-center gap-3">
-        <Label isRequired={isRequired} htmlFor={inputId} className="w-40">
-          {label}
-        </Label>
-        <div className="w-full">
-          <Controller
-            control={form.control}
-            name={name}
-            render={({ field }) => (
-              <Input
-                {...field}
-                id={inputId}
-                value={field.value as string}
-                errorMessage={form.formState.errors[name]?.message}
-                className={className}
-                disabled={isSubmitting || getScanItemDefaultMutation.isPending}
-                maxLength={maxLength}
-              />
-            )}
-          />
-        </div>
-      </div>
-    );
   };
 
   return (

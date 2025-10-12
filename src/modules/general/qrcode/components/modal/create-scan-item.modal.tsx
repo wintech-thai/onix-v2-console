@@ -87,7 +87,9 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
           },
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error creating scan item:", error);
+    }
   };
 
   const handleClose = (isOpen: boolean) => {

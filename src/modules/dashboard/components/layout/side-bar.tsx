@@ -59,61 +59,63 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const params = useParams<{ orgId: string }>();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
 
-  const MENU: MenuItem[] = [
-    {
-      key: "dashboard",
-      labelKey: "sidebar.dashboard.label",
-      icon: LayoutDashboardIcon,
-      children: [
-        {
-          labelKey: "sidebar.dashboard.sub.1",
-          href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId),
-        },
-      ],
-    },
-    {
-      key: "general",
-      labelKey: "sidebar.general.label",
-      icon: Package2Icon,
-      children: [
-        {
-          labelKey: "sidebar.general.sub.1",
-          href: RouteConfig.GENERAL.PRODUCT.LIST(params.orgId),
-        },
-        {
-          labelKey: "sidebar.general.sub.2",
-          href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
-        },
-        {
-          labelKey: "sidebar.general.sub.3",
-          href: RouteConfig.GENERAL.QRCODE(params.orgId),
-        },
-        {
-          labelKey: "sidebar.general.sub.4",
-          href: RouteConfig.GENERAL.JOB(params.orgId),
-        },
-      ],
-    },
-    {
-      key: "admin",
-      labelKey: "sidebar.admin.label",
-      icon: UserCogIcon,
-      children: [
-        {
-          labelKey: "sidebar.admin.sub.1",
-          href: RouteConfig.ADMIN.APIKEY(params.orgId),
-        },
-        {
-          labelKey: "sidebar.admin.sub.2",
-          href: RouteConfig.ADMIN.USER(params.orgId),
-        },
-        {
-          labelKey: "sidebar.admin.sub.3",
-          href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
-        },
-      ],
-    },
-  ];
+  const MENU: MenuItem[] = useMemo(() => {
+    return [
+      {
+        key: "dashboard",
+        labelKey: "sidebar.dashboard.label",
+        icon: LayoutDashboardIcon,
+        children: [
+          {
+            labelKey: "sidebar.dashboard.sub.1",
+            href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId),
+          },
+        ],
+      },
+      {
+        key: "general",
+        labelKey: "sidebar.general.label",
+        icon: Package2Icon,
+        children: [
+          {
+            labelKey: "sidebar.general.sub.1",
+            href: RouteConfig.GENERAL.PRODUCT.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.2",
+            href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.3",
+            href: RouteConfig.GENERAL.QRCODE(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.4",
+            href: RouteConfig.GENERAL.JOB(params.orgId),
+          },
+        ],
+      },
+      {
+        key: "admin",
+        labelKey: "sidebar.admin.label",
+        icon: UserCogIcon,
+        children: [
+          {
+            labelKey: "sidebar.admin.sub.1",
+            href: RouteConfig.ADMIN.APIKEY(params.orgId),
+          },
+          {
+            labelKey: "sidebar.admin.sub.2",
+            href: RouteConfig.ADMIN.USER(params.orgId),
+          },
+          {
+            labelKey: "sidebar.admin.sub.3",
+            href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
+          },
+        ],
+      },
+    ];
+  }, [params.orgId]);
 
   const activeParents = useMemo(() => {
     const actives: Record<string, boolean> = {};
@@ -131,7 +133,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
         actives[m.key] = openParents[m.key] ?? false;
     }
     return actives;
-  }, [pathname, openParents]);
+  }, [pathname, openParents, MENU]);
 
   const isParentActive = (m: MenuItem) => {
     const selfActive =
@@ -328,8 +330,8 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
               versions: {env("NEXT_PUBLIC_APP_VERSION")}
             </div>
             <div className="text-sm">
-              &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All rights
-              reserved.
+              &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All
+              rights reserved.
             </div>
           </motion.footer>
         )}

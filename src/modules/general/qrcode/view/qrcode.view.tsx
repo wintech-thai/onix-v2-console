@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 const ScanItemsView = () => {
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [, setIsDeleting] = useState(false);
   const [data, setData] = useState<IScanItems[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
