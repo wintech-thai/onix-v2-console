@@ -25,12 +25,14 @@ interface ProductFilterTableProps {
   onDelete: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
+  selected: number;
 }
 
 export const ProductFilterTable = ({
   onDelete,
   isDisabled,
   onSearch,
+  selected,
 }: ProductFilterTableProps) => {
   const params = useParams<{ orgId: string }>();
   const [searchField, setSearchField] = useState("fullTextSearch");
@@ -123,7 +125,7 @@ export const ProductFilterTable = ({
           onClick={onDelete}
           variant="destructive"
         >
-          DELETE
+          DELETE {selected > 0 ? `(${selected})` : ""}
         </Button>
 
         <DropdownMenu>

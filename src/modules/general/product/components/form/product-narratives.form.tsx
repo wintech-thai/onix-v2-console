@@ -26,13 +26,15 @@ export const ProductNarrativesForm = () => {
                       <div className="flex items-start w-full gap-x-4">
                         <Input
                           {...field}
-                          label={`Narrative ${index + 1}`}
+                          label={`${index > 0 ? '' : 'Narriate'}`}
                           isRequired
                           className="w-full"
                           errorMessage={fieldState.error?.message}
                         />
 
-                        <div className="mt-9 flex-shrink-0 flex gap-x-2">
+                        <div className="flex-shrink-0 flex gap-x-2"
+                          style={{ marginTop: index > 0 ? 5 : 35 }}
+                        >
                           <Button
                             type="button"
                             size="icon"

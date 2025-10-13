@@ -63,24 +63,8 @@ export const productTableColumns: productTableColumns[] = [
     header: "Description",
   },
   {
-    accessorKey: "itemType",
-    header: "Item Type",
-    cell: ({ row }) => {
-      const itemType = row.getValue("itemType") as number;
-      return itemType === 0 ? "Product" : "Service";
-    },
-  },
-  {
     accessorKey: "tags",
     header: "Tags",
-  },
-  {
-    accessorKey: "createdDate",
-    header: "Created Date",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("createdDate"));
-      return date.toLocaleDateString();
-    },
   },
   {
     header: "Action",
@@ -110,4 +94,16 @@ export const productTableColumns: productTableColumns[] = [
       );
     },
   },
+  {
+    header: "Product Image",
+    cell: ({ row }) => {
+      const images = row.original.images[0];
+
+      return images ? (
+        <img src={images.imageUrl} alt={images.imagePath} />
+      ) : (
+        <span>No Image</span>
+      )
+    }
+  }
 ];

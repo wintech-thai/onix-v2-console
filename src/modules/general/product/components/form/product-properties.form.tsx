@@ -189,7 +189,7 @@ export const ProductPropertiesForm = () => {
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
         {/* Left Panel - Available Properties */}
-        <div className="flex-1 min-w-0">
+        <div className="w-full md:w-sm">
           <Table>
             <TableHeader>
               <TableRow>
