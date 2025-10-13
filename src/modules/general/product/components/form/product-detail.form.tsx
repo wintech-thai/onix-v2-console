@@ -22,6 +22,7 @@ export const ProductDetailForm = () => {
       if (trimmedTag && !tagsArray.includes(trimmedTag)) {
         const newTags = [...tagsArray, trimmedTag];
         form.setValue("tags", newTags.join(","));
+        form.trigger("tags");
         setTagInput("");
       }
     }
