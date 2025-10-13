@@ -9,6 +9,7 @@ import { updateProductApi } from "../api/update-product.api";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchProductsApi } from "../api/fetch-products.api";
 import { RouteConfig } from "@/config/route.config";
+import { LoaderIcon } from "lucide-react";
 
 const UpdateProductView = () => {
   const queryClient = useQueryClient();
@@ -23,7 +24,11 @@ const UpdateProductView = () => {
   });
 
   if (productQuery.isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <LoaderIcon className="size-4 animate-spin" />
+      </div>
+    )
   }
 
   const payload = productQuery.data?.data;

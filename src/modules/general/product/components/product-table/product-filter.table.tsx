@@ -80,7 +80,7 @@ export const ProductFilterTable = ({
         </div>
 
         {/* Search input */}
-        <div className="w-full md:w-auto md:flex-1">
+        <div className="w-full md:w-[500px]">
           <Input
             placeholder="Enter search value"
             className="w-full"
@@ -96,8 +96,7 @@ export const ProductFilterTable = ({
         {/* Search button */}
         <div className="w-full md:w-auto">
           <Button type="submit" className="w-full md:w-auto" aria-label="ค้นหา">
-            <Search className="h-4 w-4 mr-2" />
-            Search
+            <Search className="h-4 w-4 mx-2" />
           </Button>
         </div>
       </div>
@@ -127,24 +126,6 @@ export const ProductFilterTable = ({
         >
           DELETE {selected > 0 ? `(${selected})` : ""}
         </Button>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="w-full md:w-auto" variant="outline">
-              CONFIG
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuItem
-              onSelect={() => console.log("Scan Item Template")}
-            >
-              Scan Item Template
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Action")}>
-              Scan Item Action
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </form>
   );
