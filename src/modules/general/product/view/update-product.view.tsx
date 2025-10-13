@@ -99,13 +99,13 @@ const UpdateProductView = () => {
         orgId: params.orgId,
         code: payload.code,
         description: payload.description,
-        tags: payload.tags,
+        tags: payload.tags ?? "",
         itemType: payload.itemType,
         narrative: payload.narrative,
         content: payload.content,
         properties: capitalizedProperties,
         narratives: payload.narratives.map((n) => {
-          return { text: n };
+          return { text: n ?? "" };
         }),
         images: [],
       }}

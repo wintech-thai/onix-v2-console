@@ -25,14 +25,13 @@ type PropertyItem = {
 };
 
 // Define which properties should be numbers
-const NUMBER_PROPERTIES = new Set([
-  "Width",
-  "Height",
-  "Weight",
-]);
+const NUMBER_PROPERTIES = new Set(["Width", "Height", "Weight"]);
 
 // Helper function to convert property value based on its type
-const convertPropertyValue = (name: string, value: string): string | number | null => {
+const convertPropertyValue = (
+  name: string,
+  value: string
+): string | number | null => {
   // If empty, return null
   if (value === "" || value === null || value === undefined) {
     return null;
@@ -106,8 +105,8 @@ export const ProductPropertiesForm = () => {
       leftChecked.has(prop.name)
     );
 
-    const newSelected = [...selectedProperties, ...propertiesToMove].sort((a, b) =>
-      a.name.localeCompare(b.name)
+    const newSelected = [...selectedProperties, ...propertiesToMove].sort(
+      (a, b) => a.name.localeCompare(b.name)
     );
 
     setSelectedProperties(newSelected);
@@ -132,8 +131,8 @@ export const ProductPropertiesForm = () => {
         )?.value || "",
     }));
 
-    const newAvailable = [...availableProperties, ...resetProperties].sort((a, b) =>
-      a.name.localeCompare(b.name)
+    const newAvailable = [...availableProperties, ...resetProperties].sort(
+      (a, b) => a.name.localeCompare(b.name)
     );
 
     setAvailableProperties(newAvailable);
@@ -201,7 +200,9 @@ export const ProductPropertiesForm = () => {
   if (fetchProductPropertiesQuery.isLoading) {
     return (
       <div className="p-4 md:p-6 border">
-        <header className="text-lg font-bold">{t("product.properties.title")}</header>
+        <header className="text-lg font-bold">
+          {t("product.properties.title")}
+        </header>
         <div className="mt-4 text-center text-muted-foreground">
           {t("product.properties.loading")}
         </div>
@@ -211,7 +212,9 @@ export const ProductPropertiesForm = () => {
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">{t("product.properties.title")}</header>
+      <header className="text-lg font-bold">
+        {t("product.properties.title")}
+      </header>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
         {/* Left Panel - Available Properties */}
@@ -334,12 +337,17 @@ export const ProductPropertiesForm = () => {
                     <TableCell>{prop.name}</TableCell>
                     <TableCell>
                       <Input
-                        type={NUMBER_PROPERTIES.has(prop.name) ? "number" : "text"}
+                        type={
+                          NUMBER_PROPERTIES.has(prop.name) ? "number" : "text"
+                        }
                         placeholder={prop.value}
                         value={properties?.[prop.name] ?? ""}
                         onChange={(e) =>
                           handlePropertyValueChange(prop.name, e.target.value)
                         }
+                        maxLength={20}
+                        required
+                        isRequired
                       />
                     </TableCell>
                   </TableRow>

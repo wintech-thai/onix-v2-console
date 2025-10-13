@@ -71,7 +71,7 @@ export const ProductForm = ({
           </div>
 
           <div className="border-t py-2 px-4 shrink-0 flex items-center justify-end gap-x-2">
-            <Button disabled={isSubmitting} variant="destructive" type="button">
+            <Button onClick={() => router.back()} disabled={isSubmitting} variant="destructive" type="button">
               {t("product.actions.cancel")}
             </Button>
             <Button isPending={isSubmitting}>

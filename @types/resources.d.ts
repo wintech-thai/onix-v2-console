@@ -331,6 +331,7 @@ interface Resources {
         "contentRequired": "Content is required",
         "descriptionRequired": "Description is required",
         "narrativeRequired": "Narrative text is required",
+        "propertyValueRequired": "All selected properties must have a value",
         "tagsRequired": "At least one tag is required"
       }
     }

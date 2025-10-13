@@ -47,7 +47,7 @@ export const ProductDetailForm = () => {
                 label={t("product.detail.code")}
                 isRequired
                 errorMessage={fieldState.error?.message}
-                maxLength={15}
+                maxLength={30}
               />
             );
           }}
@@ -63,7 +63,7 @@ export const ProductDetailForm = () => {
                 label={t("product.detail.description")}
                 isRequired
                 errorMessage={fieldState.error?.message}
-                maxLength={255}
+                maxLength={150}
               />
             );
           }}
