@@ -12,7 +12,7 @@ function Input({
   isRequired,
   ...props
 }: React.ComponentProps<"input"> & {
-  isRequired?: boolean,
+  isRequired?: boolean;
   label?: string;
   errorMessage?: string;
   helperText?: string;
@@ -21,8 +21,11 @@ function Input({
 
   return (
     <div className="*:not-first:mt-2 w-full">
-
-      {label && <Label isRequired={isRequired} htmlFor={id}>{label}</Label>}
+      {label && (
+        <Label isRequired={isRequired} htmlFor={id}>
+          {label}
+        </Label>
+      )}
 
       <input
         id={id}
@@ -35,6 +38,9 @@ function Input({
           errorMessage && "border-destructive",
           className
         )}
+        onWheel={(e) => {
+          if (type === "number") e.currentTarget.blur();
+        }}
         {...props}
       />
 

@@ -23,6 +23,30 @@ type PropertyItem = {
   value: string;
 };
 
+// Define which properties should be numbers
+const NUMBER_PROPERTIES = new Set([
+  "Width",
+  "Height",
+  "Weight",
+]);
+
+// Helper function to convert property value based on its type
+const convertPropertyValue = (name: string, value: string): string | number | null => {
+  // If empty, return null
+  if (value === "" || value === null || value === undefined) {
+    return null;
+  }
+
+  // If it's a number property, convert to number
+  if (NUMBER_PROPERTIES.has(name)) {
+    const numValue = parseFloat(value);
+    return isNaN(numValue) ? null : numValue;
+  }
+
+  // Otherwise, keep as string
+  return value;
+};
+
 export const ProductPropertiesForm = () => {
   const params = useParams<{ orgId: string }>();
   const form = useFormContext<ProductSchemaType>();
@@ -147,10 +171,10 @@ export const ProductPropertiesForm = () => {
     setRightChecked(newChecked);
   };
 
-  // Handle property value change
+  // Handle property value change with type conversion
   const handlePropertyValueChange = (name: string, value: string) => {
     const updatedProperties = { ...properties };
-    updatedProperties[name] = value;
+    updatedProperties[name] = convertPropertyValue(name, value);
     form.setValue("properties", updatedProperties);
   };
 
@@ -308,8 +332,9 @@ export const ProductPropertiesForm = () => {
                     <TableCell>{prop.name}</TableCell>
                     <TableCell>
                       <Input
+                        type={NUMBER_PROPERTIES.has(prop.name) ? "number" : "text"}
                         placeholder={prop.value}
-                        value={properties?.[prop.name] || ""}
+                        value={properties?.[prop.name] ?? ""}
                         onChange={(e) =>
                           handlePropertyValueChange(prop.name, e.target.value)
                         }
