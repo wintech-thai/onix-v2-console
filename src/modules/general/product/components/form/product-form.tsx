@@ -2,7 +2,8 @@
 
 import { ArrowLeftIcon } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
-import { productSchema, ProductSchemaType } from "../../schema/product.schema";
+import { useTranslation } from "react-i18next";
+import { useProductSchema, ProductSchemaType } from "../../schema/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { ProductPropertiesForm } from "./product-properties.form";
@@ -16,11 +17,16 @@ interface ProductFormProps {
   defaultValues?: Partial<ProductSchemaType>;
   isUpdate?: boolean;
 }
-export const ProductForm = ({ onSubmit, defaultValues, isUpdate }: ProductFormProps) => {
+export const ProductForm = ({
+  onSubmit,
+  defaultValues,
+  isUpdate,
+}: ProductFormProps) => {
+  const { t } = useTranslation("product");
   const router = useRouter();
 
   const form = useForm<ProductSchemaType>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(useProductSchema(t)),
     defaultValues: defaultValues,
   });
 
@@ -47,7 +53,11 @@ export const ProductForm = ({ onSubmit, defaultValues, isUpdate }: ProductFormPr
         >
           <header className="p-4 border border-b">
             <h1 className="text-lg font-bold">
-              <ArrowLeftIcon onClick={() => router.back()} className="inline cursor-pointer" /> {isUpdate ? "Update": "Create"} Product
+              <ArrowLeftIcon
+                onClick={() => router.back()}
+                className="inline cursor-pointer"
+              />{" "}
+              {isUpdate ? t("product.updateTitle") : t("product.createTitle")}
             </h1>
           </header>
           <div className="flex-1 p-4 space-y-4 overflow-y-auto">
@@ -62,9 +72,11 @@ export const ProductForm = ({ onSubmit, defaultValues, isUpdate }: ProductFormPr
 
           <div className="border-t py-2 px-4 shrink-0 flex items-center justify-end gap-x-2">
             <Button disabled={isSubmitting} variant="destructive" type="button">
-              Cancel
+              {t("product.actions.cancel")}
             </Button>
-            <Button isPending={isSubmitting}>Save</Button>
+            <Button isPending={isSubmitting}>
+              {t("product.actions.save")}
+            </Button>
           </div>
         </form>
       </div>

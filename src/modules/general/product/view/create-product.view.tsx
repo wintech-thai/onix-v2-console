@@ -8,8 +8,10 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchProductsApi } from "../api/fetch-products.api";
 import { RouteConfig } from "@/config/route.config";
+import { useTranslation } from "react-i18next";
 
 const CreateProductView = () => {
+  const { t } = useTranslation("product");
   const queryClient = useQueryClient();
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
@@ -40,7 +42,7 @@ const CreateProductView = () => {
             refetchType: "all",
           });
 
-          toast.success("Create product successfully");
+          toast.success(t("product.messages.createSuccess"));
           return router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
         },
         onError: (error) => {

@@ -1,4 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { ProductSchemaType } from "../../schema/product.schema";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,6 +7,7 @@ import { XIcon } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 
 export const ProductDetailForm = () => {
+  const { t } = useTranslation("product");
   const form = useFormContext<ProductSchemaType>();
   const { tags } = form.watch();
   const [tagInput, setTagInput] = useState("");
@@ -32,7 +34,7 @@ export const ProductDetailForm = () => {
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">Product Detail</header>
+      <header className="text-lg font-bold">{t("product.detail.title")}</header>
       <div className="grid md:grid-cols-2 gap-2 mt-4">
         <Controller
           control={form.control}
@@ -41,7 +43,7 @@ export const ProductDetailForm = () => {
             return (
               <Input
                 {...field}
-                label="Code"
+                label={t("product.detail.code")}
                 isRequired
                 errorMessage={fieldState.error?.message}
               />
@@ -56,7 +58,7 @@ export const ProductDetailForm = () => {
             return (
               <Input
                 {...field}
-                label="Description"
+                label={t("product.detail.description")}
                 isRequired
                 errorMessage={fieldState.error?.message}
               />
@@ -67,7 +69,7 @@ export const ProductDetailForm = () => {
 
       <div className="mt-4">
         <Label>
-          Tags <span className="text-red-500">*</span>
+          {t("product.detail.tags")} <span className="text-red-500">*</span>
         </Label>
         <div className="mt-2">
           <Input

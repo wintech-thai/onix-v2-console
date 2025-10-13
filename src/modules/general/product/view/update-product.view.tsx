@@ -10,8 +10,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { fetchProductsApi } from "../api/fetch-products.api";
 import { RouteConfig } from "@/config/route.config";
 import { LoaderIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const UpdateProductView = () => {
+  const { t } = useTranslation("product");
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -65,7 +67,7 @@ const UpdateProductView = () => {
             refetchType: "all",
           });
 
-          toast.success("Update product successfully");
+          toast.success(t("product.messages.updateSuccess"));
           router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
         },
         onError: (error) => {

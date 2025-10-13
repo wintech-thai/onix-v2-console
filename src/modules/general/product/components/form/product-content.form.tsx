@@ -1,13 +1,17 @@
 import { CKEditorComponent } from "@/components/ui/ckeditor";
 import { Controller, useFormContext } from "react-hook-form";
 import { ProductSchemaType } from "../../schema/product.schema";
+import { useTranslation } from "react-i18next";
 
 export const ProductContentForm = () => {
+  const { t } = useTranslation("product");
   const form = useFormContext<ProductSchemaType>();
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold mb-4">Content</header>
+      <header className="text-lg font-bold mb-4">
+        {t("product.content.title")}
+      </header>
       <Controller
         control={form.control}
         name="content"

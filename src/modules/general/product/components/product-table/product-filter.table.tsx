@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 interface ProductFilterTableProps {
   onDelete: () => void;
@@ -28,6 +29,7 @@ export const ProductFilterTable = ({
   onSearch,
   selected,
 }: ProductFilterTableProps) => {
+  const { t } = useTranslation("product");
   const params = useParams<{ orgId: string }>();
   const [searchField, setSearchField] = useState("fullTextSearch");
   const [searchValue, setSearchValue] = useState("");
@@ -61,12 +63,12 @@ export const ProductFilterTable = ({
           <Select value={searchField} onValueChange={setSearchField}>
             <SelectTrigger
               className="w-full md:w-48"
-              aria-label="เลือกชนิดการค้นหา"
+              aria-label={t("product.table.filter.selectSearchField")}
             >
-              <SelectValue placeholder="เลือกฟิลด์ค้นหา" />
+              <SelectValue placeholder={t("product.table.filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fullTextSearch">Full Text Search</SelectItem>
+              <SelectItem value="fullTextSearch">{t("product.table.filter.fullTextSearch")}</SelectItem>
               {/* เพิ่ม options อื่น ๆ ในอนาคตได้ */}
               {/* <SelectItem value="serial">Serial</SelectItem> */}
             </SelectContent>
@@ -76,9 +78,9 @@ export const ProductFilterTable = ({
         {/* Search input */}
         <div className="w-full md:w-[500px]">
           <Input
-            placeholder="Enter search value"
+            placeholder={t("product.table.filter.searchPlaceholder")}
             className="w-full"
-            aria-label="ค่าที่ต้องการค้นหา"
+            aria-label={t("product.table.filter.searchPlaceholder")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
@@ -89,7 +91,7 @@ export const ProductFilterTable = ({
 
         {/* Search button */}
         <div className="w-full md:w-auto">
-          <Button type="submit" className="w-full md:w-auto" aria-label="ค้นหา">
+          <Button type="submit" className="w-full md:w-auto" aria-label={t("product.table.filter.search")}>
             <Search className="h-4 w-4 mx-2" />
           </Button>
         </div>
@@ -108,7 +110,7 @@ export const ProductFilterTable = ({
           <Button
             className="w-full md:w-auto"
           >
-            ADD
+            {t("product.table.filter.add")}
           </Button>
         </Link>
 
@@ -118,7 +120,7 @@ export const ProductFilterTable = ({
           onClick={onDelete}
           variant="destructive"
         >
-          DELETE {selected > 0 ? `(${selected})` : ""}
+          {t("product.table.filter.delete")} {selected > 0 ? `(${selected})` : ""}
         </Button>
       </div>
     </form>

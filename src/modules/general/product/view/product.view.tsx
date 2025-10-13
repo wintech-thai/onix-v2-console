@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { fetchProductsApi, IProduct } from "../api/fetch-products.api";
 import { ProductTable } from "../components/product-table/product.table";
-import { productTableColumns } from "../components/product-table/product-columns.table";
+import { getProductTableColumns } from "../components/product-table/product-columns.table";
 import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { deleteProductApi } from "../api/delete-product.api";
@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 
 const ProductView = () => {
   const { t } = useTranslation();
+  const { t: tProduct } = useTranslation("product");
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
   const [data, setData] = useState<IProduct[]>([]);
@@ -94,26 +95,26 @@ const ProductView = () => {
           onSuccess: ({ data }) => {
             if (data.status !== "OK") {
               errorCount++;
-              toast.error(data.description || t("qrcode.delete.error"));
+              toast.error(data.description || tProduct("product.messages.deleteError"));
             }
 
             successCount++;
           },
           onError: () => {
             errorCount++;
-            toast.error(t("qrcode.delete.error"));
+            toast.error(tProduct("product.messages.deleteError"));
           },
         }
       );
 
       if (successCount > 0) {
         toast.success(
-          `${t("qrcode.delete.success")} (${successCount}/${idsToDelete.length})`
+          `${tProduct("product.messages.deleteSuccess")} (${successCount}/${idsToDelete.length})`
         );
       }
       if (errorCount > 0) {
         toast.error(
-          `${t("qrcode.delete.error")} (${errorCount}/${idsToDelete.length})`
+          `${tProduct("product.messages.deleteError")} (${errorCount}/${idsToDelete.length})`
         );
       }
 
@@ -151,7 +152,7 @@ const ProductView = () => {
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
       <ProductTable
-        columns={productTableColumns}
+        columns={getProductTableColumns(tProduct)}
         data={data}
         onDelete={handleDelete}
         totalItems={totalItems}

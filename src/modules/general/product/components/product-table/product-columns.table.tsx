@@ -13,12 +13,13 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
 import Link from "next/link";
 import { RouteConfig } from "@/config/route.config";
+import { TFunction } from "i18next";
 
 type productTableColumns = ColumnDef<IProduct> & {
   accessorKey?: keyof IProduct;
 };
 
-export const productTableColumns: productTableColumns[] = [
+export const getProductTableColumns = (t: TFunction<"product">): productTableColumns[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -28,14 +29,14 @@ export const productTableColumns: productTableColumns[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         // onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label={t("product.table.columns.selectAll")}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label={t("product.table.columns.selectRow")}
       />
     ),
     enableSorting: false,
@@ -43,7 +44,7 @@ export const productTableColumns: productTableColumns[] = [
   },
   {
     accessorKey: "code",
-    header: "Product Code",
+    header: t("product.table.columns.code"),
     cell: ({ row }) => {
       return (
         <Link
@@ -60,15 +61,21 @@ export const productTableColumns: productTableColumns[] = [
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: t("product.table.columns.description"),
   },
   {
     accessorKey: "tags",
-    header: "Tags",
+    header: t("product.table.columns.tags"),
   },
   {
-    header: "Action",
+    header: t("product.table.columns.action"),
     cell: () => {
+      const actions = [
+        { key: "unVerify", label: t("product.table.actions.unVerify") },
+        { key: "bindToCustomer", label: t("product.table.actions.bindToCustomer") },
+        { key: "bindToProduct", label: t("product.table.actions.bindToProduct") },
+      ];
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -77,32 +84,29 @@ export const productTableColumns: productTableColumns[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {["Un-Verify Scan Item", "Bind to Customer", "Bind To Product"].map(
-              (items) => {
-                return (
-                  <DropdownMenuItem
-                    key={items}
-                    onSelect={() => console.log(items)}
-                  >
-                    {items}
-                  </DropdownMenuItem>
-                );
-              }
-            )}
+            {actions.map((action) => (
+              <DropdownMenuItem
+                key={action.key}
+                onSelect={() => console.log(action.key)}
+              >
+                {action.label}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
   {
-    header: "Product Image",
+    header: t("product.table.columns.productImage"),
     cell: ({ row }) => {
       const images = row.original.images[0];
 
       return images ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img src={images.imageUrl} alt={images.imagePath} />
       ) : (
-        <span>No Image</span>
+        <span>{t("product.table.columns.noImage")}</span>
       )
     }
   }

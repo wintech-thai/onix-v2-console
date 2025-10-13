@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -48,6 +49,7 @@ const convertPropertyValue = (name: string, value: string): string | number | nu
 };
 
 export const ProductPropertiesForm = () => {
+  const { t } = useTranslation("product");
   const params = useParams<{ orgId: string }>();
   const form = useFormContext<ProductSchemaType>();
 
@@ -199,9 +201,9 @@ export const ProductPropertiesForm = () => {
   if (fetchProductPropertiesQuery.isLoading) {
     return (
       <div className="p-4 md:p-6 border">
-        <header className="text-lg font-bold">Properties</header>
+        <header className="text-lg font-bold">{t("product.properties.title")}</header>
         <div className="mt-4 text-center text-muted-foreground">
-          Loading properties...
+          {t("product.properties.loading")}
         </div>
       </div>
     );
@@ -209,7 +211,7 @@ export const ProductPropertiesForm = () => {
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">Properties</header>
+      <header className="text-lg font-bold">{t("product.properties.title")}</header>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
         {/* Left Panel - Available Properties */}
@@ -228,7 +230,7 @@ export const ProductPropertiesForm = () => {
                     }
                   />
                 </TableHead>
-                <TableHead>Available Properties</TableHead>
+                <TableHead>{t("product.properties.available")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -238,7 +240,7 @@ export const ProductPropertiesForm = () => {
                     colSpan={2}
                     className="text-center text-muted-foreground"
                   >
-                    No available properties
+                    {t("product.properties.noAvailable")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -301,8 +303,8 @@ export const ProductPropertiesForm = () => {
                     }
                   />
                 </TableHead>
-                <TableHead>Property</TableHead>
-                <TableHead>Value</TableHead>
+                <TableHead>{t("product.properties.property")}</TableHead>
+                <TableHead>{t("product.properties.value")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -312,7 +314,7 @@ export const ProductPropertiesForm = () => {
                     colSpan={3}
                     className="text-center text-muted-foreground"
                   >
-                    No selected properties
+                    {t("product.properties.noSelected")}
                   </TableCell>
                 </TableRow>
               ) : (
