@@ -33,6 +33,7 @@ export const ProductNarrativesForm = () => {
                     isRequired
                     className="w-full"
                     errorMessage={fieldState.error?.message}
+                    maxLength={100}
                   />
 
                   <div

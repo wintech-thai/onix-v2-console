@@ -47,6 +47,7 @@ export const ProductDetailForm = () => {
                 label={t("product.detail.code")}
                 isRequired
                 errorMessage={fieldState.error?.message}
+                maxLength={15}
               />
             );
           }}
@@ -62,6 +63,7 @@ export const ProductDetailForm = () => {
                 label={t("product.detail.description")}
                 isRequired
                 errorMessage={fieldState.error?.message}
+                maxLength={255}
               />
             );
           }}
@@ -79,6 +81,7 @@ export const ProductDetailForm = () => {
             onKeyDown={handleKeyDown}
             placeholder="Type and press Enter to add tag"
             errorMessage={form.formState.errors.tags?.message}
+            maxLength={30}
           />
         </div>
         {tagsArray.length > 0 && (
