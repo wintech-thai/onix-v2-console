@@ -212,12 +212,12 @@
     "scanItemTemplate": {
       "title": "แม่แบบรายการสแกน",
       "fields": {
-        "serialPrefixDigit": "Prefix Length",
-        "generatorCount": "Item Count",
-        "serialDigit": "Serial Length",
-        "pinDigit": "Pin Length",
-        "urlTemplate": "URL Template",
-        "notificationEmail": "Notification Email"
+        "serialPrefixDigit": "ความยาวคำนำหน้า (Prefix)",
+        "generatorCount": "จำนวนรายการที่สร้าง",
+        "serialDigit": "ความยาวหมายเลขซีเรียล",
+        "pinDigit": "ความยาวรหัส PIN",
+        "urlTemplate": "รูปแบบ URL (Template)",
+        "notificationEmail": "อีเมลแจ้งเตือน"
       },
       "buttons": {
         "defaultValue": "ค่าเริ่มต้น"
