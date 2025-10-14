@@ -100,12 +100,12 @@ const UpdateProductView = () => {
       defaultValues={{
         id: payload.id,
         orgId: params.orgId,
-        code: payload.code,
-        description: payload.description,
+        code: payload.code ?? "",
+        description: payload.description ?? "",
         tags: payload.tags ?? "",
         itemType: payload.itemType,
         narrative: payload.narrative,
-        content: payload.content,
+        content: payload.content ?? "",
         properties: capitalizedProperties,
         narratives:
           payload.narratives.length > 0
