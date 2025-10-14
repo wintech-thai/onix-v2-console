@@ -1,0 +1,84 @@
+{
+  "product": {
+    "title": "Products",
+    "createTitle": "Create Product",
+    "updateTitle": "Update Product",
+    "detail": {
+      "title": "Product Detail",
+      "code": "Code",
+      "description": "Description",
+      "tags": "Tags",
+      "itemType": "Item Type"
+    },
+    "properties": {
+      "title": "Properties",
+      "available": "Available Properties",
+      "selected": "Selected Properties",
+      "property": "Property",
+      "value": "Value",
+      "noAvailable": "No available properties",
+      "noSelected": "No selected properties",
+      "loading": "Loading properties..."
+    },
+    "narratives": {
+      "title": "Narratives",
+      "narrative": "Narrative"
+    },
+    "content": {
+      "title": "Content",
+      "placeholder": "Enter product content..."
+    },
+    "form": {
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "leavePage": "Leave Page"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "delete": "Delete",
+      "back": "Back"
+    },
+    "validation": {
+      "codeRequired": "Code is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "At least one tag is required",
+      "contentRequired": "Content is required",
+      "narrativeRequired": "Narrative text is required",
+      "atLeastOneNarrative": "At least one narrative is required"
+    },
+    "messages": {
+      "createSuccess": "Product created successfully",
+      "createError": "Failed to create product",
+      "updateSuccess": "Product updated successfully",
+      "updateError": "Failed to update product",
+      "deleteSuccess": "Product deleted successfully",
+      "deleteError": "Failed to delete product"
+    },
+    "table": {
+      "columns": {
+        "select": "Select",
+        "selectAll": "Select all",
+        "selectRow": "Select row",
+        "code": "Product Code",
+        "description": "Description",
+        "tags": "Tags",
+        "action": "Action",
+        "productImage": "Product Image",
+        "noImage": "No Image"
+      },
+      "filter": {
+        "searchPlaceholder": "Enter search value",
+        "selectSearchField": "Select search field",
+        "fullTextSearch": "Full Text Search",
+        "search": "Search",
+        "add": "ADD",
+        "delete": "DELETE"
+      },
+      "actions": {
+        "productImage": "Product Images"
+      }
+    }
+  }
+}

@@ -141,6 +141,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
               },
             });
           } catch (error) {
+            console.error("error", error)
             toast.error(t("qrcode.unverify.error"));
           }
         };

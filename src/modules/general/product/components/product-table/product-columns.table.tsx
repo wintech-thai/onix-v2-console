@@ -11,12 +11,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
+import { TFunction } from "i18next";
 
 type productTableColumns = ColumnDef<IProduct> & {
   accessorKey?: keyof IProduct;
 };
 
-export const productTableColumns: productTableColumns[] = [
+export const getProductTableColumns = (
+  t: TFunction<"product">
+): productTableColumns[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -26,14 +31,14 @@ export const productTableColumns: productTableColumns[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         // onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label={t("product.table.columns.selectAll")}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label={t("product.table.columns.selectRow")}
       />
     ),
     enableSorting: false,
@@ -41,35 +46,52 @@ export const productTableColumns: productTableColumns[] = [
   },
   {
     accessorKey: "code",
-    header: "Product Code",
+    header: t("product.table.columns.code"),
+    cell: ({ row }) => {
+      return (
+        <Link
+          href={RouteConfig.GENERAL.PRODUCT.UPDATE(
+            row.original.orgId,
+            row.original.id
+          )}
+          className="underline text-primary"
+        >
+          {row.original.code}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "description",
-    header: "Description",
-  },
-  {
-    accessorKey: "itemType",
-    header: "Item Type",
-    cell: ({ row }) => {
-      const itemType = row.getValue("itemType") as number;
-      return itemType === 0 ? "Product" : "Service";
-    },
+    header: t("product.table.columns.description"),
   },
   {
     accessorKey: "tags",
-    header: "Tags",
-  },
-  {
-    accessorKey: "createdDate",
-    header: "Created Date",
+    header: t("product.table.columns.tags"),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createdDate"));
-      return date.toLocaleDateString();
+      return (
+        <div className="max-w-[300px] w-full flex flex-wrap gap-x-0.5 gap-y-0.5">
+          {row.original.tags.split(",").map((badge, i) => {
+            return (
+              <div
+                key={i}
+                className="bg-primary text-white rounded-lg px-2 py-1 cursor-pointer"
+              >
+                {badge.trim()}
+              </div>
+            );
+          })}
+        </div>
+      );
     },
   },
   {
-    header: "Action",
+    header: t("product.table.columns.action"),
     cell: () => {
+      const actions = [
+        { key: "unVerify", label: t("product.table.actions.productImage") },
+      ];
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -78,18 +100,14 @@ export const productTableColumns: productTableColumns[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {["Un-Verify Scan Item", "Bind to Customer", "Bind To Product"].map(
-              (items) => {
-                return (
-                  <DropdownMenuItem
-                    key={items}
-                    onSelect={() => console.log(items)}
-                  >
-                    {items}
-                  </DropdownMenuItem>
-                );
-              }
-            )}
+            {actions.map((action) => (
+              <DropdownMenuItem
+                key={action.key}
+                onSelect={() => console.log(action.key)}
+              >
+                {action.label}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       );

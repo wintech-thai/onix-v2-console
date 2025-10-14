@@ -9,26 +9,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "next/navigation";
+import { RouteConfig } from "@/config/route.config";
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 interface ProductFilterTableProps {
   onDelete: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
+  selected: number;
 }
 
 export const ProductFilterTable = ({
   onDelete,
   isDisabled,
   onSearch,
+  selected,
 }: ProductFilterTableProps) => {
+  const { t } = useTranslation("product");
+  const params = useParams<{ orgId: string }>();
   const [searchField, setSearchField] = useState("fullTextSearch");
   const [searchValue, setSearchValue] = useState("");
 
@@ -61,12 +63,12 @@ export const ProductFilterTable = ({
           <Select value={searchField} onValueChange={setSearchField}>
             <SelectTrigger
               className="w-full md:w-48"
-              aria-label="เลือกชนิดการค้นหา"
+              aria-label={t("product.table.filter.selectSearchField")}
             >
-              <SelectValue placeholder="เลือกฟิลด์ค้นหา" />
+              <SelectValue placeholder={t("product.table.filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fullTextSearch">Full Text Search</SelectItem>
+              <SelectItem value="fullTextSearch">{t("product.table.filter.fullTextSearch")}</SelectItem>
               {/* เพิ่ม options อื่น ๆ ในอนาคตได้ */}
               {/* <SelectItem value="serial">Serial</SelectItem> */}
             </SelectContent>
@@ -74,24 +76,24 @@ export const ProductFilterTable = ({
         </div>
 
         {/* Search input */}
-        <div className="w-full md:w-auto md:flex-1">
+        <div className="w-full md:w-[500px]">
           <Input
-            placeholder="Enter search value"
+            placeholder={t("product.table.filter.searchPlaceholder")}
             className="w-full"
-            aria-label="ค่าที่ต้องการค้นหา"
+            aria-label={t("product.table.filter.searchPlaceholder")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
+            maxLength={50}
           />
         </div>
 
         {/* Search button */}
         <div className="w-full md:w-auto">
-          <Button type="submit" className="w-full md:w-auto" aria-label="ค้นหา">
-            <Search className="h-4 w-4 mr-2" />
-            Search
+          <Button type="submit" className="w-full md:w-auto" aria-label={t("product.table.filter.search")}>
+            <Search className="h-4 w-4 mx-2" />
           </Button>
         </div>
       </div>
@@ -105,9 +107,13 @@ export const ProductFilterTable = ({
           md:flex md:items-center
         "
       >
-        <Button className="w-full md:w-auto">
-          ADD
-        </Button>
+        <Link href={RouteConfig.GENERAL.PRODUCT.CREATE(params.orgId)}>
+          <Button
+            className="w-full md:w-auto"
+          >
+            {t("product.table.filter.add")}
+          </Button>
+        </Link>
 
         <Button
           className="w-full md:w-auto"
@@ -115,24 +121,8 @@ export const ProductFilterTable = ({
           onClick={onDelete}
           variant="destructive"
         >
-          DELETE
+          {t("product.table.filter.delete")} {selected > 0 ? `(${selected})` : ""}
         </Button>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="w-full md:w-auto" variant="outline">
-              CONFIG
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Template")}>
-              Scan Item Template
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => console.log("Scan Item Action")}>
-              Scan Item Action
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </form>
   );

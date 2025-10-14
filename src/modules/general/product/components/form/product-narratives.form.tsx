@@ -1,0 +1,72 @@
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
+import { ProductSchemaType } from "../../schema/product.schema";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { MinusIcon, PlusIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
+export const ProductNarrativesForm = () => {
+  const { t } = useTranslation("product");
+  const form = useFormContext<ProductSchemaType>();
+  const isSubmitting = form.formState.isSubmitting;
+
+  const narrative = useFieldArray({
+    control: form.control,
+    name: "narratives",
+  });
+
+  return (
+    <div className="p-4 md:p-6 border rounded-lg">
+      <header className="text-lg font-bold">
+        {t("product.narratives.title")}
+      </header>
+
+      <div className="w-full md:w-1/2 mt-4">
+        {narrative.fields.map((field, index) => (
+          <div key={field.id} className="mb-2 w-full">
+            <Controller
+              control={form.control}
+              name={`narratives.${index}.text`}
+              render={({ field, fieldState }) => (
+                <div className="flex items-start w-full gap-x-4">
+                  <Input
+                    {...field}
+                    isRequired
+                    className="w-full"
+                    errorMessage={fieldState.error?.message}
+                    maxLength={100}
+                    disabled={isSubmitting}
+                  />
+
+                  <div
+                    className="flex-shrink-0 flex gap-x-2"
+                    style={{ marginTop: index > 0 ? 5 : 5 }}
+                  >
+                    <Button
+                      type="button"
+                      size="icon"
+                      className="bg-primary text-white"
+                      disabled={narrative.fields.length === 1 || isSubmitting}
+                      onClick={() => narrative.remove(index)}
+                    >
+                      <MinusIcon />
+                    </Button>
+                    <Button
+                      type="button"
+                      size="icon"
+                      className="bg-primary text-white"
+                      disabled={isSubmitting}
+                      onClick={() => narrative.insert(index + 1, { text: "" })}
+                    >
+                      <PlusIcon />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

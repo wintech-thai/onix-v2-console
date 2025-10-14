@@ -17,39 +17,34 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 
-type CardDef = {
-  key: string;
-  title: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-};
-
 export default function Home() {
   const { t } = useTranslation();
   const router = useRouter();
-  const CARD_DEFS: CardDef[] = [
-    {
-      key: "feature",
-      title: t("sidebar.admin.label"),
-      icon: LayoutDashboardIcon,
-    },
-    {
-      key: "banner",
-      title: t("sidebar.general.label"),
-      icon: Package2Icon,
-    },
-    {
-      key: "category",
-      title: t("sidebar.admin.label"),
-      icon: UserCogIcon,
-    },
-    {
-      key: "content",
-      title: t("sidebar.admin.sub.1"),
-      icon: KeyRoundIcon,
-    },
-  ];
   const reduceMotion = useReducedMotion();
-  const cards = useMemo(() => CARD_DEFS, [CARD_DEFS]);
+  const cards = useMemo(() => {
+    return [
+      {
+        key: "feature",
+        title: t("sidebar.admin.label"),
+        icon: LayoutDashboardIcon,
+      },
+      {
+        key: "banner",
+        title: t("sidebar.general.label"),
+        icon: Package2Icon,
+      },
+      {
+        key: "category",
+        title: t("sidebar.admin.label"),
+        icon: UserCogIcon,
+      },
+      {
+        key: "content",
+        title: t("sidebar.admin.sub.1"),
+        icon: KeyRoundIcon,
+      },
+    ];
+  }, [t]);
   const [client, setClient] = useState(false);
 
   useEffect(() => {

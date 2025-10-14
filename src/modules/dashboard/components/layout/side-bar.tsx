@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { RouteConfig } from "@/config/route.config";
 import { Hint } from "@/components/ui/hint";
 import { env } from "next-runtime-env";
+import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 
 // Type-safe i18n keys
 type SidebarKeys =
@@ -58,62 +59,65 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
+  const { handleNavigation } = useFormNavigationBlocker();
 
-  const MENU: MenuItem[] = [
-    {
-      key: "dashboard",
-      labelKey: "sidebar.dashboard.label",
-      icon: LayoutDashboardIcon,
-      children: [
-        {
-          labelKey: "sidebar.dashboard.sub.1",
-          href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId),
-        },
-      ],
-    },
-    {
-      key: "general",
-      labelKey: "sidebar.general.label",
-      icon: Package2Icon,
-      children: [
-        {
-          labelKey: "sidebar.general.sub.1",
-          href: RouteConfig.GENERAL.PRODUCT(params.orgId),
-        },
-        {
-          labelKey: "sidebar.general.sub.2",
-          href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
-        },
-        {
-          labelKey: "sidebar.general.sub.3",
-          href: RouteConfig.GENERAL.QRCODE(params.orgId),
-        },
-        {
-          labelKey: "sidebar.general.sub.4",
-          href: RouteConfig.GENERAL.JOB(params.orgId),
-        },
-      ],
-    },
-    {
-      key: "admin",
-      labelKey: "sidebar.admin.label",
-      icon: UserCogIcon,
-      children: [
-        {
-          labelKey: "sidebar.admin.sub.1",
-          href: RouteConfig.ADMIN.APIKEY(params.orgId),
-        },
-        {
-          labelKey: "sidebar.admin.sub.2",
-          href: RouteConfig.ADMIN.USER(params.orgId),
-        },
-        {
-          labelKey: "sidebar.admin.sub.3",
-          href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
-        },
-      ],
-    },
-  ];
+  const MENU: MenuItem[] = useMemo(() => {
+    return [
+      {
+        key: "dashboard",
+        labelKey: "sidebar.dashboard.label",
+        icon: LayoutDashboardIcon,
+        children: [
+          {
+            labelKey: "sidebar.dashboard.sub.1",
+            href: RouteConfig.DASHBOARD.OVERVIEW(params.orgId),
+          },
+        ],
+      },
+      {
+        key: "general",
+        labelKey: "sidebar.general.label",
+        icon: Package2Icon,
+        children: [
+          {
+            labelKey: "sidebar.general.sub.1",
+            href: RouteConfig.GENERAL.PRODUCT.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.2",
+            href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.3",
+            href: RouteConfig.GENERAL.QRCODE(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.4",
+            href: RouteConfig.GENERAL.JOB(params.orgId),
+          },
+        ],
+      },
+      {
+        key: "admin",
+        labelKey: "sidebar.admin.label",
+        icon: UserCogIcon,
+        children: [
+          {
+            labelKey: "sidebar.admin.sub.1",
+            href: RouteConfig.ADMIN.APIKEY(params.orgId),
+          },
+          {
+            labelKey: "sidebar.admin.sub.2",
+            href: RouteConfig.ADMIN.USER(params.orgId),
+          },
+          {
+            labelKey: "sidebar.admin.sub.3",
+            href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
+          },
+        ],
+      },
+    ];
+  }, [params.orgId]);
 
   const activeParents = useMemo(() => {
     const actives: Record<string, boolean> = {};
@@ -131,7 +135,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
         actives[m.key] = openParents[m.key] ?? false;
     }
     return actives;
-  }, [pathname, openParents]);
+  }, [pathname, openParents, MENU]);
 
   const isParentActive = (m: MenuItem) => {
     const selfActive =
@@ -289,10 +293,11 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                         return (
                           <Hint message={t(c.labelKey as any)} key={c.href}>
                             <li key={c.href}>
-                              <Link
-                                href={c.href}
+                              <button
+                                type="button"
+                                onClick={() => handleNavigation(c.href)}
                                 className={cn(
-                                  "flex items-center justify-between rounded-lg px-2 py-2 text-sm",
+                                  "w-full flex items-center justify-between rounded-lg px-2 py-2 text-sm",
                                   childActive
                                     ? "bg-accent text-foreground shadow"
                                     : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
@@ -302,7 +307,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                                   {t(c.labelKey as any)}
                                 </span>
                                 <ChevronRight className="h-4 w-4 opacity-60" />
-                              </Link>
+                              </button>
                             </li>
                           </Hint>
                         );
@@ -328,8 +333,8 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
               versions: {env("NEXT_PUBLIC_APP_VERSION")}
             </div>
             <div className="text-sm">
-              &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All rights
-              reserved.
+              &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All
+              rights reserved.
             </div>
           </motion.footer>
         )}

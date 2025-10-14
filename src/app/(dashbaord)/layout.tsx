@@ -5,6 +5,7 @@ import { Sidebar } from "@/modules/dashboard/components/layout/side-bar";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { useIsClient, useMediaQuery } from "usehooks-ts";
+import { NavigationBlockerProvider } from "@/hooks/use-form-navigation-blocker";
 
 type Props = {
   children: React.ReactNode;
@@ -25,21 +26,23 @@ const DashboardLayout = ({ children }: Props) => {
   }
 
   return (
-    <div className="h-full">
-      <Navbar
-        isExpand={isMobile ? false : expanded}
-        isMobile={isMobile}
-        onMenuClick={() => setExpanded(!expanded)}
-      />
-      <Sidebar expanded={expanded} setExpanded={setExpanded} isMobile={isMobile} />
-      <div style={{
-        paddingLeft: isMobile ? 0 : (expanded ? 256 : 75), // mobile ไม่มี padding, desktop มี padding ตาม sidebar
-        paddingTop: 64,
-        transition: "padding-left 0.2s",
-      }} className="h-full w-full">
-        {children}
+    <NavigationBlockerProvider>
+      <div className="h-full">
+        <Navbar
+          isExpand={isMobile ? false : expanded}
+          isMobile={isMobile}
+          onMenuClick={() => setExpanded(!expanded)}
+        />
+        <Sidebar expanded={expanded} setExpanded={setExpanded} isMobile={isMobile} />
+        <div style={{
+          paddingLeft: isMobile ? 0 : (expanded ? 256 : 75), // mobile ไม่มี padding, desktop มี padding ตาม sidebar
+          paddingTop: 64,
+          transition: "padding-left 0.2s",
+        }} className="h-full w-full">
+          {children}
+        </div>
       </div>
-    </div>
+    </NavigationBlockerProvider>
   );
 }
 

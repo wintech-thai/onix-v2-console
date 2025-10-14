@@ -31,7 +31,7 @@ import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onDelete: (rows: Row<TData>[]) => void;
+  onDelete: (rows: Row<TData>[], callback: () => void) => void;
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
@@ -67,7 +67,7 @@ export function ProductTable<TData, TValue>({
   const rowSelected = table.getFilteredSelectedRowModel().rows;
 
   const handleDelete = () => {
-    onDelete(rowSelected);
+    onDelete(rowSelected, () => setRowSelection({}));
   };
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -78,6 +78,7 @@ export function ProductTable<TData, TValue>({
         onDelete={() => handleDelete()}
         isDisabled={!rowSelected.length}
         onSearch={onSearch}
+        selected={rowSelected.length}
       />
       <div className="overflow-auto rounded-md border flex-1 mt-4">
         <Table>

@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { Image } from "./create-product.api";
 
 export type GetProductsRequest = {
   orgId: string;
@@ -21,9 +22,11 @@ export interface IProduct {
   tags: string;
   itemType: number;
   narrative: string;
+  narratives: string[];
+  content: string;
   properties: string;
   propertiesObj: IPropertiesObj;
-  images: string[];
+  images: Image[];
   createdDate: Date;
   updatedDate: Date;
 }
@@ -43,14 +46,15 @@ export interface IPropertiesObj {
 export const fetchProductsApi = {
   fetchProductKey: ["fetch-products"],
   fetchProductFunc: async (params: GetProductsRequest) => {
-    return api.post<GetProductsResponse>(`/api/Item/org/${params.orgId}/action/GetItems`, {
-      params
-    })
+    return api.post<GetProductsResponse>(`/api/Item/org/${params.orgId}/action/GetItems`, params)
   },
   useFetchProductQuery: (params: GetProductsRequest) => {
     return useQuery({
       queryKey: [...fetchProductsApi.fetchProductKey, params],
       queryFn: () => fetchProductsApi.fetchProductFunc(params),
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     })
   },
 
@@ -59,10 +63,11 @@ export const fetchProductsApi = {
     return useQuery({
       queryKey: [...fetchProductsApi.fetchProductKey, "count", params],
       queryFn: async () => {
-        return await api.post<number>(`/api/Item/org/${params.orgId}/action/GetItemCount`, {
-          params,
-        })
+        return await api.post<number>(`/api/Item/org/${params.orgId}/action/GetItemCount`, params)
       },
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     })
   }
 }

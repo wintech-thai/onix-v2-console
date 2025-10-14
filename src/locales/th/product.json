@@ -1,0 +1,84 @@
+{
+  "product": {
+    "title": "สินค้า",
+    "createTitle": "สร้างสินค้า",
+    "updateTitle": "แก้ไขสินค้า",
+    "detail": {
+      "title": "รายละเอียดสินค้า",
+      "code": "รหัส",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก",
+      "itemType": "ประเภทสินค้า"
+    },
+    "properties": {
+      "title": "คุณสมบัติ",
+      "available": "คุณสมบัติที่ใช้ได้",
+      "selected": "คุณสมบัติที่เลือก",
+      "property": "คุณสมบัติ",
+      "value": "ค่า",
+      "noAvailable": "ไม่มีคุณสมบัติที่ใช้ได้",
+      "noSelected": "ไม่มีคุณสมบัติที่เลือก",
+      "loading": "กำลังโหลดคุณสมบัติ..."
+    },
+    "narratives": {
+      "title": "คำบรรยาย",
+      "narrative": "คำบรรยาย"
+    },
+    "content": {
+      "title": "เนื้อหา",
+      "placeholder": "กรอกเนื้อหาสินค้า..."
+    },
+    "form": {
+      "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ว่าต้องการออกจากหน้านี้?",
+      "leavePage": "ออกจากหน้า"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "create": "สร้าง",
+      "update": "แก้ไข",
+      "delete": "ลบ",
+      "back": "ย้อนกลับ"
+    },
+    "validation": {
+      "codeRequired": "กรุณากรอกรหัส",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณากรอกแท็กอย่างน้อย 1 รายการ",
+      "contentRequired": "กรุณากรอกเนื้อหา",
+      "narrativeRequired": "กรุณากรอกข้อความคำบรรยาย",
+      "atLeastOneNarrative": "ต้องมีคำบรรยายอย่างน้อย 1 รายการ"
+    },
+    "messages": {
+      "createSuccess": "สร้างสินค้าสำเร็จ",
+      "createError": "สร้างสินค้าไม่สำเร็จ",
+      "updateSuccess": "แก้ไขสินค้าสำเร็จ",
+      "updateError": "แก้ไขสินค้าไม่สำเร็จ",
+      "deleteSuccess": "ลบสินค้าสำเร็จ",
+      "deleteError": "ลบสินค้าไม่สำเร็จ"
+    },
+    "table": {
+      "columns": {
+        "select": "เลือก",
+        "selectAll": "เลือกทั้งหมด",
+        "selectRow": "เลือกแถว",
+        "code": "รหัสสินค้า",
+        "description": "คำอธิบาย",
+        "tags": "แท็ก",
+        "action": "การดำเนินการ",
+        "productImage": "รูปภาพสินค้า",
+        "noImage": "ไม่มีรูปภาพ"
+      },
+      "filter": {
+        "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+        "selectSearchField": "เลือกฟิลด์ค้นหา",
+        "fullTextSearch": "ค้นหาทั้งหมด",
+        "search": "ค้นหา",
+        "add": "เพิ่ม",
+        "delete": "ลบ"
+      },
+      "actions": {
+        "productImage": "รูปภาพสินค้า"
+      }
+    }
+  }
+}

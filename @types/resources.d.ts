@@ -252,6 +252,90 @@ interface Resources {
       "of": "of",
       "rowsPerPage": "Rows per page:"
     }
+  },
+  "product": {
+    "product": {
+      "actions": {
+        "back": "Back",
+        "cancel": "Cancel",
+        "create": "Create",
+        "delete": "Delete",
+        "save": "Save",
+        "update": "Update"
+      },
+      "content": {
+        "placeholder": "Enter product content...",
+        "title": "Content"
+      },
+      "createTitle": "Create Product",
+      "detail": {
+        "code": "Code",
+        "description": "Description",
+        "itemType": "Item Type",
+        "tags": "Tags",
+        "title": "Product Detail"
+      },
+      "form": {
+        "leavePage": "Leave Page",
+        "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+      },
+      "messages": {
+        "createError": "Failed to create product",
+        "createSuccess": "Product created successfully",
+        "deleteError": "Failed to delete product",
+        "deleteSuccess": "Product deleted successfully",
+        "updateError": "Failed to update product",
+        "updateSuccess": "Product updated successfully"
+      },
+      "narratives": {
+        "narrative": "Narrative",
+        "title": "Narratives"
+      },
+      "properties": {
+        "available": "Available Properties",
+        "loading": "Loading properties...",
+        "noAvailable": "No available properties",
+        "noSelected": "No selected properties",
+        "property": "Property",
+        "selected": "Selected Properties",
+        "title": "Properties",
+        "value": "Value"
+      },
+      "table": {
+        "actions": {
+          "productImage": "productImage"
+        },
+        "columns": {
+          "action": "Action",
+          "code": "Product Code",
+          "description": "Description",
+          "noImage": "No Image",
+          "productImage": "Product Image",
+          "select": "Select",
+          "selectAll": "Select all",
+          "selectRow": "Select row",
+          "tags": "Tags"
+        },
+        "filter": {
+          "add": "ADD",
+          "delete": "DELETE",
+          "fullTextSearch": "Full Text Search",
+          "search": "Search",
+          "searchPlaceholder": "Enter search value",
+          "selectSearchField": "Select search field"
+        }
+      },
+      "title": "Products",
+      "updateTitle": "Update Product",
+      "validation": {
+        "atLeastOneNarrative": "At least one narrative is required",
+        "codeRequired": "Code is required",
+        "contentRequired": "Content is required",
+        "descriptionRequired": "Description is required",
+        "narrativeRequired": "Narrative text is required",
+        "tagsRequired": "At least one tag is required"
+      }
+    }
   }
 }
 
