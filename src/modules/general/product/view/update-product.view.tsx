@@ -30,7 +30,7 @@ const UpdateProductView = () => {
       <div className="h-full w-full flex items-center justify-center">
         <LoaderIcon className="size-4 animate-spin" />
       </div>
-    )
+    );
   }
 
   const payload = productQuery.data?.data;
@@ -57,7 +57,10 @@ const UpdateProductView = () => {
 
           // Invalidate and refetch specific product query (must match the queryKey structure)
           queryClient.invalidateQueries({
-            queryKey: [getProductApi.key, { orgId: params.orgId, productId: params.productId }],
+            queryKey: [
+              getProductApi.key,
+              { orgId: params.orgId, productId: params.productId },
+            ],
             refetchType: "all",
           });
 
@@ -104,9 +107,12 @@ const UpdateProductView = () => {
         narrative: payload.narrative,
         content: payload.content,
         properties: capitalizedProperties,
-        narratives: payload.narratives.map((n) => {
-          return { text: n ?? "" };
-        }),
+        narratives:
+          payload.narratives.length > 0
+            ? payload.narratives.map((n) => {
+                return { text: n ?? "" };
+              })
+            : [{ text: "" }],
         images: [],
       }}
     />

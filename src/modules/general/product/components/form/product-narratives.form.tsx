@@ -34,6 +34,7 @@ export const ProductNarrativesForm = () => {
                     className="w-full"
                     errorMessage={fieldState.error?.message}
                     maxLength={100}
+                    required={narrative.fields.length !== 1}
                   />
 
                   <div
@@ -53,7 +54,7 @@ export const ProductNarrativesForm = () => {
                       type="button"
                       size="icon"
                       className="bg-primary text-white"
-                      onClick={() => narrative.append({ text: "" })}
+                      onClick={() => narrative.insert(index + 1, { text: "" })}
                     >
                       <PlusIcon />
                     </Button>
