@@ -19,7 +19,9 @@ type productTableColumns = ColumnDef<IProduct> & {
   accessorKey?: keyof IProduct;
 };
 
-export const getProductTableColumns = (t: TFunction<"product">): productTableColumns[] => [
+export const getProductTableColumns = (
+  t: TFunction<"product">
+): productTableColumns[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -66,14 +68,28 @@ export const getProductTableColumns = (t: TFunction<"product">): productTableCol
   {
     accessorKey: "tags",
     header: t("product.table.columns.tags"),
+    cell: ({ row }) => {
+      return (
+        <div className="max-w-[300px] w-full flex flex-wrap gap-x-0.5 gap-y-0.5">
+          {row.original.tags.split(",").map((badge, i) => {
+            return (
+              <div
+                key={i}
+                className="bg-primary text-white rounded-lg px-2 py-1 cursor-pointer"
+              >
+                {badge.trim()}
+              </div>
+            );
+          })}
+        </div>
+      );
+    },
   },
   {
     header: t("product.table.columns.action"),
     cell: () => {
       const actions = [
-        { key: "unVerify", label: t("product.table.actions.unVerify") },
-        { key: "bindToCustomer", label: t("product.table.actions.bindToCustomer") },
-        { key: "bindToProduct", label: t("product.table.actions.bindToProduct") },
+        { key: "unVerify", label: t("product.table.actions.productImage") },
       ];
 
       return (
@@ -97,17 +113,4 @@ export const getProductTableColumns = (t: TFunction<"product">): productTableCol
       );
     },
   },
-  {
-    header: t("product.table.columns.productImage"),
-    cell: ({ row }) => {
-      const images = row.original.images[0];
-
-      return images ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={images.imageUrl} alt={images.imagePath} />
-      ) : (
-        <span>{t("product.table.columns.noImage")}</span>
-      )
-    }
-  }
 ];

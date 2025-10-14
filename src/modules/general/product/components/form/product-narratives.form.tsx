@@ -34,7 +34,6 @@ export const ProductNarrativesForm = () => {
                     className="w-full"
                     errorMessage={fieldState.error?.message}
                     maxLength={100}
-                    required={narrative.fields.length !== 1}
                   />
 
                   <div

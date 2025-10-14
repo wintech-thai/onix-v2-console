@@ -28,6 +28,10 @@
       "title": "Content",
       "placeholder": "Enter product content..."
     },
+    "form": {
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "leavePage": "Leave Page"
+    },
     "actions": {
       "save": "Save",
       "cancel": "Cancel",
@@ -73,9 +77,7 @@
         "delete": "DELETE"
       },
       "actions": {
-        "unVerify": "Un-Verify Scan Item",
-        "bindToCustomer": "Bind to Customer",
-        "bindToProduct": "Bind To Product"
+        "productImage": "Product Images"
       }
     }
   }

@@ -11,6 +11,7 @@ import { ProductDetailForm } from "./product-detail.form";
 import { ProductNarrativesForm } from "./product-narratives.form";
 import { ProductContentForm } from "./product-content.form";
 import { useRouter } from "next/navigation";
+import { useConfirm } from "@/hooks/use-confirm";
 
 interface ProductFormProps {
   onSubmit: (data: ProductSchemaType) => Promise<void>;
@@ -30,6 +31,26 @@ export const ProductForm = ({
     defaultValues: defaultValues,
   });
 
+  const [ConfirmBack, confirmBack] = useConfirm({
+    message: t("product.form.unsavedChanges"),
+    title: t("product.form.leavePage"),
+    variant: "destructive"
+  });
+
+  const isDirty = form.formState.isDirty;
+
+  const handleCancel = async () => {
+    if (!isDirty) return router.back();
+
+    const ok = await confirmBack();
+
+    if (ok) {
+      form.reset();
+      form.clearErrors();
+      router.back();
+    }
+  }
+
   const isSubmitting = form.formState.isSubmitting;
 
   const handleSubmit = async (data: ProductSchemaType) => {
@@ -47,6 +68,9 @@ export const ProductForm = ({
   return (
     <FormProvider {...form}>
       <div className="h-full flex flex-col">
+
+        <ConfirmBack />
+
         <form
           className="h-full flex flex-col"
           onSubmit={form.handleSubmit(handleSubmit)}
@@ -54,7 +78,7 @@ export const ProductForm = ({
           <header className="p-4 border border-b">
             <h1 className="text-lg font-bold">
               <ArrowLeftIcon
-                onClick={() => router.back()}
+                onClick={handleCancel}
                 className="inline cursor-pointer"
               />{" "}
               {isUpdate ? t("product.updateTitle") : t("product.createTitle")}
@@ -71,7 +95,7 @@ export const ProductForm = ({
           </div>
 
           <div className="border-t py-2 px-4 shrink-0 flex items-center justify-end gap-x-2">
-            <Button onClick={() => router.back()} disabled={isSubmitting} variant="destructive" type="button">
+            <Button onClick={handleCancel} disabled={isSubmitting} variant="destructive" type="button">
               {t("product.actions.cancel")}
             </Button>
             <Button isPending={isSubmitting}>

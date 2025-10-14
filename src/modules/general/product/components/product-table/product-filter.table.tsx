@@ -86,6 +86,7 @@ export const ProductFilterTable = ({
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSubmit();
             }}
+            maxLength={50}
           />
         </div>
 

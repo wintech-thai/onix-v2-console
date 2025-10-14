@@ -275,6 +275,10 @@ interface Resources {
         "tags": "Tags",
         "title": "Product Detail"
       },
+      "form": {
+        "leavePage": "Leave Page",
+        "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+      },
       "messages": {
         "createError": "Failed to create product",
         "createSuccess": "Product created successfully",
@@ -299,9 +303,7 @@ interface Resources {
       },
       "table": {
         "actions": {
-          "bindToCustomer": "Bind to Customer",
-          "bindToProduct": "Bind To Product",
-          "unVerify": "Un-Verify Scan Item"
+          "productImage": "productImage"
         },
         "columns": {
           "action": "Action",
@@ -331,7 +333,6 @@ interface Resources {
         "contentRequired": "Content is required",
         "descriptionRequired": "Description is required",
         "narrativeRequired": "Narrative text is required",
-        "propertyValueRequired": "All selected properties must have a value",
         "tagsRequired": "At least one tag is required"
       }
     }
