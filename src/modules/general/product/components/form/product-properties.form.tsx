@@ -146,7 +146,10 @@ export const ProductPropertiesForm = () => {
     propertiesToMove.forEach((prop) => {
       delete updatedProperties[prop.name];
     });
-    form.setValue("properties", updatedProperties);
+    form.setValue("properties", updatedProperties, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
 
     setRightChecked(new Set());
   };
@@ -177,7 +180,10 @@ export const ProductPropertiesForm = () => {
   const handlePropertyValueChange = (name: string, value: string) => {
     const updatedProperties = { ...properties };
     updatedProperties[name] = convertPropertyValue(name, value);
-    form.setValue("properties", updatedProperties);
+    form.setValue("properties", updatedProperties, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   };
 
   // Handle select all for left panel
