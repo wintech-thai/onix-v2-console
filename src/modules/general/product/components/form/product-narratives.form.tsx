@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 export const ProductNarrativesForm = () => {
   const { t } = useTranslation("product");
   const form = useFormContext<ProductSchemaType>();
+  const isSubmitting = form.formState.isSubmitting;
 
   const narrative = useFieldArray({
     control: form.control,
@@ -34,6 +35,7 @@ export const ProductNarrativesForm = () => {
                     className="w-full"
                     errorMessage={fieldState.error?.message}
                     maxLength={100}
+                    disabled={isSubmitting}
                   />
 
                   <div
@@ -44,7 +46,7 @@ export const ProductNarrativesForm = () => {
                       type="button"
                       size="icon"
                       className="bg-primary text-white"
-                      disabled={narrative.fields.length === 1}
+                      disabled={narrative.fields.length === 1 || isSubmitting}
                       onClick={() => narrative.remove(index)}
                     >
                       <MinusIcon />
@@ -53,6 +55,7 @@ export const ProductNarrativesForm = () => {
                       type="button"
                       size="icon"
                       className="bg-primary text-white"
+                      disabled={isSubmitting}
                       onClick={() => narrative.insert(index + 1, { text: "" })}
                     >
                       <PlusIcon />

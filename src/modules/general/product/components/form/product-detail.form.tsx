@@ -6,9 +6,15 @@ import { Label } from "@/components/ui/label";
 import { XIcon } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 
-export const ProductDetailForm = () => {
+interface ProductDetailFormProps {
+  isUpdate: boolean;
+}
+export const ProductDetailForm = ({
+  isUpdate,
+}: ProductDetailFormProps) => {
   const { t } = useTranslation("product");
   const form = useFormContext<ProductSchemaType>();
+  const isSubmitting = form.formState.isSubmitting;
   const { tags } = form.watch();
   const [tagInput, setTagInput] = useState("");
 
@@ -53,6 +59,7 @@ export const ProductDetailForm = () => {
                 isRequired
                 errorMessage={fieldState.error?.message}
                 maxLength={30}
+                disabled={isUpdate || isSubmitting}
               />
             );
           }}
@@ -69,6 +76,7 @@ export const ProductDetailForm = () => {
                 isRequired
                 errorMessage={fieldState.error?.message}
                 maxLength={150}
+                disabled={isSubmitting}
               />
             );
           }}
@@ -87,6 +95,7 @@ export const ProductDetailForm = () => {
             placeholder="Type and press Enter to add tag"
             errorMessage={form.formState.errors.tags?.message}
             maxLength={30}
+            disabled={isSubmitting}
           />
         </div>
         {tagsArray.length > 0 && (

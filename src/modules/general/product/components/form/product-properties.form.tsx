@@ -51,6 +51,7 @@ export const ProductPropertiesForm = () => {
   const { t } = useTranslation("product");
   const params = useParams<{ orgId: string }>();
   const form = useFormContext<ProductSchemaType>();
+  const isSubmitting = form.formState.isSubmitting;
 
   const { properties } = form.watch();
 
@@ -274,7 +275,7 @@ export const ProductPropertiesForm = () => {
             size="icon"
             type="button"
             onClick={handleMoveToAvailable}
-            disabled={rightChecked.size === 0}
+            disabled={rightChecked.size === 0 || isSubmitting}
             className="lg:rotate-0 rotate-90"
           >
             <ChevronLeftIcon />
@@ -283,7 +284,7 @@ export const ProductPropertiesForm = () => {
             size="icon"
             type="button"
             onClick={handleMoveToSelected}
-            disabled={leftChecked.size === 0}
+            disabled={leftChecked.size === 0 || isSubmitting}
             className="lg:rotate-0 rotate-90"
           >
             <ChevronRightIcon />
@@ -304,6 +305,7 @@ export const ProductPropertiesForm = () => {
                     onCheckedChange={(checked) =>
                       handleSelectAllRight(checked as boolean)
                     }
+                    disabled={isSubmitting}
                   />
                 </TableHead>
                 <TableHead>{t("product.properties.property")}</TableHead>
@@ -332,6 +334,7 @@ export const ProductPropertiesForm = () => {
                             checked as boolean
                           )
                         }
+                        disabled={isSubmitting}
                       />
                     </TableCell>
                     <TableCell>{prop.name}</TableCell>
@@ -348,6 +351,7 @@ export const ProductPropertiesForm = () => {
                         maxLength={20}
                         required
                         isRequired
+                        disabled={isSubmitting}
                       />
                     </TableCell>
                   </TableRow>
