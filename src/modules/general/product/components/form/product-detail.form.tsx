@@ -12,7 +12,9 @@ export const ProductDetailForm = () => {
   const { tags } = form.watch();
   const [tagInput, setTagInput] = useState("");
 
-  const tagsArray = tags ? tags.split(",").filter((tag) => tag.trim() !== "") : [];
+  const tagsArray = tags
+    ? tags.split(",").filter((tag) => tag.trim() !== "")
+    : [];
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -21,7 +23,10 @@ export const ProductDetailForm = () => {
 
       if (trimmedTag && !tagsArray.includes(trimmedTag)) {
         const newTags = [...tagsArray, trimmedTag];
-        form.setValue("tags", newTags.join(","));
+        form.setValue("tags", newTags.join(","), {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
         form.trigger("tags");
         setTagInput("");
       }

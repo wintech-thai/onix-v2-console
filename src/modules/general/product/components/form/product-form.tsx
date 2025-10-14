@@ -12,6 +12,8 @@ import { ProductNarrativesForm } from "./product-narratives.form";
 import { ProductContentForm } from "./product-content.form";
 import { useRouter } from "next/navigation";
 import { useConfirm } from "@/hooks/use-confirm";
+import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
+import { useEffect } from "react";
 
 interface ProductFormProps {
   onSubmit: (data: ProductSchemaType) => Promise<void>;
@@ -25,6 +27,7 @@ export const ProductForm = ({
 }: ProductFormProps) => {
   const { t } = useTranslation("product");
   const router = useRouter();
+  const { setFormDirty } = useFormNavigationBlocker();
 
   const form = useForm<ProductSchemaType>({
     resolver: zodResolver(useProductSchema(t)),
@@ -39,14 +42,23 @@ export const ProductForm = ({
 
   const isDirty = form.formState.isDirty;
 
+  // Sync form dirty state with navigation blocker
+  useEffect(() => {
+    setFormDirty(isDirty);
+  }, [isDirty, setFormDirty]);
+
   const handleCancel = async () => {
-    if (!isDirty) return router.back();
+    if (!isDirty) {
+      setFormDirty(false);
+      return router.back();
+    }
 
     const ok = await confirmBack();
 
     if (ok) {
       form.reset();
       form.clearErrors();
+      setFormDirty(false);
       router.back();
     }
   }
@@ -63,6 +75,8 @@ export const ProductForm = ({
         ])
       ),
     });
+    // Clear dirty state after successful submit
+    setFormDirty(false);
   };
 
   return (

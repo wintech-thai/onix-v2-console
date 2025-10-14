@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { RouteConfig } from "@/config/route.config";
 import { Hint } from "@/components/ui/hint";
 import { env } from "next-runtime-env";
+import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 
 // Type-safe i18n keys
 type SidebarKeys =
@@ -58,6 +59,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const { t } = useTranslation();
   const params = useParams<{ orgId: string }>();
   const [openParents, setOpenParents] = useState<Record<string, boolean>>({});
+  const { handleNavigation } = useFormNavigationBlocker();
 
   const MENU: MenuItem[] = useMemo(() => {
     return [
@@ -291,10 +293,11 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                         return (
                           <Hint message={t(c.labelKey as any)} key={c.href}>
                             <li key={c.href}>
-                              <Link
-                                href={c.href}
+                              <button
+                                type="button"
+                                onClick={() => handleNavigation(c.href)}
                                 className={cn(
-                                  "flex items-center justify-between rounded-lg px-2 py-2 text-sm",
+                                  "w-full flex items-center justify-between rounded-lg px-2 py-2 text-sm",
                                   childActive
                                     ? "bg-accent text-foreground shadow"
                                     : "text-muted-foreground hover:bg-accent/70 hover:text-foreground"
@@ -304,7 +307,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                                   {t(c.labelKey as any)}
                                 </span>
                                 <ChevronRight className="h-4 w-4 opacity-60" />
-                              </Link>
+                              </button>
                             </li>
                           </Hint>
                         );
