@@ -69,6 +69,8 @@ export const getProductTableColumns = (
     accessorKey: "tags",
     header: t("product.table.columns.tags"),
     cell: ({ row }) => {
+      if (!row.original.tags) return "-";
+
       return (
         <div className="max-w-[300px] w-full flex flex-wrap gap-x-0.5 gap-y-0.5">
           {row.original.tags.split(",").map((badge, i) => {
