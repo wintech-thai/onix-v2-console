@@ -77,7 +77,7 @@
         "delete": "ลบ"
       },
       "actions": {
-        "productImagel": "รูปภาพสินค้า"
+        "productImage": "รูปภาพสินค้า"
       }
     }
   }
