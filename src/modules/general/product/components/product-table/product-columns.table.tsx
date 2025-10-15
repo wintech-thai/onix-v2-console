@@ -14,6 +14,7 @@ import { MoreHorizontalIcon } from "lucide-react";
 import Link from "next/link";
 import { RouteConfig } from "@/config/route.config";
 import { TFunction } from "i18next";
+import { useRouter as Router } from "next/navigation";
 
 type productTableColumns = ColumnDef<IProduct> & {
   accessorKey?: keyof IProduct;
@@ -89,10 +90,12 @@ export const getProductTableColumns = (
   },
   {
     header: t("product.table.columns.action"),
-    cell: () => {
+    cell: ({ row }) => {
       const actions = [
         { key: "unVerify", label: t("product.table.actions.productImage") },
       ];
+
+      const router = Router();
 
       return (
         <DropdownMenu>
@@ -105,7 +108,10 @@ export const getProductTableColumns = (
             {actions.map((action) => (
               <DropdownMenuItem
                 key={action.key}
-                onSelect={() => console.log(action.key)}
+                onSelect={() => router.push(RouteConfig.GENERAL.PRODUCT.IMAGE(
+                  row.original.orgId,
+                  row.original.id
+                ))}
               >
                 {action.label}
               </DropdownMenuItem>
