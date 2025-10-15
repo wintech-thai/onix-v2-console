@@ -96,6 +96,7 @@ export const UploadImageModal = ({
         {
           headers: {
             "Content-Type": selectedFile.type,
+            "x-goog-meta-onix-is-temp-file": true,
           },
         }
       );
