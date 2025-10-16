@@ -156,7 +156,7 @@ const ProductView = () => {
       },
       {
         onSuccess: ({ data }) => {
-          if (data.status === "OK") {
+          if (data.status === "OK" || data.status === "SUCCESS") {
             toast.success(data.description || "Attached successfully");
             callback();
             router.back();
