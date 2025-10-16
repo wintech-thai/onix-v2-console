@@ -56,6 +56,10 @@
       "deleteSuccess": "ลบสินค้าสำเร็จ",
       "deleteError": "ลบสินค้าไม่สำเร็จ"
     },
+    "attach": {
+      "title": "แนบสินค้า",
+      "message": "คุณแน่ใจหรือไม่ว่าต้องการแนบสินค้านี้?"
+    },
     "table": {
       "columns": {
         "select": "เลือก",
@@ -74,7 +78,8 @@
         "fullTextSearch": "ค้นหาทั้งหมด",
         "search": "ค้นหา",
         "add": "เพิ่ม",
-        "delete": "ลบ"
+        "delete": "ลบ",
+        "attach": "แนบ"
       },
       "actions": {
         "productImage": "รูปภาพสินค้า"

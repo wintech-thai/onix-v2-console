@@ -15,10 +15,11 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { useConfirm as Confirm } from "@/hooks/use-confirm";
 import { unVerifyScanItemsApi } from "../../api/unverify-scan-items";
-import { useParams as Params } from "next/navigation";
+import { useParams as Params, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { ScanItemDetailModal } from "../modal/scan-item-detial.modal";
+import { RouteConfig } from "@/config/route.config";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
   accessorKey?: keyof IScanItems;
@@ -26,6 +27,7 @@ type qrcodeTableColumns = ColumnDef<IScanItems> & {
 
 export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { t } = useTranslation();
 
   return [
@@ -141,7 +143,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
               },
             });
           } catch (error) {
-            console.error("error", error)
+            console.error("error", error);
             toast.error(t("qrcode.unverify.error"));
           }
         };
@@ -170,7 +172,14 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                 >
                   {t("qrcode.actions.bindToCustomer")}
                 </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => console.log("bindToProduct")}>
+                <DropdownMenuItem
+                  onSelect={() =>
+                    router.push(
+                      RouteConfig.GENERAL.PRODUCT.LIST(row.original.orgId) +
+                        `?scanItemId=${row.original.id}`
+                    )
+                  }
+                >
                   {t("qrcode.actions.bindToProduct")}
                 </DropdownMenuItem>
               </DropdownMenuContent>

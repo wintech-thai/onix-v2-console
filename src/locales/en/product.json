@@ -56,6 +56,10 @@
       "deleteSuccess": "Product deleted successfully",
       "deleteError": "Failed to delete product"
     },
+    "attach": {
+      "title": "Attach Product",
+      "message": "Are you sure you want to attach this product?"
+    },
     "table": {
       "columns": {
         "select": "Select",
@@ -74,7 +78,8 @@
         "fullTextSearch": "Full Text Search",
         "search": "Search",
         "add": "ADD",
-        "delete": "DELETE"
+        "delete": "DELETE",
+        "attach": "ATTACH"
       },
       "actions": {
         "productImage": "Product Images"

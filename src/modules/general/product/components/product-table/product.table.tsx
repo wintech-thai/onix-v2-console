@@ -1,29 +1,29 @@
 "use client";
 
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  Row,
-  useReactTable,
+    ColumnDef,
+    flexRender,
+    getCoreRowModel,
+    Row,
+    useReactTable,
 } from "@tanstack/react-table";
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "../../../../../components/ui/table";
 import { useState } from "react";
 import { ProductFilterTable } from "./product-filter.table";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
@@ -39,6 +39,8 @@ interface DataTableProps<TData, TValue> {
   onItemsPerPageChange: (items: number) => void;
   onSearch: (searchField: string, searchValue: string) => void;
   isLoading?: boolean;
+  scanItemId?: string | null;
+  onAttach?: (rows: Row<TData>[], callback: () => void) => void;
 }
 
 export function ProductTable<TData, TValue>({
@@ -52,6 +54,8 @@ export function ProductTable<TData, TValue>({
   onItemsPerPageChange,
   onSearch,
   isLoading = false,
+  scanItemId,
+  onAttach,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
@@ -62,12 +66,19 @@ export function ProductTable<TData, TValue>({
     state: {
       rowSelection,
     },
+    enableMultiRowSelection: !scanItemId, // Disable multi-selection when scanItemId exists
   });
 
   const rowSelected = table.getFilteredSelectedRowModel().rows;
 
   const handleDelete = () => {
     onDelete(rowSelected, () => setRowSelection({}));
+  };
+
+  const handleAttach = () => {
+    if (onAttach) {
+      onAttach(rowSelected, () => setRowSelection({}));
+    }
   };
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -79,6 +90,8 @@ export function ProductTable<TData, TValue>({
         isDisabled={!rowSelected.length}
         onSearch={onSearch}
         selected={rowSelected.length}
+        scanItemId={scanItemId}
+        onAttach={scanItemId && onAttach ? () => handleAttach() : undefined}
       />
       <div className="overflow-auto rounded-md border flex-1 mt-4">
         <Table>

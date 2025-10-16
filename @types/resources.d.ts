@@ -263,6 +263,10 @@ interface Resources {
         "save": "Save",
         "update": "Update"
       },
+      "attach": {
+        "message": "Are you sure you want to attach this product?",
+        "title": "Attach Product"
+      },
       "content": {
         "placeholder": "Enter product content...",
         "title": "Content"
@@ -303,7 +307,7 @@ interface Resources {
       },
       "table": {
         "actions": {
-          "productImage": "productImage"
+          "productImage": "Product Images"
         },
         "columns": {
           "action": "Action",
@@ -318,6 +322,7 @@ interface Resources {
         },
         "filter": {
           "add": "ADD",
+          "attach": "ATTACH",
           "delete": "DELETE",
           "fullTextSearch": "Full Text Search",
           "search": "Search",
