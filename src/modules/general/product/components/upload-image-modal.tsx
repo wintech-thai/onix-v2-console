@@ -91,12 +91,12 @@ export const UploadImageModal = ({
 
       // Step 2: อัปโหลดไฟล์ไปยัง GCS ผ่าน presigned URL
       const uploadResponse = await axios.put(
-        response.data.presignedUrl,
+        response.data.presignedUrl.trim(),
         selectedFile,
         {
           headers: {
             "Content-Type": selectedFile.type,
-            "x-goog-meta-onix-is-temp-file": true,
+            "x-goog-meta-onix-is-temp-file": "true",
           },
         }
       );
