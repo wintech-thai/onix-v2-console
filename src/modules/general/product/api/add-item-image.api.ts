@@ -1,6 +1,12 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 
+export interface AddItemImageResponse {
+  status:      string;
+  description: string;
+}
+
+
 export const addItemImageApi = {
   key: "add-item-image",
   useMutation: () => {
@@ -16,10 +22,15 @@ export const addItemImageApi = {
         category: number;
         sortingOrder?: number;
       }) => {
-        return api.post(
+        return api.post<AddItemImageResponse>(
           `/api/Item/org/${params.orgId}/action/AddItemImage/${params.itemId}`,
           {
             imagePath: params.imagePath,
+            imageUrl: params.imageUrl,
+            narative: params.narative,
+            tags: params.tags,
+            category: params.category,
+            sortingOrder: params.sortingOrder,
           }
         );
       },

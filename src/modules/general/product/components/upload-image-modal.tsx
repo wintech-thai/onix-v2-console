@@ -21,6 +21,7 @@ interface UploadImageModalProps {
   onOpenChange: (open: boolean) => void;
   orgId: string;
   productId: string;
+  currentMaxSortingOrder: number;
   onUploadSuccess?: () => void;
 }
 
@@ -29,6 +30,7 @@ export const UploadImageModal = ({
   onOpenChange,
   orgId,
   productId,
+  currentMaxSortingOrder,
   onUploadSuccess,
 }: UploadImageModalProps) => {
   const getItemImageUploadPresignedUrl =
@@ -108,6 +110,7 @@ export const UploadImageModal = ({
       // Step 3: บันทึกข้อมูลรูปภาพในระบบ
       const imagePath = response.data.imagePath; // ได้ path ของรูปภาพจาก presigned URL
       const imageUrl = response.data.previewUrl;
+      const newSortingOrder = currentMaxSortingOrder + 1; // ลำดับถัดไปจากรูปภาพที่มีอยู่
 
       const result = await addImageItem.mutateAsync({
         orgId: orgId,
@@ -117,10 +120,11 @@ export const UploadImageModal = ({
         narative: "",
         tags: "",
         category: 1,
+        sortingOrder: newSortingOrder,
       });
 
-      if (result.status !== 200) {
-        throw new Error("การบันทึกรูปภาพล้มเหลว");
+      if (result.data.status !== "OK") {
+        throw new Error(result.data.description);
       }
 
       toast.success("อัปโหลดรูปภาพสำเร็จ!");
@@ -135,6 +139,9 @@ export const UploadImageModal = ({
       onUploadSuccess?.();
     } catch (error) {
       console.error("Upload error:", error);
+      if (error instanceof Error) {
+        return toast.error(error.message);
+      }
       toast.error("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ");
     } finally {
       setIsUploading(false);

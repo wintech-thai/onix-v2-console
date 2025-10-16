@@ -139,6 +139,8 @@ export const EditImageModal = ({
   const onSubmit = async (data: ProductImageSchemaType) => {
     if (!image) return;
 
+    if (!isDirty) return onOpenChange(false);
+
     try {
       await updateItemImage.mutateAsync({
         value: data,
