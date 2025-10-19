@@ -107,7 +107,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
       <DialogContent iconWhite>
         <DialogHeader className="bg-primary text-white rounded-t-lg -m-6 mb-4 p-4">
           <DialogTitle className="text-lg font-semibold">
-            {t("qrcode.create.title", "Create Scan Item")}
+            {t("create.title")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -117,7 +117,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("qrcode.create.fields.serial", "Serial")}
+                label={t("create.fields.serial")}
                 errorMessage={errorMessageAsLangKey(errors.serial?.message, t)}
                 disabled={isSubmitting}
                 maxLength={10}
@@ -130,7 +130,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("qrcode.create.fields.pin", "Pin")}
+                label={t("create.fields.pin")}
                 errorMessage={errorMessageAsLangKey(errors.pin?.message, t)}
                 disabled={isSubmitting}
                 maxLength={10}
