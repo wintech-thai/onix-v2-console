@@ -70,7 +70,7 @@ const UpdateProductView = () => {
             refetchType: "all",
           });
 
-          toast.success(t("product.messages.updateSuccess"));
+          toast.success(t("messages.updateSuccess"));
           router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
         },
         onError: (error) => {

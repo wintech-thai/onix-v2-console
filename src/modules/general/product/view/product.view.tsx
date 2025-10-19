@@ -1,10 +1,10 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetchProductsApi, IProduct } from "../api/fetch-products.api";
 import { ProductTable } from "../components/product-table/product.table";
 import { getProductTableColumns } from "../components/product-table/product-columns.table";
-import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
+import { useQueryStates, parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { deleteProductApi } from "../api/delete-product.api";
 import { useTranslation } from "react-i18next";
@@ -13,14 +13,17 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
+import { AttachScanItemToProductApi } from "../api/attach-scan-item-to-product.api";
 
 const ProductView = () => {
-  const { t } = useTranslation();
-  const { t: tProduct } = useTranslation("product");
+  const { t } = useTranslation(["scan-item", "common", "product"]);
+  const { t: productLang } = useTranslation("product");
   const params = useParams<{ orgId: string }>();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [data, setData] = useState<IProduct[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [scanItemId] = useQueryState("scanItemId");
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -31,12 +34,19 @@ const ProductView = () => {
   });
 
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
-    title: t("qrcode.delete.title"),
-    message: t("qrcode.delete.message"),
+    title: t("scan-item:delete.title"),
+    message: t("scan-item:delete.message"),
     variant: "destructive",
   });
 
+  const [AttachConfirmationDialog, confirmAttach] = useConfirm({
+    title: t("product:attach.title"),
+    message: t("product:attach.message"),
+    variant: "default",
+  });
+
   const deleteProduct = deleteProductApi.useMutation();
+  const attachScanItemToProduct = AttachScanItemToProductApi.useMutation();
 
   const { page, limit, searchField, searchValue } = queryState;
 
@@ -95,26 +105,26 @@ const ProductView = () => {
           onSuccess: ({ data }) => {
             if (data.status !== "OK") {
               errorCount++;
-              toast.error(data.description || tProduct("product.messages.deleteError"));
+              toast.error(data.description || t("product:messages.deleteError"));
             }
 
             successCount++;
           },
           onError: () => {
             errorCount++;
-            toast.error(tProduct("product.messages.deleteError"));
+            toast.error(t("product:messages.deleteError"));
           },
         }
       );
 
       if (successCount > 0) {
         toast.success(
-          `${tProduct("product.messages.deleteSuccess")} (${successCount}/${idsToDelete.length})`
+          `${t("product:messages.deleteSuccess")} (${successCount}/${idsToDelete.length})`
         );
       }
       if (errorCount > 0) {
         toast.error(
-          `${tProduct("product.messages.deleteError")} (${errorCount}/${idsToDelete.length})`
+          `${t("product:messages.deleteError")} (${errorCount}/${idsToDelete.length})`
         );
       }
 
@@ -127,6 +137,38 @@ const ProductView = () => {
       // Clear selection after delete attempt
       callback();
     }
+  };
+
+  const handleAttach = async (rows: Row<IProduct>[], callback: () => void) => {
+    if (!scanItemId || rows.length !== 1) return;
+
+    const ok = await confirmAttach();
+
+    if (!ok) return;
+
+    const productId = rows[0].original.id;
+
+    await attachScanItemToProduct.mutateAsync(
+      {
+        orgId: params.orgId,
+        scanItemId: scanItemId,
+        productId: productId,
+      },
+      {
+        onSuccess: ({ data }) => {
+          if (data.status === "OK" || data.status === "SUCCESS") {
+            toast.success(data.description || "Attached successfully");
+            callback();
+            router.back();
+          } else {
+            toast.error(data.description || "Failed to attach");
+          }
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to attach");
+        },
+      }
+    );
   };
 
   const handlePageChange = (newPage: number) => {
@@ -151,8 +193,9 @@ const ProductView = () => {
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
+      <AttachConfirmationDialog />
       <ProductTable
-        columns={getProductTableColumns(tProduct)}
+        columns={getProductTableColumns(productLang)}
         data={data}
         onDelete={handleDelete}
         totalItems={totalItems}
@@ -162,6 +205,8 @@ const ProductView = () => {
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
         isLoading={fetchProducts.isLoading && !hasLoadedBefore}
+        scanItemId={scanItemId}
+        onAttach={scanItemId ? handleAttach : undefined}
       />
     </div>
   );

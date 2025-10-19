@@ -4,23 +4,24 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { IProduct } from "../../api/fetch-products.api";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
 import Link from "next/link";
 import { RouteConfig } from "@/config/route.config";
 import { TFunction } from "i18next";
+import { useRouter as Router } from "next/navigation";
 
 type productTableColumns = ColumnDef<IProduct> & {
   accessorKey?: keyof IProduct;
 };
 
 export const getProductTableColumns = (
-  t: TFunction<"product">
+  t: TFunction<"product", undefined>
 ): productTableColumns[] => [
   {
     id: "select",
@@ -31,14 +32,14 @@ export const getProductTableColumns = (
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         // onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label={t("product.table.columns.selectAll")}
+        aria-label={t("table.columns.selectAll")}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label={t("product.table.columns.selectRow")}
+        aria-label={t("table.columns.selectRow")}
       />
     ),
     enableSorting: false,
@@ -46,7 +47,7 @@ export const getProductTableColumns = (
   },
   {
     accessorKey: "code",
-    header: t("product.table.columns.code"),
+    header: t("table.columns.code"),
     cell: ({ row }) => {
       return (
         <Link
@@ -63,11 +64,11 @@ export const getProductTableColumns = (
   },
   {
     accessorKey: "description",
-    header: t("product.table.columns.description"),
+    header: t("table.columns.description"),
   },
   {
     accessorKey: "tags",
-    header: t("product.table.columns.tags"),
+    header: t("table.columns.tags"),
     cell: ({ row }) => {
       if (!row.original.tags) return "-";
 
@@ -88,11 +89,13 @@ export const getProductTableColumns = (
     },
   },
   {
-    header: t("product.table.columns.action"),
-    cell: () => {
+    header: t("table.columns.action"),
+    cell: ({ row }) => {
       const actions = [
-        { key: "unVerify", label: t("product.table.actions.productImage") },
+        { key: "unVerify", label: t("table.actions.productImage") },
       ];
+
+      const router = Router();
 
       return (
         <DropdownMenu>
@@ -105,7 +108,10 @@ export const getProductTableColumns = (
             {actions.map((action) => (
               <DropdownMenuItem
                 key={action.key}
-                onSelect={() => console.log(action.key)}
+                onSelect={() => router.push(`${RouteConfig.GENERAL.PRODUCT.IMAGE(
+                  row.original.orgId,
+                  row.original.id
+                )}?productName=${encodeURIComponent(row.original.description || row.original.code)}`)}
               >
                 {action.label}
               </DropdownMenuItem>

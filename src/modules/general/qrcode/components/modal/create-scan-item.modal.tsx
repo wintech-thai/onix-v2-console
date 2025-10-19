@@ -28,7 +28,7 @@ interface CreateScanItemModalProps {
 }
 
 export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["scan-item", "common"]);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
@@ -58,13 +58,13 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             if (data.status !== "OK") {
               if (data.status === "PIN_ALREADY_EXIST") {
                 return toast.error(
-                  t("qrcode.create.validation.pinDuplicate", {
+                  t("scan-item:create.validation.pinDuplicate", {
                     pin: values.pin,
                   })
                 );
               } else if (data.status === "SERIAL_ALREADY_EXIST") {
                 return toast.error(
-                  t("qrcode.create.validation.serialDuplicate", {
+                  t("scan-item:create.validation.serialDuplicate", {
                     serial: values.serial,
                   })
                 );
@@ -73,7 +73,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             }
 
             toast.success(
-              t("qrcode.create.success", "Scan item created successfully")
+              t("scan-item:create.success")
             );
 
             queryClient.invalidateQueries({
@@ -107,7 +107,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
       <DialogContent iconWhite>
         <DialogHeader className="bg-primary text-white rounded-t-lg -m-6 mb-4 p-4">
           <DialogTitle className="text-lg font-semibold">
-            {t("qrcode.create.title", "Create Scan Item")}
+            {t("create.title")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -117,7 +117,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("qrcode.create.fields.serial", "Serial")}
+                label={t("create.fields.serial")}
                 errorMessage={errorMessageAsLangKey(errors.serial?.message, t)}
                 disabled={isSubmitting}
                 maxLength={10}
@@ -130,7 +130,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("qrcode.create.fields.pin", "Pin")}
+                label={t("create.fields.pin")}
                 errorMessage={errorMessageAsLangKey(errors.pin?.message, t)}
                 disabled={isSubmitting}
                 maxLength={10}
@@ -145,10 +145,10 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
               onClick={() => handleClose(false)}
               disabled={isSubmitting}
             >
-              {t("common.cancel")}
+              {t("common:common.cancel")}
             </Button>
             <Button isPending={isSubmitting} type="submit">
-              {t("common.ok")}
+              {t("common:common.ok")}
             </Button>
           </div>
         </form>

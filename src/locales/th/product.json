@@ -1,84 +1,133 @@
 {
-  "product": {
-    "title": "สินค้า",
-    "createTitle": "สร้างสินค้า",
-    "updateTitle": "แก้ไขสินค้า",
-    "detail": {
-      "title": "รายละเอียดสินค้า",
-      "code": "รหัส",
+  "title": "สินค้า",
+  "createTitle": "สร้างสินค้า",
+  "updateTitle": "แก้ไขสินค้า",
+  "detail": {
+    "title": "รายละเอียดสินค้า",
+    "code": "รหัส",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "itemType": "ประเภทสินค้า"
+  },
+  "properties": {
+    "title": "คุณสมบัติ",
+    "available": "คุณสมบัติที่ใช้ได้",
+    "selected": "คุณสมบัติที่เลือก",
+    "property": "คุณสมบัติ",
+    "value": "ค่า",
+    "noAvailable": "ไม่มีคุณสมบัติที่ใช้ได้",
+    "noSelected": "ไม่มีคุณสมบัติที่เลือก",
+    "loading": "กำลังโหลดคุณสมบัติ..."
+  },
+  "narratives": {
+    "title": "คำบรรยาย",
+    "narrative": "คำบรรยาย"
+  },
+  "content": {
+    "title": "เนื้อหา",
+    "placeholder": "กรอกเนื้อหาสินค้า..."
+  },
+  "form": {
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ว่าต้องการออกจากหน้านี้?",
+    "leavePage": "ออกจากหน้า"
+  },
+  "actions": {
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "create": "สร้าง",
+    "update": "แก้ไข",
+    "delete": "ลบ",
+    "back": "ย้อนกลับ"
+  },
+  "validation": {
+    "codeRequired": "กรุณากรอกรหัส",
+    "descriptionRequired": "กรุณากรอกคำอธิบาย",
+    "tagsRequired": "กรุณากรอกแท็กอย่างน้อย 1 รายการ",
+    "contentRequired": "กรุณากรอกเนื้อหา",
+    "narrativeRequired": "กรุณากรอกข้อความคำบรรยาย",
+    "atLeastOneNarrative": "ต้องมีคำบรรยายอย่างน้อย 1 รายการ"
+  },
+  "messages": {
+    "createSuccess": "สร้างสินค้าสำเร็จ",
+    "createError": "สร้างสินค้าไม่สำเร็จ",
+    "updateSuccess": "แก้ไขสินค้าสำเร็จ",
+    "updateError": "แก้ไขสินค้าไม่สำเร็จ",
+    "deleteSuccess": "ลบสินค้าสำเร็จ",
+    "deleteError": "ลบสินค้าไม่สำเร็จ"
+  },
+  "attach": {
+    "title": "แนบสินค้า",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการแนบสินค้านี้?",
+    "mode": {
+      "title": "โหมดแนบสินค้าเปิดอยู่",
+      "description": "กรุณาเลือกสินค้า 1 รายการเพื่อแนบ จากนั้นคลิกปุ่ม 'แนบ' หรือคลิก 'ย้อนกลับ' เพื่อยกเลิก"
+    }
+  },
+  "images": {
+    "title": "รูปภาพสินค้า",
+    "subtitle": "จัดการรูปภาพของสินค้า",
+    "noImages": "ยังไม่มีรูปภาพ",
+    "noImagesDescription": "เริ่มต้นโดยการเพิ่มรูปภาพสินค้าของคุณ",
+    "addFirst": "เพิ่มรูปภาพแรก",
+    "addImage": "เพิ่มรูปภาพ",
+    "dragToReorder": "ลากเพื่อเรียงลำดับ",
+    "uploadTitle": "อัปโหลดรูปภาพสินค้า",
+    "uploadDescription": "เลือกหรือลากรูปภาพมาวางเพื่ออัปโหลด",
+    "editTitle": "แก้ไขข้อมูลรูปภาพ",
+    "editDescription": "แก้ไขรายละเอียดของรูปภาพสินค้า",
+    "fileRequirements": "ข้อกำหนดไฟล์",
+    "onlyPNG": "รองรับเฉพาะไฟล์ PNG (.png)",
+    "maxSize": "ขนาดไฟล์สูงสุด 1 MB",
+    "maxDimensions": "ขนาดรูปภาพสูงสุด 1200x1200 พิกเซล",
+    "secureStorage": "รูปภาพจะถูกจัดเก็บอย่างปลอดภัยบน Google Cloud Storage",
+    "uploading": "กำลังอัปโหลด...",
+    "upload": "อัปโหลด",
+    "dragHere": "ลากและวางรูปภาพที่นี่",
+    "clickToSelect": "หรือคลิกเพื่อเลือกรูปภาพ",
+    "imageLabel": "รูปภาพ",
+    "narrative": "คำอธิบาย",
+    "narrativePlaceholder": "ใส่คำอธิบายรูปภาพ",
+    "tagsLabel": "Tags",
+    "tagsPlaceholder": "พิมพ์ tag แล้วกด Enter หรือใส่เครื่องหมาย ,",
+    "category": "หมวดหมู่",
+    "categoryPlaceholder": "ใส่หมวดหมู่",
+    "saving": "กำลังบันทึก...",
+    "uploadSuccess": "อัปโหลดรูปภาพสำเร็จ!",
+    "uploadError": "เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ",
+    "updateSuccess": "อัปเดตรูปภาพสำเร็จ!",
+    "updateError": "เกิดข้อผิดพลาดในการอัปเดตรูปภาพ",
+    "deleteSuccess": "ลบรูปภาพสำเร็จ",
+    "deleteError": "ลบรูปภาพไม่สำเร็จ",
+    "deleteConfirmTitle": "ต้องการลบรูปภาพนี้หรือไม่?",
+    "deleteConfirmMessage": "การลบรูปภาพนี้จะไม่สามารถกู้คืนได้",
+    "sortingSuccess": "อัปเดตลำดับรูปภาพสำเร็จ",
+    "sortingError": "อัปเดตลำดับรูปภาพไม่สำเร็จ",
+    "leaveConfirmTitle": "ต้องการออกจากหน้านี้หรือไม่?",
+    "leaveConfirmMessage": "ข้อมูลที่ยังไม่ได้บันทึกจะหายไป"
+  },
+  "table": {
+    "columns": {
+      "select": "เลือก",
+      "selectAll": "เลือกทั้งหมด",
+      "selectRow": "เลือกแถว",
+      "code": "รหัสสินค้า",
       "description": "คำอธิบาย",
       "tags": "แท็ก",
-      "itemType": "ประเภทสินค้า"
+      "action": "การดำเนินการ",
+      "productImage": "รูปภาพสินค้า",
+      "noImage": "ไม่มีรูปภาพ"
     },
-    "properties": {
-      "title": "คุณสมบัติ",
-      "available": "คุณสมบัติที่ใช้ได้",
-      "selected": "คุณสมบัติที่เลือก",
-      "property": "คุณสมบัติ",
-      "value": "ค่า",
-      "noAvailable": "ไม่มีคุณสมบัติที่ใช้ได้",
-      "noSelected": "ไม่มีคุณสมบัติที่เลือก",
-      "loading": "กำลังโหลดคุณสมบัติ..."
-    },
-    "narratives": {
-      "title": "คำบรรยาย",
-      "narrative": "คำบรรยาย"
-    },
-    "content": {
-      "title": "เนื้อหา",
-      "placeholder": "กรอกเนื้อหาสินค้า..."
-    },
-    "form": {
-      "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ว่าต้องการออกจากหน้านี้?",
-      "leavePage": "ออกจากหน้า"
+    "filter": {
+      "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+      "selectSearchField": "เลือกฟิลด์ค้นหา",
+      "fullTextSearch": "ค้นหาทั้งหมด",
+      "search": "ค้นหา",
+      "add": "เพิ่ม",
+      "delete": "ลบ",
+      "attach": "แนบ"
     },
     "actions": {
-      "save": "บันทึก",
-      "cancel": "ยกเลิก",
-      "create": "สร้าง",
-      "update": "แก้ไข",
-      "delete": "ลบ",
-      "back": "ย้อนกลับ"
-    },
-    "validation": {
-      "codeRequired": "กรุณากรอกรหัส",
-      "descriptionRequired": "กรุณากรอกคำอธิบาย",
-      "tagsRequired": "กรุณากรอกแท็กอย่างน้อย 1 รายการ",
-      "contentRequired": "กรุณากรอกเนื้อหา",
-      "narrativeRequired": "กรุณากรอกข้อความคำบรรยาย",
-      "atLeastOneNarrative": "ต้องมีคำบรรยายอย่างน้อย 1 รายการ"
-    },
-    "messages": {
-      "createSuccess": "สร้างสินค้าสำเร็จ",
-      "createError": "สร้างสินค้าไม่สำเร็จ",
-      "updateSuccess": "แก้ไขสินค้าสำเร็จ",
-      "updateError": "แก้ไขสินค้าไม่สำเร็จ",
-      "deleteSuccess": "ลบสินค้าสำเร็จ",
-      "deleteError": "ลบสินค้าไม่สำเร็จ"
-    },
-    "table": {
-      "columns": {
-        "select": "เลือก",
-        "selectAll": "เลือกทั้งหมด",
-        "selectRow": "เลือกแถว",
-        "code": "รหัสสินค้า",
-        "description": "คำอธิบาย",
-        "tags": "แท็ก",
-        "action": "การดำเนินการ",
-        "productImage": "รูปภาพสินค้า",
-        "noImage": "ไม่มีรูปภาพ"
-      },
-      "filter": {
-        "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
-        "selectSearchField": "เลือกฟิลด์ค้นหา",
-        "fullTextSearch": "ค้นหาทั้งหมด",
-        "search": "ค้นหา",
-        "add": "เพิ่ม",
-        "delete": "ลบ"
-      },
-      "actions": {
-        "productImage": "รูปภาพสินค้า"
-      }
+      "productImage": "รูปภาพสินค้า"
     }
   }
 }

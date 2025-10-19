@@ -15,10 +15,11 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { useConfirm as Confirm } from "@/hooks/use-confirm";
 import { unVerifyScanItemsApi } from "../../api/unverify-scan-items";
-import { useParams as Params } from "next/navigation";
+import { useParams as Params, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { ScanItemDetailModal } from "../modal/scan-item-detial.modal";
+import { RouteConfig } from "@/config/route.config";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
   accessorKey?: keyof IScanItems;
@@ -26,7 +27,8 @@ type qrcodeTableColumns = ColumnDef<IScanItems> & {
 
 export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
   const queryClient = useQueryClient();
-  const { t } = useTranslation();
+  const router = useRouter();
+  const { t } = useTranslation("scan-item");
 
   return [
     {
@@ -53,7 +55,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
     },
     {
       accessorKey: "serial",
-      header: t("qrcode.columns.serial"),
+      header: t("columns.serial"),
       cell: ({ row }) => {
         return (
           <ScanItemDetailModal
@@ -69,11 +71,11 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
     },
     {
       accessorKey: "pin",
-      header: t("qrcode.columns.pin"),
+      header: t("columns.pin"),
     },
     {
       accessorKey: "registeredFlag",
-      header: t("qrcode.columns.verified"),
+      header: t("columns.verified"),
       cell: ({ row }) => {
         const productCode =
           row.original.registeredFlag ?? ("" as string | null);
@@ -83,7 +85,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       },
     },
     {
-      header: t("qrcode.columns.verifiedDate"),
+      header: t("columns.verifiedDate"),
       cell: ({ row }) => {
         const registeredFlag = row.original.registeredDate ?? ("" as string);
         return registeredFlag
@@ -93,17 +95,17 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
     },
     {
       accessorKey: "productCode",
-      header: t("qrcode.columns.productCode"),
+      header: t("columns.productCode"),
     },
     {
       accessorKey: "url",
-      header: t("qrcode.columns.url"),
+      header: t("columns.url"),
     },
     {
       accessorKey: "scanCount",
       header: () => {
         return (
-          <div className="text-center">{t("qrcode.columns.scanCount")}</div>
+          <div className="text-center">{t("columns.scanCount")}</div>
         );
       },
       cell: ({ row }) => {
@@ -111,11 +113,11 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       },
     },
     {
-      header: t("qrcode.columns.action"),
+      header: t("columns.action"),
       cell: ({ row }) => {
         const [UnVerifyConfirmDialog, unVerifyConfirm] = Confirm({
-          title: t("qrcode.unverify.title"),
-          message: t("qrcode.unverify.message"),
+          title: t("unverify.title"),
+          message: t("unverify.message"),
           variant: "destructive",
         });
         const params = Params<{ orgId: string }>();
@@ -130,19 +132,19 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           try {
             await unVerifyScanItemMutate.mutateAsync(scanId, {
               onSuccess: () => {
-                toast.success(t("qrcode.unverify.success"));
+                toast.success(t("unverify.success"));
                 queryClient.invalidateQueries({
                   queryKey: fetchScanItemsApi.fetchScanItemsKey,
                   refetchType: "active",
                 });
               },
               onError: () => {
-                toast.error(t("qrcode.unverify.error"));
+                toast.error(t("unverify.error"));
               },
             });
           } catch (error) {
-            console.error("error", error)
-            toast.error(t("qrcode.unverify.error"));
+            console.error("error", error);
+            toast.error(t("unverify.error"));
           }
         };
 
@@ -163,15 +165,22 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                 <DropdownMenuItem
                   onSelect={() => handleUnVerify(row.original.id)}
                 >
-                  {t("qrcode.actions.unVerifyScanItem")}
+                  {t("actions.unVerifyScanItem")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={() => console.log("bindToCustomer")}
                 >
-                  {t("qrcode.actions.bindToCustomer")}
+                  {t("actions.bindToCustomer")}
                 </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => console.log("bindToProduct")}>
-                  {t("qrcode.actions.bindToProduct")}
+                <DropdownMenuItem
+                  onSelect={() =>
+                    router.push(
+                      RouteConfig.GENERAL.PRODUCT.LIST(row.original.orgId) +
+                        `?scanItemId=${row.original.id}`
+                    )
+                  }
+                >
+                  {t("actions.bindToProduct")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

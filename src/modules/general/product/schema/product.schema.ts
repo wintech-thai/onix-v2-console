@@ -1,19 +1,18 @@
-import { TFunction } from "i18next";
 import { z } from "zod";
 
-export const useProductSchema = (t: TFunction<"product", undefined>) => {
+export const useProductSchema = () => {
   return z.object({
     id: z.string().nullable(),
-    orgId: z.string().min(1, t("product.validation.codeRequired")),
-    code: z.string().min(1, t("product.validation.codeRequired")),
-    description: z.string().min(1, t("product.validation.descriptionRequired")),
-    tags: z.string().min(1, t("product.validation.tagsRequired")),
+    orgId: z.string().min(1, "validation.codeRequired"),
+    code: z.string().min(1, "validation.codeRequired"),
+    description: z.string().min(1, "validation.descriptionRequired"),
+    tags: z.string().min(1, "validation.tagsRequired"),
     itemType: z.number(),
     narrative: z.string(),
     content: z.string(),
     properties: z.record(z.string(), z.union([z.string(), z.number(), z.null()])),
     narratives: z.array(z.object({
-      text: z.string().min(1, t("product.validation.narrativeRequired"))
+      text: z.string().min(1, "validation.narrativeRequired")
     })),
     images: z.array(
       z.object({

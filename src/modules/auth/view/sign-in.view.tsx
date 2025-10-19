@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { RouteConfig } from "@/config/route.config";
 
 const SignInView = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "auth"]);
   const router = useRouter();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -42,14 +42,14 @@ const SignInView = () => {
       const r = await authApi.login(data);
 
       if (r.status !== 200) {
-        return toast.error(t("auth.error.invalidCredentials"));
+        return toast.error(t("auth:error.invalidCredentials"));
       }
 
       handleCheckAuthOrg();
-      return toast.success(t("auth.success.login"));
+      return toast.success(t("auth:success.login"));
     } catch (error) {
       console.log("error", error);
-      return toast.error(t("auth.error.invalidCredentials"));
+      return toast.error(t("auth:error.invalidCredentials"));
     }
   };
 
@@ -61,7 +61,7 @@ const SignInView = () => {
   };
 
   return (
-    <AuthLayout header={t("auth.signInHeader")}>
+    <AuthLayout header={t("auth:signInHeader")}>
       <form
         className="flex flex-col space-y-4"
         onSubmit={(e) => {
@@ -76,12 +76,12 @@ const SignInView = () => {
             return (
               <Input
                 maxLength={20}
-                placeholder={t("auth.username")}
-                label={t("auth.username")}
+                placeholder={t("auth:username")}
+                label={t("auth:username")}
                 {...field}
                 errorMessage={
                   errors.UserName?.message
-                    ? t("auth.error.form.username")
+                    ? t("auth:error.form.username")
                     : undefined
                 }
               />
@@ -96,12 +96,12 @@ const SignInView = () => {
               <Input
                 type="password"
                 maxLength={20}
-                placeholder={t("auth.password")}
-                label={t("auth.password")}
+                placeholder={t("auth:password")}
+                label={t("auth:password")}
                 {...field}
                 errorMessage={
                   errors.Password?.message
-                    ? t("auth.error.form.password")
+                    ? t("auth:error.form.password")
                     : undefined
                 }
               />
@@ -110,7 +110,7 @@ const SignInView = () => {
         />
 
         <Button type="submit" isPending={form.formState.isSubmitting}>
-          {t("auth.signInLabel")}
+          {t("auth:signInLabel")}
         </Button>
       </form>
     </AuthLayout>

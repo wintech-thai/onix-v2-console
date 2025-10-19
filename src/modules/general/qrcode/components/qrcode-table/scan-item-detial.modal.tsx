@@ -24,7 +24,7 @@ export const ScanItemDetailModal = ({
   children,
 }: ScanItemDetailModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["scan-item", "common"]);
 
   // Query only when modal is open
   const getScanItem = getScanItemsApi.useGetScanItemsQuery(
@@ -40,7 +40,7 @@ export const ScanItemDetailModal = ({
       <DialogContent iconWhite className="min-w-2xl w-full max-h-[80vh] overflow-y-auto">
         <DialogHeader className="relative bg-primary text-white rounded-t-lg -m-6 mb-4 p-4">
           <DialogTitle className="text-xl font-semibold">
-            {t("qrcode.modal.title")}
+            {t("modal.title")}
           </DialogTitle>
           {/* Copy button positioned next to close button */}
           {scanItem && (
@@ -82,14 +82,14 @@ export const ScanItemDetailModal = ({
         {getScanItem.isLoading && (
           <div className="flex items-center justify-center py-8">
             <Loader className="animate-spin size-6 mr-2" />
-            <span>{t("qrcode.modal.loading")}</span>
+            <span>{t("modal.loading")}</span>
           </div>
         )}
 
         {getScanItem.isError && (
           <div className="flex items-center justify-center py-8 text-red-500">
             <XIcon className="size-6 mr-2" />
-            <span>{t("qrcode.modal.error")}</span>
+            <span>{t("modal.error")}</span>
           </div>
         )}
 
@@ -98,23 +98,23 @@ export const ScanItemDetailModal = ({
 {/* First group: Serial, Pin, URL, Upload Path */}
             {[
               {
-                label: t("qrcode.modal.fields.serial"),
+                label: t("modal.fields.serial"),
                 value: scanItem.serial,
                 type: "text"
               },
               {
-                label: t("qrcode.modal.fields.pin"),
+                label: t("modal.fields.pin"),
                 value: scanItem.pin,
                 type: "text"
               },
               {
-                label: t("qrcode.modal.fields.url"),
+                label: t("modal.fields.url"),
                 value: scanItem.url,
                 type: "text",
                 breakAll: true
               },
               {
-                label: t("qrcode.modal.fields.uploadPath"),
+                label: t("modal.fields.uploadPath"),
                 value: scanItem.uploadedPath,
                 type: "text",
                 breakAll: true
@@ -143,7 +143,7 @@ export const ScanItemDetailModal = ({
                     ) : (
                       <XIcon className="size-4 text-red-500 mr-1" />
                     )}
-                    <span className="text-sm">{t("qrcode.modal.fields.verified")}</span>
+                    <span className="text-sm">{t("modal.fields.verified")}</span>
                   </div>
 
                   <div className="flex items-center">
@@ -152,7 +152,7 @@ export const ScanItemDetailModal = ({
                     ) : (
                       <XIcon className="size-4 text-red-500 mr-1" />
                     )}
-                    <span className="text-sm">{t("qrcode.modal.fields.used")}</span>
+                    <span className="text-sm">{t("modal.fields.used")}</span>
                   </div>
 
                   <div className="flex items-center">
@@ -161,7 +161,7 @@ export const ScanItemDetailModal = ({
                     ) : (
                       <XIcon className="size-4 text-red-500 mr-1" />
                     )}
-                    <span className="text-sm">{t("qrcode.modal.fields.applied")}</span>
+                    <span className="text-sm">{t("modal.fields.applied")}</span>
                   </div>
                 </div>
               </div>
@@ -170,12 +170,12 @@ export const ScanItemDetailModal = ({
             {/* Second group: Run ID, Sequence No */}
             {[
               {
-                label: t("qrcode.modal.fields.runId"),
+                label: t("modal.fields.runId"),
                 value: scanItem.runId,
                 type: "text"
               },
               {
-                label: t("qrcode.modal.fields.sequenceNo"),
+                label: t("modal.fields.sequenceNo"),
                 value: scanItem.sequenceNo,
                 type: "text"
               }
@@ -193,7 +193,7 @@ export const ScanItemDetailModal = ({
         )}
 
         <Button className="mt-6 w-fit ml-auto" onClick={() => setIsOpen(false)}>
-          {t("common.ok")}
+          {t("common:common.ok")}
         </Button>
       </DialogContent>
     </Dialog>

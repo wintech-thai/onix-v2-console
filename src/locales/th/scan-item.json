@@ -1,0 +1,154 @@
+{
+  "columns": {
+    "serial": "ซีเรียล",
+    "pin": "พิน",
+    "verified": "ยืนยันแล้ว",
+    "verifiedDate": "วันที่ยืนยัน",
+    "productCode": "รหัสสินค้า",
+    "url": "ลิงก์",
+    "scanCount": "จำนวนการสแกน",
+    "action": "การดำเนินการ"
+  },
+  "actions": {
+    "unVerifyScanItem": "ยกเลิกการยืนยัน",
+    "bindToCustomer": "ผูกกับลูกค้า",
+    "bindToProduct": "ผูกกับสินค้า"
+  },
+  "filter": {
+    "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "add": "เพิ่ม",
+    "delete": "ลบ",
+    "config": "ตั้งค่า",
+    "scanItemTemplate": "แม่แบบรายการสแกน",
+    "scanItemAction": "การดำเนินการรายการสแกน"
+  },
+  "delete": {
+    "title": "ยืนยันการลบ",
+    "message": "คุณแน่ใจหรือไม่ที่จะลบรายการสแกนที่เลือก? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+    "success": "ลบรายการสแกนสำเร็จ",
+    "error": "ลบรายการสแกนไม่สำเร็จ"
+  },
+  "unverify": {
+    "title": "ยืนยันการยกเลิกการยืนยัน",
+    "message": "คุณแน่ใจหรือไม่ที่จะยกเลิกการยืนยันรายการสแกนนี้? การดำเนินการนี้จะลบสถานะการยืนยัน",
+    "success": "ยกเลิกการยืนยันรายการสแกนสำเร็จ",
+    "error": "ยกเลิกการยืนยันรายการสแกนไม่สำเร็จ"
+  },
+  "modal": {
+    "title": "รายละเอียดรายการสแกน",
+    "loading": "กำลังโหลดรายละเอียดรายการสแกน...",
+    "error": "เกิดข้อผิดพลาดในการโหลดรายละเอียดรายการสแกน",
+    "copySuccess": "คัดลอกไปยังคลิปบอร์ดแล้ว",
+    "copyTooltip": "คัดลอกข้อมูลรายการสแกนไปยังคลิปบอร์ด",
+    "fields": {
+      "serial": "ซีเรียล",
+      "pin": "พิน",
+      "url": "ลิงก์",
+      "uploadPath": "เส้นทางอัพโหลด",
+      "verified": "ยืนยันแล้ว",
+      "used": "ใช้แล้ว",
+      "applied": "นำไปใช้แล้ว",
+      "runId": "รหัสการรัน",
+      "sequenceNo": "หมายเลขลำดับ",
+      "productCode": "รหัสสินค้า",
+      "itemGroup": "กลุ่มรายการ",
+      "itemId": "รหัสรายการ",
+      "customerId": "รหัสลูกค้า",
+      "scanCount": "จำนวนการสแกน",
+      "tags": "แท็ก",
+      "createdDate": "วันที่สร้าง",
+      "registeredDate": "วันที่ลงทะเบียน",
+      "yes": "ใช่",
+      "no": "ไม่"
+    }
+  },
+  "create": {
+    "title": "สร้างรายการสแกน",
+    "fields": {
+      "serial": "ซีเรียล",
+      "pin": "พิน"
+    },
+    "validation": {
+      "serialRequired": "กรุณากรอกซีเรียล",
+      "pinRequired": "กรุณากรอกพิน",
+      "serialDuplicate": "{{serial}} ซีเรียลซ้ำ",
+      "pinDuplicate": "{{pin}} พินซ้ำ"
+    },
+    "success": "สร้างรายการสแกนสำเร็จ",
+    "error": "สร้างรายการสแกนไม่สำเร็จ",
+    "copySuccess": "คัดลอกไปยังคลิปบอร์ดแล้ว",
+    "copyTooltip": "คัดลอกข้อมูลไปยังคลิปบอร์ด"
+  },
+  "scanItemAction": {
+    "title": "การดำเนินการรายการสแกน",
+    "fields": {
+      "key": "คีย์",
+      "iv": "ไอวี",
+      "theme": "ธีม",
+      "redirectUrl": "ลิงก์ตรวจสอบ",
+      "rescanCheck": "ตรวจสอบการสแกนซ้ำ"
+    },
+    "buttons": {
+      "defaultValue": "ค่าเริ่มต้น"
+    },
+    "validation": {
+      "orgIdRequired": "กรุณากรอกรหัสองค์กร",
+      "redirectUrlRequired": "กรุณากรอกลิงก์ตรวจสอบ",
+      "redirectUrlMax": "ลิงก์ตรวจสอบต้องมีความยาวไม่เกิน 80 ตัวอักษร",
+      "encryptionKeyLength": "คีย์เข้ารหัสต้องมีความยาว 16 ตัวอักษร",
+      "encryptionIVLength": "ไอวีเข้ารหัสต้องมีความยาว 16 ตัวอักษร",
+      "themeVerifyMax": "ธีมต้องมีความยาวไม่เกิน 15 ตัวอักษร",
+      "invalidUrl": "รูปแบบลิงก์ไม่ถูกต้อง",
+      "registeredAwareFlagRequired": "กรุณากรอกสถานะการลงทะเบียน",
+      "createdDateRequired": "กรุณากรอกวันที่สร้าง"
+    },
+    "success": {
+      "create": "สร้างการดำเนินการรายการสแกนสำเร็จ",
+      "update": "อัปเดตการดำเนินการรายการสแกนสำเร็จ"
+    },
+    "error": {
+      "create": "สร้างการดำเนินการรายการสแกนไม่สำเร็จ",
+      "update": "อัปเดตการดำเนินการรายการสแกนไม่สำเร็จ",
+      "loadDefault": "โหลดค่าเริ่มต้นไม่สำเร็จ"
+    }
+  },
+  "scanItemTemplate": {
+    "title": "แม่แบบรายการสแกน",
+    "fields": {
+      "serialPrefixDigit": "ความยาวคำนำหน้า (Prefix)",
+      "generatorCount": "จำนวนรายการที่สร้าง",
+      "serialDigit": "ความยาวหมายเลขซีเรียล",
+      "pinDigit": "ความยาวรหัส PIN",
+      "urlTemplate": "รูปแบบ URL (Template)",
+      "notificationEmail": "อีเมลแจ้งเตือน"
+    },
+    "buttons": {
+      "defaultValue": "ค่าเริ่มต้น"
+    },
+    "validation": {
+      "orgIdRequired": "กรุณากรอกรหัสองค์กร",
+      "serialPrefixDigitMin": "Prefix Length ต้องมีค่าอย่างน้อย 2",
+      "serialPrefixDigitMax": "Prefix Length ต้องมีค่าไม่เกิน 3",
+      "generatorCountRequired": "กรุณากรอก Item Count",
+      "serialDigitMin": "Serial Length ต้องมีค่าอย่างน้อย 7",
+      "serialDigitMax": "Serial Length ต้องมีค่าไม่เกิน 9",
+      "pinDigitMin": "Pin Length ต้องมีค่าอย่างน้อย 7",
+      "pinDigitMax": "Pin Length ต้องมีค่าไม่เกิน 9",
+      "urlTemplateRequired": "กรุณากรอกแม่แบบลิงก์",
+      "invalidEmail": "รูปแบบอีเมลไม่ถูกต้อง",
+      "createdDateRequired": "กรุณากรอกวันที่สร้าง"
+    },
+    "success": {
+      "create": "สร้างแม่แบบรายการสแกนสำเร็จ",
+      "update": "อัปเดตแม่แบบรายการสแกนสำเร็จ"
+    },
+    "error": {
+      "create": "สร้างแม่แบบรายการสแกนไม่สำเร็จ",
+      "update": "อัปเดตแม่แบบรายการสแกนไม่สำเร็จ",
+      "loadDefault": "โหลดค่าเริ่มต้นไม่สำเร็จ"
+    }
+  }
+}

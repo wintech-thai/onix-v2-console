@@ -208,10 +208,10 @@ export const ProductPropertiesForm = () => {
     return (
       <div className="p-4 md:p-6 border">
         <header className="text-lg font-bold">
-          {t("product.properties.title")}
+          {t("properties.title")}
         </header>
         <div className="mt-4 text-center text-muted-foreground">
-          {t("product.properties.loading")}
+          {t("properties.loading")}
         </div>
       </div>
     );
@@ -220,7 +220,7 @@ export const ProductPropertiesForm = () => {
   return (
     <div className="p-4 md:p-6 border rounded-lg">
       <header className="text-lg font-bold">
-        {t("product.properties.title")}
+        {t("properties.title")}
       </header>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
@@ -240,7 +240,7 @@ export const ProductPropertiesForm = () => {
                     }
                   />
                 </TableHead>
-                <TableHead>{t("product.properties.available")}</TableHead>
+                <TableHead>{t("properties.available")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -250,7 +250,7 @@ export const ProductPropertiesForm = () => {
                     colSpan={2}
                     className="text-center text-muted-foreground"
                   >
-                    {t("product.properties.noAvailable")}
+                    {t("properties.noAvailable")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -314,8 +314,8 @@ export const ProductPropertiesForm = () => {
                     disabled={isSubmitting}
                   />
                 </TableHead>
-                <TableHead>{t("product.properties.property")}</TableHead>
-                <TableHead>{t("product.properties.value")}</TableHead>
+                <TableHead>{t("properties.property")}</TableHead>
+                <TableHead>{t("properties.value")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -325,7 +325,7 @@ export const ProductPropertiesForm = () => {
                     colSpan={3}
                     className="text-center text-muted-foreground"
                   >
-                    {t("product.properties.noSelected")}
+                    {t("properties.noSelected")}
                   </TableCell>
                 </TableRow>
               ) : (

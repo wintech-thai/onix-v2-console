@@ -29,14 +29,16 @@ export const ProductForm = ({
   const router = useRouter();
   const { setFormDirty } = useFormNavigationBlocker();
 
+  const schema = useProductSchema();
+
   const form = useForm<ProductSchemaType>({
-    resolver: zodResolver(useProductSchema(t)),
+    resolver: zodResolver(schema),
     defaultValues: defaultValues,
   });
 
   const [ConfirmBack, confirmBack] = useConfirm({
-    message: t("product.form.unsavedChanges"),
-    title: t("product.form.leavePage"),
+    message: t("form.unsavedChanges"),
+    title: t("form.leavePage"),
     variant: "destructive"
   });
 
@@ -95,7 +97,7 @@ export const ProductForm = ({
                 onClick={handleCancel}
                 className="inline cursor-pointer"
               />{" "}
-              {isUpdate ? t("product.updateTitle") : t("product.createTitle")}
+              {isUpdate ? t("updateTitle") : t("createTitle")}
             </h1>
           </header>
           <div className="flex-1 p-4 space-y-4 overflow-y-auto">
@@ -110,10 +112,10 @@ export const ProductForm = ({
 
           <div className="border-t py-2 px-4 shrink-0 flex items-center justify-end gap-x-2">
             <Button onClick={handleCancel} disabled={isSubmitting} variant="destructive" type="button">
-              {t("product.actions.cancel")}
+              {t("actions.cancel")}
             </Button>
             <Button isPending={isSubmitting}>
-              {t("product.actions.save")}
+              {t("actions.save")}
             </Button>
           </div>
         </form>

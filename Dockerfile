@@ -40,6 +40,7 @@ RUN CI=true pnpm install --prod --ignore-scripts --frozen-lockfile
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./
+COPY --from=builder /app/next.config.ts ./
 
 # Set environment variables
 ENV NODE_ENV=production
