@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { XIcon } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
+import { errorMessageAsLangKey } from "@/lib/utils";
 
 interface ProductDetailFormProps {
   isUpdate: boolean;
@@ -46,7 +47,7 @@ export const ProductDetailForm = ({
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">{t("product.detail.title")}</header>
+      <header className="text-lg font-bold">{t("detail.title")}</header>
       <div className="grid md:grid-cols-2 gap-2 mt-4">
         <Controller
           control={form.control}
@@ -55,9 +56,9 @@ export const ProductDetailForm = ({
             return (
               <Input
                 {...field}
-                label={t("product.detail.code")}
+                label={t("detail.code")}
                 isRequired
-                errorMessage={fieldState.error?.message}
+                errorMessage={errorMessageAsLangKey(fieldState.error?.message, t)}
                 maxLength={30}
                 disabled={isUpdate || isSubmitting}
               />
@@ -72,9 +73,9 @@ export const ProductDetailForm = ({
             return (
               <Input
                 {...field}
-                label={t("product.detail.description")}
+                label={t("detail.description")}
                 isRequired
-                errorMessage={fieldState.error?.message}
+                errorMessage={errorMessageAsLangKey(fieldState.error?.message, t)}
                 maxLength={150}
                 disabled={isSubmitting}
               />
@@ -85,7 +86,7 @@ export const ProductDetailForm = ({
 
       <div className="mt-4">
         <Label>
-          {t("product.detail.tags")} <span className="text-red-500">*</span>
+          {t("detail.tags")} <span className="text-red-500">*</span>
         </Label>
         <div className="mt-2">
           <Input
@@ -93,7 +94,7 @@ export const ProductDetailForm = ({
             onChange={(e) => setTagInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type and press Enter to add tag"
-            errorMessage={form.formState.errors.tags?.message}
+            errorMessage={errorMessageAsLangKey(form.formState.errors.tags?.message, t)}
             maxLength={30}
             disabled={isSubmitting}
           />

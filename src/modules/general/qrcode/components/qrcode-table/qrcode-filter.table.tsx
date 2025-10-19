@@ -36,7 +36,7 @@ export const QrCodeFilterTable = ({
   onSearch,
   selected,
 }: QrCodeFilterTableProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("scan-item");
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -85,13 +85,13 @@ export const QrCodeFilterTable = ({
           <Select value={searchField} onValueChange={setSearchField}>
             <SelectTrigger
               className="w-full md:w-48"
-              aria-label={t("qrcode.filter.selectSearchField")}
+              aria-label={t("filter.selectSearchField")}
             >
-              <SelectValue placeholder={t("qrcode.filter.selectSearchField")} />
+              <SelectValue placeholder={t("filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="fullTextSearch">
-                {t("qrcode.filter.fullTextSearch")}
+                {t("filter.fullTextSearch")}
               </SelectItem>
               {/* เพิ่ม options อื่น ๆ ในอนาคตได้ */}
               {/* <SelectItem value="serial">Serial</SelectItem> */}
@@ -102,9 +102,9 @@ export const QrCodeFilterTable = ({
         {/* Search input */}
         <div className="w-full md:w-[500px]">
           <Input
-            placeholder={t("qrcode.filter.searchPlaceholder")}
+            placeholder={t("filter.searchPlaceholder")}
             className="w-full"
-            aria-label={t("qrcode.filter.searchPlaceholder")}
+            aria-label={t("filter.searchPlaceholder")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
@@ -119,7 +119,7 @@ export const QrCodeFilterTable = ({
           <Button
             type="submit"
             className="w-full md:w-[80px]"
-            aria-label={t("qrcode.filter.search")}
+            aria-label={t("filter.search")}
           >
             <Search className="size-4" />
           </Button>
@@ -137,7 +137,7 @@ export const QrCodeFilterTable = ({
       >
         <CreateScanItemModal>
           <Button className="w-full md:w-auto col-span-3">
-            {t("qrcode.filter.add")}
+            {t("filter.add")}
           </Button>
         </CreateScanItemModal>
 
@@ -147,21 +147,21 @@ export const QrCodeFilterTable = ({
           onClick={onDelete}
           variant="destructive"
         >
-          {t("qrcode.filter.delete")} {selected ? `(${selected})` : ""}
+          {t("filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="w-full md:w-auto" variant="outline">
-              {t("qrcode.filter.config")}
+              {t("filter.config")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">
             <DropdownMenuItem onSelect={() => setOpenScanItemThemplateModal(true)}>
-              {t("qrcode.filter.scanItemTemplate")}
+              {t("filter.scanItemTemplate")}
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => setOpenScanItemModal(true)}>
-              {t("qrcode.filter.scanItemAction")}
+              {t("filter.scanItemAction")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

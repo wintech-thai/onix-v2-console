@@ -32,7 +32,7 @@ export const ResetPasswordModal = ({
   open,
   onClose,
 }: ResetPasswordModalProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["auth", "common"]);
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const [updatePasswordError, setUpdatePasswordError] = useState(false);
@@ -88,7 +88,7 @@ export const ResetPasswordModal = ({
       }
 
       if (r.data.status === "IDP_UPDATE_PASSWORD_ERROR") {
-        toast.error(t("auth.validPassword.IDP_UPDATE_PASSWORD_ERROR"));
+        toast.error(t("auth:validPassword.IDP_UPDATE_PASSWORD_ERROR"));
         return;
       }
 
@@ -108,18 +108,18 @@ export const ResetPasswordModal = ({
   };
 
   const errorsPassword = [
-    t("auth.validPassword.1"),
-    t("auth.validPassword.2"),
-    t("auth.validPassword.3"),
-    t("auth.validPassword.4"),
+    t("auth:validPassword.1"),
+    t("auth:validPassword.2"),
+    t("auth:validPassword.3"),
+    t("auth:validPassword.4"),
   ];
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("auth.updatePasswordHeader")}</DialogTitle>
-          <DialogDescription>{t("auth.updatePasswordesc")}</DialogDescription>
+          <DialogTitle>{t("auth:updatePasswordHeader")}</DialogTitle>
+          <DialogDescription>{t("auth:updatePasswordesc")}</DialogDescription>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
           <Controller
@@ -128,9 +128,9 @@ export const ResetPasswordModal = ({
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("auth.currentPassword")}
+                label={t("auth:currentPassword")}
                 type="password"
-                placeholder={t("auth.currentPassword")}
+                placeholder={t("auth:currentPassword")}
                 errorMessage={errorMessageAsLangKey(errors.currentPassword?.message, t)}
                 maxLength={20}
               />
@@ -142,9 +142,9 @@ export const ResetPasswordModal = ({
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("auth.newPassword")}
+                label={t("auth:newPassword")}
                 type="password"
-                placeholder={t("auth.newPassword")}
+                placeholder={t("auth:newPassword")}
                 errorMessage={errorMessageAsLangKey(errors.newPassword?.message, t)}
                 maxLength={20}
               />
@@ -156,9 +156,9 @@ export const ResetPasswordModal = ({
             render={({ field }) => (
               <Input
                 {...field}
-                label={t("auth.confirmNewPassword")}
+                label={t("auth:confirmNewPassword")}
                 type="password"
-                placeholder={t("auth.confirmNewPassword")}
+                placeholder={t("auth:confirmNewPassword")}
                 errorMessage={errorMessageAsLangKey(errors.confirmNewPassword?.message, t)}
                 maxLength={20}
               />
@@ -183,9 +183,9 @@ export const ResetPasswordModal = ({
               variant="outline"
               onClick={() => handleOpenChange(false)}
             >
-              {t("common.cancel")}
+              {t("common:common.cancel")}
             </Button>
-            <Button isPending={isSubmitting}>{t("common.save")}</Button>
+            <Button isPending={isSubmitting}>{t("common:common.save")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

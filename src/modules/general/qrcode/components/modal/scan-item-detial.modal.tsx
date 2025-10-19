@@ -27,7 +27,7 @@ export const ScanItemDetailModal = ({
   children,
 }: ScanItemDetailModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "scan-item"]);
 
   const getScanItem = getScanItemsApi.useGetScanItemsQuery(
     { orgId, scanItemId },
@@ -56,7 +56,7 @@ export const ScanItemDetailModal = ({
           "
         >
           <DialogTitle className="text-base sm:text-lg md:text-xl font-semibold">
-            {t("qrcode.modal.title")}
+            {t("scan-item:modal.title")}
           </DialogTitle>
 
           {scanItem && (
@@ -108,7 +108,7 @@ export const ScanItemDetailModal = ({
           <div className="flex items-center justify-center py-6 sm:py-8">
             <Loader className="animate-spin size-5 sm:size-6 mr-2" />
             <span className="text-sm sm:text-base">
-              {t("qrcode.modal.loading")}
+              {t("scan-item:modal.loading")}
             </span>
           </div>
         )}
@@ -117,7 +117,7 @@ export const ScanItemDetailModal = ({
           <div className="flex items-center justify-center py-6 sm:py-8 text-red-500">
             <XIcon className="size-5 sm:size-6 mr-2" />
             <span className="text-sm sm:text-base">
-              {t("qrcode.modal.error")}
+              {t("scan-item:modal.error")}
             </span>
           </div>
         )}
@@ -132,7 +132,7 @@ export const ScanItemDetailModal = ({
                 "
             >
               <label className="text-xs sm:text-sm font-medium text-muted-foreground sm:min-w-[120px] md:min-w-[140px] shrink-0">
-                {t("qrcode.modal.fields.serial")} :
+                {t("scan-item:modal.fields.serial")} :
               </label>
 
               <div
@@ -147,15 +147,15 @@ export const ScanItemDetailModal = ({
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                     <Status
                       ok={scanItem.registeredFlag === "TRUE"}
-                      label={t("qrcode.modal.fields.verified")}
+                      label={t("scan-item:modal.fields.verified")}
                     />
                     <Status
                       ok={scanItem.usedFlag === "TRUE"}
-                      label={t("qrcode.modal.fields.used")}
+                      label={t("scan-item:modal.fields.used")}
                     />
                     <Status
                       ok={scanItem.appliedFlag === "TRUE"}
-                      label={t("qrcode.modal.fields.applied")}
+                      label={t("scan-item:modal.fields.applied")}
                     />
                   </div>
                 </div>
@@ -163,14 +163,14 @@ export const ScanItemDetailModal = ({
             </div>
             {(
               [
-                { label: t("qrcode.modal.fields.pin"), value: scanItem.pin },
+                { label: t("scan-item:modal.fields.pin"), value: scanItem.pin },
                 {
-                  label: t("qrcode.modal.fields.url"),
+                  label: t("scan-item:modal.fields.url"),
                   value: scanItem.url,
                   long: true,
                 },
                 {
-                  label: t("qrcode.modal.fields.uploadPath"),
+                  label: t("scan-item:modal.fields.uploadPath"),
                   value: scanItem.uploadedPath,
                   long: true,
                 },
@@ -211,11 +211,11 @@ export const ScanItemDetailModal = ({
             {/* Run ID / Sequence No */}
             {[
               {
-                label: t("qrcode.modal.fields.runId"),
+                label: t("scan-item:modal.fields.runId"),
                 value: scanItem.runId,
               },
               {
-                label: t("qrcode.modal.fields.sequenceNo"),
+                label: t("scan-item:modal.fields.sequenceNo"),
                 value: scanItem.sequenceNo,
               },
             ].map((f, i) => (
@@ -240,7 +240,7 @@ export const ScanItemDetailModal = ({
           className="mt-4 sm:mt-6 w-full sm:w-fit sm:ml-auto text-sm sm:text-base"
           onClick={() => setIsOpen(false)}
         >
-          {t("common.ok")}
+          {t("common:common.ok")}
         </Button>
       </DialogContent>
     </Dialog>

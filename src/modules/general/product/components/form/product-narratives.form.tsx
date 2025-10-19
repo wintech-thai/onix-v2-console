@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { errorMessageAsLangKey } from "@/lib/utils";
 
 export const ProductNarrativesForm = () => {
   const { t } = useTranslation("product");
@@ -18,7 +19,7 @@ export const ProductNarrativesForm = () => {
   return (
     <div className="p-4 md:p-6 border rounded-lg">
       <header className="text-lg font-bold">
-        {t("product.narratives.title")}
+        {t("narratives.title")}
       </header>
 
       <div className="w-full md:w-1/2 mt-4">
@@ -33,7 +34,7 @@ export const ProductNarrativesForm = () => {
                     {...field}
                     isRequired
                     className="w-full"
-                    errorMessage={fieldState.error?.message}
+                    errorMessage={errorMessageAsLangKey(fieldState.error?.message, t)}
                     maxLength={100}
                     disabled={isSubmitting}
                   />

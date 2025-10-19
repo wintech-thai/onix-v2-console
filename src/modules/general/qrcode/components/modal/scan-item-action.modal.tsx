@@ -35,11 +35,11 @@ export const ScanItemActionModal = ({
   open,
   onOpenChange,
 }: ScanItemActionModalProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["scan-item", "common"]);
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
 
-  const scanItemActionSchema = useScanItemActionSchema(t);
+  const scanItemActionSchema = useScanItemActionSchema();
 
   const [internalOpen, setInternalOpen] = useState(false);
   // Form setup
@@ -115,7 +115,7 @@ export const ScanItemActionModal = ({
       });
     } catch (error) {
       console.error("Error loading default values:", error);
-      toast.error(t("qrcode.scanItemAction.error.loadDefault"));
+      toast.error(t("scan-item:scanItemAction.error.loadDefault"));
     }
   };
 
@@ -131,15 +131,17 @@ export const ScanItemActionModal = ({
           {
             onError: (error) => {
               toast.error(
-                error.message || t("qrcode.scanItemAction.error.update")
+                error.message || t("scan-item:scanItemAction.error.update")
               );
             },
             onSuccess: ({ data }) => {
               if (data.status !== "OK") {
-                return toast.error(data.description || t("common.error"));
+                return toast.error(
+                  data.description || t("common:common.error")
+                );
               }
 
-              toast.success(t("qrcode.scanItemAction.success.update"));
+              toast.success(t("scan-item:scanItemAction.success.update"));
               handleClose(false);
             },
           }
@@ -153,15 +155,17 @@ export const ScanItemActionModal = ({
           {
             onError: (error) => {
               toast.error(
-                error.message || t("qrcode.scanItemAction.error.create")
+                error.message || t("scan-item:scanItemAction.error.create")
               );
             },
             onSuccess: ({ data }) => {
               if (data.status !== "OK") {
-                return toast.error(data.description || t("common.error"));
+                return toast.error(
+                  data.description || t("common:common.error")
+                );
               }
 
-              toast.success(t("qrcode.scanItemAction.success.create"));
+              toast.success(t("scan-item:scanItemAction.success.create"));
               handleClose(false);
             },
           }
@@ -186,7 +190,7 @@ export const ScanItemActionModal = ({
           "
         >
           <DialogTitle className="text-xl font-bold mb-2">
-            {t("qrcode.scanItemAction.title")}
+            {t("scan-item:scanItemAction.title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -200,15 +204,15 @@ export const ScanItemActionModal = ({
             disabled={getScanItemDefaultMutation.isPending || isSubmitting}
           >
             {getScanItemDefaultMutation.isPending
-              ? t("common.loading")
-              : t("qrcode.scanItemAction.buttons.defaultValue")}
+              ? t("common:common.loading")
+              : t("scan-item:scanItemAction.buttons.defaultValue")}
           </Button>
 
           <div className="flex flex-col gap-2">
             {/* Encryption Key */}
             <div className="flex flex-col md:flex-row md:items-center gap-3 relative">
               <Label isRequired className="w-32">
-                {t("qrcode.scanItemAction.fields.key")}
+                {t("scan-item:scanItemAction.fields.key")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -239,15 +243,15 @@ export const ScanItemActionModal = ({
                 disabled={getScanItemDefaultMutation.isPending || isSubmitting}
               >
                 {getScanItemDefaultMutation.isPending
-                  ? t("common.loading")
-                  : t("qrcode.scanItemAction.buttons.defaultValue")}
+                  ? t("common:common.loading")
+                  : t("scan-item:scanItemAction.buttons.defaultValue")}
               </Button>
             </div>
 
             {/* Encryption IV */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label isRequired className="w-32">
-                {t("qrcode.scanItemAction.fields.iv")}
+                {t("scan-item:scanItemAction.fields.iv")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -271,7 +275,7 @@ export const ScanItemActionModal = ({
             {/* Theme Verify */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label className="w-32">
-                {t("qrcode.scanItemAction.fields.theme")}
+                {t("scan-item:scanItemAction.fields.theme")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -295,7 +299,7 @@ export const ScanItemActionModal = ({
             {/* Redirect URL */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label isRequired className="w-32">
-                {t("qrcode.scanItemAction.fields.redirectUrl")}
+                {t("scan-item:scanItemAction.fields.redirectUrl")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -334,7 +338,7 @@ export const ScanItemActionModal = ({
                     />
                   )}
                 />
-                <span>{t("qrcode.scanItemAction.fields.rescanCheck")}</span>
+                <span>{t("scan-item:scanItemAction.fields.rescanCheck")}</span>
               </div>
             </div>
           </div>
@@ -346,7 +350,7 @@ export const ScanItemActionModal = ({
               onClick={() => handleClose(false)}
               disabled={isSubmitting || getScanItemDefaultMutation.isPending}
             >
-              {t("common.cancel")}
+              {t("common:common.cancel")}
             </Button>
             <Button
               type="submit"
@@ -354,7 +358,7 @@ export const ScanItemActionModal = ({
               disabled={getScanItemDefaultMutation.isPending}
               isPending={isSubmitting}
             >
-              {t("common.ok")}
+              {t("common:common.ok")}
             </Button>
           </div>
         </form>

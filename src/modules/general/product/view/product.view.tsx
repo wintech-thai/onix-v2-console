@@ -16,8 +16,8 @@ import dayjs from "dayjs";
 import { AttachScanItemToProductApi } from "../api/attach-scan-item-to-product.api";
 
 const ProductView = () => {
-  const { t } = useTranslation();
-  const { t: tProduct } = useTranslation("product");
+  const { t } = useTranslation(["scan-item", "common", "product"]);
+  const { t: productLang } = useTranslation("product");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -34,14 +34,14 @@ const ProductView = () => {
   });
 
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
-    title: t("qrcode.delete.title"),
-    message: t("qrcode.delete.message"),
+    title: t("scan-item:delete.title"),
+    message: t("scan-item:delete.message"),
     variant: "destructive",
   });
 
   const [AttachConfirmationDialog, confirmAttach] = useConfirm({
-    title: tProduct("product.attach.title"),
-    message: tProduct("product.attach.message"),
+    title: t("product:attach.title"),
+    message: t("product:attach.message"),
     variant: "default",
   });
 
@@ -105,26 +105,26 @@ const ProductView = () => {
           onSuccess: ({ data }) => {
             if (data.status !== "OK") {
               errorCount++;
-              toast.error(data.description || tProduct("product.messages.deleteError"));
+              toast.error(data.description || t("product:messages.deleteError"));
             }
 
             successCount++;
           },
           onError: () => {
             errorCount++;
-            toast.error(tProduct("product.messages.deleteError"));
+            toast.error(t("product:messages.deleteError"));
           },
         }
       );
 
       if (successCount > 0) {
         toast.success(
-          `${tProduct("product.messages.deleteSuccess")} (${successCount}/${idsToDelete.length})`
+          `${t("product:messages.deleteSuccess")} (${successCount}/${idsToDelete.length})`
         );
       }
       if (errorCount > 0) {
         toast.error(
-          `${tProduct("product.messages.deleteError")} (${errorCount}/${idsToDelete.length})`
+          `${t("product:messages.deleteError")} (${errorCount}/${idsToDelete.length})`
         );
       }
 
@@ -195,7 +195,7 @@ const ProductView = () => {
       <DeleteConfirmationDialog />
       <AttachConfirmationDialog />
       <ProductTable
-        columns={getProductTableColumns(tProduct)}
+        columns={getProductTableColumns(productLang)}
         data={data}
         onDelete={handleDelete}
         totalItems={totalItems}

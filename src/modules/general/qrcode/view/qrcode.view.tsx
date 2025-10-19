@@ -15,14 +15,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
 const ScanItemsView = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["scan-item"]);
   const params = useParams<{ orgId: string }>();
   const [, setIsDeleting] = useState(false);
   const [data, setData] = useState<IScanItems[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
-    title: t("qrcode.delete.title"),
-    message: t("qrcode.delete.message"),
+    title: t("delete.title"),
+    message: t("delete.message"),
     variant: "destructive",
   });
   const queryClient = useQueryClient();
@@ -107,14 +107,14 @@ const ScanItemsView = () => {
         onSuccess: ({ data }) => {
           if (data.status !== "OK") {
             errorCount++;
-            toast.error(data.description || t("qrcode.delete.error"));
+            toast.error(data.description || t("delete.error"));
           }
 
           successCount++;
         },
         onError: () => {
           errorCount++;
-          toast.error(t("qrcode.delete.error"));
+          toast.error(t("delete.error"));
         },
       });
     }
@@ -123,12 +123,12 @@ const ScanItemsView = () => {
     // Show summary toast
     if (successCount > 0) {
       toast.success(
-        `${t("qrcode.delete.success")} (${successCount}/${idsToDelete.length})`
+        `${t("delete.success")} (${successCount}/${idsToDelete.length})`
       );
     }
     if (errorCount > 0) {
       toast.error(
-        `${t("qrcode.delete.error")} (${errorCount}/${idsToDelete.length})`
+        `${t("delete.error")} (${errorCount}/${idsToDelete.length})`
       );
     }
 

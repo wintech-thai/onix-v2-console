@@ -36,14 +36,14 @@ export const ScanItemTemplateModal = ({
   open,
   onOpenChange,
 }: ScanItemTemplateModalProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "scan-item"]);
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
 
   const [internalOpen, setInternalOpen] = useState(false);
   // Form setup
   const form = useForm<CreateScanItemTemplateType>({
-    resolver: zodResolver(useScanItemThemplateSchema(t)),
+    resolver: zodResolver(useScanItemThemplateSchema()),
     defaultValues: {
       serialPrefixDigit: 0,
       generatorCount: 0,
@@ -114,7 +114,7 @@ export const ScanItemTemplateModal = ({
       });
     } catch (error) {
       console.error("Error loading default values:", error);
-      toast.error(t("qrcode.scanItemTemplate.error.loadDefault"));
+      toast.error(t("scan-item:scanItemTemplate.error.loadDefault"));
     }
   };
 
@@ -130,7 +130,7 @@ export const ScanItemTemplateModal = ({
           {
             onError: (error) => {
               toast.error(
-                error.message || t("qrcode.scanItemTemplate.error.update")
+                error.message || t("scan-item:scanItemTemplate.error.update")
               );
             },
             onSuccess: ({ data }) => {
@@ -138,7 +138,7 @@ export const ScanItemTemplateModal = ({
                 return toast.error(data.description || t("common.error"));
               }
 
-              toast.success(t("qrcode.scanItemTemplate.success.update"));
+              toast.success(t("scan-item:scanItemTemplate.success.update"));
               handleClose(false);
             },
           }
@@ -152,7 +152,7 @@ export const ScanItemTemplateModal = ({
           {
             onError: (error) => {
               toast.error(
-                error.message || t("qrcode.scanItemTemplate.error.create")
+                error.message || t("scan-item:scanItemTemplate.error.create")
               );
             },
             onSuccess: ({ data }) => {
@@ -160,7 +160,7 @@ export const ScanItemTemplateModal = ({
                 return toast.error(data.description || t("common.error"));
               }
 
-              toast.success(t("qrcode.scanItemTemplate.success.create"));
+              toast.success(t("scan-item:scanItemTemplate.success.create"));
               handleClose(false);
             },
           }
@@ -185,7 +185,7 @@ export const ScanItemTemplateModal = ({
           "
         >
           <DialogTitle className="text-xl font-bold mb-2">
-            {t("qrcode.scanItemTemplate.title")}
+            {t("scan-item:scanItemTemplate.title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -200,14 +200,14 @@ export const ScanItemTemplateModal = ({
           >
             {getScanItemDefaultMutation.isPending
               ? t("common.loading")
-              : t("qrcode.scanItemTemplate.buttons.defaultValue")}
+              : t("scan-item:scanItemTemplate.buttons.defaultValue")}
           </Button>
 
           <div className="flex flex-col gap-2">
             {/* Serial Prefix Digit */}
             <div className="flex flex-col md:flex-row md:items-center gap-3 relative">
               <Label htmlFor="serialPrefixDigit" isRequired className="w-40">
-                {t("qrcode.scanItemTemplate.fields.serialPrefixDigit")}
+                {t("scan-item:scanItemTemplate.fields.serialPrefixDigit")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -262,14 +262,14 @@ export const ScanItemTemplateModal = ({
               >
                 {getScanItemDefaultMutation.isPending
                   ? t("common.loading")
-                  : t("qrcode.scanItemTemplate.buttons.defaultValue")}
+                  : t("scan-item:scanItemTemplate.buttons.defaultValue")}
               </Button>
             </div>
 
             {/* Serial Digit */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label htmlFor="serialDigit" isRequired className="w-40">
-                {t("qrcode.scanItemTemplate.fields.serialDigit")}
+                {t("scan-item:scanItemTemplate.fields.serialDigit")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -316,7 +316,7 @@ export const ScanItemTemplateModal = ({
             {/* Generator Count */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label htmlFor="generatorCount" isRequired className="w-40">
-                {t("qrcode.scanItemTemplate.fields.generatorCount")}
+                {t("scan-item:scanItemTemplate.fields.generatorCount")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -364,7 +364,7 @@ export const ScanItemTemplateModal = ({
             {/* Pin Digit */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label htmlFor="pinDigit" isRequired className="w-40">
-                {t("qrcode.scanItemTemplate.fields.pinDigit")}
+                {t("scan-item:scanItemTemplate.fields.pinDigit")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -411,7 +411,7 @@ export const ScanItemTemplateModal = ({
             {/* Notification Email & URL Template */}
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label isRequired={false} className="w-40">
-                {t("qrcode.scanItemTemplate.fields.notificationEmail")}
+                {t("scan-item:scanItemTemplate.fields.notificationEmail")}
               </Label>
               <div className="w-full">
                 <Controller
@@ -436,7 +436,7 @@ export const ScanItemTemplateModal = ({
 
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <Label isRequired className="w-40">
-                {t("qrcode.scanItemTemplate.fields.urlTemplate")}
+                {t("scan-item:scanItemTemplate.fields.urlTemplate")}
               </Label>
               <div className="w-full">
                 <Controller

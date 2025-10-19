@@ -39,10 +39,10 @@ const CreateProductView = () => {
 
           queryClient.invalidateQueries({
             queryKey: fetchProductsApi.fetchProductKey,
-            refetchType: "all",
+            refetchType: "inactive",
           });
 
-          toast.success(t("product.messages.createSuccess"));
+          toast.success(t("messages.createSuccess"));
           return router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
         },
         onError: (error) => {

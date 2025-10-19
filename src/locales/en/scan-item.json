@@ -1,0 +1,154 @@
+{
+  "columns": {
+    "serial": "Serial",
+    "pin": "Pin",
+    "verified": "Verified",
+    "verifiedDate": "Verified Date",
+    "productCode": "Product Code",
+    "url": "URL",
+    "scanCount": "Scan Count",
+    "action": "Action"
+  },
+  "actions": {
+    "unVerifyScanItem": "Un-Verify Scan Item",
+    "bindToCustomer": "Bind to Customer",
+    "bindToProduct": "Bind To Product"
+  },
+  "filter": {
+    "searchPlaceholder": "Enter search value",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "add": "ADD",
+    "delete": "DELETE",
+    "config": "CONFIG",
+    "scanItemTemplate": "Scan Item Template",
+    "scanItemAction": "Scan Item Action"
+  },
+  "delete": {
+    "title": "Confirm Deletion",
+    "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
+    "success": "Deleted scan item successfully",
+    "error": "Failed to delete scan item"
+  },
+  "unverify": {
+    "title": "Confirm Un-Verification",
+    "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
+    "success": "Scan item un-verified successfully",
+    "error": "Failed to un-verify scan item"
+  },
+  "modal": {
+    "title": "Scan Item Detail",
+    "loading": "Loading scan item details...",
+    "error": "Error loading scan item details",
+    "copySuccess": "Copied to clipboard",
+    "copyTooltip": "Copy scan item data to clipboard",
+    "fields": {
+      "serial": "Serial",
+      "pin": "Pin",
+      "url": "URL",
+      "uploadPath": "Upload Path",
+      "verified": "Verified",
+      "used": "Used",
+      "applied": "Applied",
+      "runId": "Run ID",
+      "sequenceNo": "Sequence No",
+      "productCode": "Product Code",
+      "itemGroup": "Item Group",
+      "itemId": "Item ID",
+      "customerId": "Customer ID",
+      "scanCount": "Scan Count",
+      "tags": "Tags",
+      "createdDate": "Created Date",
+      "registeredDate": "Registered Date",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "create": {
+    "title": "Create Scan Item",
+    "fields": {
+      "serial": "Serial",
+      "pin": "Pin"
+    },
+    "validation": {
+      "serialRequired": "Serial is required",
+      "pinRequired": "Pin is required",
+      "serialDuplicate": "Serial {{serial}} already exist in our database!!!",
+      "pinDuplicate": "Pin {{pin}} already exist in our database!!!"
+    },
+    "success": "Scan item created successfully",
+    "error": "Failed to create scan item",
+    "copySuccess": "Copied to clipboard",
+    "copyTooltip": "Copy payload to clipboard"
+  },
+  "scanItemAction": {
+    "title": "Scan Item Action",
+    "fields": {
+      "key": "Key",
+      "iv": "IV",
+      "theme": "Theme",
+      "redirectUrl": "Redirect URL",
+      "rescanCheck": "Re-scan check"
+    },
+    "buttons": {
+      "defaultValue": "Default Value"
+    },
+    "validation": {
+      "orgIdRequired": "Organization ID is required",
+      "redirectUrlRequired": "Redirect URL is required",
+      "redirectUrlMax": "Redirect URL must be at most 80 characters",
+      "encryptionKeyLength": "Encryption Key must be exactly 16 characters",
+      "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+      "themeVerifyMax": "Theme must be at most 15 characters",
+      "invalidUrl": "Invalid URL format",
+      "registeredAwareFlagRequired": "Registered Aware Flag is required",
+      "createdDateRequired": "Created Date is required"
+    },
+    "success": {
+      "create": "Scan item action created successfully",
+      "update": "Scan item action updated successfully"
+    },
+    "error": {
+      "create": "Failed to create scan item action",
+      "update": "Failed to update scan item action",
+      "loadDefault": "Error loading default values"
+    }
+  },
+  "scanItemTemplate": {
+    "title": "Scan Item Template",
+    "fields": {
+      "serialPrefixDigit": "Prefix Length",
+      "generatorCount": "Item Count",
+      "serialDigit": "Serial Length",
+      "pinDigit": "Pin Length",
+      "urlTemplate": "URL Template",
+      "notificationEmail": "Notification Email"
+    },
+    "buttons": {
+      "defaultValue": "Default Value"
+    },
+    "validation": {
+      "orgIdRequired": "Organization ID is required",
+      "serialPrefixDigitMin": "Prefix Length must be at least 2",
+      "serialPrefixDigitMax": "Prefix Length must be at most 3",
+      "generatorCountRequired": "Item Count is required",
+      "serialDigitMin": "Serial Length must be at least 7",
+      "serialDigitMax": "Serial Length must be at most 9",
+      "pinDigitMin": "Pin Length must be at least 7",
+      "pinDigitMax": "Pin Length must be at most 9",
+      "urlTemplateRequired": "URL Template is required",
+      "invalidEmail": "Invalid email format",
+      "createdDateRequired": "Created Date is required"
+    },
+    "success": {
+      "create": "Scan item template created successfully",
+      "update": "Scan item template updated successfully"
+    },
+    "error": {
+      "create": "Failed to create scan item template",
+      "update": "Failed to update scan item template",
+      "loadDefault": "Error loading default values"
+    }
+  }
+}

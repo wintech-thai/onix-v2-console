@@ -74,15 +74,15 @@ export const ProductFilterTable = ({
           <Select value={searchField} onValueChange={setSearchField}>
             <SelectTrigger
               className="w-full md:w-48"
-              aria-label={t("product.table.filter.selectSearchField")}
+              aria-label={t("table.filter.selectSearchField")}
             >
               <SelectValue
-                placeholder={t("product.table.filter.selectSearchField")}
+                placeholder={t("table.filter.selectSearchField")}
               />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="fullTextSearch">
-                {t("product.table.filter.fullTextSearch")}
+                {t("table.filter.fullTextSearch")}
               </SelectItem>
               {/* เพิ่ม options อื่น ๆ ในอนาคตได้ */}
               {/* <SelectItem value="serial">Serial</SelectItem> */}
@@ -93,9 +93,9 @@ export const ProductFilterTable = ({
         {/* Search input */}
         <div className="w-full md:w-[500px]">
           <Input
-            placeholder={t("product.table.filter.searchPlaceholder")}
+            placeholder={t("table.filter.searchPlaceholder")}
             className="w-full"
-            aria-label={t("product.table.filter.searchPlaceholder")}
+            aria-label={t("table.filter.searchPlaceholder")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
@@ -110,7 +110,7 @@ export const ProductFilterTable = ({
           <Button
             type="submit"
             className="w-full md:w-auto"
-            aria-label={t("product.table.filter.search")}
+            aria-label={t("table.filter.search")}
           >
             <Search className="h-4 w-4 mx-2" />
           </Button>
@@ -129,7 +129,7 @@ export const ProductFilterTable = ({
         {scanItemId && onAttach ? (
           <>
             <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
-              {t("product.actions.back")}
+              {t("actions.back")}
             </Button>
 
             <Button
@@ -137,7 +137,7 @@ export const ProductFilterTable = ({
               disabled={selected !== 1}
               onClick={onAttach}
             >
-              {t("product.table.filter.attach")}{" "}
+              {t("table.filter.attach")}{" "}
               {selected > 0 ? `(${selected})` : ""}
             </Button>
           </>
@@ -145,7 +145,7 @@ export const ProductFilterTable = ({
           <>
             <Link href={RouteConfig.GENERAL.PRODUCT.CREATE(params.orgId)}>
               <Button className="w-full md:w-auto">
-                {t("product.table.filter.add")}
+                {t("table.filter.add")}
               </Button>
             </Link>
 
@@ -155,7 +155,7 @@ export const ProductFilterTable = ({
               onClick={onDelete}
               variant="destructive"
             >
-              {t("product.table.filter.delete")}{" "}
+              {t("table.filter.delete")}{" "}
               {selected > 0 ? `(${selected})` : ""}
             </Button>
           </>

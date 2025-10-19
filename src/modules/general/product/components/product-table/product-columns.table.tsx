@@ -21,7 +21,7 @@ type productTableColumns = ColumnDef<IProduct> & {
 };
 
 export const getProductTableColumns = (
-  t: TFunction<"product">
+  t: TFunction<"product", undefined>
 ): productTableColumns[] => [
   {
     id: "select",
@@ -32,14 +32,14 @@ export const getProductTableColumns = (
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         // onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label={t("product.table.columns.selectAll")}
+        aria-label={t("table.columns.selectAll")}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label={t("product.table.columns.selectRow")}
+        aria-label={t("table.columns.selectRow")}
       />
     ),
     enableSorting: false,
@@ -47,7 +47,7 @@ export const getProductTableColumns = (
   },
   {
     accessorKey: "code",
-    header: t("product.table.columns.code"),
+    header: t("table.columns.code"),
     cell: ({ row }) => {
       return (
         <Link
@@ -64,11 +64,11 @@ export const getProductTableColumns = (
   },
   {
     accessorKey: "description",
-    header: t("product.table.columns.description"),
+    header: t("table.columns.description"),
   },
   {
     accessorKey: "tags",
-    header: t("product.table.columns.tags"),
+    header: t("table.columns.tags"),
     cell: ({ row }) => {
       if (!row.original.tags) return "-";
 
@@ -89,10 +89,10 @@ export const getProductTableColumns = (
     },
   },
   {
-    header: t("product.table.columns.action"),
+    header: t("table.columns.action"),
     cell: ({ row }) => {
       const actions = [
-        { key: "unVerify", label: t("product.table.actions.productImage") },
+        { key: "unVerify", label: t("table.actions.productImage") },
       ];
 
       const router = Router();

@@ -23,8 +23,8 @@ export function NavigationBlockerProvider({ children }: NavigationBlockerProvide
   const { t } = useTranslation("product");
 
   const [ConfirmDialog, confirm] = useConfirm({
-    title: t("product.form.leavePage"),
-    message: t("product.form.unsavedChanges"),
+    title: t("form.leavePage"),
+    message: t("form.unsavedChanges"),
     variant: "destructive",
   });
 

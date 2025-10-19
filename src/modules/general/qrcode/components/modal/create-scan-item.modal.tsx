@@ -28,7 +28,7 @@ interface CreateScanItemModalProps {
 }
 
 export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["scan-item", "common"]);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
@@ -58,13 +58,13 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             if (data.status !== "OK") {
               if (data.status === "PIN_ALREADY_EXIST") {
                 return toast.error(
-                  t("qrcode.create.validation.pinDuplicate", {
+                  t("scan-item:create.validation.pinDuplicate", {
                     pin: values.pin,
                   })
                 );
               } else if (data.status === "SERIAL_ALREADY_EXIST") {
                 return toast.error(
-                  t("qrcode.create.validation.serialDuplicate", {
+                  t("scan-item:create.validation.serialDuplicate", {
                     serial: values.serial,
                   })
                 );
@@ -73,7 +73,7 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             }
 
             toast.success(
-              t("qrcode.create.success", "Scan item created successfully")
+              t("scan-item:create.success")
             );
 
             queryClient.invalidateQueries({
@@ -145,10 +145,10 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
               onClick={() => handleClose(false)}
               disabled={isSubmitting}
             >
-              {t("common.cancel")}
+              {t("common:common.cancel")}
             </Button>
             <Button isPending={isSubmitting} type="submit">
-              {t("common.ok")}
+              {t("common:common.ok")}
             </Button>
           </div>
         </form>

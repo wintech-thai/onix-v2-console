@@ -62,7 +62,7 @@ export const EditImageModal = ({
       image: "",
       narative: "",
       tags: "",
-      category: "",
+      category: "0",
     },
   });
 
@@ -266,13 +266,13 @@ export const EditImageModal = ({
             </div>
 
             {/* Category */}
-            <Input
+            {/*<Input
               type="number"
               label="Category"
               placeholder="ใส่หมวดหมู่"
               {...register("category")}
               errorMessage={errors.category?.message}
-            />
+            />*/}
 
             <DialogFooter>
               <Button
