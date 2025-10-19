@@ -15,6 +15,7 @@ import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import { getItemImageUploadPresignedUrlApi } from "../api/get-item-image-upload-presigned-url.api";
 import { addItemImageApi } from "../api/add-item-image.api";
+import { useTranslation } from "react-i18next";
 
 interface UploadImageModalProps {
   open: boolean;
@@ -33,6 +34,7 @@ export const UploadImageModal = ({
   currentMaxSortingOrder,
   onUploadSuccess,
 }: UploadImageModalProps) => {
+  const { t } = useTranslation("product");
   const getItemImageUploadPresignedUrl =
     getItemImageUploadPresignedUrlApi.useMutation();
   const addImageItem = addItemImageApi.useMutation();
@@ -60,13 +62,13 @@ export const UploadImageModal = ({
     onDropRejected: (rejections) => {
       rejections.forEach((rejection) => {
         if (rejection.errors.some((e) => e.code === "file-too-large")) {
-          toast.error("ไฟล์มีขนาดใหญ่เกิน 1MB");
+          toast.error(t("images.maxSize"));
         } else if (
           rejection.errors.some((e) => e.code === "file-invalid-type")
         ) {
-          toast.error("กรุณาเลือกไฟล์ PNG เท่านั้น");
+          toast.error(t("images.onlyPNG"));
         } else {
-          toast.error("ไฟล์ไม่ถูกต้อง");
+          toast.error(t("images.uploadError"));
         }
       });
     },
@@ -74,7 +76,7 @@ export const UploadImageModal = ({
 
   const handleUpload = async () => {
     if (!selectedFile || !orgId || !productId) {
-      toast.error("กรุณาเลือกรูปภาพก่อนอัปโหลด");
+      toast.error(t("images.uploadError"));
       return;
     }
 
@@ -88,7 +90,7 @@ export const UploadImageModal = ({
       });
 
       if (response.data.status !== "SUCCESS") {
-        throw new Error("ไม่สามารถขอ URL สำหรับอัปโหลดได้");
+        throw new Error(t("images.uploadError"));
       }
 
       // Step 2: อัปโหลดไฟล์ไปยัง GCS ผ่าน presigned URL
@@ -104,7 +106,7 @@ export const UploadImageModal = ({
       );
 
       if (uploadResponse.status !== 200) {
-        throw new Error("การอัปโหลดไฟล์ล้มเหลว");
+        throw new Error(t("images.uploadError"));
       }
 
       // Step 3: บันทึกข้อมูลรูปภาพในระบบ
@@ -127,7 +129,7 @@ export const UploadImageModal = ({
         throw new Error(result.data.description);
       }
 
-      toast.success("อัปโหลดรูปภาพสำเร็จ!");
+      toast.success(t("images.uploadSuccess"));
 
       // Reset form
       handleReset();
@@ -142,7 +144,7 @@ export const UploadImageModal = ({
       if (error instanceof Error) {
         return toast.error(error.message);
       }
-      toast.error("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ");
+      toast.error(t("images.uploadError"));
     } finally {
       setIsUploading(false);
     }
@@ -172,9 +174,9 @@ export const UploadImageModal = ({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>อัปโหลดรูปภาพสินค้า</DialogTitle>
+          <DialogTitle>{t("images.uploadTitle")}</DialogTitle>
           <DialogDescription>
-            เลือกหรือลากรูปภาพมาวางเพื่ออัปโหลด
+            {t("images.uploadDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -229,12 +231,12 @@ export const UploadImageModal = ({
                   {isUploading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      กำลังอัปโหลด...
+                      {t("images.uploading")}
                     </>
                   ) : (
                     <>
                       <Upload className="w-4 h-4" />
-                      อัปโหลด
+                      {t("images.upload")}
                     </>
                   )}
                 </Button>
@@ -250,14 +252,14 @@ export const UploadImageModal = ({
               <div className="space-y-2">
                 <p className="text-lg font-medium">
                   {isDragActive
-                    ? "วางรูปภาพที่นี่..."
-                    : "ลากและวางรูปภาพที่นี่"}
+                    ? t("images.dragHere")
+                    : t("images.dragHere")}
                 </p>
                 <p className="text-sm text-gray-500">
-                  หรือคลิกเพื่อเลือกรูปภาพ
+                  {t("images.clickToSelect")}
                 </p>
                 <p className="text-xs text-gray-400">
-                  รองรับเฉพาะไฟล์ PNG ขนาดไม่เกิน 1MB
+                  {t("images.onlyPNG")} - {t("images.maxSize")}
                 </p>
               </div>
             </div>
@@ -267,12 +269,13 @@ export const UploadImageModal = ({
         {/* Info Card */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h3 className="text-sm font-semibold text-blue-900 mb-2">
-            ข้อกำหนดไฟล์
+            {t("images.fileRequirements")}
           </h3>
           <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
-            <li>รองรับเฉพาะไฟล์ PNG (.png)</li>
-            <li>ขนาดไฟล์สูงสุด 1 MB</li>
-            <li>รูปภาพจะถูกจัดเก็บอย่างปลอดภัยบน Google Cloud Storage</li>
+            <li>{t("images.onlyPNG")}</li>
+            <li>{t("images.maxSize")}</li>
+            <li>{t("images.maxDimensions")}</li>
+            <li>{t("images.secureStorage")}</li>
           </ul>
         </div>
       </DialogContent>

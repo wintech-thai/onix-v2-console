@@ -4,10 +4,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { IProduct } from "../../api/fetch-products.api";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
@@ -108,10 +108,10 @@ export const getProductTableColumns = (
             {actions.map((action) => (
               <DropdownMenuItem
                 key={action.key}
-                onSelect={() => router.push(RouteConfig.GENERAL.PRODUCT.IMAGE(
+                onSelect={() => router.push(`${RouteConfig.GENERAL.PRODUCT.IMAGE(
                   row.original.orgId,
                   row.original.id
-                ))}
+                )}?productName=${encodeURIComponent(row.original.description || row.original.code)}`)}
               >
                 {action.label}
               </DropdownMenuItem>

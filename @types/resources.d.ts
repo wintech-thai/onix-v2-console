@@ -110,6 +110,10 @@ interface Resources {
     },
     "attach": {
       "message": "Are you sure you want to attach this product?",
+      "mode": {
+        "description": "Please select one product to attach. Click 'ATTACH' button when ready or 'Back' to cancel.",
+        "title": "Attach Mode Active"
+      },
       "title": "Attach Product"
     },
     "content": {
@@ -127,6 +131,48 @@ interface Resources {
     "form": {
       "leavePage": "Leave Page",
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    },
+    "images": {
+      "addFirst": "Add First Image",
+      "addImage": "Add Image",
+      "category": "Category",
+      "categoryPlaceholder": "Enter category",
+      "clickToSelect": "or click to select images",
+      "deleteConfirmMessage": "This action cannot be undone",
+      "deleteConfirmTitle": "Delete this image?",
+      "deleteError": "Failed to delete image",
+      "deleteSuccess": "Image deleted successfully",
+      "dragHere": "Drag and drop images here",
+      "dragToReorder": "Drag to reorder",
+      "editDescription": "Edit product image details",
+      "editTitle": "Edit Image Information",
+      "fileRequirements": "File Requirements",
+      "imageLabel": "Image",
+      "leaveConfirmMessage": "Unsaved data will be lost",
+      "leaveConfirmTitle": "Leave this page?",
+      "maxDimensions": "Maximum dimensions 1200x1200 pixels",
+      "maxSize": "Maximum file size 1 MB",
+      "narrative": "Description",
+      "narrativePlaceholder": "Enter image description",
+      "noImages": "No images yet",
+      "noImagesDescription": "Start by adding your product images",
+      "onlyPNG": "Only PNG files (.png) are supported",
+      "saving": "Saving...",
+      "secureStorage": "Images are stored securely on Google Cloud Storage",
+      "sortingError": "Failed to update image order",
+      "sortingSuccess": "Image order updated successfully",
+      "subtitle": "Manage product images",
+      "tagsLabel": "Tags",
+      "tagsPlaceholder": "Type tag and press Enter or add comma",
+      "title": "Product Images",
+      "updateError": "Failed to update image",
+      "updateSuccess": "Image updated successfully!",
+      "upload": "Upload",
+      "uploadDescription": "Select or drag images to upload",
+      "uploadError": "Failed to upload image",
+      "uploadSuccess": "Image uploaded successfully!",
+      "uploadTitle": "Upload Product Image",
+      "uploading": "Uploading..."
     },
     "messages": {
       "createError": "Failed to create product",

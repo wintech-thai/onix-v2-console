@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, Edit, Grip, Plus, Trash2 } from "lucide-react";
@@ -33,15 +33,18 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 // Sortable Image Item Component
 interface SortableImageItemProps {
   image: GetImageImageByItemIDResponse;
   onEdit: (image: GetImageImageByItemIDResponse) => void;
   onDelete: (imageId: string) => void;
+  t: TFunction<"product", undefined>;
 }
 
-const SortableImageItem = ({ image, onEdit, onDelete }: SortableImageItemProps) => {
+const SortableImageItem = ({ image, onEdit, onDelete, t }: SortableImageItemProps) => {
   const {
     attributes,
     listeners,
@@ -126,13 +129,11 @@ const SortableImageItem = ({ image, onEdit, onDelete }: SortableImageItemProps) 
           <Edit className="w-4 h-4" />
         </Button>
 
-        <div className="flex items-center gap-1 text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-1 text-white text-sm bg-black/50 px-3 py-1 rounded-full">
           <Grip className="w-4 h-4" />
-          <span className="hidden sm:inline">ลากเพื่อเรียงลำดับ</span>
+          <span className="hidden sm:inline">{t("images.dragToReorder")}</span>
         </div>
-      </div>
-
-      {/* Image info - ด้านล่าง */}
+      </div>      {/* Image info - ด้านล่าง */}
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 z-20 pointer-events-none">
         <div className="flex items-end justify-between text-white text-xs">
           {/* ขนาดไฟล์ - มุมซ้าย */}
@@ -161,8 +162,11 @@ const SortableImageItem = ({ image, onEdit, onDelete }: SortableImageItemProps) 
 };
 
 const ProductImageView = () => {
+  const { t } = useTranslation("product");
   const params = useParams<{ orgId: string; productId: string }>();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const productName = searchParams.get("productName");
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -171,8 +175,8 @@ const ProductImageView = () => {
   const [sortedImages, setSortedImages] = useState<GetImageImageByItemIDResponse[]>([]);
 
   const [DeleteDialog, confirmDelete] = useConfirm({
-    title: "ต้องการลบรูปภาพนี้หรือไม่?",
-    message: "การลบรูปภาพนี้จะไม่สามารถกู้คืนได้",
+    title: t("images.deleteConfirmTitle"),
+    message: t("images.deleteConfirmMessage"),
     variant: "destructive",
   });
 
@@ -250,55 +254,55 @@ const ProductImageView = () => {
     setSortedImages(newSortedImages);
 
     // Update sorting order on server
-    try {
-      await updateItemImageSortingOrder.mutateAsync({
-        orgId: params.orgId,
-        itemId: params.productId,
-        imageIds: newSortedImages.map((img) => img.id),
-      });
-      toast.success("อัปเดตลำดับรูปภาพสำเร็จ");
-      refetch();
-    } catch {
-      toast.error("อัปเดตลำดับรูปภาพไม่สำเร็จ");
-      // Revert on error
-      setSortedImages(sortedImages);
-    }
-  };
-
-  const handleDelete = async (imageId: string) => {
-    const confirmed = await confirmDelete();
-
-    if (!confirmed) return;
-
-    deleteItemImagesByItemId.mutate(
-      { orgId: params.orgId, itemImageId: imageId },
-      {
-        onSuccess: async () => {
-          // Refetch to get updated list
-          await refetch();
-
-          // Update sorting order after delete
-          const remainingImages = sortedImages.filter((img) => img.id !== imageId);
-          if (remainingImages.length > 0) {
-            try {
-              await updateItemImageSortingOrder.mutateAsync({
-                orgId: params.orgId,
-                itemId: params.productId,
-                imageIds: remainingImages.map((img) => img.id),
-              });
-            } catch (error) {
-              console.error("Failed to update sorting order:", error);
-            }
-          }
-
-          toast.success("ลบรูปภาพสำเร็จ");
-        },
-        onError: () => {
-          toast.error("ลบรูปภาพไม่สำเร็จ");
-        }
+      try {
+        await updateItemImageSortingOrder.mutateAsync({
+          orgId: params.orgId,
+          itemId: params.productId,
+          imageIds: newSortedImages.map((img) => img.id),
+        });
+        toast.success(t("images.sortingSuccess"));
+        refetch();
+      } catch {
+        toast.error(t("images.sortingError"));
+        // Revert on error
+        setSortedImages(sortedImages);
       }
-    );
-  };
+    };
+
+    const handleDelete = async (imageId: string) => {
+      const confirmed = await confirmDelete();
+
+      if (!confirmed) return;
+
+      deleteItemImagesByItemId.mutate(
+        { orgId: params.orgId, itemImageId: imageId },
+        {
+          onSuccess: async () => {
+            // Refetch to get updated list
+            await refetch();
+
+            // Update sorting order after delete
+            const remainingImages = sortedImages.filter((img) => img.id !== imageId);
+            if (remainingImages.length > 0) {
+              try {
+                await updateItemImageSortingOrder.mutateAsync({
+                  orgId: params.orgId,
+                  itemId: params.productId,
+                  imageIds: remainingImages.map((img) => img.id),
+                });
+              } catch (error) {
+                console.error("Failed to update sorting order:", error);
+              }
+            }
+
+            toast.success(t("images.deleteSuccess"));
+          },
+          onError: () => {
+            toast.error(t("images.deleteError"));
+          }
+        }
+      );
+    };
 
   return (
     <div className="mx-auto p-6 space-y-6">
@@ -308,13 +312,15 @@ const ProductImageView = () => {
         <div className="flex items-center gap-x-2">
         <ArrowLeftIcon onClick={() => router.back()} className="size-7 flex-shrink-0 cursor-pointer" />
         <div className="space-y-1">
-          <h2 className="text-2xl font-bold">รูปภาพสินค้า</h2>
-          <p className="text-sm text-muted-foreground">จัดการรูปภาพของสินค้า</p>
+          <h2 className="text-2xl font-bold">{t("images.title")}</h2>
+          <p className="text-sm text-muted-foreground">
+            {productName ? `${t("images.subtitle")} - ${productName}` : t("images.subtitle")}
+          </p>
         </div>
         </div>
         <Button onClick={() => setIsUploadModalOpen(true)} className="gap-2">
           <Plus className="w-4 h-4" />
-          เพิ่มรูปภาพ
+          {t("images.addImage")}
         </Button>
       </div>
 
@@ -333,10 +339,10 @@ const ProductImageView = () => {
             </div>
             <div className="space-y-2">
               <h3 className="text-lg font-medium text-gray-900">
-                ยังไม่มีรูปภาพ
+                {t("images.noImages")}
               </h3>
               <p className="text-sm text-gray-500">
-                เริ่มต้นโดยการเพิ่มรูปภาพสินค้าของคุณ
+                {t("images.noImagesDescription")}
               </p>
             </div>
             <Button
@@ -345,7 +351,7 @@ const ProductImageView = () => {
               className="gap-2"
             >
               <Plus className="w-4 h-4" />
-              เพิ่มรูปภาพแรก
+              {t("images.addFirst")}
             </Button>
           </div>
         </div>
@@ -366,6 +372,7 @@ const ProductImageView = () => {
                   image={image}
                   onEdit={handleEditClick}
                   onDelete={handleDelete}
+                  t={t}
                 />
               ))}
             </div>

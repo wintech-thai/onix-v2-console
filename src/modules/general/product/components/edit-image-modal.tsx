@@ -24,6 +24,7 @@ import { updateItemImageByItemImageIdApi } from "../api/update-item-image-by-ite
 import { GetImageImageByItemIDResponse } from "../api/get-item-images-by-item-id.api";
 import Image from "next/image";
 import { useConfirm } from "@/hooks/use-confirm";
+import { useTranslation } from "react-i18next";
 
 interface EditImageModalProps {
   open: boolean;
@@ -40,11 +41,12 @@ export const EditImageModal = ({
   image,
   onUpdateSuccess,
 }: EditImageModalProps) => {
+  const { t } = useTranslation("product");
   const updateItemImage = updateItemImageByItemImageIdApi.useMutation();
 
   const [LeaveDialog, leaveConfirm] = useConfirm({
-    title: "ต้องการออกจากหน้านี้หรือไม่?",
-    message: "ข้อมูลที่ยังไม่ได้บันทึกจะหายไป",
+    title: t("images.leaveConfirmTitle"),
+    message: t("images.leaveConfirmMessage"),
     variant: "destructive",
   });
   const [tags, setTags] = useState<string[]>([]);
@@ -148,12 +150,12 @@ export const EditImageModal = ({
         itemImageId: image.id,
       });
 
-      toast.success("อัปเดตรูปภาพสำเร็จ!");
+      toast.success(t("images.updateSuccess"));
       onOpenChange(false);
       onUpdateSuccess?.();
     } catch (error) {
       console.error("Update error:", error);
-      toast.error("เกิดข้อผิดพลาดในการอัปเดตรูปภาพ");
+      toast.error(t("images.updateError"));
     }
   };
 
@@ -186,16 +188,16 @@ export const EditImageModal = ({
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>แก้ไขข้อมูลรูปภาพ</DialogTitle>
+            <DialogTitle>{t("images.editTitle")}</DialogTitle>
             <DialogDescription>
-              แก้ไขรายละเอียดของรูปภาพสินค้า
+              {t("images.editDescription")}
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Image Preview */}
             <div className="space-y-2">
-              <Label>รูปภาพ</Label>
+              <Label>{t("images.imageLabel")}</Label>
               <div className="relative aspect-video w-full max-w-md mx-auto rounded-lg overflow-hidden border border-gray-200">
                 <Image
                   src={image.imageUrl}
@@ -212,11 +214,11 @@ export const EditImageModal = ({
 
             {/* Narrative */}
             <Input
-              label="คำอธิบาย"
+              label={t("images.narrative")}
               id="narative"
-              placeholder="ใส่คำอธิบายรูปภาพ"
+              placeholder={t("images.narrativePlaceholder")}
               {...register("narative")}
-              errorMessage={errors.narative?.message}
+              maxLength={100}
             />
             {errors.narative && (
               <p className="text-sm text-red-500">{errors.narative.message}</p>
@@ -225,16 +227,17 @@ export const EditImageModal = ({
             {/* Tags */}
             <div className="space-y-2">
               <Label htmlFor="tags">
-                Tags <span className="text-red-500">*</span>
+                {t("images.tagsLabel")} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="tags-input"
                 type="text"
-                placeholder="พิมพ์ tag แล้วกด Enter หรือใส่เครื่องหมาย ,"
+                placeholder={t("images.tagsPlaceholder")}
                 value={tagInput}
                 onChange={handleTagInputChange}
                 onKeyDown={handleTagInputKeyDown}
                 className={errors.tags ? "border-red-500" : ""}
+                maxLength={30}
               />
               {/* Hidden field for form validation */}
               <input type="hidden" {...register("tags")} />
@@ -281,16 +284,16 @@ export const EditImageModal = ({
                 onClick={() => handleOpenChange(false)}
                 disabled={isSubmitting}
               >
-                ยกเลิก
+                {t("actions.cancel")}
               </Button>
               <Button type="submit" disabled={isSubmitting} className="gap-2">
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    กำลังบันทึก...
+                    {t("images.saving")}
                   </>
                 ) : (
-                  "บันทึก"
+                  t("actions.save")
                 )}
               </Button>
             </DialogFooter>
