@@ -172,10 +172,10 @@ export const UploadImageModal = ({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-2xl">
-        <DialogHeader>
+      <DialogContent iconWhite className="sm:max-w-2xl">
+        <DialogHeader className="bg-primary text-white rounded-t-lg -m-6 mb-4 p-4">
           <DialogTitle>{t("images.uploadTitle")}</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-white">
             {t("images.uploadDescription")}
           </DialogDescription>
         </DialogHeader>

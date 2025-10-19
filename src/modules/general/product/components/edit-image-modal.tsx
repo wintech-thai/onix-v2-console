@@ -186,10 +186,10 @@ export const EditImageModal = ({
     <>
       <LeaveDialog />
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent iconWhite className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="bg-primary text-white rounded-t-lg -m-6 mb-4 p-4">
             <DialogTitle>{t("images.editTitle")}</DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-white">
               {t("images.editDescription")}
             </DialogDescription>
           </DialogHeader>
