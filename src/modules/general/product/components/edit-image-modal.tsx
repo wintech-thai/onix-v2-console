@@ -122,7 +122,10 @@ export const EditImageModal = ({
       if (trimmedTag) {
         const updatedTags = [...tags, trimmedTag];
         setTags(updatedTags);
-        setValue("tags", updatedTags.join(", "));
+        setValue("tags", updatedTags.join(", "), {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
         setTagInput("");
       }
     }
@@ -227,7 +230,7 @@ export const EditImageModal = ({
             {/* Tags */}
             <div className="space-y-2">
               <Label htmlFor="tags">
-                {t("images.tagsLabel")} <span className="text-red-500">*</span>
+                {t("images.tagsLabel")}
               </Label>
               <Input
                 id="tags-input"
