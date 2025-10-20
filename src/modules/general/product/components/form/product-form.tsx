@@ -68,6 +68,10 @@ export const ProductForm = ({
   const isSubmitting = form.formState.isSubmitting;
 
   const handleSubmit = async (data: ProductSchemaType) => {
+    if (!isDirty) {
+      return router.back();
+    }
+
     await onSubmit({
       ...data,
       properties: Object.fromEntries(

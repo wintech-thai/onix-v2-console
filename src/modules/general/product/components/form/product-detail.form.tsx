@@ -42,7 +42,10 @@ export const ProductDetailForm = ({
 
   const handleRemoveTag = (tagToRemove: string) => {
     const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
-    form.setValue("tags", newTags.join(","));
+    form.setValue("tags", newTags.join(","), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   };
 
   return (
