@@ -236,6 +236,8 @@ interface Resources {
     "actions": {
       "bindToCustomer": "Bind to Customer",
       "bindToProduct": "Bind To Product",
+      "dryRun": "Dry Run",
+      "scanQr": "Scan QR",
       "unVerifyScanItem": "Un-Verify Scan Item"
     },
     "columns": {
@@ -308,6 +310,7 @@ interface Resources {
         "yes": "Yes"
       },
       "loading": "Loading scan item details...",
+      "qrcodeTitle": "QR Code",
       "title": "Scan Item Detail"
     },
     "scanItemAction": {

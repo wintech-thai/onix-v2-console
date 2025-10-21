@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,9 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { ScanItemDetailModal } from "../modal/scan-item-detial.modal";
 import { RouteConfig } from "@/config/route.config";
+import { getScanItemUrlDryRunApi } from "../../api/get-scan-item-url-dry-run.api";
+import { QrCodeModal } from "../modal/qrcode-modal";
+import { useState as State } from "react";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
   accessorKey?: keyof IScanItems;
@@ -104,9 +108,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
     {
       accessorKey: "scanCount",
       header: () => {
-        return (
-          <div className="text-center">{t("columns.scanCount")}</div>
-        );
+        return <div className="text-center">{t("columns.scanCount")}</div>;
       },
       cell: ({ row }) => {
         return <div className="text-center">{row.getValue("scanCount")}</div>;
@@ -124,6 +126,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
 
         const unVerifyScanItemMutate =
           unVerifyScanItemsApi.useDeleteScanItemsMutation(params.orgId);
+        const getScanUrlDryRunApi = getScanItemUrlDryRunApi.useMutation();
 
         const handleUnVerify = async (scanId: string) => {
           const ok = await unVerifyConfirm();
@@ -148,8 +151,18 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           }
         };
 
+        const [qrCodeModal, setQrCodeModal] = State({
+          open: false,
+          url: "",
+        });
+
         return (
           <>
+            <QrCodeModal
+              open={qrCodeModal.open}
+              onOpenChange={() => setQrCodeModal({ open: false, url: "" })}
+              url={qrCodeModal.url}
+            />
             <UnVerifyConfirmDialog />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -167,6 +180,9 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                 >
                   {t("actions.unVerifyScanItem")}
                 </DropdownMenuItem>
+
+                <DropdownMenuSeparator className="my-1" />
+
                 <DropdownMenuItem
                   onSelect={() => console.log("bindToCustomer")}
                 >
@@ -181,6 +197,72 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                   }
                 >
                   {t("actions.bindToProduct")}
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator className="my-1" />
+
+                <DropdownMenuItem
+                  disabled={getScanUrlDryRunApi.isPending}
+                  onSelect={() => {
+                    getScanUrlDryRunApi.mutate(
+                      {
+                        orgId: row.original.orgId,
+                        scanItemId: row.original.id,
+                      },
+                      {
+                        onSuccess: ({ data }) => {
+                          if (
+                            data.status === "OK" ||
+                            data.status === "SUCCESS"
+                          ) {
+                            if (data.scanItem?.url) {
+                              window.open(data.scanItem.url);
+                              return;
+                            } else {
+                              return toast.error("product url not found");
+                            }
+                          }
+
+                          toast.error(data.description);
+                        },
+                      }
+                    );
+                  }}
+                >
+                  {t("actions.dryRun")}
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  onSelect={() => {
+                    getScanUrlDryRunApi.mutate(
+                      {
+                        orgId: row.original.orgId,
+                        scanItemId: row.original.id,
+                      },
+                      {
+                        onSuccess: ({ data }) => {
+                          if (
+                            data.status === "OK" ||
+                            data.status === "SUCCESS"
+                          ) {
+                            if (data.scanItem?.url) {
+                              setQrCodeModal({
+                                open: true,
+                                url: data.scanItem.url,
+                              });
+                              return;
+                            } else {
+                              return toast.error("product url not found");
+                            }
+                          }
+
+                          toast.error(data.description);
+                        },
+                      }
+                    );
+                  }}
+                >
+                  {t("actions.scanQr")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
