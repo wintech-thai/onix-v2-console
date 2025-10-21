@@ -12,7 +12,9 @@
   "actions": {
     "unVerifyScanItem": "ยกเลิกการยืนยัน",
     "bindToCustomer": "ผูกกับลูกค้า",
-    "bindToProduct": "ผูกกับสินค้า"
+    "bindToProduct": "ผูกกับสินค้า",
+    "scanQr": "สร้าง QR",
+    "dryRun": "ทดสอบแสกน"
   },
   "filter": {
     "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
@@ -43,6 +45,7 @@
     "error": "เกิดข้อผิดพลาดในการโหลดรายละเอียดรายการสแกน",
     "copySuccess": "คัดลอกไปยังคลิปบอร์ดแล้ว",
     "copyTooltip": "คัดลอกข้อมูลรายการสแกนไปยังคลิปบอร์ด",
+    "qrcodeTitle": "คิวอาร์โค้ด",
     "fields": {
       "serial": "ซีเรียล",
       "pin": "พิน",

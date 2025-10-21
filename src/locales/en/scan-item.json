@@ -12,7 +12,9 @@
   "actions": {
     "unVerifyScanItem": "Un-Verify Scan Item",
     "bindToCustomer": "Bind to Customer",
-    "bindToProduct": "Bind To Product"
+    "bindToProduct": "Bind To Product",
+    "scanQr": "Scan QR",
+    "dryRun": "Dry Run"
   },
   "filter": {
     "searchPlaceholder": "Enter search value",
@@ -43,6 +45,7 @@
     "error": "Error loading scan item details",
     "copySuccess": "Copied to clipboard",
     "copyTooltip": "Copy scan item data to clipboard",
+    "qrcodeTitle": "QR Code",
     "fields": {
       "serial": "Serial",
       "pin": "Pin",
