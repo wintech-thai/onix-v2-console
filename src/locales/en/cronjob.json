@@ -53,6 +53,17 @@
       "parameterNameRequired": "Parameter name is required",
       "parameterValueRequired": "Parameter value is required"
     },
-    "tagsPlaceholder": "Type and press Enter to add tag"
+    "tagsPlaceholder": "Type and press Enter to add tag",
+    "state": {
+      "title": "Job Execution Status",
+      "type": "Type",
+      "status": "Status",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "pickupDate": "Pickup Date",
+      "succeedCount": "Succeed Count",
+      "failedCount": "Failed Count",
+      "jobMessage": "Job Message"
+    }
   }
 }

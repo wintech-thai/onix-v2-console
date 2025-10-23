@@ -8,6 +8,10 @@
     "cancel": "Cancel",
     "ok": "OK"
   },
+  "unsave": {
+    "title": "Unsaved Changes",
+    "message": "You have unsaved changes. Are you sure you want to leave without saving?"
+  },
   "not-found": {
     "title": "404 - Page Not Found",
     "description": "Sorry, the page you are looking for does not exist.",

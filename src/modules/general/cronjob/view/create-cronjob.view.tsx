@@ -75,6 +75,7 @@ const CreateCronJobView = () => {
         parameters: defaultPayload.parameters,
         tags: defaultPayload.tags ?? "",
       }}
+      cronJobData={defaultPayload}
       isUpdate={false}
       onSubmit={handleSubmit}
     />

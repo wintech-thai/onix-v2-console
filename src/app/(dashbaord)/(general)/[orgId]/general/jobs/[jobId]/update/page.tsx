@@ -1,9 +1,7 @@
+import UpdateCronJobView from "@/modules/general/cronjob/view/update-cronjob.view";
+
 const UpdateJobPage = () => {
-  return (
-    <div>
-      update job page
-    </div>
-   );
+  return <UpdateCronJobView />;
 }
 
 export default UpdateJobPage;

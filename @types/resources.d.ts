@@ -97,6 +97,10 @@ interface Resources {
       "noResults": "No results.",
       "of": "of",
       "rowsPerPage": "Rows per page:"
+    },
+    "unsave": {
+      "message": "You have unsaved changes. Are you sure you want to leave without saving?",
+      "title": "Unsaved Changes"
     }
   },
   "cronjob": {
@@ -145,6 +149,17 @@ interface Resources {
         "remove": "Remove",
         "title": "Parameters",
         "value": "Parameter Value"
+      },
+      "state": {
+        "endDate": "End Date",
+        "failedCount": "Failed Count",
+        "jobMessage": "Job Message",
+        "pickupDate": "Pickup Date",
+        "startDate": "Start Date",
+        "status": "Status",
+        "succeedCount": "Succeed Count",
+        "title": "Job Execution Status",
+        "type": "Type"
       },
       "tagsPlaceholder": "Type and press Enter to add tag",
       "updateTitle": "Update Cronjob",

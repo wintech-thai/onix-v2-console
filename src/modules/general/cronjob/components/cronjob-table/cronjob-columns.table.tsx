@@ -4,6 +4,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { IJob } from "../../api/fetch-cron-job.api";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
 
 type CronJobTableColumns = ColumnDef<IJob> & {
   accessorKey?: keyof IJob;
@@ -38,6 +40,19 @@ export const useCronJobTableColumns = (): CronJobTableColumns[] => {
     {
       accessorKey: "name",
       header: t("columns.name"),
+      cell: ({ row }) => {
+        return (
+          <Link
+            className="text-primary underline"
+            href={RouteConfig.GENERAL.JOB.UPDATE(
+              row.original.orgId,
+              row.original.id
+            )}
+          >
+            {row.original.name}
+          </Link>
+        );
+      },
     },
     {
       accessorKey: "description",

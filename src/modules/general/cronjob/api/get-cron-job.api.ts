@@ -9,7 +9,7 @@ export const getCronJobApi = {
       return useQuery({
         queryKey: [...getCronJobApi.key, "cronJob", orgId, jobId],
         queryFn: () => {
-          return api.get<IJob>(`/api/Job/org/${orgId}/GetJobById/${jobId}`)
+          return api.get<IJob>(`/api/Job/org/${orgId}/action/GetJobById/${jobId}`)
         }
       });
     }

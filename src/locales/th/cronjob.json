@@ -53,6 +53,17 @@
       "parameterNameRequired": "กรุณากรอกชื่อพารามิเตอร์",
       "parameterValueRequired": "กรุณากรอกค่าพารามิเตอร์"
     },
-    "tagsPlaceholder": "พิมพ์และกด Enter เพื่อเพิ่มแท็ก"
+    "tagsPlaceholder": "พิมพ์และกด Enter เพื่อเพิ่มแท็ก",
+    "state": {
+      "title": "สถานะการทำงาน",
+      "type": "ประเภท",
+      "status": "สถานะ",
+      "startDate": "วันที่เริ่มต้น",
+      "endDate": "วันที่สิ้นสุด",
+      "pickupDate": "วันที่รับงาน",
+      "succeedCount": "จำนวนสำเร็จ",
+      "failedCount": "จำนวนล้มเหลว",
+      "jobMessage": "ข้อความจากงาน"
+    }
   }
 }
