@@ -28,6 +28,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useActiveRow } from "@/hooks/use-active-row";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -56,6 +57,8 @@ export function CronJobTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
   const [rowSelection, setRowSelection] = useState({});
+  const { activeRowId, setActiveRowId } = useActiveRow("cronjob-table");
+
   const table = useReactTable({
     data,
     columns,
@@ -119,6 +122,10 @@ export function CronJobTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => setActiveRowId((row.original as { id: string }).id)}
+                  className={`cursor-pointer transition-colors ${
+                    activeRowId === (row.original as { id: string }).id ? "bg-blue-50 hover:bg-blue-100" : ""
+                  }`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
