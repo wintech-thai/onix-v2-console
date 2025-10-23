@@ -19,7 +19,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 import Link from "next/link";
 
@@ -38,7 +38,6 @@ export const CronJobFilterTable = ({
 }: CronJobFilterTableProps) => {
   const { t } = useTranslation("cronjob");
   const params = useParams<{ orgId: string }>();
-  const router = useRouter();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
