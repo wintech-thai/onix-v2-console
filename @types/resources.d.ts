@@ -129,6 +129,32 @@ interface Resources {
       "search": "Search",
       "searchPlaceholder": "Enter search value",
       "selectSearchField": "Select search field"
+    },
+    "form": {
+      "createTitle": "Create Cronjob",
+      "detail": {
+        "description": "Description",
+        "name": "Name",
+        "tags": "Tags",
+        "title": "Cronjob Detail"
+      },
+      "parameters": {
+        "add": "Add Parameter",
+        "name": "Parameter Name",
+        "noParameters": "No parameters added yet",
+        "remove": "Remove",
+        "title": "Parameters",
+        "value": "Parameter Value"
+      },
+      "tagsPlaceholder": "Type and press Enter to add tag",
+      "updateTitle": "Update Cronjob",
+      "validation": {
+        "descriptionRequired": "Description is required",
+        "nameRequired": "Name is required",
+        "parameterNameRequired": "Parameter name is required",
+        "parameterValueRequired": "Parameter value is required",
+        "tagsRequired": "At least one tag is required"
+      }
     }
   },
   "product": {

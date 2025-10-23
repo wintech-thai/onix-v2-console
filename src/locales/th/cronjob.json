@@ -28,5 +28,31 @@
     "message": "คุณแน่ใจหรือไม่ที่จะลบงานที่เลือก? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
     "success": "ลบงานสำเร็จ",
     "error": "ลบงานไม่สำเร็จ"
+  },
+  "form": {
+    "createTitle": "สร้างงาน",
+    "updateTitle": "แก้ไขงาน",
+    "detail": {
+      "title": "รายละเอียดงาน",
+      "name": "ชื่อ",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก"
+    },
+    "parameters": {
+      "title": "พารามิเตอร์",
+      "name": "ชื่อพารามิเตอร์",
+      "value": "ค่าพารามิเตอร์",
+      "add": "เพิ่มพารามิเตอร์",
+      "remove": "ลบ",
+      "noParameters": "ยังไม่มีพารามิเตอร์"
+    },
+    "validation": {
+      "nameRequired": "กรุณากรอกชื่อ",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",
+      "parameterNameRequired": "กรุณากรอกชื่อพารามิเตอร์",
+      "parameterValueRequired": "กรุณากรอกค่าพารามิเตอร์"
+    },
+    "tagsPlaceholder": "พิมพ์และกด Enter เพื่อเพิ่มแท็ก"
   }
 }

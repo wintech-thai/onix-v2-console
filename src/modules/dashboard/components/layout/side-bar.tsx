@@ -93,7 +93,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.general.sub.4",
-            href: RouteConfig.GENERAL.JOB(params.orgId),
+            href: RouteConfig.GENERAL.JOB.LIST(params.orgId),
           },
         ],
       },

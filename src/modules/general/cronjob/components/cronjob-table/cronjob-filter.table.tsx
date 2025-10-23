@@ -19,6 +19,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useParams, useRouter } from "next/navigation";
+import { RouteConfig } from "@/config/route.config";
+import Link from "next/link";
 
 interface CronJobFilterTableProps {
   onDelete: () => void;
@@ -34,6 +37,8 @@ export const CronJobFilterTable = ({
   selected,
 }: CronJobFilterTableProps) => {
   const { t } = useTranslation("cronjob");
+  const params = useParams<{ orgId: string }>();
+  const router = useRouter();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -123,7 +128,11 @@ export const CronJobFilterTable = ({
             <Button>{t("filter.add")}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>{t("actions.create-scan-item")}</DropdownMenuItem>
+            <Link href={RouteConfig.GENERAL.JOB.CREATE(params.orgId)}>
+              <DropdownMenuItem>
+                {t("actions.create-scan-item")}
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
         <Button

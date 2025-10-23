@@ -28,5 +28,31 @@
     "message": "Are you sure you want to delete the selected cronjobs? This action cannot be undone.",
     "success": "Deleted cronjob successfully",
     "error": "Failed to delete cronjob"
+  },
+  "form": {
+    "createTitle": "Create Cronjob",
+    "updateTitle": "Update Cronjob",
+    "detail": {
+      "title": "Cronjob Detail",
+      "name": "Name",
+      "description": "Description",
+      "tags": "Tags"
+    },
+    "parameters": {
+      "title": "Parameters",
+      "name": "Parameter Name",
+      "value": "Parameter Value",
+      "add": "Add Parameter",
+      "remove": "Remove",
+      "noParameters": "No parameters added yet"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "At least one tag is required",
+      "parameterNameRequired": "Parameter name is required",
+      "parameterValueRequired": "Parameter value is required"
+    },
+    "tagsPlaceholder": "Type and press Enter to add tag"
   }
 }
