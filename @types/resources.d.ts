@@ -99,6 +99,38 @@ interface Resources {
       "rowsPerPage": "Rows per page:"
     }
   },
+  "cronjob": {
+    "actions": {
+      "create-scan-item": "Create ScanItem"
+    },
+    "columns": {
+      "createdDate": "Created Date",
+      "description": "Description",
+      "endDate": "End Date",
+      "failedCount": "Failed",
+      "name": "Name",
+      "progressPct": "Progress",
+      "startDate": "Start Date",
+      "status": "Status",
+      "succeedCount": "Succeed",
+      "tags": "Tags",
+      "type": "Type"
+    },
+    "delete": {
+      "error": "Failed to delete cronjob",
+      "message": "Are you sure you want to delete the selected cronjobs? This action cannot be undone.",
+      "success": "Deleted cronjob successfully",
+      "title": "Confirm Deletion"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field"
+    }
+  },
   "product": {
     "actions": {
       "back": "Back",

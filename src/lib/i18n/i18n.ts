@@ -5,8 +5,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import { i18nConfig } from "./i18n-config";
 
-export type i18nKeys = "common" | "product" | "auth" | "scan-item";
-export const i18nNamespaces: i18nKeys[] = ["common", "product", "auth", "scan-item"];
+export type i18nKeys = "common" | "product" | "auth" | "scan-item" | "cronjob";
+export const i18nNamespaces: i18nKeys[] = ["common", "product", "auth", "scan-item", "cronjob"];
 
 export default async function initTranslations(
   locale: string,

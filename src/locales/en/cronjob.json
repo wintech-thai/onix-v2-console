@@ -1,0 +1,32 @@
+{
+  "columns": {
+    "name": "Name",
+    "type": "Type",
+    "status": "Status",
+    "description": "Description",
+    "tags": "Tags",
+    "progressPct": "Progress",
+    "succeedCount": "Succeed",
+    "failedCount": "Failed",
+    "createdDate": "Created Date",
+    "startDate": "Start Date",
+    "endDate": "End Date"
+  },
+  "filter": {
+    "searchPlaceholder": "Enter search value",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD"
+  },
+  "actions": {
+    "create-scan-item": "Create ScanItem"
+  },
+  "delete": {
+    "title": "Confirm Deletion",
+    "message": "Are you sure you want to delete the selected cronjobs? This action cannot be undone.",
+    "success": "Deleted cronjob successfully",
+    "error": "Failed to delete cronjob"
+  }
+}
