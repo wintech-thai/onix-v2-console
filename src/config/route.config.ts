@@ -11,7 +11,11 @@ export const RouteConfig = {
     },
     CUSTOMER: (orgId: string) => `/${orgId}/general/customers`,
     QRCODE: (orgId: string) => `/${orgId}/general/qrcodes`,
-    JOB: (orgId: string) => `/${orgId}/general/jobs`,
+    JOB: {
+      LIST: (orgId: string) => `/${orgId}/general/jobs`,
+      CREATE: (orgId: string) => `/${orgId}/general/jobs/create`,
+      UPDATE: (orgId: string, jobId: string) => `/${orgId}/general/jobs/${jobId}/update`,
+    }
   },
   ADMIN: {
     APIKEY: (orgId: string) => `/${orgId}/admin/apikeys`,

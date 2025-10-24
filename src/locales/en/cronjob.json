@@ -1,0 +1,69 @@
+{
+  "columns": {
+    "name": "Name",
+    "type": "Type",
+    "status": "Status",
+    "description": "Description",
+    "tags": "Tags",
+    "progressPct": "Progress",
+    "succeedCount": "Succeed",
+    "failedCount": "Failed",
+    "createdDate": "Created Date",
+    "startDate": "Start Date",
+    "endDate": "End Date"
+  },
+  "filter": {
+    "searchPlaceholder": "Enter search value",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD"
+  },
+  "actions": {
+    "create-scan-item": "Create ScanItem"
+  },
+  "delete": {
+    "title": "Confirm Deletion",
+    "message": "Are you sure you want to delete the selected cronjobs? This action cannot be undone.",
+    "success": "Deleted cronjob successfully",
+    "error": "Failed to delete cronjob"
+  },
+  "form": {
+    "createTitle": "Create Cronjob",
+    "updateTitle": "Update Cronjob",
+    "detail": {
+      "title": "Cronjob Detail",
+      "name": "Name",
+      "description": "Description",
+      "tags": "Tags"
+    },
+    "parameters": {
+      "title": "Parameters",
+      "name": "Parameter Name",
+      "value": "Parameter Value",
+      "add": "Add Parameter",
+      "remove": "Remove",
+      "noParameters": "No parameters added yet"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "At least one tag is required",
+      "parameterNameRequired": "Parameter name is required",
+      "parameterValueRequired": "Parameter value is required"
+    },
+    "tagsPlaceholder": "Type and press Enter to add tag",
+    "state": {
+      "title": "Job Execution Status",
+      "type": "Type",
+      "status": "Status",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "pickupDate": "Pickup Date",
+      "succeedCount": "Succeed Count",
+      "failedCount": "Failed Count",
+      "jobMessage": "Job Message"
+    }
+  }
+}

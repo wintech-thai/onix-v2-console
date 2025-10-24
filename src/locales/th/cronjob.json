@@ -1,0 +1,69 @@
+{
+  "columns": {
+    "name": "ชื่อ",
+    "type": "ประเภท",
+    "status": "สถานะ",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "progressPct": "ความคืบหน้า",
+    "succeedCount": "สำเร็จ",
+    "failedCount": "ล้มเหลว",
+    "createdDate": "วันที่สร้าง",
+    "startDate": "วันที่เริ่มต้น",
+    "endDate": "วันที่สิ้นสุด"
+  },
+  "filter": {
+    "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม"
+  },
+  "actions": {
+    "create-scan-item": "สร้าง ScanItem"
+  },
+  "delete": {
+    "title": "ยืนยันการลบ",
+    "message": "คุณแน่ใจหรือไม่ที่จะลบงานที่เลือก? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+    "success": "ลบงานสำเร็จ",
+    "error": "ลบงานไม่สำเร็จ"
+  },
+  "form": {
+    "createTitle": "สร้างงาน",
+    "updateTitle": "แก้ไขงาน",
+    "detail": {
+      "title": "รายละเอียดงาน",
+      "name": "ชื่อ",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก"
+    },
+    "parameters": {
+      "title": "พารามิเตอร์",
+      "name": "ชื่อพารามิเตอร์",
+      "value": "ค่าพารามิเตอร์",
+      "add": "เพิ่มพารามิเตอร์",
+      "remove": "ลบ",
+      "noParameters": "ยังไม่มีพารามิเตอร์"
+    },
+    "validation": {
+      "nameRequired": "กรุณากรอกชื่อ",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",
+      "parameterNameRequired": "กรุณากรอกชื่อพารามิเตอร์",
+      "parameterValueRequired": "กรุณากรอกค่าพารามิเตอร์"
+    },
+    "tagsPlaceholder": "พิมพ์และกด Enter เพื่อเพิ่มแท็ก",
+    "state": {
+      "title": "สถานะการทำงาน",
+      "type": "ประเภท",
+      "status": "สถานะ",
+      "startDate": "วันที่เริ่มต้น",
+      "endDate": "วันที่สิ้นสุด",
+      "pickupDate": "วันที่รับงาน",
+      "succeedCount": "จำนวนสำเร็จ",
+      "failedCount": "จำนวนล้มเหลว",
+      "jobMessage": "ข้อความจากงาน"
+    }
+  }
+}

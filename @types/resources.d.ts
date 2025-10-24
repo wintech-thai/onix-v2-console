@@ -97,6 +97,79 @@ interface Resources {
       "noResults": "No results.",
       "of": "of",
       "rowsPerPage": "Rows per page:"
+    },
+    "unsave": {
+      "message": "You have unsaved changes. Are you sure you want to leave without saving?",
+      "title": "Unsaved Changes"
+    }
+  },
+  "cronjob": {
+    "actions": {
+      "create-scan-item": "Create ScanItem"
+    },
+    "columns": {
+      "createdDate": "Created Date",
+      "description": "Description",
+      "endDate": "End Date",
+      "failedCount": "Failed",
+      "name": "Name",
+      "progressPct": "Progress",
+      "startDate": "Start Date",
+      "status": "Status",
+      "succeedCount": "Succeed",
+      "tags": "Tags",
+      "type": "Type"
+    },
+    "delete": {
+      "error": "Failed to delete cronjob",
+      "message": "Are you sure you want to delete the selected cronjobs? This action cannot be undone.",
+      "success": "Deleted cronjob successfully",
+      "title": "Confirm Deletion"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "createTitle": "Create Cronjob",
+      "detail": {
+        "description": "Description",
+        "name": "Name",
+        "tags": "Tags",
+        "title": "Cronjob Detail"
+      },
+      "parameters": {
+        "add": "Add Parameter",
+        "name": "Parameter Name",
+        "noParameters": "No parameters added yet",
+        "remove": "Remove",
+        "title": "Parameters",
+        "value": "Parameter Value"
+      },
+      "state": {
+        "endDate": "End Date",
+        "failedCount": "Failed Count",
+        "jobMessage": "Job Message",
+        "pickupDate": "Pickup Date",
+        "startDate": "Start Date",
+        "status": "Status",
+        "succeedCount": "Succeed Count",
+        "title": "Job Execution Status",
+        "type": "Type"
+      },
+      "tagsPlaceholder": "Type and press Enter to add tag",
+      "updateTitle": "Update Cronjob",
+      "validation": {
+        "descriptionRequired": "Description is required",
+        "nameRequired": "Name is required",
+        "parameterNameRequired": "Parameter name is required",
+        "parameterValueRequired": "Parameter value is required",
+        "tagsRequired": "At least one tag is required"
+      }
     }
   },
   "product": {
