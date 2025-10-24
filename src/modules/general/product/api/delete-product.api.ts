@@ -1,5 +1,5 @@
-import { api } from "@/lib/axios"
-import { useMutation } from "@tanstack/react-query"
+import { api } from "@/lib/axios";
+import { useMutation } from "@tanstack/react-query";
 
 export interface DeleteProductResponse {
   status: string;
@@ -18,7 +18,7 @@ export const deleteProductApi = {
         orgId: string,
         productId: string,
       }) => {
-        return api.delete<DeleteProductResponse>(`/api/Item/org/${orgId}/action/DeleteItemById/${productId}`)
+        return api.delete<DeleteProductResponse>(`/api/Item/org/${orgId}/action/DeleteItemCascadeById/${productId}`)
       }
     })
   }
