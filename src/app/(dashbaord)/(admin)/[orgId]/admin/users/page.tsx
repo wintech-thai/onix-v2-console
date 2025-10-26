@@ -1,9 +1,7 @@
+import UserView from "@/modules/admin/user/view/user.view";
+
 const AccountUserPage = () => {
-  return (
-    <div>
-      account user page
-    </div>
-   );
+  return <UserView />;
 }
 
 export default AccountUserPage;
