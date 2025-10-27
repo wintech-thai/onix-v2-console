@@ -282,6 +282,7 @@ export const UserForm = ({
                     )}
                     minLength={4}
                     maxLength={20}
+                    disabled={isSubmitting || isUpdate}
                   />
                 );
               }}
@@ -301,6 +302,7 @@ export const UserForm = ({
                       t
                     )}
                     maxLength={80}
+                    disabled={isSubmitting || isUpdate}
                   />
                 );
               }}
