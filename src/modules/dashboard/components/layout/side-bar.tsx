@@ -108,7 +108,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.admin.sub.2",
-            href: RouteConfig.ADMIN.USER(params.orgId),
+            href: RouteConfig.ADMIN.USER.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.admin.sub.3",
