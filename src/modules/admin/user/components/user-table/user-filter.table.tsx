@@ -15,6 +15,7 @@ import { parseAsString, useQueryStates } from "nuqs";
 import { useParams } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 interface UserFilterTableProps {
   onDelete: () => void;
@@ -29,6 +30,7 @@ export const UserFilterTable = ({
   onSearch,
   selected,
 }: UserFilterTableProps) => {
+  const { t } = useTranslation("user");
   const params = useParams<{ orgId: string }>();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
@@ -67,12 +69,14 @@ export const UserFilterTable = ({
           <Select value={searchField} onValueChange={setSearchField}>
             <SelectTrigger
               className="w-full md:w-48"
-              aria-label="Select search field"
+              aria-label={t("filter.selectSearchField")}
             >
-              <SelectValue placeholder="Select search field" />
+              <SelectValue placeholder={t("filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fullTextSearch">Full Text Search</SelectItem>
+              <SelectItem value="fullTextSearch">
+                {t("filter.fullTextSearch")}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -80,9 +84,9 @@ export const UserFilterTable = ({
         {/* Search input */}
         <div className="w-full md:w-[500px]">
           <Input
-            placeholder="Search users..."
+            placeholder={t("filter.searchPlaceholder")}
             className="w-full"
-            aria-label="Search users"
+            aria-label={t("filter.search")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
@@ -97,7 +101,7 @@ export const UserFilterTable = ({
           <Button
             type="submit"
             className="w-full md:w-[80px]"
-            aria-label="Search"
+            aria-label={t("filter.search")}
           >
             <Search className="size-4" />
           </Button>
@@ -114,7 +118,7 @@ export const UserFilterTable = ({
       >
         <Link href={RouteConfig.ADMIN.USER.CREATE(params.orgId)}>
           <Button className="w-full md:w-auto">
-            Create User
+            {t("actions.createUser")}
           </Button>
         </Link>
         <Button
@@ -123,7 +127,7 @@ export const UserFilterTable = ({
           onClick={onDelete}
           variant="destructive"
         >
-          Delete {selected ? `(${selected})` : ""}
+          {t("filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
       </div>
     </form>

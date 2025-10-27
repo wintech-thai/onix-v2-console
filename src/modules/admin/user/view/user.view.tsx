@@ -12,15 +12,17 @@ import { toast } from "sonner";
 import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 const UserView = () => {
+  const { t } = useTranslation("user");
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IUser[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [, setIsDeleting] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
-    title: "Delete User",
-    message: "Are you sure you want to delete the selected user(s)?",
+    title: t("delete.title"),
+    message: t("delete.message"),
     variant: "destructive",
   });
   const queryClient = useQueryClient();
@@ -90,7 +92,7 @@ const UserView = () => {
 
     if (!ok) return;
 
-    const idsToDelete = rows.map((row) => row.original.userId);
+    const idsToDelete = rows.map((row) => row.original.orgUserId);
     let successCount = 0;
     let errorCount = 0;
 
@@ -106,14 +108,14 @@ const UserView = () => {
           onSuccess: ({ data }) => {
             if (data.status !== "OK") {
               errorCount++;
-              toast.error(data.description || "Failed to delete user");
+              toast.error(data.description || t("delete.error"));
             } else {
               successCount++;
             }
           },
           onError: () => {
             errorCount++;
-            toast.error("Failed to delete user");
+            toast.error(t("delete.error"));
           },
         }
       );
@@ -123,12 +125,12 @@ const UserView = () => {
     // Show summary toast
     if (successCount > 0) {
       toast.success(
-        `Successfully deleted user(s) (${successCount}/${idsToDelete.length})`
+        `${t("delete.success")} (${successCount}/${idsToDelete.length})`
       );
     }
     if (errorCount > 0) {
       toast.error(
-        `Failed to delete user(s) (${errorCount}/${idsToDelete.length})`
+        `${t("delete.error")} (${errorCount}/${idsToDelete.length})`
       );
     }
 

@@ -461,6 +461,73 @@ interface Resources {
       "success": "Scan item un-verified successfully",
       "title": "Confirm Un-Verification"
     }
+  },
+  "user": {
+    "actions": {
+      "createUser": "Create User",
+      "disableUser": "Disable User",
+      "enableUser": "Enable User"
+    },
+    "columns": {
+      "action": "Action",
+      "email": "Email",
+      "isOrgInitialUser": "Initial User",
+      "role": "Role",
+      "userStatus": "Status",
+      "username": "Username"
+    },
+    "delete": {
+      "error": "Failed to delete user",
+      "message": "Are you sure you want to delete the selected user(s)?",
+      "success": "Successfully deleted user(s)",
+      "title": "Delete User"
+    },
+    "filter": {
+      "add": "Add",
+      "delete": "Delete",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search users...",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "create": "Create User",
+        "save": "Save",
+        "saving": "Saving...",
+        "update": "Update User"
+      },
+      "createTitle": "Create User",
+      "leavePage": "Leave Page",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update User",
+      "userInformation": {
+        "title": "User Information",
+        "userEmail": "Email",
+        "userName": "Username"
+      },
+      "userRoles": {
+        "availableRoles": "Available Roles",
+        "noAvailable": "No available roles",
+        "noSelected": "No selected roles",
+        "selectedRoles": "Selected Roles",
+        "title": "User Roles"
+      },
+      "validation": {
+        "emailInvalid": "Invalid email format",
+        "emailRequired": "Email is required",
+        "rolesRequired": "At least one role is required",
+        "userNameRequired": "Username is required"
+      }
+    },
+    "messages": {
+      "createError": "Failed to create user",
+      "createSuccess": "User created successfully",
+      "loading": "Loading...",
+      "updateError": "Failed to update user",
+      "updateSuccess": "User updated successfully"
+    }
   }
 }
 
