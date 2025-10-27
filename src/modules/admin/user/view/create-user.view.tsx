@@ -5,8 +5,10 @@ import { inviteUserApi } from "../api/create-user.api";
 import { UserForm } from "../components/user-form/user-form";
 import { UserSchemaType } from "../schema/user.schema";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const CreateUserView = () => {
+  const { t } = useTranslation("user");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const inviteUserMutation = inviteUserApi.useMutation();
@@ -20,14 +22,14 @@ const CreateUserView = () => {
       {
         onSuccess: ({ data }) => {
           if (data.status === "OK") {
-            toast.success("Email Send");
+            toast.success(t("messages.sendInviteSuccess", { email: values.tmpUserEmail }));
             return router.back();
           }
 
-          return toast.error(data.description);
+          return toast.error(data.description || t("messages.createError"));
         },
         onError: () => {
-          return toast.error("Failed");
+          return toast.error(t("messages.createError"));
         },
       }
     );

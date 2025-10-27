@@ -62,6 +62,7 @@
     "createError": "Failed to create user",
     "updateSuccess": "User updated successfully",
     "updateError": "Failed to update user",
+    "sendInviteSuccess": "Invitation sent to {{email}} successfully",
     "loading": "Loading..."
   }
 }

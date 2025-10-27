@@ -9,8 +9,10 @@ import { UserSchemaType } from "../schema/user.schema";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchUsersApi } from "../api/fetch-users.api";
+import { useTranslation } from "react-i18next";
 
 const UpdateUserView = () => {
+  const { t } = useTranslation("user");
   const params = useParams<{ orgId: string; userId: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -56,14 +58,14 @@ const UpdateUserView = () => {
               refetchType: "active",
             });
 
-            toast.success("Update User Success");
+            toast.success(t("messages.updateSuccess"));
             return router.back();
           }
 
-          return toast.error("Update User Failed");
+          return toast.error(data.description || t("messages.updateError"));
         },
         onError: () => {
-          return toast.error("Update User Failed");
+          return toast.error(t("messages.updateError"));
         },
       }
     );

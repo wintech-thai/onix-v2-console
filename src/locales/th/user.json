@@ -62,6 +62,7 @@
     "createError": "สร้างผู้ใช้ไม่สำเร็จ",
     "updateSuccess": "แก้ไขผู้ใช้สำเร็จ",
     "updateError": "แก้ไขผู้ใช้ไม่สำเร็จ",
+    "sendInviteSuccess": "ส่งคำเชิญไปยัง {{email}} สำเร็จแล้ว",
     "loading": "กำลังโหลด..."
   }
 }

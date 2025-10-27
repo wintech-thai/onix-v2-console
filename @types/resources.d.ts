@@ -525,6 +525,7 @@ interface Resources {
       "createError": "Failed to create user",
       "createSuccess": "User created successfully",
       "loading": "Loading...",
+      "sendInviteSuccess": "Invitation sent to {{email}} successfully",
       "updateError": "Failed to update user",
       "updateSuccess": "User updated successfully"
     }
