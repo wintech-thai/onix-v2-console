@@ -263,7 +263,9 @@ export const UserForm = ({
       </header>
       <div className="flex-1 p-4 space-y-4 overflow-y-auto">
         <div className="p-4 md:p-6 border rounded-lg">
-          <header className="text-lg font-bold">{t("form.userInformation.title")}</header>
+          <header className="text-lg font-bold">
+            {t("form.userInformation.title")}
+          </header>
           <div className="grid md:grid-cols-2 gap-2 mt-4">
             <Controller
               control={form.control}
@@ -274,7 +276,10 @@ export const UserForm = ({
                     {...field}
                     label={t("form.userInformation.userName")}
                     isRequired
-                    errorMessage={errorMessageAsLangKey(errors.userName?.message, t)}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.userName?.message,
+                      t
+                    )}
                     minLength={4}
                     maxLength={20}
                   />
@@ -291,7 +296,10 @@ export const UserForm = ({
                     {...field}
                     label={t("form.userInformation.userEmail")}
                     isRequired
-                    errorMessage={errorMessageAsLangKey(errors.tmpUserEmail?.message, t)}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.tmpUserEmail?.message,
+                      t
+                    )}
                     maxLength={80}
                   />
                 );
@@ -302,7 +310,9 @@ export const UserForm = ({
 
         {/* User Roles Section */}
         <div className="p-4 md:p-6 border rounded-lg">
-          <header className="text-lg font-bold">{t("form.userRoles.title")}</header>
+          <header className="text-lg font-bold">
+            {t("form.userRoles.title")}
+          </header>
 
           <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
             {/* Left Panel - Available Roles */}
@@ -435,12 +445,14 @@ export const UserForm = ({
                           />
                         </TableCell>
                         <TableCell>
-                          <div>
-                            <div className="font-medium">{role.roleName}</div>
-                            <div className="text-sm text-muted-foreground">
-                              {role.roleDescription}
+                          <Hint message={role.roleDefinition}>
+                            <div>
+                              <div className="font-medium">{role.roleName}</div>
+                              <div className="text-sm text-muted-foreground">
+                                {role.roleDescription}
+                              </div>
                             </div>
-                          </div>
+                          </Hint>
                         </TableCell>
                       </TableRow>
                     ))
@@ -475,7 +487,9 @@ export const UserForm = ({
               {t("form.actions.saving")}
             </>
           ) : (
-            <>{isUpdate ? t("form.actions.update") : t("form.actions.create")}</>
+            <>
+              {isUpdate ? t("form.actions.update") : t("form.actions.create")}
+            </>
           )}
         </Button>
       </footer>
