@@ -53,7 +53,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
               row.original.id
             )}
           >
-            {row.original.name}
+            {row.original.code}
           </Link>
         );
       },
