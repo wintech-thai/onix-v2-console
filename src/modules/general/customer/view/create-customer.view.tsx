@@ -1,9 +1,9 @@
+"use client";
+
+import { CustomerForm } from "../components/customer-form/customer-form";
+
 const CreateCustomerView = () => {
-  return (
-    <div>
-      create customer view
-    </div>
-   );
+  return <CustomerForm />;
 }
 
 export default CreateCustomerView;
