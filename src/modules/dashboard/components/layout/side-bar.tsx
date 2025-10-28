@@ -85,7 +85,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.general.sub.2",
-            href: RouteConfig.GENERAL.CUSTOMER(params.orgId),
+            href: RouteConfig.GENERAL.CUSTOMER.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.general.sub.3",

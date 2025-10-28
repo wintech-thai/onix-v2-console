@@ -9,7 +9,11 @@ export const RouteConfig = {
       UPDATE: (orgId: string, productId: string) => `/${orgId}/general/products/${productId}/update`,
       IMAGE: (orgId: string, productId: string) => `/${orgId}/general/products/${productId}/image`,
     },
-    CUSTOMER: (orgId: string) => `/${orgId}/general/customers`,
+    CUSTOMER: {
+      LIST: (orgId: string) => `/${orgId}/general/customers`,
+      CREATE: (orgId: string) => `/${orgId}/general/customers/create`,
+      UPDATE: (orgId: string, customerId: string) => `/${orgId}/general/customers/${customerId}/update`,
+    },
     QRCODE: (orgId: string) => `/${orgId}/general/qrcodes`,
     JOB: {
       LIST: (orgId: string) => `/${orgId}/general/jobs`,

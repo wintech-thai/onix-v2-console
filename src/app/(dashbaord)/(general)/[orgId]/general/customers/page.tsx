@@ -1,9 +1,7 @@
+import CustomerView from "@/modules/general/customer/view/customer.view";
+
 const CustomerPage = () => {
-  return (
-    <div>
-      customer page
-    </div>
-   );
+  return <CustomerView />;
 }
 
 export default CustomerPage;
