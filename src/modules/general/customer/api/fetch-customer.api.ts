@@ -42,7 +42,7 @@ export const fetchCustomerApi = {
     params: FetchCustomerRequest;
   }) => {
     return useQuery({
-      queryKey: [...fetchCustomerApi.key],
+      queryKey: [...fetchCustomerApi.key, params],
       queryFn: () => {
         return api.post<FetchCustomerResponse>(`/api/Customer/org/${params.orgId}/action/GetCustomers`, params.params);
       }
@@ -53,7 +53,7 @@ export const fetchCustomerApi = {
     params: FetchCustomerRequest;
   }) => {
     return useQuery({
-      queryKey: [...fetchCustomerApi.key],
+      queryKey: [...fetchCustomerApi.key, "count", params],
       queryFn: () => {
         return api.post<number>(`/api/Customer/org/${params.orgId}/action/GetCustomerCount`, params.params);
       }
