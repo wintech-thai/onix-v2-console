@@ -144,7 +144,7 @@ export function ProductTable<TData, TValue>({
                   className="h-24 text-center"
                 >
                   <div className="flex items-center justify-center">
-                    <Loader className="animate-spin size-6 text-gray-500" />
+                    <Loader className="animate-spin size-4 text-gray-500" />
                   </div>
                 </TableCell>
               </TableRow>
