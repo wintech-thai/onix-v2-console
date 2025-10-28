@@ -1,0 +1,68 @@
+{
+  "columns": {
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "isOrgInitialUser": "Initial User",
+    "userStatus": "Status",
+    "action": "Action"
+  },
+  "filter": {
+    "searchPlaceholder": "Search users...",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "Delete",
+    "add": "Add"
+  },
+  "actions": {
+    "createUser": "Create User",
+    "disableUser": "Disable User",
+    "enableUser": "Enable User"
+  },
+  "delete": {
+    "title": "Delete User",
+    "message": "Are you sure you want to delete the selected user(s)?",
+    "success": "Successfully deleted user(s)",
+    "error": "Failed to delete user"
+  },
+  "form": {
+    "createTitle": "Create User",
+    "updateTitle": "Update User",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "leavePage": "Leave Page",
+    "userInformation": {
+      "title": "User Information",
+      "userName": "Username",
+      "userEmail": "Email"
+    },
+    "userRoles": {
+      "title": "User Roles",
+      "availableRoles": "Available Roles",
+      "selectedRoles": "Selected Roles",
+      "noAvailable": "No available roles",
+      "noSelected": "No selected roles"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "create": "Create User",
+      "update": "Update User",
+      "saving": "Saving..."
+    },
+    "validation": {
+      "userNameRequired": "Username is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "rolesRequired": "At least one role is required"
+    }
+  },
+  "messages": {
+    "createSuccess": "User created successfully",
+    "createError": "Failed to create user",
+    "updateSuccess": "User updated successfully",
+    "updateError": "Failed to update user",
+    "sendInviteSuccess": "Invitation sent to {{email}} successfully",
+    "loading": "Loading..."
+  }
+}

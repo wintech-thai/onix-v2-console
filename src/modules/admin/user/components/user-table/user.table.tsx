@@ -1,33 +1,34 @@
 "use client";
 
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    Row,
-    useReactTable,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  Row,
+  useReactTable,
 } from "@tanstack/react-table";
 
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../../../../../components/ui/table";
 import { useState } from "react";
 import { UserFilterTable } from "./user-filter.table";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useActiveRow } from "@/hooks/use-active-row";
+import { useTranslation } from "react-i18next";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -54,6 +55,7 @@ export function UserTable<TData, TValue>({
   onSearch,
   isLoading = false,
 }: DataTableProps<TData, TValue>) {
+  const { t } = useTranslation("common");
   const [rowSelection, setRowSelection] = useState({});
   const { activeRowId, setActiveRowId } = useActiveRow("user-table");
 
@@ -141,7 +143,7 @@ export function UserTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -151,7 +153,7 @@ export function UserTable<TData, TValue>({
       <div className="flex items-center justify-end">
         <div className="flex items-center space-x-2">
           <span className="hidden text-sm text-gray-500 md:block">
-            Rows per page
+            {t("table.rowsPerPage")}
           </span>
           <Select
             value={itemsPerPage.toString()}
@@ -174,7 +176,7 @@ export function UserTable<TData, TValue>({
           <span className="text-sm text-gray-500">
             {((currentPage - 1) * itemsPerPage + 1).toLocaleString()}-
             {Math.min(currentPage * itemsPerPage, totalItems).toLocaleString()}{" "}
-            of {totalItems.toLocaleString()}
+            {t("table.of")} {totalItems.toLocaleString()}
           </span>
           <Button
             variant="ghost"

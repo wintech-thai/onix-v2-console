@@ -166,7 +166,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
             <UnVerifyConfirmDialog />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="outline" size="icon">
                   {unVerifyScanItemMutate.isPending ? (
                     <Loader className="animate-spin size-4" />
                   ) : (

@@ -8,15 +8,15 @@ export interface IUser {
   userName: string;
   createdDate: string;
   rolesList: string;
-  isOrgInitialUser: boolean;
+  isOrgInitialUser: string | null;
   userStatus: string;
-  tmpUserEmail: null;
-  previousUserStatus: string;
-  invitedDate: string;
-  invitedBy: string;
-  userEmail: string;
-  orgName: string;
-  orgDesc: string;
+  tmpUserEmail: string | null;
+  previousUserStatus: string  | null;
+  invitedDate: string | null;
+  invitedBy: string | null;
+  userEmail: string | null;
+  orgName: string | null;
+  orgDesc: string | null;
   roles: string[];
 }
 

@@ -1,0 +1,68 @@
+{
+  "columns": {
+    "username": "ชื่อผู้ใช้",
+    "email": "อีเมล",
+    "role": "บทบาท",
+    "isOrgInitialUser": "ผู้ใช้เริ่มต้น",
+    "userStatus": "สถานะ",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "searchPlaceholder": "ค้นหาผู้ใช้...",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม"
+  },
+  "actions": {
+    "createUser": "สร้างผู้ใช้",
+    "disableUser": "ปิดใช้งานผู้ใช้",
+    "enableUser": "เปิดใช้งานผู้ใช้"
+  },
+  "delete": {
+    "title": "ลบผู้ใช้",
+    "message": "คุณแน่ใจหรือไม่ที่จะลบผู้ใช้ที่เลือก?",
+    "success": "ลบผู้ใช้สำเร็จ",
+    "error": "ลบผู้ใช้ไม่สำเร็จ"
+  },
+  "form": {
+    "createTitle": "สร้างผู้ใช้",
+    "updateTitle": "แก้ไขผู้ใช้",
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ที่จะออก?",
+    "leavePage": "ออกจากหน้านี้",
+    "userInformation": {
+      "title": "ข้อมูลผู้ใช้",
+      "userName": "ชื่อผู้ใช้",
+      "userEmail": "อีเมล"
+    },
+    "userRoles": {
+      "title": "บทบาทผู้ใช้",
+      "availableRoles": "บทบาทที่มี",
+      "selectedRoles": "บทบาทที่เลือก",
+      "noAvailable": "ไม่มีบทบาทที่มี",
+      "noSelected": "ไม่มีบทบาทที่เลือก"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "create": "สร้างผู้ใช้",
+      "update": "แก้ไขผู้ใช้",
+      "saving": "กำลังบันทึก..."
+    },
+    "validation": {
+      "userNameRequired": "กรุณากรอกชื่อผู้ใช้",
+      "emailRequired": "กรุณากรอกอีเมล",
+      "emailInvalid": "รูปแบบอีเมลไม่ถูกต้อง",
+      "rolesRequired": "กรุณาเลือกบทบาทอย่างน้อย 1 รายการ"
+    }
+  },
+  "messages": {
+    "createSuccess": "สร้างผู้ใช้สำเร็จ",
+    "createError": "สร้างผู้ใช้ไม่สำเร็จ",
+    "updateSuccess": "แก้ไขผู้ใช้สำเร็จ",
+    "updateError": "แก้ไขผู้ใช้ไม่สำเร็จ",
+    "sendInviteSuccess": "ส่งคำเชิญไปยัง {{email}} สำเร็จแล้ว",
+    "loading": "กำลังโหลด..."
+  }
+}
