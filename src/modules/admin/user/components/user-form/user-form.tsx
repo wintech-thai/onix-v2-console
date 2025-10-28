@@ -476,23 +476,14 @@ export const UserForm = ({
       <footer className="p-4 border-t flex justify-end gap-2">
         <Button
           type="button"
-          variant="outline"
+          variant="destructive"
           disabled={isSubmitting}
           onClick={handleCancel}
         >
           {t("form.actions.cancel")}
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <Loader className="size-4 animate-spin mr-2" />
-              {t("form.actions.saving")}
-            </>
-          ) : (
-            <>
-              {isUpdate ? t("form.actions.update") : t("form.actions.create")}
-            </>
-          )}
+          {t("form.actions.save")}
         </Button>
       </footer>
     </form>

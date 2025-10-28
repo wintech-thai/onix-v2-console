@@ -118,7 +118,7 @@ export const UserFilterTable = ({
       >
         <Link href={RouteConfig.ADMIN.USER.CREATE(params.orgId)}>
           <Button className="w-full md:w-auto">
-            {t("actions.createUser")}
+            {t("filter.add")}
           </Button>
         </Link>
         <Button
