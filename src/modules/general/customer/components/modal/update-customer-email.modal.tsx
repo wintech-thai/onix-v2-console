@@ -14,6 +14,8 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchCustomerApi } from "../../api/fetch-customer.api";
 import { getCustomerApi } from "../../api/get-customer.api";
+import { useTranslation } from "react-i18next";
+import { errorMessageAsLangKey } from "@/lib/utils";
 
 interface UpdateCustomerEmailModalProps {
   isOpen: boolean;
@@ -24,7 +26,7 @@ interface UpdateCustomerEmailModalProps {
 }
 
 const schema = z.object({
-  email: z.email(),
+  email: z.email("form.validation.emailInvalid"),
 });
 
 type SchemaType = z.infer<typeof schema>;
@@ -36,6 +38,7 @@ export const UpdateCustomerEmailModal = ({
   orgId,
   customerId,
 }: UpdateCustomerEmailModalProps) => {
+  const { t } = useTranslation("customer");
   const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -63,7 +66,7 @@ export const UpdateCustomerEmailModal = ({
         {
           onSuccess: async ({ data }) => {
             if (data.status === "OK") {
-              toast.success("Update Email Success");
+              toast.success(t("modal.updateSuccess"));
 
               await queryClient.invalidateQueries({
                 queryKey: fetchCustomerApi.key,
@@ -81,7 +84,7 @@ export const UpdateCustomerEmailModal = ({
             return toast.error(data.description);
           },
           onError: () => {
-            toast.error("Update Error");
+            toast.error(t("modal.updateError"));
           },
         }
       );
@@ -97,7 +100,7 @@ export const UpdateCustomerEmailModal = ({
         {
           onSuccess: async ({ data }) => {
             if (data.status === "OK") {
-              toast.success(`send email to ${values.email}`);
+              toast.success(t("modal.verifySuccess", { email: values.email }));
 
               await queryClient.invalidateQueries({
                 queryKey: fetchCustomerApi.key,
@@ -115,7 +118,7 @@ export const UpdateCustomerEmailModal = ({
             return toast.error(data.description);
           },
           onError: () => {
-            toast.error("Update Error");
+            toast.error(t("modal.verifyError"));
           },
         }
       );
@@ -130,12 +133,14 @@ export const UpdateCustomerEmailModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update Customer Email</DialogTitle>
+      <DialogContent iconWhite>
+        <DialogHeader className="bg-primary text-white rounded-t-lg -m-6 mb-0.5 p-4">
+          <DialogTitle>
+            {mode === "update" ? t("modal.updateEmailTitle") : t("modal.verifyEmailTitle")}
+          </DialogTitle>
         </DialogHeader>
 
-        <form className="space-y-3" onSubmit={form.handleSubmit(handleSubmit)}>
+        <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
           <Controller
             control={form.control}
             name="email"
@@ -143,8 +148,10 @@ export const UpdateCustomerEmailModal = ({
               return (
                 <Input
                   {...field}
-                  errorMessage={errors.email?.message}
+                  label={t("modal.email")}
+                  errorMessage={errorMessageAsLangKey(errors.email?.message, t)}
                   disabled={isSubmitting}
+                  maxLength={80}
                 />
               );
             }}
@@ -157,14 +164,14 @@ export const UpdateCustomerEmailModal = ({
               onClick={() => onClose(false)}
               disabled={isSubmitting}
             >
-              Cancel
+              {t("modal.cancel")}
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
               isPending={isSubmitting}
             >
-              SAVE
+              {t("modal.save")}
             </Button>
           </div>
         </form>

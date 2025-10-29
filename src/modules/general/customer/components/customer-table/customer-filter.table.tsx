@@ -35,7 +35,7 @@ export const CustomerFilterTable = ({
   scanItemId,
   onAttach,
 }: CustomerFilterTableProps) => {
-  const { t } = useTranslation("cronjob");
+  const { t } = useTranslation("customer");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const [queryState] = useQueryStates({
@@ -131,7 +131,7 @@ export const CustomerFilterTable = ({
         {scanItemId && onAttach ? (
           <>
             <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
-              Back
+              {t("filter.back")}
             </Button>
 
             <Button
@@ -139,7 +139,7 @@ export const CustomerFilterTable = ({
               disabled={selected !== 1}
               onClick={onAttach}
             >
-              Attach{" "}
+              {t("filter.attach")}{" "}
               {selected > 0 ? `(${selected})` : ""}
             </Button>
           </>
@@ -149,7 +149,7 @@ export const CustomerFilterTable = ({
               className={cn(buttonVariants({ variant: "default" }))}
               href={RouteConfig.GENERAL.CUSTOMER.CREATE(params.orgId)}
             >
-              add
+              {t("filter.add")}
             </Link>
             <Button
               className="w-full md:w-auto"
@@ -157,7 +157,7 @@ export const CustomerFilterTable = ({
               onClick={onDelete}
               variant="destructive"
             >
-              delete {selected ? `(${selected})` : ""}
+              {t("filter.delete")} {selected ? `(${selected})` : ""}
             </Button>
           </>
         )}

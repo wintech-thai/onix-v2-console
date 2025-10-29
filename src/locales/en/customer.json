@@ -1,0 +1,72 @@
+{
+  "columns": {
+    "code": "Code",
+    "name": "Name",
+    "primaryEmail": "Email",
+    "totalPoint": "Total Point",
+    "tags": "Tags",
+    "action": "Action"
+  },
+  "filter": {
+    "searchPlaceholder": "Enter search value",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD",
+    "back": "BACK",
+    "attach": "ATTACH"
+  },
+  "actions": {
+    "pointManagement": "Point Management",
+    "verifyEmail": "Verify Email",
+    "updateEmail": "Update Email"
+  },
+  "delete": {
+    "title": "Delete Customer",
+    "message": "Are you sure you want to delete this customer?",
+    "success": "Deleted customer successfully",
+    "error": "Failed to delete customer"
+  },
+  "attach": {
+    "title": "Attach Scan Item",
+    "message": "Are you sure you want to attach this scan item to the selected customer?",
+    "success": "Attached scan item successfully",
+    "error": "Failed to attach scan item",
+    "modeTitle": "Attach Mode",
+    "modeDescription": "Select a customer to attach the scan item. You can only select one customer at a time."
+  },
+  "form": {
+    "createTitle": "Create Customer",
+    "updateTitle": "Update Customer",
+    "customerInformation": "Customer Information",
+    "content": "Content",
+    "code": "Code",
+    "name": "Name",
+    "email": "Email",
+    "tags": "Tags",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "leavePage": "Leave Page",
+    "cancel": "Cancel",
+    "save": "Save",
+    "validation": {
+      "codeRequired": "Code is required",
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "tagsRequired": "At least one tag is required",
+      "contentRequired": "Content is required"
+    }
+  },
+  "modal": {
+    "updateEmailTitle": "Update Customer Email",
+    "verifyEmailTitle": "Verify Customer Email",
+    "email": "Email",
+    "cancel": "Cancel",
+    "save": "Save",
+    "updateSuccess": "Update Email Success",
+    "updateError": "Update Error",
+    "verifySuccess": "send email to {{email}}",
+    "verifyError": "Verify Error"
+  }
+}

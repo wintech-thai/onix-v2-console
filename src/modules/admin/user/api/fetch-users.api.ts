@@ -42,6 +42,9 @@ export const fetchUsersApi = {
           params
         );
       },
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     });
   },
   useFetchUsersCount: (params: FetchUsersRequest) => {
@@ -53,6 +56,9 @@ export const fetchUsersApi = {
           params
         );
       },
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     });
   },
 };

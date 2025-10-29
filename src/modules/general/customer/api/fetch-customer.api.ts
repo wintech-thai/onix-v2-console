@@ -45,7 +45,10 @@ export const fetchCustomerApi = {
       queryKey: [...fetchCustomerApi.key, params],
       queryFn: () => {
         return api.post<FetchCustomerResponse>(`/api/Customer/org/${params.orgId}/action/GetCustomers`, params.params);
-      }
+      },
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     })
   },
   useFetchCustomerCount: (params: {
@@ -56,7 +59,10 @@ export const fetchCustomerApi = {
       queryKey: [...fetchCustomerApi.key, "count", params],
       queryFn: () => {
         return api.post<number>(`/api/Customer/org/${params.orgId}/action/GetCustomerCount`, params.params);
-      }
+      },
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     })
   }
 }

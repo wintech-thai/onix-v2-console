@@ -15,12 +15,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState as State } from "react";
 import { UpdateCustomerEmailModal } from "../../components/modal/update-customer-email.modal";
+import { useTranslation } from "react-i18next";
 
 type CustomerTableColumns = ColumnDef<ICustomer> & {
   accessorKey?: keyof ICustomer;
 };
 
 export const useCustomerTableColumns = (): CustomerTableColumns[] => {
+  const { t } = useTranslation("customer");
   return [
     {
       id: "select",
@@ -45,6 +47,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
     },
     {
       accessorKey: "code",
+      header: t("columns.code"),
       cell: ({ row }) => {
         return (
           <Link
@@ -61,9 +64,11 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
     },
     {
       accessorKey: "name",
+      header: t("columns.name"),
     },
     {
       accessorKey: "primaryEmail",
+      header: t("columns.primaryEmail"),
       cell: ({ row }) => {
         return (
           <div className="flex items-center">
@@ -77,6 +82,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
     },
     {
       accessorKey: "totalPoint",
+      header: t("columns.totalPoint"),
       cell: ({ row }) => {
         const total = row.original.totalPoint ?? 0;
         return (
@@ -86,6 +92,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
     },
     {
       accessorKey: "tags",
+      header: t("columns.tags"),
       cell: ({ row }) => {
         if (!row.original.tags) return "-";
 
@@ -107,7 +114,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
     },
     {
       id: "actions",
-      header: "action",
+      header: t("columns.action"),
       cell: ({ row }) => {
         const orgId = row.original.orgId;
         const customerId = row.original.id;
@@ -129,13 +136,13 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => {}}>
-                  Point Management
+                  {t("actions.pointManagement")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleOpenModal("verify")}>
-                  Verify Email
+                  {t("actions.verifyEmail")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleOpenModal("update")}>
-                  Update Email
+                  {t("actions.updateEmail")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -124,7 +124,8 @@
       "search": "Search",
       "add": "ADD",
       "delete": "DELETE",
-      "attach": "ATTACH"
+      "attach": "ATTACH",
+      "back": "BACK"
     },
     "actions": {
       "productImage": "Product Images"

@@ -13,8 +13,10 @@ import { toast } from "sonner";
 import { useConfirm } from "@/hooks/use-confirm";
 import { CustomerTable } from "../components/customer-table/customer.table";
 import { attachScanItemToCustomerApi } from "../api/attach-scan-item-to-customer.api";
+import { useTranslation } from "react-i18next";
 
 const CustomerView = () => {
+  const { t } = useTranslation("customer");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const [data, setData] = useState<ICustomer[]>([]);
@@ -22,14 +24,14 @@ const CustomerView = () => {
   const [scanItemId] = useQueryState("scanItemId");
 
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
-    title: "Delete Customer",
-    message: "Are you sure you want to delete this customer?",
+    title: t("delete.title"),
+    message: t("delete.message"),
     variant: "destructive",
   });
 
   const [AttachConfirmationDialog, confirmAttach] = useConfirm({
-    title: "Attach Scan Item",
-    message: "Are you sure you want to attach this scan item to the selected customer?",
+    title: t("attach.title"),
+    message: t("attach.message"),
     variant: "default",
   });
 
@@ -123,8 +125,7 @@ const CustomerView = () => {
           },
           onError: () => {
             errorCount++;
-            toast.error("delete fail");
-            // toast.error(t("delete.error"));
+            toast.error(t("delete.error"));
           },
         }
       );
@@ -132,10 +133,10 @@ const CustomerView = () => {
 
     // Show summary toast
     if (successCount > 0) {
-      toast.success(`"delete.success" (${successCount}/${idsToDelete.length})`);
+      toast.success(`${t("delete.success")} (${successCount}/${idsToDelete.length})`);
     }
     if (errorCount > 0) {
-      toast.error(`"delete.error" (${errorCount}/${idsToDelete.length})`);
+      toast.error(`${t("delete.error")} (${errorCount}/${idsToDelete.length})`);
     }
 
     // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
@@ -165,15 +166,15 @@ const CustomerView = () => {
       {
         onSuccess: ({ data }) => {
           if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || "Attached successfully");
+            toast.success(data.description || t("attach.success"));
             callback();
             router.back();
           } else {
-            toast.error(data.description || "Failed to attach");
+            toast.error(data.description || t("attach.error"));
           }
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to attach");
+          toast.error(error.message || t("attach.error"));
         },
       }
     );

@@ -129,7 +129,7 @@ export const ProductFilterTable = ({
         {scanItemId && onAttach ? (
           <>
             <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
-              {t("actions.back")}
+              {t("table.filter.back")}
             </Button>
 
             <Button

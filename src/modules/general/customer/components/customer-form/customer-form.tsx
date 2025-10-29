@@ -12,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { KeyboardEvent, useEffect, useState } from "react";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { useConfirm } from "@/hooks/use-confirm";
+import { useTranslation } from "react-i18next";
+import { errorMessageAsLangKey } from "@/lib/utils";
 
 interface CustomerFormProps {
   onSubmit: (values: CustomerSchemaType) => Promise<void>;
@@ -25,6 +27,7 @@ export const CustomerForm = ({
   isUpdate,
 }: CustomerFormProps) => {
   const router = useRouter();
+  const { t } = useTranslation("customer");
   const { setFormDirty } = useFormNavigationBlocker();
 
   const form = useForm<CustomerSchemaType>({
@@ -33,8 +36,8 @@ export const CustomerForm = ({
   });
 
   const [ConfirmBack, confirmBack] = useConfirm({
-    message: "form.unsavedChanges",
-    title: "form.leavePage",
+    message: t("form.unsavedChanges"),
+    title: t("form.leavePage"),
     variant: "destructive",
   });
 
@@ -118,13 +121,13 @@ export const CustomerForm = ({
             onClick={handleCancel}
             className="inline cursor-pointer"
           />{" "}
-          {isUpdate ? "Update Customer" : "Create Customer"}
+          {isUpdate ? t("form.updateTitle") : t("form.createTitle")}
         </h1>
       </header>
 
       <div className="flex-1 p-4 space-y-4 overflow-y-auto">
         <div className="p-4 md:p-6 border rounded-lg">
-          <header className="text-lg font-bold">Customer Information</header>
+          <header className="text-lg font-bold">{t("form.customerInformation")}</header>
           <div className="grid md:grid-cols-2 mt-4 gap-4 mb-4">
             <Controller
               control={form.control}
@@ -133,10 +136,11 @@ export const CustomerForm = ({
                 return (
                   <Input
                     {...field}
-                    label="Code"
+                    label={t("form.code")}
                     isRequired
-                    errorMessage={errors.code?.message}
+                    errorMessage={errorMessageAsLangKey(errors.code?.message, t)}
                     disabled={isSubmitting || isUpdate}
+                    maxLength={20}
                   />
                 );
               }}
@@ -148,10 +152,11 @@ export const CustomerForm = ({
                 return (
                   <Input
                     {...field}
-                    label="Name"
+                    label={t("form.name")}
                     isRequired
-                    errorMessage={errors.name?.message}
+                    errorMessage={errorMessageAsLangKey(errors.name?.message, t)}
                     disabled={isSubmitting}
+                    maxLength={100}
                   />
                 );
               }}
@@ -163,10 +168,11 @@ export const CustomerForm = ({
                 return (
                   <Input
                     {...field}
-                    label="Email"
+                    label={t("form.email")}
                     isRequired
-                    errorMessage={errors.primaryEmail?.message}
+                    errorMessage={errorMessageAsLangKey(errors.primaryEmail?.message, t)}
                     disabled={isSubmitting || isUpdate}
+                    maxLength={80}
                   />
                 );
               }}
@@ -175,14 +181,14 @@ export const CustomerForm = ({
 
           <div className="mt-4">
             <Input
-              label="Tags"
+              label={t("form.tags")}
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={handleKeyDown}
               maxLength={30}
               disabled={isSubmitting}
               isRequired
-              errorMessage={errors.tags?.message}
+              errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
             />
             {tagsArray.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-3">
@@ -208,7 +214,7 @@ export const CustomerForm = ({
         </div>
 
         <div className="p-4 md:p-6 border rounded-lg">
-          <header className="text-lg font-bold">Content</header>
+          <header className="text-lg font-bold">{t("form.content")}</header>
           <div className="mt-4">
             <Controller
               control={form.control}
@@ -224,7 +230,6 @@ export const CustomerForm = ({
                     {errors.content?.message && (
                       <p className="text-sm text-red-500 mt-2">
                         {errors.content.message}
-                        {/* {errorMessageAsLangKey(fieldState.error.message, t)} */}
                       </p>
                     )}
                   </div>
@@ -243,12 +248,10 @@ export const CustomerForm = ({
           disabled={isSubmitting}
           onClick={handleCancel}
         >
-          Cancel
-          {/* {t("form.actions.cancel")} */}
+          {t("form.cancel")}
         </Button>
         <Button type="submit" isPending={isSubmitting} disabled={isSubmitting}>
-          Save
-          {/* {t("form.actions.save")} */}
+          {t("form.save")}
         </Button>
       </footer>
     </form>

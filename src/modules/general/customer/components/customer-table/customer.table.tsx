@@ -1,29 +1,29 @@
 "use client";
 
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    Row,
-    useReactTable,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  Row,
+  useReactTable,
 } from "@tanstack/react-table";
 
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../../../../../components/ui/table";
 import { useState } from "react";
 import { CustomerFilterTable } from "./customer-filter.table";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
@@ -60,6 +60,7 @@ export function CustomerTable<TData, TValue>({
   onAttach,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
+  const { t: tCustomer } = useTranslation("customer");
   const [rowSelection, setRowSelection] = useState({});
   const { activeRowId, setActiveRowId } = useActiveRow("customer-table");
 
@@ -100,10 +101,10 @@ export function CustomerTable<TData, TValue>({
           </div>
           <div className="flex-1">
             <h3 className="text-sm font-semibold text-blue-900">
-              Attach Mode
+              {tCustomer("attach.modeTitle")}
             </h3>
             <p className="text-sm text-blue-700 mt-1">
-              Select a customer to attach the scan item. You can only select one customer at a time.
+              {tCustomer("attach.modeDescription")}
             </p>
           </div>
         </div>
