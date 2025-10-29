@@ -9,25 +9,45 @@ import {
   CustomerSchemaType,
 } from "../../schema/customer.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
+import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
+import { useConfirm } from "@/hooks/use-confirm";
 
-export const CustomerForm = () => {
+interface CustomerFormProps {
+  onSubmit: (values: CustomerSchemaType) => Promise<void>;
+  initialValue: CustomerSchemaType;
+  isUpdate: boolean;
+}
+
+export const CustomerForm = ({
+  onSubmit,
+  initialValue,
+  isUpdate,
+}: CustomerFormProps) => {
   const router = useRouter();
+  const { setFormDirty } = useFormNavigationBlocker();
 
   const form = useForm<CustomerSchemaType>({
     resolver: zodResolver(customerSchema),
-    defaultValues: {
-      code: "",
-      content: "",
-      name: "",
-      primaryEmail: "",
-      tags: "",
-    },
+    defaultValues: initialValue,
   });
+
+  const [ConfirmBack, confirmBack] = useConfirm({
+    message: "form.unsavedChanges",
+    title: "form.leavePage",
+    variant: "destructive",
+  });
+
   const isSubmitting = form.formState.isSubmitting;
+  const isDirty = form.formState.isDirty;
   const errors = form.formState.errors;
   const { tags } = form.watch();
   const [tagInput, setTagInput] = useState("");
+
+  // Sync form dirty state with navigation blocker
+  useEffect(() => {
+    setFormDirty(isDirty);
+  }, [isDirty, setFormDirty]);
 
   // Handle tags
   const tagsArray = tags
@@ -59,12 +79,30 @@ export const CustomerForm = () => {
     });
   };
 
-  const handleCancel = () => {
-    return router.back();
+  const handleCancel = async () => {
+    if (!isDirty) {
+      setFormDirty(false);
+      return router.back();
+    }
+
+    const ok = await confirmBack();
+
+    if (ok) {
+      form.reset();
+      form.clearErrors();
+      setFormDirty(false);
+      router.back();
+    }
   };
 
   const handleSubmit = async (values: CustomerSchemaType) => {
-    console.log("values", values);
+    if (!isDirty) {
+      return router.back();
+    }
+
+    await onSubmit(values);
+
+    setFormDirty(false);
   };
 
   return (
@@ -72,13 +110,15 @@ export const CustomerForm = () => {
       onSubmit={form.handleSubmit(handleSubmit)}
       className="h-full flex flex-col"
     >
+      <ConfirmBack />
+
       <header className="p-4 border border-b">
         <h1 className="text-lg font-bold">
           <ArrowLeftIcon
             onClick={handleCancel}
             className="inline cursor-pointer"
           />{" "}
-          CustomerForm ยังไม่ต่อ API Mock Form
+          {isUpdate ? "Update Customer" : "Create Customer"}
         </h1>
       </header>
 
@@ -96,6 +136,7 @@ export const CustomerForm = () => {
                     label="Code"
                     isRequired
                     errorMessage={errors.code?.message}
+                    disabled={isSubmitting || isUpdate}
                   />
                 );
               }}
@@ -110,6 +151,7 @@ export const CustomerForm = () => {
                     label="Name"
                     isRequired
                     errorMessage={errors.name?.message}
+                    disabled={isSubmitting}
                   />
                 );
               }}
@@ -124,6 +166,7 @@ export const CustomerForm = () => {
                     label="Email"
                     isRequired
                     errorMessage={errors.primaryEmail?.message}
+                    disabled={isSubmitting || isUpdate}
                   />
                 );
               }}
@@ -203,7 +246,7 @@ export const CustomerForm = () => {
           Cancel
           {/* {t("form.actions.cancel")} */}
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" isPending={isSubmitting} disabled={isSubmitting}>
           Save
           {/* {t("form.actions.save")} */}
         </Button>

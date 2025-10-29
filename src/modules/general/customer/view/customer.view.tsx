@@ -1,26 +1,36 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { fetchCustomerApi, ICustomer } from "../api/fetch-customer.api";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCustomerTableColumns } from "../components/customer-table/customer-columns.table";
 import { deleteCustomerApi } from "../api/delete-customer.api";
-import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
+import { useQueryStates, parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import dayjs from "dayjs";
 import { Row } from "@tanstack/react-table";
 import { toast } from "sonner";
 import { useConfirm } from "@/hooks/use-confirm";
 import { CustomerTable } from "../components/customer-table/customer.table";
+import { attachScanItemToCustomerApi } from "../api/attach-scan-item-to-customer.api";
 
 const CustomerView = () => {
   const params = useParams<{ orgId: string }>();
+  const router = useRouter();
   const [data, setData] = useState<ICustomer[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [scanItemId] = useQueryState("scanItemId");
+
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
-    title: "delete.title",
-    message: "delete.message",
+    title: "Delete Customer",
+    message: "Are you sure you want to delete this customer?",
     variant: "destructive",
+  });
+
+  const [AttachConfirmationDialog, confirmAttach] = useConfirm({
+    title: "Attach Scan Item",
+    message: "Are you sure you want to attach this scan item to the selected customer?",
+    variant: "default",
   });
 
   const queryClient = useQueryClient();
@@ -28,6 +38,7 @@ const CustomerView = () => {
   const customerTableColumns = useCustomerTableColumns();
 
   const deleteCustomer = deleteCustomerApi.useDeleteCustomer();
+  const attachScanItemToCustomer = attachScanItemToCustomerApi.useMutation();
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -136,6 +147,38 @@ const CustomerView = () => {
     callback();
   };
 
+  const handleAttach = async (rows: Row<ICustomer>[], callback: () => void) => {
+    if (!scanItemId || rows.length !== 1) return;
+
+    const ok = await confirmAttach();
+
+    if (!ok) return;
+
+    const customerId = rows[0].original.id;
+
+    await attachScanItemToCustomer.mutateAsync(
+      {
+        orgId: params.orgId,
+        scanItemId: scanItemId,
+        customerId: customerId,
+      },
+      {
+        onSuccess: ({ data }) => {
+          if (data.status === "OK" || data.status === "SUCCESS") {
+            toast.success(data.description || "Attached successfully");
+            callback();
+            router.back();
+          } else {
+            toast.error(data.description || "Failed to attach");
+          }
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to attach");
+        },
+      }
+    );
+  };
+
   const handlePageChange = (newPage: number) => {
     setQueryState({ page: newPage });
   };
@@ -155,6 +198,7 @@ const CustomerView = () => {
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
+      <AttachConfirmationDialog />
 
       <CustomerTable
         columns={customerTableColumns}
@@ -167,6 +211,8 @@ const CustomerView = () => {
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
         isLoading={fetchCustomer.isLoading && !hasLoadedBefore}
+        scanItemId={scanItemId}
+        onAttach={scanItemId ? handleAttach : undefined}
       />
     </div>
   );

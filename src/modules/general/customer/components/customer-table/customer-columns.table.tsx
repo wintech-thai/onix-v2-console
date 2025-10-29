@@ -13,6 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useState as State } from "react";
+import { UpdateCustomerEmailModal } from "../../components/modal/update-customer-email.modal";
 
 type CustomerTableColumns = ColumnDef<ICustomer> & {
   accessorKey?: keyof ICustomer;
@@ -28,7 +30,6 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          // onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
         />
       ),
@@ -78,7 +79,9 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
       accessorKey: "totalPoint",
       cell: ({ row }) => {
         const total = row.original.totalPoint ?? 0;
-        return <div className="text-right w-[65px]">{total.toLocaleString()}</div>;
+        return (
+          <div className="text-right w-[65px]">{total.toLocaleString()}</div>
+        );
       },
     },
     {
@@ -105,28 +108,45 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
     {
       id: "actions",
       header: "action",
-      cell: () => {
+      cell: ({ row }) => {
+        const orgId = row.original.orgId;
+        const customerId = row.original.id;
+        const [modalOpen, setModalOpen] = State(false);
+        const [modalMode, setModalMode] = State<"verify" | "update">("update");
+
+        const handleOpenModal = (mode: "verify" | "update") => {
+          setModalMode(mode);
+          setModalOpen(true);
+        };
+
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon">
-                <MoreHorizontalIcon className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => {}}>
-                Point Management
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => {}}>
-                Verify Email
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => {}}>
-                Edit Email
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <MoreHorizontalIcon className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => {}}>
+                  Point Management
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleOpenModal("verify")}>
+                  Verify Email
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleOpenModal("update")}>
+                  Update Email
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <UpdateCustomerEmailModal
+              isOpen={modalOpen}
+              setOpen={setModalOpen}
+              mode={modalMode}
+              orgId={orgId}
+              customerId={customerId}
+            />
+          </>
         );
       },
     },

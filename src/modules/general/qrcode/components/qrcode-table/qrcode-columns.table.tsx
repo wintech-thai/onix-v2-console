@@ -184,7 +184,12 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                 <DropdownMenuSeparator className="my-1" />
 
                 <DropdownMenuItem
-                  onSelect={() => console.log("bindToCustomer")}
+                  onSelect={() =>
+                    router.push(
+                      RouteConfig.GENERAL.CUSTOMER.LIST(row.original.orgId) +
+                        `?scanItemId=${row.original.id}`
+                    )
+                  }
                 >
                   {t("actions.bindToCustomer")}
                 </DropdownMenuItem>

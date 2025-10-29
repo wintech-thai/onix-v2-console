@@ -13,7 +13,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -23,6 +23,8 @@ interface CustomerFilterTableProps {
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
+  scanItemId?: string | null;
+  onAttach?: () => void;
 }
 
 export const CustomerFilterTable = ({
@@ -30,9 +32,12 @@ export const CustomerFilterTable = ({
   isDisabled,
   onSearch,
   selected,
+  scanItemId,
+  onAttach,
 }: CustomerFilterTableProps) => {
   const { t } = useTranslation("cronjob");
   const params = useParams<{ orgId: string }>();
+  const router = useRouter();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -44,6 +49,12 @@ export const CustomerFilterTable = ({
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
     onSearch(searchField, searchValue);
+  };
+
+  const handleBack = () => {
+    if (scanItemId) {
+      router.replace(RouteConfig.GENERAL.QRCODE(params.orgId))
+    }
   };
 
   return (
@@ -117,20 +128,39 @@ export const CustomerFilterTable = ({
           md:flex md:items-center
         "
       >
-        <Link
-          className={cn(buttonVariants({ variant: "default" }))}
-          href={RouteConfig.GENERAL.CUSTOMER.CREATE(params.orgId)}
-        >
-          add
-        </Link>
-        <Button
-          className="w-full md:w-auto"
-          disabled={isDisabled}
-          onClick={onDelete}
-          variant="destructive"
-        >
-          delete {selected ? `(${selected})` : ""}
-        </Button>
+        {scanItemId && onAttach ? (
+          <>
+            <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
+              Back
+            </Button>
+
+            <Button
+              className="w-full md:w-auto"
+              disabled={selected !== 1}
+              onClick={onAttach}
+            >
+              Attach{" "}
+              {selected > 0 ? `(${selected})` : ""}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Link
+              className={cn(buttonVariants({ variant: "default" }))}
+              href={RouteConfig.GENERAL.CUSTOMER.CREATE(params.orgId)}
+            >
+              add
+            </Link>
+            <Button
+              className="w-full md:w-auto"
+              disabled={isDisabled}
+              onClick={onDelete}
+              variant="destructive"
+            >
+              delete {selected ? `(${selected})` : ""}
+            </Button>
+          </>
+        )}
       </div>
     </form>
   );
