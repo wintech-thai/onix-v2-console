@@ -51,7 +51,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary underline"
+            className="text-primary hover:underline block"
             href={RouteConfig.GENERAL.CUSTOMER.UPDATE(
               row.original.orgId,
               row.original.id
@@ -152,6 +152,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
               mode={modalMode}
               orgId={orgId}
               customerId={customerId}
+              email={row.original.primaryEmail ?? ""}
             />
           </>
         );

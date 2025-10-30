@@ -176,7 +176,7 @@ interface Resources {
     "actions": {
       "pointManagement": "Point Management",
       "updateEmail": "Update Email",
-      "verifyEmail": "Verify Email"
+      "verifyEmail": "Update & Verify Email"
     },
     "attach": {
       "error": "Failed to attach scan item",
@@ -193,6 +193,10 @@ interface Resources {
       "primaryEmail": "Email",
       "tags": "Tags",
       "totalPoint": "Total Point"
+    },
+    "create": {
+      "error": "Create Error",
+      "success": "Create Success"
     },
     "delete": {
       "error": "Failed to delete customer",
@@ -235,13 +239,18 @@ interface Resources {
     "modal": {
       "cancel": "Cancel",
       "email": "Email",
-      "save": "SAVE",
+      "save": "Save",
       "updateEmailTitle": "Update Customer Email",
       "updateError": "Update Error",
       "updateSuccess": "Update Email Success",
       "verifyEmailTitle": "Verify Customer Email",
       "verifyError": "Verify Error",
       "verifySuccess": "send email to {{email}}"
+    },
+    "update": {
+      "error": "Update Error",
+      "notFound": "Customer Not Found",
+      "success": "Update Success"
     }
   },
   "product": {
@@ -556,8 +565,8 @@ interface Resources {
       "title": "Delete User"
     },
     "filter": {
-      "add": "Add",
-      "delete": "Delete",
+      "add": "ADD",
+      "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
       "searchPlaceholder": "Search users...",

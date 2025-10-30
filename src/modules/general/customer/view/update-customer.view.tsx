@@ -9,8 +9,10 @@ import { updateCustomerApi } from "../api/update-customer.api";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchCustomerApi } from "../api/fetch-customer.api";
+import { useTranslation } from "react-i18next";
 
 const UpdateCustomerView = () => {
+  const { t } = useTranslation("customer");
   const params = useParams<{ orgId: string; customerId: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -33,7 +35,7 @@ const UpdateCustomerView = () => {
   const customerPayload = getCustomer.data?.data;
 
   if (!customerPayload) {
-    throw new Error("Customer Not Found");
+    throw new Error(t("update.notFound"));
   }
 
   const handleUpdate = async (values: CustomerSchemaType) => {
@@ -46,7 +48,7 @@ const UpdateCustomerView = () => {
       {
         onSuccess: async ({ data }) => {
           if (data.status === "OK") {
-            toast.success("Update Success");
+            toast.success(t("update.success"));
 
             await queryClient.invalidateQueries({
               queryKey: fetchCustomerApi.key,
@@ -61,10 +63,10 @@ const UpdateCustomerView = () => {
             return router.back();
           }
 
-          return toast.error("Update Error");
+          return toast.error(data.description);
         },
         onError: () => {
-          toast.error("Update Error");
+          toast.error(t("update.error"));
         }
       }
     );

@@ -7,8 +7,10 @@ import { CustomerSchemaType } from "../schema/customer.schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchCustomerApi } from "../api/fetch-customer.api";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const CreateCustomerView = () => {
+  const { t } = useTranslation("customer");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -24,7 +26,7 @@ const CreateCustomerView = () => {
       {
         onSuccess: async ({ data }) => {
           if (data.status === "OK") {
-            toast.success("Create Success");
+            toast.success(t("create.success"));
 
             await queryClient.invalidateQueries({
               queryKey: fetchCustomerApi.key,
@@ -34,10 +36,10 @@ const CreateCustomerView = () => {
             return router.back();
           }
 
-          return toast.error("Create Error");
+          return toast.error(data.description);
         },
         onError: () => {
-          toast.error("Create Error");
+          toast.error(t("create.error"));
         },
       }
     );

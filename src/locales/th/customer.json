@@ -19,7 +19,7 @@
   },
   "actions": {
     "pointManagement": "จัดการคะแนน",
-    "verifyEmail": "ยืนยันอีเมล",
+    "verifyEmail": "อัปเดต & ยืนยันอีเมล",
     "updateEmail": "อัปเดตอีเมล"
   },
   "delete": {
@@ -57,6 +57,15 @@
       "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",
       "contentRequired": "กรุณากรอกเนื้อหา"
     }
+  },
+  "create": {
+    "success": "สร้างลูกค้าสำเร็จ",
+    "error": "สร้างลูกค้าไม่สำเร็จ"
+  },
+  "update": {
+    "success": "แก้ไขลูกค้าสำเร็จ",
+    "error": "แก้ไขลูกค้าไม่สำเร็จ",
+    "notFound": "ไม่พบข้อมูลลูกค้า"
   },
   "modal": {
     "updateEmailTitle": "อัปเดตอีเมลลูกค้า",

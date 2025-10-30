@@ -66,7 +66,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
             orgId={row.original.orgId}
             scanItemId={row.original.id}
           >
-            <div className="text-primary underline cursor-pointer">
+            <div className="text-primary hover:underline cursor-pointer">
               {row.getValue("serial")}
             </div>
           </ScanItemDetailModal>
@@ -134,7 +134,10 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           if (!ok) return;
           try {
             await unVerifyScanItemMutate.mutateAsync(scanId, {
-              onSuccess: () => {
+              onSuccess: ({ data }) => {
+                if (data.status !== "OK") {
+                  return toast.error(data.description);
+                }
                 toast.success(t("unverify.success"));
                 queryClient.invalidateQueries({
                   queryKey: fetchScanItemsApi.fetchScanItemsKey,

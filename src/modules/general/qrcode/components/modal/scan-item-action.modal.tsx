@@ -54,8 +54,6 @@ export const ScanItemActionModal = ({
       createdDate: "",
     },
   });
-  const errors = form.formState.errors;
-  console.log("errors", errors);
 
   const isSubmitting = form.formState.isSubmitting;
   const isControlled = open !== undefined && onOpenChange !== undefined;

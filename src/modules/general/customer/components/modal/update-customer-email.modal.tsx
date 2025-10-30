@@ -23,6 +23,7 @@ interface UpdateCustomerEmailModalProps {
   mode: "verify" | "update";
   orgId: string;
   customerId: string;
+  email: string;
 }
 
 const schema = z.object({
@@ -37,12 +38,13 @@ export const UpdateCustomerEmailModal = ({
   mode,
   orgId,
   customerId,
+  email,
 }: UpdateCustomerEmailModalProps) => {
   const { t } = useTranslation("customer");
   const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
-      email: "",
+      email: email ?? "",
     },
   });
 
