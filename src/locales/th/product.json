@@ -124,7 +124,8 @@
       "search": "ค้นหา",
       "add": "เพิ่ม",
       "delete": "ลบ",
-      "attach": "แนบ"
+      "attach": "แนบ",
+      "back": "ย้อนกลับ"
     },
     "actions": {
       "productImage": "รูปภาพสินค้า"

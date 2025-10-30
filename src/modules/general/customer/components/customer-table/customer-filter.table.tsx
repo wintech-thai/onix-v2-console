@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { parseAsString, useQueryStates } from "nuqs";
 import { useParams, useRouter } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
-interface ProductFilterTableProps {
+interface CustomerFilterTableProps {
   onDelete: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
@@ -25,19 +27,24 @@ interface ProductFilterTableProps {
   onAttach?: () => void;
 }
 
-export const ProductFilterTable = ({
+export const CustomerFilterTable = ({
   onDelete,
   isDisabled,
   onSearch,
   selected,
   scanItemId,
   onAttach,
-}: ProductFilterTableProps) => {
-  const { t } = useTranslation("product");
+}: CustomerFilterTableProps) => {
+  const { t } = useTranslation("customer");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
+  const [queryState] = useQueryStates({
+    searchField: parseAsString.withDefault("fullTextSearch"),
+    searchValue: parseAsString.withDefault(""),
+  });
+
   const [searchField, setSearchField] = useState("fullTextSearch");
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(queryState.searchValue);
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -48,7 +55,7 @@ export const ProductFilterTable = ({
     if (scanItemId) {
       router.replace(RouteConfig.GENERAL.QRCODE(params.orgId))
     }
-  }
+  };
 
   return (
     <form
@@ -58,7 +65,7 @@ export const ProductFilterTable = ({
         flex flex-col gap-3
         md:flex-row md:items-center md:justify-between
       "
-      aria-label="Product filter controls"
+      aria-label="Cronjob filter controls"
     >
       {/* Left side: search controls */}
       <div
@@ -74,18 +81,14 @@ export const ProductFilterTable = ({
           <Select value={searchField} onValueChange={setSearchField}>
             <SelectTrigger
               className="w-full md:w-48"
-              aria-label={t("table.filter.selectSearchField")}
+              aria-label={t("filter.selectSearchField")}
             >
-              <SelectValue
-                placeholder={t("table.filter.selectSearchField")}
-              />
+              <SelectValue placeholder={t("filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="fullTextSearch">
-                {t("table.filter.fullTextSearch")}
+                {t("filter.fullTextSearch")}
               </SelectItem>
-              {/* เพิ่ม options อื่น ๆ ในอนาคตได้ */}
-              {/* <SelectItem value="serial">Serial</SelectItem> */}
             </SelectContent>
           </Select>
         </div>
@@ -93,9 +96,9 @@ export const ProductFilterTable = ({
         {/* Search input */}
         <div className="w-full md:w-[500px]">
           <Input
-            placeholder={t("table.filter.searchPlaceholder")}
+            placeholder={t("filter.searchPlaceholder")}
             className="w-full"
-            aria-label={t("table.filter.searchPlaceholder")}
+            aria-label={t("filter.searchPlaceholder")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
@@ -109,10 +112,10 @@ export const ProductFilterTable = ({
         <div className="w-full md:w-auto">
           <Button
             type="submit"
-            className="w-full md:w-auto"
-            aria-label={t("table.filter.search")}
+            className="w-full md:w-[80px]"
+            aria-label={t("filter.search")}
           >
-            <Search className="h-4 w-4 mx-2" />
+            <Search className="size-4" />
           </Button>
         </div>
       </div>
@@ -121,15 +124,14 @@ export const ProductFilterTable = ({
       <div
         className="
           w-full md:w-auto
-          grid grid-cols-2 gap-2
-          sm:grid-cols-3
+          grid grid-cols-1 gap-2
           md:flex md:items-center
         "
       >
         {scanItemId && onAttach ? (
           <>
             <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
-              {t("table.filter.back")}
+              {t("filter.back")}
             </Button>
 
             <Button
@@ -137,26 +139,25 @@ export const ProductFilterTable = ({
               disabled={selected !== 1}
               onClick={onAttach}
             >
-              {t("table.filter.attach")}{" "}
+              {t("filter.attach")}{" "}
               {selected > 0 ? `(${selected})` : ""}
             </Button>
           </>
         ) : (
           <>
-            <Link href={RouteConfig.GENERAL.PRODUCT.CREATE(params.orgId)}>
-              <Button className="w-full md:w-auto">
-                {t("table.filter.add")}
-              </Button>
+            <Link
+              className={cn(buttonVariants({ variant: "default" }))}
+              href={RouteConfig.GENERAL.CUSTOMER.CREATE(params.orgId)}
+            >
+              {t("filter.add")}
             </Link>
-
             <Button
               className="w-full md:w-auto"
               disabled={isDisabled}
               onClick={onDelete}
               variant="destructive"
             >
-              {t("table.filter.delete")}{" "}
-              {selected > 0 ? `(${selected})` : ""}
+              {t("filter.delete")} {selected ? `(${selected})` : ""}
             </Button>
           </>
         )}

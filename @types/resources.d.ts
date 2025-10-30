@@ -172,6 +172,87 @@ interface Resources {
       }
     }
   },
+  "customer": {
+    "actions": {
+      "pointManagement": "Point Management",
+      "updateEmail": "Update Email",
+      "verifyEmail": "Update & Verify Email"
+    },
+    "attach": {
+      "error": "Failed to attach scan item",
+      "message": "Are you sure you want to attach this scan item to the selected customer?",
+      "modeDescription": "Select a customer to attach the scan item. You can only select one customer at a time.",
+      "modeTitle": "Attach Mode",
+      "success": "Attached scan item successfully",
+      "title": "Attach Scan Item"
+    },
+    "columns": {
+      "action": "Action",
+      "code": "Code",
+      "name": "Name",
+      "primaryEmail": "Email",
+      "tags": "Tags",
+      "totalPoint": "Total Point"
+    },
+    "create": {
+      "error": "Create Error",
+      "success": "Create Success"
+    },
+    "delete": {
+      "error": "Failed to delete customer",
+      "message": "Are you sure you want to delete this customer?",
+      "success": "Deleted customer successfully",
+      "title": "Delete Customer"
+    },
+    "filter": {
+      "add": "ADD",
+      "attach": "ATTACH",
+      "back": "BACK",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "code": "Code",
+      "content": "Content",
+      "createTitle": "Create Customer",
+      "customerInformation": "Customer Information",
+      "email": "Email",
+      "leavePage": "Leave Page",
+      "name": "Name",
+      "save": "Save",
+      "tags": "Tags",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update Customer",
+      "validation": {
+        "codeRequired": "Code is required",
+        "contentRequired": "Content is required",
+        "emailInvalid": "Invalid email format",
+        "emailRequired": "Email is required",
+        "nameRequired": "Name is required",
+        "tagsRequired": "At least one tag is required"
+      }
+    },
+    "modal": {
+      "cancel": "Cancel",
+      "email": "Email",
+      "save": "Save",
+      "updateEmailTitle": "Update Customer Email",
+      "updateError": "Update Error",
+      "updateSuccess": "Update Email Success",
+      "verifyEmailTitle": "Verify Customer Email",
+      "verifyError": "Verify Error",
+      "verifySuccess": "send email to {{email}}"
+    },
+    "update": {
+      "error": "Update Error",
+      "notFound": "Customer Not Found",
+      "success": "Update Success"
+    }
+  },
   "product": {
     "actions": {
       "back": "Back",
@@ -287,6 +368,7 @@ interface Resources {
       "filter": {
         "add": "ADD",
         "attach": "ATTACH",
+        "back": "BACK",
         "delete": "DELETE",
         "fullTextSearch": "Full Text Search",
         "search": "Search",
@@ -483,8 +565,8 @@ interface Resources {
       "title": "Delete User"
     },
     "filter": {
-      "add": "Add",
-      "delete": "Delete",
+      "add": "ADD",
+      "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
       "searchPlaceholder": "Search users...",

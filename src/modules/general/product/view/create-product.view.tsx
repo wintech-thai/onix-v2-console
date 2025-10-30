@@ -19,7 +19,6 @@ const CreateProductView = () => {
   const createProductMutate = createProductApi.useMutation();
 
   const handleSubmit = async (value: ProductSchemaType) => {
-    console.log("value", value);
     await createProductMutate.mutateAsync(
       {
         params: {

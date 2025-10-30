@@ -42,7 +42,7 @@ export const CronJobForm = ({
   const [ConfirmBack, confirmBack] = useConfirm({
     message: commonLang("unsave.message"),
     title: commonLang("unsave.title"),
-    variant: "destructive"
+    variant: "destructive",
   });
 
   const isDirty = form.formState.isDirty;
@@ -59,7 +59,7 @@ export const CronJobForm = ({
       form.clearErrors();
       router.back();
     }
-  }
+  };
 
   const isSubmitting = form.formState.isSubmitting;
   const { tags } = form.watch();
@@ -110,7 +110,6 @@ export const CronJobForm = ({
 
   return (
     <form className="h-full flex flex-col" onSubmit={handleFormSubmit}>
-
       <ConfirmBack />
 
       <header className="p-4 border-b">
@@ -126,7 +125,9 @@ export const CronJobForm = ({
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* Part 1: Detail Section */}
         <div className="p-4 md:p-6 border rounded-lg">
-          <header className="text-lg font-bold">{t("form.detail.title")}</header>
+          <header className="text-lg font-bold">
+            {t("form.detail.title")}
+          </header>
           <div className="grid md:grid-cols-2 gap-4 mt-4">
             <Controller
               control={form.control}
@@ -234,7 +235,9 @@ export const CronJobForm = ({
                         <Input
                           {...field}
                           readOnly
-                          label={index === 0 ? t("form.parameters.name") : undefined}
+                          label={
+                            index === 0 ? t("form.parameters.name") : undefined
+                          }
                           placeholder={t("form.parameters.name")}
                           errorMessage={errorMessageAsLangKey(
                             fieldState.error?.message,
@@ -255,7 +258,9 @@ export const CronJobForm = ({
                         <Input
                           {...field}
                           readOnly={isUpdate}
-                          label={index === 0 ? t("form.parameters.value") : undefined}
+                          label={
+                            index === 0 ? t("form.parameters.value") : undefined
+                          }
                           placeholder={t("form.parameters.value")}
                           errorMessage={errorMessageAsLangKey(
                             fieldState.error?.message,
@@ -280,7 +285,9 @@ export const CronJobForm = ({
         {/* Part 3: State CronJob Data Show on Mode isUpdate Only*/}
         {isUpdate && cronJobData && (
           <div className="p-4 md:p-6 border rounded-lg">
-            <header className="text-lg font-bold">{t("form.state.title")}</header>
+            <header className="text-lg font-bold">
+              {t("form.state.title")}
+            </header>
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <Input
                 label={t("form.state.type")}
@@ -296,19 +303,37 @@ export const CronJobForm = ({
 
               <Input
                 label={t("form.state.startDate")}
-                value={dayjs(cronJobData.startDate).format("DD MMM YYYY HH:mm [GMT] Z")|| "-"}
+                value={
+                  cronJobData.startDate
+                    ? dayjs(cronJobData.startDate).format(
+                        "DD MMM YYYY HH:mm [GMT] Z"
+                      )
+                    : "-"
+                }
                 readOnly
               />
 
               <Input
                 label={t("form.state.endDate")}
-                value={dayjs(cronJobData.endDate).format("DD MMM YYYY HH:mm [GMT] Z") || "-"}
+                value={
+                  cronJobData.endDate
+                    ? dayjs(cronJobData.endDate).format(
+                        "DD MMM YYYY HH:mm [GMT] Z"
+                      )
+                    : "-"
+                }
                 readOnly
               />
 
               <Input
                 label={t("form.state.pickupDate")}
-                value={dayjs(cronJobData.pickupDate).format("DD MMM YYYY HH:mm [GMT] Z") || "-"}
+                value={
+                  cronJobData.pickupDate
+                    ? dayjs(cronJobData.pickupDate).format(
+                        "DD MMM YYYY HH:mm [GMT] Z"
+                      )
+                    : "-"
+                }
                 readOnly
               />
 
@@ -339,7 +364,12 @@ export const CronJobForm = ({
       </div>
 
       <footer className="p-4 border-t flex justify-end gap-2">
-        <Button type="button" variant="outline" onClick={handleCancel} disabled={isSubmitting}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleCancel}
+          disabled={isSubmitting}
+        >
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
@@ -349,5 +379,3 @@ export const CronJobForm = ({
     </form>
   );
 };
-
-

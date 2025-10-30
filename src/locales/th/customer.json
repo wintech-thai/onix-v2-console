@@ -1,0 +1,81 @@
+{
+  "columns": {
+    "code": "รหัส",
+    "name": "ชื่อ",
+    "primaryEmail": "อีเมล",
+    "totalPoint": "คะแนนทั้งหมด",
+    "tags": "แท็ก",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม",
+    "back": "ย้อนกลับ",
+    "attach": "แนบ"
+  },
+  "actions": {
+    "pointManagement": "จัดการคะแนน",
+    "verifyEmail": "อัปเดต & ยืนยันอีเมล",
+    "updateEmail": "อัปเดตอีเมล"
+  },
+  "delete": {
+    "title": "ลบลูกค้า",
+    "message": "คุณแน่ใจหรือไม่ที่จะลบลูกค้านี้?",
+    "success": "ลบลูกค้าสำเร็จ",
+    "error": "ลบลูกค้าไม่สำเร็จ"
+  },
+  "attach": {
+    "title": "แนบรายการสแกน",
+    "message": "คุณแน่ใจหรือไม่ที่จะแนบรายการสแกนนี้กับลูกค้าที่เลือก?",
+    "success": "แนบรายการสแกนสำเร็จ",
+    "error": "แนบรายการสแกนไม่สำเร็จ",
+    "modeTitle": "โหมดแนบรายการ",
+    "modeDescription": "เลือกลูกค้าเพื่อแนบรายการสแกน คุณสามารถเลือกได้เพียงลูกค้าเดียวเท่านั้น"
+  },
+  "form": {
+    "createTitle": "สร้างลูกค้า",
+    "updateTitle": "แก้ไขลูกค้า",
+    "customerInformation": "ข้อมูลลูกค้า",
+    "content": "เนื้อหา",
+    "code": "รหัส",
+    "name": "ชื่อ",
+    "email": "อีเมล",
+    "tags": "แท็ก",
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ที่จะออก?",
+    "leavePage": "ออกจากหน้า",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "validation": {
+      "codeRequired": "กรุณากรอกรหัส",
+      "nameRequired": "กรุณากรอกชื่อ",
+      "emailRequired": "กรุณากรอกอีเมล",
+      "emailInvalid": "รูปแบบอีเมลไม่ถูกต้อง",
+      "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",
+      "contentRequired": "กรุณากรอกเนื้อหา"
+    }
+  },
+  "create": {
+    "success": "สร้างลูกค้าสำเร็จ",
+    "error": "สร้างลูกค้าไม่สำเร็จ"
+  },
+  "update": {
+    "success": "แก้ไขลูกค้าสำเร็จ",
+    "error": "แก้ไขลูกค้าไม่สำเร็จ",
+    "notFound": "ไม่พบข้อมูลลูกค้า"
+  },
+  "modal": {
+    "updateEmailTitle": "อัปเดตอีเมลลูกค้า",
+    "verifyEmailTitle": "ยืนยันอีเมลลูกค้า",
+    "email": "อีเมล",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "updateSuccess": "อัปเดตอีเมลสำเร็จ",
+    "updateError": "อัปเดตอีเมลไม่สำเร็จ",
+    "verifySuccess": "ส่งอีเมลไปยัง {{email}}",
+    "verifyError": "ยืนยันอีเมลไม่สำเร็จ"
+  }
+}

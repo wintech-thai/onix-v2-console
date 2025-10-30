@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "../../../../../components/ui/table";
 import { useState } from "react";
-import { ProductFilterTable } from "./product-filter.table";
+import { CustomerFilterTable } from "./customer-filter.table";
 import {
   Select,
   SelectContent,
@@ -45,7 +45,7 @@ interface DataTableProps<TData, TValue> {
   onAttach?: (rows: Row<TData>[], callback: () => void) => void;
 }
 
-export function ProductTable<TData, TValue>({
+export function CustomerTable<TData, TValue>({
   columns,
   data,
   onDelete,
@@ -59,9 +59,10 @@ export function ProductTable<TData, TValue>({
   scanItemId,
   onAttach,
 }: DataTableProps<TData, TValue>) {
-  const { t } = useTranslation(["common", "product"])
+  const { t } = useTranslation();
+  const { t: tCustomer } = useTranslation("customer");
   const [rowSelection, setRowSelection] = useState({});
-  const { activeRowId, setActiveRowId } = useActiveRow("product-table");
+  const { activeRowId, setActiveRowId } = useActiveRow("customer-table");
 
   const table = useReactTable({
     data,
@@ -100,19 +101,19 @@ export function ProductTable<TData, TValue>({
           </div>
           <div className="flex-1">
             <h3 className="text-sm font-semibold text-blue-900">
-              {t("product:attach.mode.title")}
+              {tCustomer("attach.modeTitle")}
             </h3>
             <p className="text-sm text-blue-700 mt-1">
-              {t("product:attach.mode.description")}
+              {tCustomer("attach.modeDescription")}
             </p>
           </div>
         </div>
       )}
-      <ProductFilterTable
+      <CustomerFilterTable
         onDelete={() => handleDelete()}
+        selected={rowSelected.length}
         isDisabled={!rowSelected.length}
         onSearch={onSearch}
-        selected={rowSelected.length}
         scanItemId={scanItemId}
         onAttach={scanItemId && onAttach ? () => handleAttach() : undefined}
       />

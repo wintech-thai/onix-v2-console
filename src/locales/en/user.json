@@ -12,8 +12,8 @@
     "selectSearchField": "Select search field",
     "fullTextSearch": "Full Text Search",
     "search": "Search",
-    "delete": "Delete",
-    "add": "Add"
+    "delete": "DELETE",
+    "add": "ADD"
   },
   "actions": {
     "createUser": "Create User",
