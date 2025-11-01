@@ -22,7 +22,11 @@ export const RouteConfig = {
     }
   },
   ADMIN: {
-    APIKEY: (orgId: string) => `/${orgId}/admin/apikeys`,
+    APIKEY: {
+      LIST: (orgId: string) => `/${orgId}/admin/apikeys`,
+      CREATE: (orgId: string) => `/${orgId}/admin/apikeys/create`,
+      UPDATE: (orgId: string, apikeyId: string) => `/${orgId}/admin/apikeys/${apikeyId}/update`,
+    },
     USER: {
       LIST: (orgId: string) => `/${orgId}/admin/users`,
       CREATE: (orgId: string) => `/${orgId}/admin/users/create`,
