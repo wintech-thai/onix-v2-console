@@ -88,55 +88,55 @@ const ProductView = () => {
 
   const handleDelete = async (rows: Row<IProduct>[], callback: () => void) => {
     const ok = await confirmDelete();
-
     if (!ok) return;
 
     const idsToDelete = rows.map((row) => row.original.id);
-    let successCount = 0;
-    let errorCount = 0;
 
-    for (const id of idsToDelete) {
-      await deleteProduct.mutateAsync(
-        {
+    if (idsToDelete.length === 0) {
+      return;
+    }
+
+    const toastId = toast.loading(
+      t("common:delete.loading", "Deleting items...")
+    );
+
+    const results = await Promise.allSettled(
+      idsToDelete.map((id) =>
+        deleteProduct.mutateAsync({
           orgId: params.orgId,
           productId: id,
-        },
-        {
-          onSuccess: ({ data }) => {
-            if (data.status !== "OK") {
-              errorCount++;
-              toast.error(data.description || t("product:messages.deleteError"));
-            }
+        })
+      )
+    );
 
-            successCount++;
-          },
-          onError: () => {
-            errorCount++;
-            toast.error(t("product:messages.deleteError"));
-          },
-        }
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = idsToDelete.length;
+
+    if (successCount > 0) {
+      toast.success(
+        `${t("product:messages.deleteSuccess", "Success")} (${successCount}/${totalCount})`
       );
-
-      if (successCount > 0) {
-        toast.success(
-          `${t("product:messages.deleteSuccess")} (${successCount}/${idsToDelete.length})`
-        );
-      }
-      if (errorCount > 0) {
-        toast.error(
-          `${t("product:messages.deleteError")} (${errorCount}/${idsToDelete.length})`
-        );
-      }
-
-      // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
-      await queryClient.invalidateQueries({
-        queryKey: fetchProductsApi.fetchProductKey,
-        refetchType: "active",
-      });
-
-      // Clear selection after delete attempt
-      callback();
     }
+    if (errorCount > 0) {
+      toast.error(
+        `${t("product:messages.deleteError", "Error")} (${errorCount}/${totalCount})`
+      );
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to delete product:", result.reason);
+        }
+      });
+    }
+
+    await queryClient.invalidateQueries({
+      queryKey: fetchProductsApi.fetchProductKey,
+      refetchType: "active",
+    });
+
+    callback();
   };
 
   const handleAttach = async (rows: Row<IProduct>[], callback: () => void) => {

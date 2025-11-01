@@ -1,9 +1,7 @@
+import ApiKeyView from "@/modules/admin/apikeys/view/apikey.view";
+
 const AdminAPIKeyPage = () => {
-  return (
-    <div>
-      api key page
-    </div>
-   );
+  return <ApiKeyView />;
 }
 
 export default AdminAPIKeyPage;

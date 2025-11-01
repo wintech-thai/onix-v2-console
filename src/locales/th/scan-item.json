@@ -2,6 +2,7 @@
   "columns": {
     "serial": "ซีเรียล",
     "pin": "พิน",
+    "tags": "แท็ก",
     "verified": "ยืนยันแล้ว",
     "verifiedDate": "วันที่ยืนยัน",
     "productCode": "รหัสสินค้า",

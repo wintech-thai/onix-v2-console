@@ -104,7 +104,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
         children: [
           {
             labelKey: "sidebar.admin.sub.1",
-            href: RouteConfig.ADMIN.APIKEY(params.orgId),
+            href: RouteConfig.ADMIN.APIKEY.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.admin.sub.2",

@@ -3,6 +3,7 @@
     "serial": "Serial",
     "pin": "Pin",
     "verified": "Verified",
+    "tags": "tags",
     "verifiedDate": "Verified Date",
     "productCode": "Product Code",
     "url": "URL",

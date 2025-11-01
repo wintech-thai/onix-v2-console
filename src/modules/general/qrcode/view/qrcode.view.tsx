@@ -17,7 +17,6 @@ import dayjs from "dayjs";
 const ScanItemsView = () => {
   const { t } = useTranslation(["scan-item"]);
   const params = useParams<{ orgId: string }>();
-  const [, setIsDeleting] = useState(false);
   const [data, setData] = useState<IScanItems[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
@@ -93,46 +92,42 @@ const ScanItemsView = () => {
     callback: () => void
   ) => {
     const ok = await confirmDelete();
-
     if (!ok) return;
 
     const idsToDelete = rows.map((row) => row.original.id);
-    let successCount = 0;
-    let errorCount = 0;
 
-    // Delete items one by one
-    setIsDeleting(true);
-    for (const id of idsToDelete) {
-      await deleteScanItems.mutateAsync(id, {
-        onSuccess: ({ data }) => {
-          if (data.status !== "OK") {
-            errorCount++;
-            toast.error(data.description || t("delete.error"));
-          }
-
-          successCount++;
-        },
-        onError: () => {
-          errorCount++;
-          toast.error(t("delete.error"));
-        },
-      });
+    if (idsToDelete.length === 0) {
+      return;
     }
-    setIsDeleting(false);
 
-    // Show summary toast
+    const toastId = toast.loading(t("delete.loading", "Deleting items..."));
+
+    const results = await Promise.allSettled(
+      idsToDelete.map((id) => deleteScanItems.mutateAsync(id))
+    );
+
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = idsToDelete.length;
+
     if (successCount > 0) {
       toast.success(
-        `${t("delete.success")} (${successCount}/${idsToDelete.length})`
+        `${t("delete.success", "Success")} (${successCount}/${totalCount})`
       );
     }
     if (errorCount > 0) {
-      toast.error(
-        `${t("delete.error")} (${errorCount}/${idsToDelete.length})`
-      );
+      toast.error(`${t("delete.error", "Error")} (${errorCount}/${totalCount})`);
+      // Optionally log the errors
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to delete item:", result.reason);
+        }
+      });
     }
 
-    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
+    // Invalidate queries to refetch data
     await queryClient.invalidateQueries({
       queryKey: fetchScanItemsApi.fetchScanItemsKey,
       refetchType: "active",
