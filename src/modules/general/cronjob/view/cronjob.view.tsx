@@ -15,9 +15,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
 const CronJobView = () => {
-  const { t } = useTranslation(["cronjob"]);
+  const { t } = useTranslation(["cronjob", "common"]);
   const params = useParams<{ orgId: string }>();
-  const [, setIsDeleting] = useState(false);
   const [data, setData] = useState<IJob[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
@@ -84,63 +83,54 @@ const CronJobView = () => {
     throw new Error(fetchCronJobsCount.error.message);
   }
 
-  const handleDelete = async (
-    rows: Row<IJob>[],
-    callback: () => void
-  ) => {
+  const handleDelete = async (rows: Row<IJob>[], callback: () => void) => {
     const ok = await confirmDelete();
-
     if (!ok) return;
 
     const idsToDelete = rows.map((row) => row.original.id);
-    let successCount = 0;
-    let errorCount = 0;
 
-    // Delete items one by one
-    setIsDeleting(true);
-    for (const id of idsToDelete) {
-      await deleteCronJob.mutateAsync(
-        {
+    if (idsToDelete.length === 0) {
+      return;
+    }
+
+    const toastId = toast.loading(t("common:delete.loading"));
+
+    const results = await Promise.allSettled(
+      idsToDelete.map((id) =>
+        deleteCronJob.mutateAsync({
           orgId: params.orgId,
           jobId: id,
-        },
-        {
-          onSuccess: ({ data }) => {
-            if (data.status !== "OK") {
-              errorCount++;
-              toast.error(data.description || t("delete.error"));
-            } else {
-              successCount++;
-            }
-          },
-          onError: () => {
-            errorCount++;
-            toast.error(t("delete.error"));
-          },
-        }
-      );
-    }
-    setIsDeleting(false);
+        })
+      )
+    );
 
-    // Show summary toast
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = idsToDelete.length;
+
     if (successCount > 0) {
       toast.success(
-        `${t("delete.success")} (${successCount}/${idsToDelete.length})`
+        `${t("delete.success", "Success")} (${successCount}/${totalCount})`
       );
     }
     if (errorCount > 0) {
       toast.error(
-        `${t("delete.error")} (${errorCount}/${idsToDelete.length})`
+        `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
       );
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to delete cron job:", result.reason);
+        }
+      });
     }
 
-    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
     await queryClient.invalidateQueries({
       queryKey: fetchCronJobApi.key,
       refetchType: "active",
     });
 
-    // Clear selection after delete attempt
     callback();
   };
 
@@ -181,4 +171,3 @@ const CronJobView = () => {
 };
 
 export default CronJobView;
-

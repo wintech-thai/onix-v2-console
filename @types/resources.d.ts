@@ -41,6 +41,9 @@ interface Resources {
       "save": "Save",
       "welcome": "Welcome"
     },
+    "delete": {
+      "loading": "Deleting items..."
+    },
     "error": {
       "description": "We encountered an unexpected error. Please try again or contact support if the problem persists.",
       "errorDetails": "Error Details",

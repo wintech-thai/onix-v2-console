@@ -16,7 +16,7 @@ import { attachScanItemToCustomerApi } from "../api/attach-scan-item-to-customer
 import { useTranslation } from "react-i18next";
 
 const CustomerView = () => {
-  const { t } = useTranslation("customer");
+  const { t } = useTranslation(["customer", "common"]);
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
   const [data, setData] = useState<ICustomer[]>([]);
@@ -100,46 +100,47 @@ const CustomerView = () => {
 
   const handleDelete = async (rows: Row<ICustomer>[], callback: () => void) => {
     const ok = await confirmDelete();
-
     if (!ok) return;
 
     const idsToDelete = rows.map((row) => row.original.id);
-    let successCount = 0;
-    let errorCount = 0;
 
-    // Delete items one by one
-    for (const id of idsToDelete) {
-      await deleteCustomer.mutateAsync(
-        {
+    if (idsToDelete.length === 0) {
+      return;
+    }
+
+    const toastId = toast.loading(t("common:delete.loading"));
+
+    const results = await Promise.allSettled(
+      idsToDelete.map((id) =>
+        deleteCustomer.mutateAsync({
           orgId: params.orgId,
           customerId: id,
-        },
-        {
-          onSuccess: ({ data }) => {
-            if (data.status !== "OK") {
-              errorCount++;
-              toast.error(data.description);
-            } else {
-              successCount++;
-            }
-          },
-          onError: () => {
-            errorCount++;
-            toast.error(t("delete.error"));
-          },
-        }
+        })
+      )
+    );
+
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = idsToDelete.length;
+
+    if (successCount > 0) {
+      toast.success(
+        `${t("delete.success", "Success")} (${successCount}/${totalCount})`
       );
     }
-
-    // Show summary toast
-    if (successCount > 0) {
-      toast.success(`${t("delete.success")} (${successCount}/${idsToDelete.length})`);
-    }
     if (errorCount > 0) {
-      toast.error(`${t("delete.error")} (${errorCount}/${idsToDelete.length})`);
+      toast.error(
+        `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
+      );
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to delete customer:", result.reason);
+        }
+      });
     }
 
-    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
     await queryClient.invalidateQueries({
       queryKey: fetchCustomerApi.key,
       refetchType: "active",

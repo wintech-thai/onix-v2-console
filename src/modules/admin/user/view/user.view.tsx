@@ -15,11 +15,10 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
 const UserView = () => {
-  const { t } = useTranslation("user");
+  const { t } = useTranslation(["user", "common"]);
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IUser[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
-  const [, setIsDeleting] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
     message: t("delete.message"),
@@ -84,63 +83,54 @@ const UserView = () => {
     throw new Error(fetchUsersCount.error.message);
   }
 
-  const handleDelete = async (
-    rows: Row<IUser>[],
-    callback: () => void
-  ) => {
+  const handleDelete = async (rows: Row<IUser>[], callback: () => void) => {
     const ok = await confirmDelete();
-
     if (!ok) return;
 
     const idsToDelete = rows.map((row) => row.original.orgUserId);
-    let successCount = 0;
-    let errorCount = 0;
 
-    // Delete items one by one
-    setIsDeleting(true);
-    for (const userId of idsToDelete) {
-      await deleteUser.mutateAsync(
-        {
+    if (idsToDelete.length === 0) {
+      return;
+    }
+
+    const toastId = toast.loading(t("common:delete.loading"));
+
+    const results = await Promise.allSettled(
+      idsToDelete.map((userId) =>
+        deleteUser.mutateAsync({
           orgId: params.orgId,
           userId: userId,
-        },
-        {
-          onSuccess: ({ data }) => {
-            if (data.status !== "OK") {
-              errorCount++;
-              toast.error(data.description || t("delete.error"));
-            } else {
-              successCount++;
-            }
-          },
-          onError: () => {
-            errorCount++;
-            toast.error(t("delete.error"));
-          },
-        }
-      );
-    }
-    setIsDeleting(false);
+        })
+      )
+    );
 
-    // Show summary toast
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = idsToDelete.length;
+
     if (successCount > 0) {
       toast.success(
-        `${t("delete.success")} (${successCount}/${idsToDelete.length})`
+        `${t("delete.success", "Success")} (${successCount}/${totalCount})`
       );
     }
     if (errorCount > 0) {
       toast.error(
-        `${t("delete.error")} (${errorCount}/${idsToDelete.length})`
+        `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
       );
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to delete user:", result.reason);
+        }
+      });
     }
 
-    // Invalidate queries using prefix matching - will invalidate all queries starting with these keys
     await queryClient.invalidateQueries({
       queryKey: fetchUsersApi.key,
       refetchType: "active",
     });
 
-    // Clear selection after delete attempt
     callback();
   };
 
@@ -157,9 +147,10 @@ const UserView = () => {
   };
 
   // Get total items count from API
-  const totalItems = typeof fetchUsersCount.data?.data === "number"
-    ? fetchUsersCount.data.data
-    : 0;
+  const totalItems =
+    typeof fetchUsersCount.data?.data === "number"
+      ? fetchUsersCount.data.data
+      : 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">
