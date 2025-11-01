@@ -401,6 +401,7 @@ interface Resources {
       "productCode": "Product Code",
       "scanCount": "Scan Count",
       "serial": "Serial",
+      "tags": "tags",
       "url": "URL",
       "verified": "Verified",
       "verifiedDate": "Verified Date"
