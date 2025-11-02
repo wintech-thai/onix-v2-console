@@ -1,0 +1,87 @@
+{
+  "columns": {
+    "keyName": "ชื่อคีย์",
+    "keyDescription": "คำอธิบาย",
+    "rolesList": "บทบาท",
+    "status": "สถานะ",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "searchPlaceholder": "ค้นหา API keys...",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม"
+  },
+  "actions": {
+    "createApiKey": "สร้าง API Key",
+    "disableApiKey": "ปิดใช้งาน API Key",
+    "enableApiKey": "เปิดใช้งาน API Key"
+  },
+  "delete": {
+    "title": "ลบ API Key",
+    "message": "คุณแน่ใจหรือไม่ที่จะลบ API key ที่เลือก?",
+    "success": "ลบ API key สำเร็จ",
+    "error": "ลบ API key ไม่สำเร็จ"
+  },
+  "enable": {
+    "title": "เปิดใช้งาน API Key",
+    "message": "คุณแน่ใจหรือไม่ที่จะเปิดใช้งาน API key นี้?",
+    "loading": "กำลังเปิดใช้งาน API key...",
+    "success": "เปิดใช้งาน API key สำเร็จ",
+    "error": "เปิดใช้งาน API key ไม่สำเร็จ"
+  },
+  "disable": {
+    "title": "ปิดใช้งาน API Key",
+    "message": "คุณแน่ใจหรือไม่ที่จะปิดใช้งาน API key นี้?",
+    "loading": "กำลังปิดใช้งาน API key...",
+    "success": "ปิดใช้งาน API key สำเร็จ",
+    "error": "ปิดใช้งาน API key ไม่สำเร็จ"
+  },
+  "form": {
+    "createTitle": "สร้าง API Key",
+    "updateTitle": "แก้ไข API Key",
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ที่จะออก?",
+    "leavePage": "ออกจากหน้านี้",
+    "keyInformation": {
+      "title": "ข้อมูล API Key",
+      "keyName": "ชื่อคีย์",
+      "keyDescription": "คำอธิบายคีย์"
+    },
+    "keyRoles": {
+      "title": "บทบาท API Key",
+      "availableRoles": "บทบาทที่มี",
+      "selectedRoles": "บทบาทที่เลือก",
+      "noAvailable": "ไม่มีบทบาทที่มี",
+      "noSelected": "ไม่มีบทบาทที่เลือก"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "create": "สร้าง API Key",
+      "update": "แก้ไข API Key"
+    },
+    "validation": {
+      "keyNameRequired": "กรุณากรอกชื่อคีย์",
+      "keyNameTooLong": "ชื่อคีย์ต้องไม่เกิน 100 ตัวอักษร",
+      "keyDescriptionRequired": "กรุณากรอกคำอธิบายคีย์",
+      "keyDescriptionTooLong": "คำอธิบายคีย์ต้องไม่เกิน 500 ตัวอักษร",
+      "rolesRequired": "กรุณาเลือกอย่างน้อย 1 บทบาท"
+    }
+  },
+  "messages": {
+    "createSuccess": "สร้าง API Key สำเร็จ",
+    "createError": "สร้าง API Key ไม่สำเร็จ",
+    "updateSuccess": "แก้ไข API Key สำเร็จ",
+    "updateError": "แก้ไข API Key ไม่สำเร็จ",
+    "loading": "กำลังโหลด..."
+  },
+  "modal": {
+    "apiKeyCreatedTitle": "สร้าง API Key สำเร็จ",
+    "apiKeyCreatedMessage": "กรุณาคัดลอกและบันทึก API key นี้ คุณจะไม่สามารถดูได้อีกครั้ง",
+    "copiedSuccess": "คัดลอก API Key สำเร็จ",
+    "copiedError": "คัดลอก API Key ไม่สำเร็จ",
+    "ok": "ตกลง"
+  }
+}

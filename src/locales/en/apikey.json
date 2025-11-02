@@ -1,0 +1,87 @@
+{
+  "columns": {
+    "keyName": "Key Name",
+    "keyDescription": "Description",
+    "rolesList": "Roles",
+    "status": "Status",
+    "action": "Action"
+  },
+  "filter": {
+    "searchPlaceholder": "Search API keys...",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD"
+  },
+  "actions": {
+    "createApiKey": "Create API Key",
+    "disableApiKey": "Disable API Key",
+    "enableApiKey": "Enable API Key"
+  },
+  "delete": {
+    "title": "Delete API Key",
+    "message": "Are you sure you want to delete the selected API key(s)?",
+    "success": "Successfully deleted API key(s)",
+    "error": "Failed to delete API key"
+  },
+  "enable": {
+    "title": "Enable API Key",
+    "message": "Are you sure you want to enable this API key?",
+    "loading": "Enabling API key...",
+    "success": "Successfully enabled API key",
+    "error": "Failed to enable API key"
+  },
+  "disable": {
+    "title": "Disable API Key",
+    "message": "Are you sure you want to disable this API key?",
+    "loading": "Disabling API key...",
+    "success": "Successfully disabled API key",
+    "error": "Failed to disable API key"
+  },
+  "form": {
+    "createTitle": "Create API Key",
+    "updateTitle": "Update API Key",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "leavePage": "Leave Page",
+    "keyInformation": {
+      "title": "API Key Information",
+      "keyName": "Key Name",
+      "keyDescription": "Key Description"
+    },
+    "keyRoles": {
+      "title": "API Key Roles",
+      "availableRoles": "Available Roles",
+      "selectedRoles": "Selected Roles",
+      "noAvailable": "No available roles",
+      "noSelected": "No selected roles"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "create": "Create API Key",
+      "update": "Update API Key"
+    },
+    "validation": {
+      "keyNameRequired": "Key name is required",
+      "keyNameTooLong": "Key name must be 100 characters or less",
+      "keyDescriptionRequired": "Key description is required",
+      "keyDescriptionTooLong": "Key description must be 500 characters or less",
+      "rolesRequired": "At least one role is required"
+    }
+  },
+  "messages": {
+    "createSuccess": "API Key created successfully",
+    "createError": "Failed to create API Key",
+    "updateSuccess": "API Key updated successfully",
+    "updateError": "Failed to update API Key",
+    "loading": "Loading..."
+  },
+  "modal": {
+    "apiKeyCreatedTitle": "API Key Created Successfully",
+    "apiKeyCreatedMessage": "Please copy and save this API key. You won't be able to see it again.",
+    "copiedSuccess": "API Key copied to clipboard",
+    "copiedError": "Failed to copy API Key",
+    "ok": "OK"
+  }
+}
