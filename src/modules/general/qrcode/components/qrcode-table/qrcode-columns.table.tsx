@@ -140,25 +140,28 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           const ok = await unVerifyConfirm();
 
           if (!ok) return;
+
+          const toastId = toast.loading(t("unverify.loading"));
+
           try {
             await unVerifyScanItemMutate.mutateAsync(scanId, {
               onSuccess: ({ data }) => {
                 if (data.status !== "OK") {
-                  return toast.error(data.description);
+                  return toast.error(data.description, { id: toastId });
                 }
-                toast.success(t("unverify.success"));
+                toast.success(t("unverify.success"), { id: toastId });
                 queryClient.invalidateQueries({
                   queryKey: fetchScanItemsApi.fetchScanItemsKey,
                   refetchType: "active",
                 });
               },
               onError: () => {
-                toast.error(t("unverify.error"));
+                toast.error(t("unverify.error"), { id: toastId });
               },
             });
           } catch (error) {
             console.error("error", error);
-            toast.error(t("unverify.error"));
+            toast.error(t("unverify.error"), { id: toastId });
           }
         };
 

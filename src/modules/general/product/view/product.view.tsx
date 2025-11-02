@@ -147,6 +147,7 @@ const ProductView = () => {
     if (!ok) return;
 
     const productId = rows[0].original.id;
+    const toastId = toast.loading(t("product:attach.loading"));
 
     await attachScanItemToProduct.mutateAsync(
       {
@@ -157,15 +158,15 @@ const ProductView = () => {
       {
         onSuccess: ({ data }) => {
           if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || "Attached successfully");
+            toast.success(data.description || "Attached successfully", { id: toastId });
             callback();
             router.back();
           } else {
-            toast.error(data.description || "Failed to attach");
+            toast.error(data.description || "Failed to attach", { id: toastId });
           }
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to attach");
+          toast.error(error.message || "Failed to attach", { id: toastId });
         },
       }
     );

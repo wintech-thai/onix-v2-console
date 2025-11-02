@@ -31,6 +31,7 @@
   "attach": {
     "title": "Attach Scan Item",
     "message": "Are you sure you want to attach this scan item to the selected customer?",
+    "loading": "Attaching scan item...",
     "success": "Attached scan item successfully",
     "error": "Failed to attach scan item",
     "modeTitle": "Attach Mode",

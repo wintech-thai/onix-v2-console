@@ -270,6 +270,7 @@ interface Resources {
     },
     "attach": {
       "error": "Failed to attach scan item",
+      "loading": "Attaching scan item...",
       "message": "Are you sure you want to attach this scan item to the selected customer?",
       "modeDescription": "Select a customer to attach the scan item. You can only select one customer at a time.",
       "modeTitle": "Attach Mode",
@@ -353,6 +354,7 @@ interface Resources {
       "update": "Update"
     },
     "attach": {
+      "loading": "Attaching product...",
       "message": "Are you sure you want to attach this product?",
       "mode": {
         "description": "Please select one product to attach. Click 'ATTACH' button when ready or 'Back' to cancel.",
@@ -630,6 +632,7 @@ interface Resources {
     },
     "unverify": {
       "error": "Failed to un-verify scan item",
+      "loading": "Un-verifying scan item...",
       "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
       "success": "Scan item un-verified successfully",
       "title": "Confirm Un-Verification"
