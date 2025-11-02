@@ -9,7 +9,7 @@ export const getApiKeyApi = {
     apiKeyId: string;
   }) => {
     return useQuery({
-      queryKey: [getApiKeyApi.key],
+      queryKey: [getApiKeyApi.key, params],
       queryFn: () => {
         return api.get<IApiKey>(`/api/ApiKey/org/${params.orgId}/action/GetApiKeyById/${params.apiKeyId}`)
       }
