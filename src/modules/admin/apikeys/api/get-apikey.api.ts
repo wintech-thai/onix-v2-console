@@ -17,7 +17,10 @@ export const getApiKeyApi = {
     return useQuery({
       queryKey: [getApiKeyApi.key, params],
       queryFn: () => {
-        return api.get<GetApiKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/GetApiKeyById/${params.apiKeyId}`)
+        console.log("params", params);
+        const url = `/api/ApiKey/org/${params.orgId}/action/GetApiKeyById/${params.apiKeyId}`;
+        console.log("url", url);
+        return api.get<GetApiKeyResponse>(url)
       }
     })
   }

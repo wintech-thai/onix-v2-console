@@ -17,9 +17,11 @@ const UpdateApiKeyView = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  console.log("params", params);
+  const getApiKey = getApiKeyApi.useGetApiKey({
+    orgId: params.orgId,
+    apiKeyId: params.apiKeyId,
+  });
 
-  const getApiKey = getApiKeyApi.useGetApiKey(params);
   const updateApiKeyMutation = updateApiKeyApi.useUpdateApiKey();
 
   if (getApiKey.isLoading) {
