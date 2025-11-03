@@ -58,6 +58,7 @@
   "attach": {
     "title": "Attach Product",
     "message": "Are you sure you want to attach this product?",
+    "loading": "Attaching product...",
     "mode": {
       "title": "Attach Mode Active",
       "description": "Please select one product to attach. Click 'ATTACH' button when ready or 'Back' to cancel."

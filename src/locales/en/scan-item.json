@@ -37,6 +37,7 @@
   "unverify": {
     "title": "Confirm Un-Verification",
     "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
+    "loading": "Un-verifying scan item...",
     "success": "Scan item un-verified successfully",
     "error": "Failed to un-verify scan item"
   },

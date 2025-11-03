@@ -157,6 +157,7 @@ const CustomerView = () => {
     if (!ok) return;
 
     const customerId = rows[0].original.id;
+    const toastId = toast.loading(t("attach.loading"));
 
     await attachScanItemToCustomer.mutateAsync(
       {
@@ -167,15 +168,15 @@ const CustomerView = () => {
       {
         onSuccess: ({ data }) => {
           if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || t("attach.success"));
+            toast.success(data.description || t("attach.success"), { id: toastId });
             callback();
             router.back();
           } else {
-            toast.error(data.description || t("attach.error"));
+            toast.error(data.description || t("attach.error"), { id: toastId });
           }
         },
         onError: (error) => {
-          toast.error(error.message || t("attach.error"));
+          toast.error(error.message || t("attach.error"), { id: toastId });
         },
       }
     );
