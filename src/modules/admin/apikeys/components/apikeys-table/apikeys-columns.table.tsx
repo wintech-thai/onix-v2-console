@@ -214,8 +214,7 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   disabled={!isActive}
-                  onClick={(e) => {
-                    e.stopPropagation();
+                  onClick={() => {
                     handleDisableApiKey(row.original.keyId);
                   }}
                 >
@@ -223,8 +222,7 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   disabled={!isInactive}
-                  onClick={(e) => {
-                    e.stopPropagation();
+                  onClick={() => {
                     handleEnableApiKey(row.original.keyId);
                   }}
                 >

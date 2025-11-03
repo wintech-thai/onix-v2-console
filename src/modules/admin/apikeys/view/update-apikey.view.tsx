@@ -32,7 +32,7 @@ const UpdateApiKeyView = () => {
     throw new Error(getApiKey.error.message);
   }
 
-  const apiKeyPayload = getApiKey.data?.data;
+  const apiKeyPayload = getApiKey.data?.data.apiKey;
 
   if (!apiKeyPayload) {
     throw new Error("API Key Not Found");
