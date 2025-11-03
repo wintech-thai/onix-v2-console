@@ -7,7 +7,6 @@ import {
     DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogOverlay,
     DialogTitle,
 } from "@/components/ui/dialog";
 import { useTranslation } from "react-i18next";
