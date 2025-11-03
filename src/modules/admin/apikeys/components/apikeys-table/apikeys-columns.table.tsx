@@ -32,91 +32,6 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
 
-  const enableApiKey = enableApiKeyApi.useEnableApiKey();
-  const disableApiKey = disableApiKeyApi.useDisableApiKey();
-
-  const [ConfirmEnableDialog, confirmEnable] = useConfirm({
-    title: t("enable.title"),
-    message: t("enable.message"),
-    variant: "default",
-  });
-
-  const [ConfirmDisableDialog, confirmDisable] = useConfirm({
-    title: t("disable.title"),
-    message: t("disable.message"),
-    variant: "destructive",
-  });
-
-  const handleEnableApiKey = async (apiKeyId: string) => {
-    const ok = await confirmEnable();
-    if (!ok) return;
-
-    const toastId = toast.loading(t("enable.loading"));
-
-    try {
-      await enableApiKey.mutateAsync(
-        {
-          orgId: params.orgId,
-          apiKeyId: apiKeyId,
-        },
-        {
-          onSuccess: ({ data }) => {
-            if (data.status != "OK") {
-              return toast.error(data.description, { id: toastId });
-            }
-
-            toast.success(t("enable.success"), { id: toastId });
-
-            // Invalidate query to refetch data
-            queryClient.invalidateQueries({
-              queryKey: fetchApiKeyApi.key,
-            });
-          },
-          onError: () => {
-            toast.error(t("enable.error"), { id: toastId });
-          },
-        }
-      );
-    } catch {
-      toast.error(t("enable.error"), { id: toastId });
-    }
-  };
-
-  const handleDisableApiKey = async (apiKeyId: string) => {
-    const ok = await confirmDisable();
-    if (!ok) return;
-
-    const toastId = toast.loading(t("disable.loading"));
-
-    try {
-      await disableApiKey.mutateAsync(
-        {
-          orgId: params.orgId,
-          apiKeyId: apiKeyId,
-        },
-        {
-          onSuccess: ({ data }) => {
-            if (data.status != "OK") {
-              return toast.error(data.description, { id: toastId });
-            }
-
-            toast.success(t("disable.success"), { id: toastId });
-
-            // Invalidate query to refetch data
-            queryClient.invalidateQueries({
-              queryKey: fetchApiKeyApi.key,
-            });
-          },
-          onError: () => {
-            toast.error(t("disable.error"), { id: toastId });
-          },
-        }
-      );
-    } catch {
-      toast.error(t("disable.error"), { id: toastId });
-    }
-  };
-
   return [
     {
       id: "select",
@@ -200,6 +115,91 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
         const isActive = keyStatus === "Active";
         const isInactive = keyStatus === "Disabled";
 
+        const [ConfirmEnableDialog, confirmEnable] = useConfirm({
+          title: t("enable.title"),
+          message: t("enable.message"),
+          variant: "default",
+        });
+
+        const [ConfirmDisableDialog, confirmDisable] = useConfirm({
+          title: t("disable.title"),
+          message: t("disable.message"),
+          variant: "destructive",
+        });
+
+        const enableApiKey = enableApiKeyApi.useEnableApiKey();
+        const disableApiKey = disableApiKeyApi.useDisableApiKey();
+
+        const handleEnableApiKey = async (apiKeyId: string) => {
+          const ok = await confirmEnable();
+          if (!ok) return;
+
+          const toastId = toast.loading(t("enable.loading"));
+
+          try {
+            await enableApiKey.mutateAsync(
+              {
+                orgId: params.orgId,
+                apiKeyId: apiKeyId,
+              },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status != "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("enable.success"), { id: toastId });
+
+                  // Invalidate query to refetch data
+                  queryClient.invalidateQueries({
+                    queryKey: fetchApiKeyApi.key,
+                  });
+                },
+                onError: () => {
+                  toast.error(t("enable.error"), { id: toastId });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("enable.error"), { id: toastId });
+          }
+        };
+
+        const handleDisableApiKey = async (apiKeyId: string) => {
+          const ok = await confirmDisable();
+          if (!ok) return;
+
+          const toastId = toast.loading(t("disable.loading"));
+
+          try {
+            await disableApiKey.mutateAsync(
+              {
+                orgId: params.orgId,
+                apiKeyId: apiKeyId,
+              },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status != "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("disable.success"), { id: toastId });
+
+                  // Invalidate query to refetch data
+                  queryClient.invalidateQueries({
+                    queryKey: fetchApiKeyApi.key,
+                  });
+                },
+                onError: () => {
+                  toast.error(t("disable.error"), { id: toastId });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("disable.error"), { id: toastId });
+          }
+        };
+
         return (
           <>
             <ConfirmDisableDialog />
@@ -214,7 +214,7 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   disabled={!isActive}
-                  onClick={() => {
+                  onSelect={() => {
                     handleDisableApiKey(row.original.keyId);
                   }}
                 >
@@ -222,7 +222,7 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   disabled={!isInactive}
-                  onClick={() => {
+                  onSelect={() => {
                     handleEnableApiKey(row.original.keyId);
                   }}
                 >
