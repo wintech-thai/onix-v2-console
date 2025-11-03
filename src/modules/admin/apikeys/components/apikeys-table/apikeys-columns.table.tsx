@@ -21,7 +21,7 @@ import { disableApiKeyApi } from "../../api/disable-apikey.api";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchApiKeyApi } from "../../api/fetch-apikey.api";
-import { useConfirm } from "@/hooks/use-confirm";
+import { useConfirm as Confirm } from "@/hooks/use-confirm";
 
 type ApiKeyTableColumns = ColumnDef<IApiKey> & {
   accessorKey?: keyof IApiKey;
@@ -115,13 +115,13 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
         const isActive = keyStatus === "Active";
         const isInactive = keyStatus === "Disabled";
 
-        const [ConfirmEnableDialog, confirmEnable] = useConfirm({
+        const [ConfirmEnableDialog, confirmEnable] = Confirm({
           title: t("enable.title"),
           message: t("enable.message"),
           variant: "default",
         });
 
-        const [ConfirmDisableDialog, confirmDisable] = useConfirm({
+        const [ConfirmDisableDialog, confirmDisable] = Confirm({
           title: t("disable.title"),
           message: t("disable.message"),
           variant: "destructive",
