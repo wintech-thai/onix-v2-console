@@ -10,18 +10,14 @@ export interface GetApiKeyResponse {
 
 export const getApiKeyApi = {
   key: "get-api-key",
-  useGetApiKey: (params: {
-    orgId: string;
-    apiKeyId: string;
-  }) => {
+  useGetApiKey: (params: { orgId: string; apikeyId: string }) => {
     return useQuery({
       queryKey: [getApiKeyApi.key, params],
       queryFn: () => {
-        console.log("params", params);
-        const url = `/api/ApiKey/org/${params.orgId}/action/GetApiKeyById/${params.apiKeyId}`;
-        console.log("url", url);
-        return api.get<GetApiKeyResponse>(url)
-      }
-    })
-  }
-}
+        return api.get<GetApiKeyResponse>(
+          `/api/ApiKey/org/${params.orgId}/action/GetApiKeyById/${params.apikeyId}`
+        );
+      },
+    });
+  },
+};

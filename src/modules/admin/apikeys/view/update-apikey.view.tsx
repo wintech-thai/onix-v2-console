@@ -13,14 +13,11 @@ import { useTranslation } from "react-i18next";
 
 const UpdateApiKeyView = () => {
   const { t } = useTranslation("apikey");
-  const params = useParams<{ orgId: string; apiKeyId: string }>();
+  const params = useParams<{ orgId: string; apikeyId: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const getApiKey = getApiKeyApi.useGetApiKey({
-    orgId: params.orgId,
-    apiKeyId: params.apiKeyId,
-  });
+  const getApiKey = getApiKeyApi.useGetApiKey(params);
 
   const updateApiKeyMutation = updateApiKeyApi.useUpdateApiKey();
 
@@ -46,7 +43,7 @@ const UpdateApiKeyView = () => {
     await updateApiKeyMutation.mutateAsync(
       {
         orgId: params.orgId,
-        apiKeyId: params.apiKeyId,
+        apiKeyId: params.apikeyId,
         values: {
           keyName: values.keyName,
           keyDescription: values.keyDescription,
