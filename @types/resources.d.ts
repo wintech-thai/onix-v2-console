@@ -137,6 +137,7 @@ interface Resources {
       "goBack": "Go Back",
       "goHome": "Go to Home",
       "hideDetails": "Hide Details",
+      "noPermissions": "No permission to call API {{apiName}} please contact administrator.",
       "retry": "Try Again",
       "showDetails": "Show Details",
       "title": "Oops! Something went wrong"

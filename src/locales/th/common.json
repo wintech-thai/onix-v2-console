@@ -30,7 +30,8 @@
     "goBack": "ย้อนกลับ",
     "errorDetails": "รายละเอียดข้อผิดพลาด",
     "showDetails": "แสดงรายละเอียด",
-    "hideDetails": "ซ่อนรายละเอียด"
+    "hideDetails": "ซ่อนรายละเอียด",
+    "noPermissions": "ไม่มีสิทธิ์ในการเรียกใช้ API {{apiName}} กรุณาติดต่อผู้ดูแลระบบ"
   },
   "navbar": {
     "profile": "โปรไฟล์",
