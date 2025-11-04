@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ScanItemsView = () => {
   const { t } = useTranslation(["scan-item"]);
@@ -62,7 +63,7 @@ const ScanItemsView = () => {
   });
 
   useEffect(() => {
-    if (fetchScanItems.data?.data) {
+    if (fetchScanItems?.data) {
       setData(fetchScanItems.data.data);
       setHasLoadedBefore(true);
     }
@@ -78,10 +79,18 @@ const ScanItemsView = () => {
   });
 
   if (fetchScanItems.isError) {
+    if (fetchScanItems.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetScanItems" />
+    }
+
     throw new Error(fetchScanItems.error.message);
   }
 
   if (fetchScanItemsCount.isError) {
+    if (fetchScanItemsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetScanItems" />
+    }
+
     throw new Error(fetchScanItemsCount.error.message);
   }
 
