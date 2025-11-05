@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchApiKeyApi } from "../api/fetch-apikey.api";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UpdateApiKeyView = () => {
   const { t } = useTranslation("apikey");
@@ -29,7 +30,11 @@ const UpdateApiKeyView = () => {
     );
   }
 
-  if (getApiKey.error) {
+  if (getApiKey.isError) {
+    if (getApiKey.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetApiKeyById" />;
+    }
+
     throw new Error(getApiKey.error.message);
   }
 
@@ -68,10 +73,7 @@ const UpdateApiKeyView = () => {
           }
 
           return toast.error(data.description || t("messages.updateError"));
-        },
-        onError: () => {
-          return toast.error(t("messages.updateError"));
-        },
+        }
       }
     );
   };

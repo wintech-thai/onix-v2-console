@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { AttachScanItemToProductApi } from "../api/attach-scan-item-to-product.api";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ProductView = () => {
   const { t } = useTranslation(["scan-item", "common", "product"]);
@@ -149,27 +150,23 @@ const ProductView = () => {
     const productId = rows[0].original.id;
     const toastId = toast.loading(t("product:attach.loading"));
 
-    await attachScanItemToProduct.mutateAsync(
-      {
+    try {
+      const result = await attachScanItemToProduct.mutateAsync({
         orgId: params.orgId,
         scanItemId: scanItemId,
         productId: productId,
-      },
-      {
-        onSuccess: ({ data }) => {
-          if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || "Attached successfully", { id: toastId });
-            callback();
-            router.back();
-          } else {
-            toast.error(data.description || "Failed to attach", { id: toastId });
-          }
-        },
-        onError: (error) => {
-          toast.error(error.message || "Failed to attach", { id: toastId });
-        },
+      });
+
+      if (result.data.status === "OK" || result.data.status === "SUCCESS") {
+        toast.success(result.data.description || "Attached successfully", { id: toastId });
+        callback();
+        router.back();
+      } else {
+        toast.error(result.data.description || "Failed to attach", { id: toastId });
       }
-    );
+    } catch {
+      toast.dismiss(toastId);
+    }
   };
 
   const handlePageChange = (newPage: number) => {
@@ -185,7 +182,17 @@ const ProductView = () => {
   };
 
   if (fetchProducts.isError) {
+    if (fetchProducts.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetItems" />
+    }
     throw new Error(fetchProducts.error.message);
+  }
+
+  if (fetchProductsCount.isError) {
+    if (fetchProductsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetItemCount" />
+    }
+    throw new Error(fetchProductsCount.error.message);
   }
 
   // Get total items count from API

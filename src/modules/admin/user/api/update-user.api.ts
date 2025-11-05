@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { UserSchemaType } from "../schema/user.schema";
+import { useErrorToast } from "@/lib/utils";
 
 export interface UpdateUserResponse {
   status: string;
@@ -18,7 +19,8 @@ export const updateUserApi = {
         values: UserSchemaType;
       }) => {
         return api.post<UpdateUserResponse>(`/api/OrganizationUser/org/${params.orgId}/action/UpdateUserById/${params.userId}`, params.values)
-      }
+      },
+      onError: useErrorToast("UpdateUserById"),
     })
   }
 }

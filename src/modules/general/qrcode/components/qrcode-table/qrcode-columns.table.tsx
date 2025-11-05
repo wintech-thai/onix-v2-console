@@ -155,9 +155,6 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                   refetchType: "active",
                 });
               },
-              onError: () => {
-                toast.error(t("unverify.error"), { id: toastId });
-              },
             });
           } catch (error) {
             console.error("error", error);

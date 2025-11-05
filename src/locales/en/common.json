@@ -33,6 +33,10 @@
     "hideDetails": "Hide Details",
     "noPermissions": "No permission to call API {{apiName}} please contact administrator."
   },
+  "noPermissions": {
+    "title": "No Permission to Access API {{apiName}}",
+    "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error."
+  },
   "navbar": {
     "profile": "Profile",
     "settings": "Settings",

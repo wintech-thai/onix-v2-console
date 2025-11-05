@@ -297,9 +297,6 @@ const ProductImageView = () => {
 
             toast.success(t("images.deleteSuccess"));
           },
-          onError: () => {
-            toast.error(t("images.deleteError"));
-          }
         }
       );
     };

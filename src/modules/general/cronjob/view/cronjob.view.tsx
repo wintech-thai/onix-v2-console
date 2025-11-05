@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const CronJobView = () => {
   const { t } = useTranslation(["cronjob", "common"]);
@@ -76,10 +77,16 @@ const CronJobView = () => {
   });
 
   if (fetchCronJobs.isError) {
+    if (fetchCronJobs.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobs" />
+    }
     throw new Error(fetchCronJobs.error.message);
   }
 
   if (fetchCronJobsCount.isError) {
+    if (fetchCronJobsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobCount" />
+    }
     throw new Error(fetchCronJobsCount.error.message);
   }
 
@@ -147,9 +154,7 @@ const CronJobView = () => {
   };
 
   // Get total items count from API
-  const totalItems = typeof fetchCronJobsCount.data?.data === "number"
-    ? fetchCronJobsCount.data.data
-    : 0;
+  const totalItems = fetchCronJobsCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">

@@ -59,8 +59,8 @@ export const fetchScanItemsApi = {
   useFetchScanItemsCount: (params: GetScanItemsRequest) => {
     return useQuery<AxiosResponse<number>, AxiosError>({
       queryKey: [...fetchScanItemsApi.fetchScanItemsKey, "count", params],
-      queryFn: async () => {
-        return await api.post<number>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemCount`, params)
+      queryFn: () => {
+        return api.post<number>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemCount`, params);
       },
       staleTime: 0,
       refetchOnMount: true,

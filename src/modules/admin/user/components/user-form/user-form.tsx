@@ -27,6 +27,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { useTranslation } from "react-i18next";
 import { errorMessageAsLangKey } from "@/lib/utils";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 interface UserFormProps {
   onSubmit: (values: UserSchemaType) => Promise<void>;
@@ -123,7 +124,10 @@ export const UserForm = ({
     );
   }
 
-  if (userRole.error) {
+  if (userRole.isError) {
+    if (userRole.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetRoles" />
+    }
     throw new Error(userRole.error.message);
   }
 

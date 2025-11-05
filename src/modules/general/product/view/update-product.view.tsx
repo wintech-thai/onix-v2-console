@@ -11,6 +11,7 @@ import { fetchProductsApi } from "../api/fetch-products.api";
 import { RouteConfig } from "@/config/route.config";
 import { LoaderIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UpdateProductView = () => {
   const { t } = useTranslation("product");
@@ -31,6 +32,13 @@ const UpdateProductView = () => {
         <LoaderIcon className="size-4 animate-spin" />
       </div>
     );
+  }
+
+  if (productQuery.isError) {
+    if (productQuery.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetItemById" />
+    }
+    throw new Error(productQuery.error.message);
   }
 
   const payload = productQuery.data?.data;
@@ -72,9 +80,6 @@ const UpdateProductView = () => {
 
           toast.success(t("messages.updateSuccess"));
           router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
-        },
-        onError: (error) => {
-          toast.error(error.message);
         },
       }
     );

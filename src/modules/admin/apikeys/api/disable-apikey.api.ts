@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface DisableApiKeyResponse {
@@ -16,7 +17,8 @@ export const disableApiKeyApi = {
         apiKeyId: string;
       }) => {
         return api.post<DisableApiKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/DisableApiKeyById/${params.apiKeyId}`)
-      }
+      },
+      onError: useErrorToast("DisableApiKeyById"),
     })
   }
 }

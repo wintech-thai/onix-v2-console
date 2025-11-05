@@ -17,7 +17,7 @@ export const getItemImageUploadPresignedUrlApi = {
       mutationKey: [getItemImageUploadPresignedUrlApi.key],
       mutationFn: async (params: { orgId: string, productId: string }) => {
         return api.get<GetItemImageUploadPresignURLResponse>(`/api/Item/org/${params.orgId}/action/GetItemImageUploadPresignedUrl/${params.productId}`)
-      }
+      },
     })
   }
 }

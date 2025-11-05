@@ -1,56 +1,31 @@
-# Step 1: Build the Next.js app
+# ---------- Build ----------
 FROM node:20-alpine AS builder
-
-# Install pnpm
-RUN npm install -g pnpm
-
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY pnpm-lock.yaml ./
-COPY package.json ./
+COPY pnpm-lock.yaml package.json ./
+RUN npm i -g pnpm
 
-# Copy the rest of the code
 COPY . .
-
-RUN CI=true pnpm install --frozen-lockfile
-
-ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN pnpm install --prefer-offline --frozen-lockfile
+RUN pnpm build
 
-# Build the Next.js app
-RUN pnpm run build
-
+# ---------- Run (standalone) ----------
 FROM node:20-alpine AS runner
-ARG version
-
-# Install pnpm
-RUN npm install -g pnpm
-
 WORKDIR /app
 
-# Install production dependencies only
-COPY pnpm-lock.yaml ./
-COPY package.json ./
+RUN apk add --no-cache libc6-compat
 
-RUN CI=true pnpm install --prod --ignore-scripts --frozen-lockfile
-
-# Copy the build output from the builder stage
-COPY --from=builder /app/.next ./.next
+# 1) ตัว server + node_modules ที่ bundle แล้ว
+COPY --from=builder /app/.next/standalone ./
+# 2) ไฟล์ static ของ Next
+COPY --from=builder /app/.next/static ./.next/static
+# 3) public assets
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/next.config.ts ./
 
-# Set environment variables
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-ENV NEXT_PUBLIC_APP_VERSION=$version
-
-# Expose the port the app runs on
+ENV HOSTNAME=0.0.0.0
 EXPOSE 3000
 
-# Start the app
-CMD ["pnpm", "start"]
-
+CMD ["node", "server.js"]

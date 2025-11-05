@@ -51,7 +51,7 @@ export default async function RootLayout({
         >
           <TanstackQueryProvider>
             <NuqsAdapter>
-              <Toaster richColors position="top-center" />
+              <Toaster expand richColors position="top-center" />
               {children}
             </NuqsAdapter>
           </TanstackQueryProvider>

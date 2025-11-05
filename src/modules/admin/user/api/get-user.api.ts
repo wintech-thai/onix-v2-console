@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 import { IUser } from "./fetch-users.api";
 
 export interface GetUserResponse {
@@ -14,7 +15,7 @@ export const getUserApi = {
     orgId: string;
     userId: string;
   }) => {
-    return useQuery({
+    return useQuery<AxiosResponse<GetUserResponse>, AxiosError>({
       queryKey: [getUserApi.key, params],
       queryFn: () => {
         return api.get<GetUserResponse>(`/api/OrganizationUser/org/${params.orgId}/action/GetUserById/${params.userId}`)

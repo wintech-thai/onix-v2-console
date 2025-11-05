@@ -13,6 +13,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ApiKeyView = () => {
   const { t } = useTranslation(["apikey", "common"]);
@@ -80,10 +81,16 @@ const ApiKeyView = () => {
   });
 
   if (fetchApiKeys.isError) {
+    if (fetchApiKeys.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetApiKeys" />;
+    }
     throw new Error(fetchApiKeys.error.message);
   }
 
   if (fetchApiKeysCount.isError) {
+    if (fetchApiKeysCount.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetApiKeyCount" />;
+    }
     throw new Error(fetchApiKeysCount.error.message);
   }
 
@@ -151,10 +158,7 @@ const ApiKeyView = () => {
   };
 
   // Get total items count from API
-  const totalItems =
-    typeof fetchApiKeysCount.data?.data === "number"
-      ? fetchApiKeysCount.data.data
-      : 0;
+  const totalItems = fetchApiKeysCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">

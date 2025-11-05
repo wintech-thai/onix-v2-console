@@ -14,6 +14,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { CustomerTable } from "../components/customer-table/customer.table";
 import { attachScanItemToCustomerApi } from "../api/attach-scan-item-to-customer.api";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const CustomerView = () => {
   const { t } = useTranslation(["customer", "common"]);
@@ -91,10 +92,16 @@ const CustomerView = () => {
   });
 
   if (fetchCustomer.isError) {
+    if (fetchCustomer.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetCustomers" />
+    }
     throw new Error(fetchCustomer.error.message);
   }
 
   if (fetchCustomerCount.isError) {
+    if (fetchCustomerCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetCustomerCount" />
+    }
     throw new Error(fetchCustomerCount.error.message);
   }
 
@@ -159,27 +166,23 @@ const CustomerView = () => {
     const customerId = rows[0].original.id;
     const toastId = toast.loading(t("attach.loading"));
 
-    await attachScanItemToCustomer.mutateAsync(
-      {
+    try {
+      const result = await attachScanItemToCustomer.mutateAsync({
         orgId: params.orgId,
         scanItemId: scanItemId,
         customerId: customerId,
-      },
-      {
-        onSuccess: ({ data }) => {
-          if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || t("attach.success"), { id: toastId });
-            callback();
-            router.back();
-          } else {
-            toast.error(data.description || t("attach.error"), { id: toastId });
-          }
-        },
-        onError: (error) => {
-          toast.error(error.message || t("attach.error"), { id: toastId });
-        },
+      });
+
+      if (result.data.status === "OK" || result.data.status === "SUCCESS") {
+        toast.success(result.data.description || t("attach.success"), { id: toastId });
+        callback();
+        router.back();
+      } else {
+        toast.error(result.data.description || t("attach.error"), { id: toastId });
       }
-    );
+    } catch {
+      toast.dismiss(toastId);
+    }
   };
 
   const handlePageChange = (newPage: number) => {
@@ -195,8 +198,7 @@ const CustomerView = () => {
   };
 
   // Get total items count from API
-  const totalItems =
-    typeof fetchCustomer.data?.data === "number" ? fetchCustomer.data.data : 0;
+  const totalItems = fetchCustomerCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">

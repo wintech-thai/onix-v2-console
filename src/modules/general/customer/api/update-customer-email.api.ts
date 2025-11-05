@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface UpdateCustomerEmailWithConfirmationResponse {
   status: string;
@@ -22,7 +23,8 @@ export const updateCustomerEmailApi = {
         email: string;
       }) => {
         return api.post<UpdateCustomerEmailWithConfirmationResponse>(`/api/Customer/org/${params.orgId}/action/UpdateCustomerEmailWithConfirmationById/${params.customerId}/${params.email}`)
-      }
+      },
+      onError: useErrorToast("UpdateCustomerEmailWithConfirmationById"),
     })
   },
   useUpdateUpdateCustomerEmail: () => {
@@ -34,7 +36,8 @@ export const updateCustomerEmailApi = {
         email: string;
       }) => {
         return api.post<UpdateCustomerEmailResponse>(`/api/Customer/org/${params.orgId}/action/UpdateCustomerEmailById/${params.customerId}/${params.email}`)
-      }
+      },
+      onError: useErrorToast("UpdateCustomerEmailById"),
     })
   }
 }

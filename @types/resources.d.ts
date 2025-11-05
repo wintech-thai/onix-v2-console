@@ -148,6 +148,10 @@ interface Resources {
       "settings": "Settings",
       "updatePassword": "Change Password"
     },
+    "noPermissions": {
+      "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error.",
+      "title": "No Permission to Access API {{apiName}}"
+    },
     "not-found": {
       "contactSupport": "If you think this is a bug, please contact support.",
       "description": "Sorry, the page you are looking for does not exist.",

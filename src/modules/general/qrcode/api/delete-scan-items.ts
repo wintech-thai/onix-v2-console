@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface DeleteScanItemsResponse {
@@ -16,6 +17,7 @@ export const deleteScanItemsApi = {
     return useMutation({
       mutationKey: [...deleteScanItemsApi.deleteScanItemsKey, orgId],
       mutationFn: (id: string) => deleteScanItemsApi.deleteScanItemsFunc(orgId, id),
+      onError: useErrorToast("DeleteScanItemById"),
     });
   }
 }

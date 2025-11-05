@@ -85,9 +85,6 @@ export const UpdateCustomerEmailModal = ({
 
             return toast.error(data.description);
           },
-          onError: () => {
-            toast.error(t("modal.updateError"));
-          },
         }
       );
     }
@@ -118,9 +115,6 @@ export const UpdateCustomerEmailModal = ({
             }
 
             return toast.error(data.description);
-          },
-          onError: () => {
-            toast.error(t("modal.verifyError"));
           },
         }
       );

@@ -155,9 +155,6 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
                     queryKey: fetchApiKeyApi.key,
                   });
                 },
-                onError: () => {
-                  toast.error(t("enable.error"), { id: toastId });
-                },
               }
             );
           } catch {
@@ -189,9 +186,6 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
                   queryClient.invalidateQueries({
                     queryKey: fetchApiKeyApi.key,
                   });
-                },
-                onError: () => {
-                  toast.error(t("disable.error"), { id: toastId });
                 },
               }
             );

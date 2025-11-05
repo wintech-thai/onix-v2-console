@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { getCronJobApi } from "../api/get-cron-job.api";
 import { LoaderIcon } from "lucide-react";
 import { CronJobForm } from "../components/cronjob-form/cronjob-form";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UpdateCronJobView = () => {
   const params = useParams<{ orgId: string; jobId: string }>();
@@ -18,6 +19,9 @@ const UpdateCronJobView = () => {
   }
 
   if (getCronJob.error) {
+    if (getCronJob.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobById" />
+    }
     throw new Error(getCronJob.error.message);
   }
 

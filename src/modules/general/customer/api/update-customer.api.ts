@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { CustomerSchemaType } from "../schema/customer.schema";
+import { useErrorToast } from "@/lib/utils";
 
 export interface UpdateCustomerResponse {
   status: string;
@@ -18,7 +19,8 @@ export const updateCustomerApi = {
         values: CustomerSchemaType;
       }) => {
         return api.post<UpdateCustomerResponse>(`/api/Customer/org/${params.orgId}/action/UpdateCustomerById/${params.customerId}`, params.values)
-      }
+      },
+      onError: useErrorToast("UpdateCustomerById"),
     })
   }
 }

@@ -44,9 +44,6 @@ const CreateProductView = () => {
           toast.success(t("messages.createSuccess"));
           return router.push(RouteConfig.GENERAL.PRODUCT.LIST(params.orgId));
         },
-        onError: (error) => {
-          toast.error(error.message);
-        },
       }
     );
   };

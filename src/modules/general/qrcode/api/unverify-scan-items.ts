@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface UnVerifyScanItemsResponse {
@@ -16,6 +17,7 @@ export const unVerifyScanItemsApi = {
     return useMutation({
       mutationKey: [...unVerifyScanItemsApi.deleteScanItemsKey, orgId],
       mutationFn: (id: string) => unVerifyScanItemsApi.unVerifyScanItemFunc(orgId, id),
+      onError: useErrorToast("UnVerifyScanItemById"),
     });
   }
 }

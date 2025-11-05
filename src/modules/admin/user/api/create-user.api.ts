@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { UserSchemaType } from "../schema/user.schema";
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 
 export interface InviteUserResponse {
   status: string;
@@ -17,7 +18,8 @@ export const inviteUserApi = {
         values: UserSchemaType;
       }) => {
         return api.post<InviteUserResponse>(`/api/OrganizationUser/org/${params.orgId}/action/InviteUser`, params.values)
-      }
+      },
+      onError: useErrorToast("InviteUser"),
     })
   }
 }

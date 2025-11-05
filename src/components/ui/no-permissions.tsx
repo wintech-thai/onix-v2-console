@@ -5,7 +5,7 @@ interface NoPermissionsPageProps {
 }
 
 export const NoPermissionsPage = (props: NoPermissionsPageProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <div className="h-full flex flex-col items-center justify-center rounded-xl p-8 text-amber-600 shadow-md">
@@ -35,10 +35,11 @@ export const NoPermissionsPage = (props: NoPermissionsPageProps) => {
         />
         <circle cx="12" cy="13.5" r=".7" fill="#d97706" />
       </svg>
-      <h2 className="mb-2 text-2xl font-semibold">ไม่มีสิทธิ์เข้าถึง API {props.apiName}</h2>
+      <h2 className="mb-2 text-2xl font-semibold">
+        {t("noPermissions.title", { apiName: props.apiName })}
+      </h2>
       <p className="max-w-xs text-center text-base text-amber-800">
-        คุณไม่มีสิทธิ์ในการเข้าถึงหน้านี้
-        กรุณาติดต่อผู้ดูแลระบบหากคิดว่านี่เป็นข้อผิดพลาด
+        {t("noPermissions.description")}
       </p>
     </div>
   );

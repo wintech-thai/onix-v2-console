@@ -13,6 +13,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UserView = () => {
   const { t } = useTranslation(["user", "common"]);
@@ -76,10 +77,16 @@ const UserView = () => {
   });
 
   if (fetchUsers.isError) {
+    if (fetchUsers.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetUsers" />
+    }
     throw new Error(fetchUsers.error.message);
   }
 
   if (fetchUsersCount.isError) {
+    if (fetchUsersCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetUserCount" />
+    }
     throw new Error(fetchUsersCount.error.message);
   }
 
@@ -147,10 +154,7 @@ const UserView = () => {
   };
 
   // Get total items count from API
-  const totalItems =
-    typeof fetchUsersCount.data?.data === "number"
-      ? fetchUsersCount.data.data
-      : 0;
+  const totalItems = fetchUsersCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">

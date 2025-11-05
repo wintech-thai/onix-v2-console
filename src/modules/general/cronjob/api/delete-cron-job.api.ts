@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
-import { useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface DeleteCronJobResponse {
   status: string;
@@ -16,7 +17,8 @@ export const deleteCronJobApi = {
         jobId: string;
       }) => {
         return api.delete<DeleteCronJobResponse>(`/api/Job/org/${params.orgId}/action/DeleteJobById/${params.jobId}`)
-      }
+      },
+      onError: useErrorToast("DeleteJobById"),
     })
   }
 }

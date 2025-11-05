@@ -38,9 +38,6 @@ const CreateCustomerView = () => {
 
           return toast.error(data.description);
         },
-        onError: () => {
-          toast.error(t("create.error"));
-        },
       }
     );
   };

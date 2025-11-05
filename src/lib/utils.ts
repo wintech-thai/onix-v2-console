@@ -87,6 +87,7 @@ export function useErrorToast(apiName: string) {
 
   return (error: AxiosError) => {
     const status = error.response?.status;
+    console.log({ status, apiName })
 
     if (status === 403) {
       toast.error(t("error.noPermissions", { apiName }));

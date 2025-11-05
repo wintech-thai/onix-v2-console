@@ -36,10 +36,7 @@ const CreateApiKeyView = () => {
           }
 
           return toast.error(data.description || t("messages.createError"));
-        },
-        onError: () => {
-          return toast.error(t("messages.createError"));
-        },
+        }
       }
     );
   };
