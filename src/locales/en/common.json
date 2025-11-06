@@ -53,10 +53,11 @@
     "general": {
       "label": "General",
       "sub": {
-        "1": "Products",
-        "2": "Customers",
-        "3": "Scan Items",
-        "4": "Jobs"
+        "1": "Organization",
+        "2": "Products",
+        "3": "Customers",
+        "4": "Scan Items",
+        "5": "Jobs"
       }
     },
     "admin": {

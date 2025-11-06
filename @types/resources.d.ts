@@ -181,10 +181,11 @@ interface Resources {
       "general": {
         "label": "General",
         "sub": {
-          "1": "Products",
-          "2": "Customers",
-          "3": "Scan Items",
-          "4": "Jobs"
+          "1": "Organization",
+          "2": "Products",
+          "3": "Customers",
+          "4": "Scan Items",
+          "5": "Jobs"
         }
       }
     },
@@ -347,6 +348,78 @@ interface Resources {
       "error": "Update Error",
       "notFound": "Customer Not Found",
       "success": "Update Success"
+    }
+  },
+  "organization": {
+    "actions": {
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "save": "Save"
+    },
+    "addresses": {
+      "addressType": "Address Type",
+      "available": "Available Address Types",
+      "loading": "Loading address types...",
+      "noAvailable": "No available address types",
+      "noSelected": "No selected address types",
+      "selected": "Selected Address Types",
+      "title": "Addresses",
+      "value": "Value"
+    },
+    "channels": {
+      "available": "Available Channel Types",
+      "channelType": "Channel Type",
+      "loading": "Loading channel types...",
+      "noAvailable": "No available channel types",
+      "noSelected": "No selected channel types",
+      "selected": "Selected Channel Types",
+      "title": "Channels",
+      "value": "Value"
+    },
+    "detail": {
+      "logoImage": "Logo Image",
+      "logoImagePlaceholder": "Enter logo image URL",
+      "noLogo": "No Logo",
+      "orgCustomId": "Custom ID",
+      "orgDescription": "Description",
+      "orgId": "Organization ID",
+      "orgName": "Organization Name",
+      "tags": "Tags",
+      "tagsPlaceholder": "Enter tags separated by commas",
+      "title": "Organization Details"
+    },
+    "error": "Error loading organization",
+    "form": {
+      "cancelEdit": "Cancel Edit",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to cancel?"
+    },
+    "loading": "Loading organization...",
+    "logo": {
+      "clickToSelect": "or click to select file",
+      "dragHere": "Drag and drop logo here",
+      "fileRequirements": "File Requirements",
+      "maxSize": "Maximum file size 2 MB",
+      "onlyJPG": "Only JPG files (.jpg, .jpeg) are supported",
+      "recommendedSize": "Recommended size 512x512 pixels",
+      "upload": "Upload",
+      "uploadDescription": "Select a JPG image for your organization logo",
+      "uploadError": "Failed to upload logo",
+      "uploadSuccess": "Logo uploaded successfully!",
+      "uploadTitle": "Upload Logo",
+      "uploading": "Uploading..."
+    },
+    "messages": {
+      "updateError": "Failed to update organization",
+      "updateSuccess": "Organization updated successfully"
+    },
+    "notFound": "Organization not found",
+    "title": "Organization Settings",
+    "validation": {
+      "orgCustomIdRequired": "Custom ID is required",
+      "orgDescriptionRequired": "Description is required",
+      "orgIdRequired": "Organization ID is required",
+      "orgNameRequired": "Organization name is required",
+      "tagsRequired": "Tags are required"
     }
   },
   "product": {
