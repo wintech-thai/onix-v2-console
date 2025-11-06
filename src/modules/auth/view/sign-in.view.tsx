@@ -13,10 +13,13 @@ import { authApi } from "../api/auth.api";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { RouteConfig } from "@/config/route.config";
+import { ForgotPasswordModal } from "../components/modal/forgot-password.modal";
+import { useState } from "react";
 
 const SignInView = () => {
   const { t } = useTranslation(["common", "auth"]);
   const router = useRouter();
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -62,6 +65,10 @@ const SignInView = () => {
 
   return (
     <AuthLayout header={t("auth:signInHeader")}>
+      <ForgotPasswordModal
+        open={isForgotPasswordOpen}
+        onClose={() => setIsForgotPasswordOpen(false)}
+      />
       <form
         className="flex flex-col space-y-4"
         onSubmit={(e) => {
@@ -112,6 +119,14 @@ const SignInView = () => {
         <Button type="submit" isPending={form.formState.isSubmitting}>
           {t("auth:signInLabel")}
         </Button>
+
+        <button
+          type="button"
+          className="underline text-primary text-left cursor-pointer"
+          onClick={() => setIsForgotPasswordOpen(true)}
+        >
+          {t("auth:forgotPassword.title")}
+        </button>
       </form>
     </AuthLayout>
   );

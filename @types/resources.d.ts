@@ -92,11 +92,22 @@ interface Resources {
     "currentPassword": "Current Password",
     "currentPasswordRequired": "Current password is required",
     "error": {
+      "emailRequired": "Email is required",
       "form": {
         "password": "Please enter your password",
         "username": "Please enter your username"
       },
-      "invalidCredentials": "Invalid username or password"
+      "invalidCredentials": "Invalid username or password",
+      "invalidEmail": "Please enter a valid email address"
+    },
+    "forgotPassword": {
+      "description": "Enter your email address and we'll send you a link to reset your password.",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "error": "Failed to send reset link. Please try again.",
+      "sendButton": "Send Reset Link",
+      "success": "Password reset link has been sent to your email",
+      "title": "Forgot Password"
     },
     "newPassword": "New Password",
     "newPasswordRequired": "New password is required",
