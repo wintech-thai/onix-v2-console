@@ -22,6 +22,7 @@ const CustomerView = () => {
   const router = useRouter();
   const [data, setData] = useState<ICustomer[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [scanItemId] = useQueryState("scanItemId");
 
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
@@ -77,6 +78,7 @@ const CustomerView = () => {
     if (fetchCustomer.data?.data) {
       setData(fetchCustomer.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchCustomer.data]);
 
@@ -186,14 +188,17 @@ const CustomerView = () => {
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
@@ -215,7 +220,7 @@ const CustomerView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchCustomer.isLoading && !hasLoadedBefore}
+        isLoading={(fetchCustomer.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
         scanItemId={scanItemId}
         onAttach={scanItemId ? handleAttach : undefined}
       />

@@ -20,6 +20,7 @@ const ApiKeyView = () => {
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IApiKey[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
     message: t("delete.message"),
@@ -66,6 +67,7 @@ const ApiKeyView = () => {
     if (fetchApiKeys.data?.data) {
       setData(fetchApiKeys.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchApiKeys.data]);
 
@@ -146,14 +148,17 @@ const ApiKeyView = () => {
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
@@ -173,7 +178,7 @@ const ApiKeyView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchApiKeys.isLoading && !hasLoadedBefore}
+        isLoading={(fetchApiKeys.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
       />
     </div>
   );
