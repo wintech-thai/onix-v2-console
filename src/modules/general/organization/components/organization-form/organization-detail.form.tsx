@@ -85,6 +85,7 @@ export const OrganizationDetailForm = ({
             {...form.register("orgName")}
             disabled={isViewMode || isSubmitting}
             errorMessage={form.formState.errors.orgName?.message}
+            max={30}
           />
           <Input
             label={t("detail.orgDescription")}
@@ -93,6 +94,7 @@ export const OrganizationDetailForm = ({
             {...form.register("orgDescription")}
             disabled={isViewMode || isSubmitting}
             errorMessage={form.formState.errors.orgDescription?.message}
+            max={200}
           />
         </div>
 

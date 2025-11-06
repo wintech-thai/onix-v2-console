@@ -75,8 +75,9 @@ export const OrganizationForm = ({
 
     await onSubmit(data);
 
+    form.reset();
+    form.clearErrors();
     setIsViewMode(true);
-    // Clear dirty state after successful submit
     setFormDirty(false);
   };
 
