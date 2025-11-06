@@ -12,6 +12,7 @@
   },
   "actions": {
     "unVerifyScanItem": "Un-Verify Scan Item",
+    "detachCustomer": "Detach Customer",
     "bindToCustomer": "Bind to Customer",
     "bindToProduct": "Bind To Product",
     "scanQr": "Scan QR",
@@ -40,6 +41,13 @@
     "loading": "Un-verifying scan item...",
     "success": "Scan item un-verified successfully",
     "error": "Failed to un-verify scan item"
+  },
+  "detachCustomer": {
+    "title": "Confirm Detach Customer",
+    "message": "Are you sure you want to detach this customer from the scan item?",
+    "loading": "Detaching customer...",
+    "success": "Customer detached successfully",
+    "error": "Failed to detach customer"
   },
   "modal": {
     "title": "Scan Item Detail",

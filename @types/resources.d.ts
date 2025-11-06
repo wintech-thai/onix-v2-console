@@ -572,6 +572,7 @@ interface Resources {
     "actions": {
       "bindToCustomer": "Bind to Customer",
       "bindToProduct": "Bind To Product",
+      "detachCustomer": "Detach Customer",
       "dryRun": "Dry Run",
       "scanQr": "Scan QR",
       "unVerifyScanItem": "Un-Verify Scan Item"
@@ -609,6 +610,13 @@ interface Resources {
       "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
       "success": "Deleted scan item successfully",
       "title": "Confirm Deletion"
+    },
+    "detachCustomer": {
+      "error": "Failed to detach customer",
+      "loading": "Detaching customer...",
+      "message": "Are you sure you want to detach this customer from the scan item?",
+      "success": "Customer detached successfully",
+      "title": "Confirm Detach Customer"
     },
     "filter": {
       "add": "ADD",
