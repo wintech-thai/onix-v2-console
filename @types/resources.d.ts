@@ -727,6 +727,7 @@ interface Resources {
       "email": "Email",
       "isOrgInitialUser": "Initial User",
       "role": "Role",
+      "tags": "Tags",
       "userStatus": "Status",
       "username": "Username"
     },
@@ -757,6 +758,8 @@ interface Resources {
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
       "updateTitle": "Update User",
       "userInformation": {
+        "tags": "Tags",
+        "tagsPlaceholder": "Press Enter to add tag",
         "title": "User Information",
         "userEmail": "Email",
         "userName": "Username"

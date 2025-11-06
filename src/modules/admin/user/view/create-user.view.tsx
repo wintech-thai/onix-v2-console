@@ -38,6 +38,7 @@ const CreateUserView = () => {
         roles: [],
         userName: "",
         tmpUserEmail: "",
+        tags: ""
       }}
       isUpdate={false}
       onSubmit={onSubmit}

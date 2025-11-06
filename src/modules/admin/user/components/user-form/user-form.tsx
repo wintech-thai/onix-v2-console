@@ -6,11 +6,13 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   Loader,
+  XIcon,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { fetchUserRoleApi, IUserRole } from "../../api/fetch-user-role.api";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, KeyboardEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -55,15 +57,46 @@ export const UserForm = ({
     variant: "destructive",
   });
 
-  const { roles } = form.watch();
+  const { roles, tags } = form.watch();
   const isSubmitting = form.formState.isSubmitting;
   const isDirty = form.formState.isDirty;
   const errors = form.formState.errors;
+
+  // Handle tags
+  const tagsArray = tags
+    ? tags.split(",").filter((tag) => tag.trim() !== "")
+    : [];
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const trimmedTag = tagInput.trim();
+
+      if (trimmedTag && !tagsArray.includes(trimmedTag)) {
+        const newTags = [...tagsArray, trimmedTag];
+        form.setValue("tags", newTags.join(","), {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+        form.trigger("tags");
+        setTagInput("");
+      }
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
+    form.setValue("tags", newTags.join(","), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  };
 
   const [availableRoles, setAvailableRoles] = useState<IUserRole[]>([]);
   const [selectedRoles, setSelectedRoles] = useState<IUserRole[]>([]);
   const [leftChecked, setLeftChecked] = useState<Set<string>>(new Set());
   const [rightChecked, setRightChecked] = useState<Set<string>>(new Set());
+  const [tagInput, setTagInput] = useState("");
 
   const dateRange = useMemo(
     () => ({
@@ -311,6 +344,46 @@ export const UserForm = ({
                 );
               }}
             />
+          </div>
+
+          <div className="mt-4">
+            <Label>
+              {t("form.userInformation.tags")} <span className="text-red-500">*</span>
+            </Label>
+            <div className="mt-2">
+              <Input
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={t("form.userInformation.tagsPlaceholder")}
+                errorMessage={errorMessageAsLangKey(
+                  errors.tags?.message,
+                  t
+                )}
+                maxLength={30}
+                disabled={isSubmitting}
+              />
+            </div>
+            {tagsArray.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                {tagsArray.map((tag, index) => (
+                  <div
+                    key={index}
+                    className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground rounded-full text-sm"
+                  >
+                    <span>{tag}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveTag(tag)}
+                      className="hover:bg-primary-foreground/20 rounded-full p-0.5 disabled:cursor-not-allowed"
+                      disabled={isSubmitting}
+                    >
+                      <XIcon className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

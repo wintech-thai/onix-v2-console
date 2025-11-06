@@ -78,6 +78,7 @@ const UpdateUserView = () => {
         roles: userPayload.roles ?? [],
         tmpUserEmail: userPayload.tmpUserEmail ?? "",
         userName: userPayload.userName,
+        tags: userPayload.tags ?? ""
       }}
       isUpdate
       onSubmit={handleUpdateUser}
