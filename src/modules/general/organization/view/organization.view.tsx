@@ -125,6 +125,7 @@ const OrganizationView = () => {
 
   return (
     <OrganizationForm
+      key={getOrg.dataUpdatedAt}
       onSubmit={handleSubmit}
       defaultValues={{
         orgId: getOrg.data.data.orgId,
