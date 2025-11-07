@@ -61,7 +61,7 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary hover:underline block"
+            className="text-primary hover:underline"
             href={RouteConfig.ADMIN.APIKEY.UPDATE(
               row.original.orgId,
               row.original.keyId

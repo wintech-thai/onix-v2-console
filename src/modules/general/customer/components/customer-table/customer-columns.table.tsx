@@ -51,7 +51,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary hover:underline block"
+            className="text-primary hover:underline"
             href={RouteConfig.GENERAL.CUSTOMER.UPDATE(
               row.original.orgId,
               row.original.id

@@ -51,7 +51,7 @@ export const useUserTableColumns = (): UserTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary hover:underline block"
+            className="text-primary hover:underline"
             href={RouteConfig.ADMIN.USER.UPDATE(
               row.original.orgCustomId,
               row.original.orgUserId

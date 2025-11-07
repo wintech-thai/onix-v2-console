@@ -43,7 +43,7 @@ export const useCronJobTableColumns = (): CronJobTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary hover:underline block"
+            className="text-primary hover:underline"
             href={RouteConfig.GENERAL.JOB.UPDATE(
               row.original.orgId,
               row.original.id

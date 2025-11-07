@@ -55,7 +55,7 @@ export const getProductTableColumns = (
             row.original.orgId,
             row.original.id
           )}
-          className="text-primary hover:underline block"
+          className="text-primary hover:underline"
         >
           {row.original.code}
         </Link>
