@@ -57,10 +57,11 @@
   },
   "logo": {
     "uploadTitle": "อัปโหลดโลโก้",
-    "uploadDescription": "เลือกไฟล์ JPG สำหรับโลโก้องค์กร",
+    "uploadDescription": "เลือกไฟล์ PNG สำหรับโลโก้องค์กร",
     "dragHere": "ลากและวางไฟล์โลโก้ที่นี่",
     "clickToSelect": "หรือคลิกเพื่อเลือกไฟล์",
     "onlyJPG": "รองรับเฉพาะไฟล์ JPG (.jpg, .jpeg)",
+    "onlyPNG": "รองรับเฉพาะไฟล์ PNG (.png)",
     "maxSize": "ขนาดไฟล์สูงสุด 2 MB",
     "recommendedSize": "ขนาดที่แนะนำ 512x512 พิกเซล",
     "fileRequirements": "ข้อกำหนดไฟล์",

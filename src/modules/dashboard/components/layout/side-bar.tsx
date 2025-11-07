@@ -337,7 +337,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
             <div className="text-base">
               versions: {env("NEXT_PUBLIC_APP_VERSION")}
             </div>
-            <Link href={env("NEXT_PUBLIC_PROVIDER_URL") ?? ""} className="text-sm hover:underline">
+            <Link target="_blank" href={env("NEXT_PUBLIC_PROVIDER_URL") ?? ""} className="text-sm hover:underline">
               &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All
               rights reserved.
             </Link>

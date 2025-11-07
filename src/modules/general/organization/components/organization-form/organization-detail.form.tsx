@@ -109,7 +109,7 @@ export const OrganizationDetailForm = ({
                 className="w-full h-[200px] rounded-lg border object-contain"
               />
             ) : (
-              <div className="w-full aspect-square bg-muted rounded-lg border flex items-center justify-center text-muted-foreground">
+              <div className="w-full h-[200px] aspect-square bg-muted rounded-lg border flex items-center justify-center text-muted-foreground">
                 {t("detail.noLogo")}
               </div>
             )}

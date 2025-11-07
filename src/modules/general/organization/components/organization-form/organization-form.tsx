@@ -10,7 +10,6 @@ import { OrganizationAddressesForm } from "./organization-addresses.form";
 import { OrganizationChannelsForm } from "./organization-channels.form";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useEffect, useState } from "react";
-import { PencilIcon } from "lucide-react";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 
 interface OrganizationFormProps {
@@ -109,10 +108,8 @@ export const OrganizationForm = ({
             <Button
               onClick={handleEdit}
               disabled={!isViewMode || isSubmitting}
-              variant="outline"
               type="button"
             >
-              <PencilIcon className="mr-2 h-4 w-4" />
               {t("actions.edit")}
             </Button>
 

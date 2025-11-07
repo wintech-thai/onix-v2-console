@@ -15,8 +15,6 @@ import axios, { AxiosError } from "axios";
 import { useDropzone } from "react-dropzone";
 import { getLogoImageUploadPresignedUrlApi } from "../api/get-logo-image-upload-presigned-url.api";
 import { useTranslation } from "react-i18next";
-import { useQueryClient } from "@tanstack/react-query";
-import { getOrganizationApi } from "../api/get-organization.api";
 
 interface UploadLogoModalProps {
   open: boolean;
@@ -32,7 +30,6 @@ export const UploadLogoModal = ({
   onUploadSuccess,
 }: UploadLogoModalProps) => {
   const { t } = useTranslation(["organization", "common"]);
-  const queryClient = useQueryClient();
   const getLogoImageUploadPresignedUrl =
     getLogoImageUploadPresignedUrlApi.useGetLogoImageUploadPresignedUrl({ orgId });
 
@@ -43,7 +40,7 @@ export const UploadLogoModal = ({
   // ใช้ react-dropzone
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
-      "image/jpeg": [".jpg", ".jpeg"],
+      "image/png": [".png"],
     },
     maxSize: 2 * 1024 * 1024, // 2MB
     maxFiles: 1,
@@ -63,7 +60,7 @@ export const UploadLogoModal = ({
         } else if (
           rejection.errors.some((e) => e.code === "file-invalid-type")
         ) {
-          toast.error(t("logo.onlyJPG"));
+          toast.error(t("logo.onlyPNG"));
         } else {
           toast.error(t("logo.uploadError"));
         }
@@ -114,11 +111,6 @@ export const UploadLogoModal = ({
 
       // Close modal
       onOpenChange(false);
-
-      await queryClient.invalidateQueries({
-        queryKey: [getOrganizationApi.key],
-        refetchType: "active"
-      });
 
       // Callback with logo info
       onUploadSuccess?.(logoUrl, logoPath);
@@ -227,7 +219,7 @@ export const UploadLogoModal = ({
                   {t("logo.clickToSelect")}
                 </p>
                 <p className="text-xs text-gray-400">
-                  {t("logo.onlyJPG")} • {t("logo.maxSize")}
+                  {t("logo.onlyPNG")} • {t("logo.maxSize")}
                 </p>
               </div>
             </div>
@@ -240,7 +232,7 @@ export const UploadLogoModal = ({
             {t("logo.fileRequirements")}
           </h3>
           <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
-            <li>{t("logo.onlyJPG")}</li>
+            <li>{t("logo.onlyPNG")}</li>
             <li>{t("logo.maxSize")}</li>
             <li>{t("logo.recommendedSize")}</li>
           </ul>

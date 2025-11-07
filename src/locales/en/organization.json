@@ -57,10 +57,11 @@
   },
   "logo": {
     "uploadTitle": "Upload Logo",
-    "uploadDescription": "Select a JPG image for your organization logo",
+    "uploadDescription": "Select a PNG image for your organization logo",
     "dragHere": "Drag and drop logo here",
     "clickToSelect": "or click to select file",
     "onlyJPG": "Only JPG files (.jpg, .jpeg) are supported",
+    "onlyPNG": "Only PNG files (.png) are supported",
     "maxSize": "Maximum file size 2 MB",
     "recommendedSize": "Recommended size 512x512 pixels",
     "fileRequirements": "File Requirements",

@@ -7,7 +7,7 @@ import { RouteConfig } from "@/config/route.config";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 
 type Props = {
   isExpand: boolean;
@@ -25,7 +25,8 @@ export const Navbar = ({
   isMobile = false,
   onMenuClick,
 }: Props) => {
-  const router = useRouter();
+  const { handleNavigation } = useFormNavigationBlocker();
+
   return (
     <div
       style={{
@@ -51,7 +52,7 @@ export const Navbar = ({
 
           {showOrg ? (
             <OrgSwitcher
-              onOrgChange={(orgId) => router.push(RouteConfig.DASHBOARD.OVERVIEW(orgId))}
+              onOrgChange={(orgId) => handleNavigation(RouteConfig.DASHBOARD.OVERVIEW(orgId))}
             />
           ) : null}
           {showIcon ? (

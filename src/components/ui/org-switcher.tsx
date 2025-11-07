@@ -36,10 +36,9 @@ export function OrgSwitcher({
   withFull,
   onOrgChange,
 }: OrgSwitcherProps) {
-  const params = useParams();
+  const params = useParams<{ orgId: string }>();
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(params.orgId);
 
   const organization = useQuery({
     queryKey: ["organization"],
@@ -52,10 +51,10 @@ export function OrgSwitcher({
   });
 
   const org = organization.data ?? [];
-  const selectedOrg = org.find((o: any) => o.orgCustomId === value);
+  const selectedOrg = org.find((o: any) => o.orgCustomId === params.orgId);
 
   const handleSelect = (currentValue: string) => {
-    setValue(currentValue);
+    if (currentValue === params.orgId) return setOpen(false);
     setOpen(false);
     onOrgChange?.(currentValue);
   };
@@ -149,7 +148,7 @@ export function OrgSwitcher({
             </CommandEmpty>
             <CommandGroup>
               {org.map((org: any) => {
-                const isSelected = value === org.orgCustomId;
+                const isSelected = params.orgId === org.orgCustomId;
                 return (
                   <CommandItem
                     key={org.orgCustomId}
