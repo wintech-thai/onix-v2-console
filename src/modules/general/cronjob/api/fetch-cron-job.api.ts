@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 
 export type FetchJobsResponse = IJob[];
 
@@ -42,7 +43,7 @@ export const fetchCronJobApi = {
   key: ["fetch-cron-job"],
   cronJob: {
     useQuery: (orgId: string, params: FetchJobRequest) => {
-      return useQuery({
+      return useQuery<AxiosResponse<FetchJobsResponse>, AxiosError>({
         queryKey: [...fetchCronJobApi.key, orgId, params],
         queryFn: () => {
           return api.post<FetchJobsResponse>(`/api/Job/org/${orgId}/action/GetJobs`, params);
@@ -55,10 +56,10 @@ export const fetchCronJobApi = {
   },
   cronJobCount: {
     useQuery: (orgId: string, params: FetchJobRequest) => {
-      return useQuery({
+      return useQuery<AxiosResponse<number>, AxiosError>({
         queryKey: [...fetchCronJobApi.key, "count", orgId, params],
         queryFn: () => {
-          return api.post<FetchJobsResponse>(`/api/Job/org/${orgId}/action/GetJobCount`, params);
+          return api.post<number>(`/api/Job/org/${orgId}/action/GetJobCount`, params);
         },
         staleTime: 0,
         refetchOnMount: true,

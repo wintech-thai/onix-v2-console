@@ -5,15 +5,14 @@ import { Sidebar } from "@/modules/dashboard/components/layout/side-bar";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { useIsClient, useMediaQuery } from "usehooks-ts";
-import { NavigationBlockerProvider } from "@/hooks/use-form-navigation-blocker";
 
 type Props = {
   children: React.ReactNode;
-}
+};
 
 const DashboardLayout = ({ children }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 767px)');
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const isClient = useIsClient();
 
   // รอให้ client-side hydrate ก่อน
@@ -26,24 +25,29 @@ const DashboardLayout = ({ children }: Props) => {
   }
 
   return (
-    <NavigationBlockerProvider>
-      <div className="h-full">
-        <Navbar
-          isExpand={isMobile ? false : expanded}
-          isMobile={isMobile}
-          onMenuClick={() => setExpanded(!expanded)}
-        />
-        <Sidebar expanded={expanded} setExpanded={setExpanded} isMobile={isMobile} />
-        <div style={{
-          paddingLeft: isMobile ? 0 : (expanded ? 256 : 75), // mobile ไม่มี padding, desktop มี padding ตาม sidebar
+    <div className="h-full">
+      <Navbar
+        isExpand={isMobile ? false : expanded}
+        isMobile={isMobile}
+        onMenuClick={() => setExpanded(!expanded)}
+      />
+      <Sidebar
+        expanded={expanded}
+        setExpanded={setExpanded}
+        isMobile={isMobile}
+      />
+      <div
+        style={{
+          paddingLeft: isMobile ? 0 : expanded ? 256 : 75, // mobile ไม่มี padding, desktop มี padding ตาม sidebar
           paddingTop: 64,
           transition: "padding-left 0.2s",
-        }} className="h-full w-full">
-          {children}
-        </div>
+        }}
+        className="h-full w-full"
+      >
+        {children}
       </div>
-    </NavigationBlockerProvider>
+    </div>
   );
-}
+};
 
 export default DashboardLayout;

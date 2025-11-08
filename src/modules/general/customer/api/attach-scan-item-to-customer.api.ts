@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface AttacheScanItemToCustomerResponse {
   status: string;
@@ -17,7 +18,8 @@ export const attachScanItemToCustomerApi = {
         customerId: string;
       }) => {
         return api.post<AttacheScanItemToCustomerResponse>(`/api/ScanItem/org/${params.orgId}/action/AttachScanItemToCustomer/${params.scanItemId}/${params.customerId}`)
-      }
+      },
+      onError: useErrorToast("AttachScanItemToCustomer"),
     })
   }
 }

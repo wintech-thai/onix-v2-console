@@ -11,6 +11,7 @@ import { fetchCronJobApi } from "../api/fetch-cron-job.api";
 import { toast } from "sonner";
 import { RouteConfig } from "@/config/route.config";
 import { useId } from "react";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const CreateCronJobView = () => {
   const router = useRouter();
@@ -29,7 +30,10 @@ const CreateCronJobView = () => {
     );
   }
 
-  if (getDefaultValue.error) {
+  if (getDefaultValue.isError) {
+    if (getDefaultValue.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobDefault/ScanItemGenerator" />;
+    }
     throw new Error(getDefaultValue.error.message);
   }
 
@@ -59,9 +63,6 @@ const CreateCronJobView = () => {
           });
 
           router.push(RouteConfig.GENERAL.JOB.LIST(params.orgId));
-        },
-        onError: () => {
-          toast.error("Create CronJob Error");
         },
       }
     );

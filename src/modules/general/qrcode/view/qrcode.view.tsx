@@ -13,12 +13,14 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ScanItemsView = () => {
   const { t } = useTranslation(["scan-item"]);
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IScanItems[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
     message: t("delete.message"),
@@ -62,9 +64,10 @@ const ScanItemsView = () => {
   });
 
   useEffect(() => {
-    if (fetchScanItems.data?.data) {
+    if (fetchScanItems?.data) {
       setData(fetchScanItems.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchScanItems.data]);
 
@@ -78,10 +81,18 @@ const ScanItemsView = () => {
   });
 
   if (fetchScanItems.isError) {
+    if (fetchScanItems.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetScanItems" />
+    }
+
     throw new Error(fetchScanItems.error.message);
   }
 
   if (fetchScanItemsCount.isError) {
+    if (fetchScanItemsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetScanItemCount" />
+    }
+
     throw new Error(fetchScanItemsCount.error.message);
   }
 
@@ -138,10 +149,12 @@ const ScanItemsView = () => {
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
@@ -165,7 +178,7 @@ const ScanItemsView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore)}
+        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
       />
     </div>
   );

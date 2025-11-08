@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios"
 import { useMutation } from "@tanstack/react-query"
 import { CreateProductRequest } from "./create-product.api"
+import { useErrorToast } from "@/lib/utils"
 
 export const updateProductApi = {
   key: "updateProduct",
@@ -17,6 +18,7 @@ export const updateProductApi = {
       }) => {
         return api.post(`/api/Item/org/${orgId}/action/UpdateItemById/${productId}`, value)
       },
+      onError: useErrorToast("UpdateItemById"),
     })
   }
 }

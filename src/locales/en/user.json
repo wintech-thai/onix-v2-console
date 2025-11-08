@@ -3,6 +3,7 @@
     "username": "Username",
     "email": "Email",
     "role": "Role",
+    "tags": "Tags",
     "isOrgInitialUser": "Initial User",
     "userStatus": "Status",
     "action": "Action"
@@ -34,7 +35,9 @@
     "userInformation": {
       "title": "User Information",
       "userName": "Username",
-      "userEmail": "Email"
+      "userEmail": "Email",
+      "tags": "Tags",
+      "tagsPlaceholder": "Press Enter to add tag"
     },
     "userRoles": {
       "title": "User Roles",

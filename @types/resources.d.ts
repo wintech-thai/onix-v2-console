@@ -92,11 +92,22 @@ interface Resources {
     "currentPassword": "Current Password",
     "currentPasswordRequired": "Current password is required",
     "error": {
+      "emailRequired": "Email is required",
       "form": {
         "password": "Please enter your password",
         "username": "Please enter your username"
       },
-      "invalidCredentials": "Invalid username or password"
+      "invalidCredentials": "Invalid username or password",
+      "invalidEmail": "Please enter a valid email address"
+    },
+    "forgotPassword": {
+      "description": "Enter your email address and we'll send you a link to reset your password.",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "error": "Failed to send reset link. Please try again.",
+      "sendButton": "Send Reset Link",
+      "success": "Password reset link has been sent to your email",
+      "title": "Forgot Password"
     },
     "newPassword": "New Password",
     "newPasswordRequired": "New password is required",
@@ -137,6 +148,7 @@ interface Resources {
       "goBack": "Go Back",
       "goHome": "Go to Home",
       "hideDetails": "Hide Details",
+      "noPermissions": "No permission to call API {{apiName}} please contact administrator.",
       "retry": "Try Again",
       "showDetails": "Show Details",
       "title": "Oops! Something went wrong"
@@ -146,6 +158,10 @@ interface Resources {
       "profile": "Profile",
       "settings": "Settings",
       "updatePassword": "Change Password"
+    },
+    "noPermissions": {
+      "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error.",
+      "title": "No Permission to Access API {{apiName}}"
     },
     "not-found": {
       "contactSupport": "If you think this is a bug, please contact support.",
@@ -176,10 +192,11 @@ interface Resources {
       "general": {
         "label": "General",
         "sub": {
-          "1": "Products",
-          "2": "Customers",
-          "3": "Scan Items",
-          "4": "Jobs"
+          "1": "Organization",
+          "2": "Products",
+          "3": "Customers",
+          "4": "Scan Items",
+          "5": "Jobs"
         }
       }
     },
@@ -344,6 +361,79 @@ interface Resources {
       "success": "Update Success"
     }
   },
+  "organization": {
+    "actions": {
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "save": "Save"
+    },
+    "addresses": {
+      "addressType": "Address Type",
+      "available": "Available Address Types",
+      "loading": "Loading address types...",
+      "noAvailable": "No available address types",
+      "noSelected": "No selected address types",
+      "selected": "Selected Address Types",
+      "title": "Addresses",
+      "value": "Value"
+    },
+    "channels": {
+      "available": "Available Channel Types",
+      "channelType": "Channel Type",
+      "loading": "Loading channel types...",
+      "noAvailable": "No available channel types",
+      "noSelected": "No selected channel types",
+      "selected": "Selected Channel Types",
+      "title": "Channels",
+      "value": "Value"
+    },
+    "detail": {
+      "logoImage": "Logo Image",
+      "logoImagePlaceholder": "Enter logo image URL",
+      "noLogo": "No Logo",
+      "orgCustomId": "Custom ID",
+      "orgDescription": "Description",
+      "orgId": "Organization ID",
+      "orgName": "Organization Name",
+      "tags": "Tags",
+      "tagsPlaceholder": "Enter tags separated by commas",
+      "title": "Organization Details"
+    },
+    "error": "Error loading organization",
+    "form": {
+      "cancelEdit": "Cancel Edit",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to cancel?"
+    },
+    "loading": "Loading organization...",
+    "logo": {
+      "clickToSelect": "or click to select file",
+      "dragHere": "Drag and drop logo here",
+      "fileRequirements": "File Requirements",
+      "maxSize": "Maximum file size 2 MB",
+      "onlyJPG": "Only JPG files (.jpg, .jpeg) are supported",
+      "onlyPNG": "Only PNG files (.png) are supported",
+      "recommendedSize": "Recommended size 512x512 pixels",
+      "upload": "Upload",
+      "uploadDescription": "Select a PNG image for your organization logo",
+      "uploadError": "Failed to upload logo",
+      "uploadSuccess": "Logo uploaded successfully!",
+      "uploadTitle": "Upload Logo",
+      "uploading": "Uploading..."
+    },
+    "messages": {
+      "updateError": "Failed to update organization",
+      "updateSuccess": "Organization updated successfully"
+    },
+    "notFound": "Organization not found",
+    "title": "Organization Settings",
+    "validation": {
+      "orgCustomIdRequired": "Custom ID is required",
+      "orgDescriptionRequired": "Description is required",
+      "orgIdRequired": "Organization ID is required",
+      "orgNameRequired": "Organization name is required",
+      "tagsRequired": "Tags are required"
+    }
+  },
   "product": {
     "actions": {
       "back": "Back",
@@ -483,6 +573,7 @@ interface Resources {
     "actions": {
       "bindToCustomer": "Bind to Customer",
       "bindToProduct": "Bind To Product",
+      "detachCustomer": "Detach Customer",
       "dryRun": "Dry Run",
       "scanQr": "Scan QR",
       "unVerifyScanItem": "Un-Verify Scan Item"
@@ -520,6 +611,13 @@ interface Resources {
       "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
       "success": "Deleted scan item successfully",
       "title": "Confirm Deletion"
+    },
+    "detachCustomer": {
+      "error": "Failed to detach customer",
+      "loading": "Detaching customer...",
+      "message": "Are you sure you want to detach this customer from the scan item?",
+      "success": "Customer detached successfully",
+      "title": "Confirm Detach Customer"
     },
     "filter": {
       "add": "ADD",
@@ -649,6 +747,7 @@ interface Resources {
       "email": "Email",
       "isOrgInitialUser": "Initial User",
       "role": "Role",
+      "tags": "Tags",
       "userStatus": "Status",
       "username": "Username"
     },
@@ -679,6 +778,8 @@ interface Resources {
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
       "updateTitle": "Update User",
       "userInformation": {
+        "tags": "Tags",
+        "tagsPlaceholder": "Press Enter to add tag",
         "title": "User Information",
         "userEmail": "Email",
         "userName": "Username"

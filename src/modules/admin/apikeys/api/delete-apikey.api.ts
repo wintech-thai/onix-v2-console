@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface DeleteApiKeyResponse {
@@ -16,7 +17,8 @@ export const deleteApiKeyApi = {
         apiKeyId: string;
       }) => {
         return api.delete<DeleteApiKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/DeleteApiKeyById/${params.apiKeyId}`)
-      }
+      },
+      onError: useErrorToast("DeleteApiKeyById"),
     })
   }
 }

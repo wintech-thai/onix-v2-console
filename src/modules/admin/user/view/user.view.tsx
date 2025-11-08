@@ -13,12 +13,14 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UserView = () => {
   const { t } = useTranslation(["user", "common"]);
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IUser[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
     message: t("delete.message"),
@@ -63,6 +65,7 @@ const UserView = () => {
     if (fetchUsers.data?.data) {
       setData(fetchUsers.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchUsers.data]);
 
@@ -76,10 +79,16 @@ const UserView = () => {
   });
 
   if (fetchUsers.isError) {
+    if (fetchUsers.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetUsers" />
+    }
     throw new Error(fetchUsers.error.message);
   }
 
   if (fetchUsersCount.isError) {
+    if (fetchUsersCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetUserCount" />
+    }
     throw new Error(fetchUsersCount.error.message);
   }
 
@@ -135,22 +144,22 @@ const UserView = () => {
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
   // Get total items count from API
-  const totalItems =
-    typeof fetchUsersCount.data?.data === "number"
-      ? fetchUsersCount.data.data
-      : 0;
+  const totalItems = fetchUsersCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">
@@ -165,7 +174,7 @@ const UserView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchUsers.isLoading && !hasLoadedBefore}
+        isLoading={(fetchUsers.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
       />
     </div>
   );

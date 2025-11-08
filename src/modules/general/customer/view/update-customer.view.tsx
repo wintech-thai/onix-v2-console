@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchCustomerApi } from "../api/fetch-customer.api";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UpdateCustomerView = () => {
   const { t } = useTranslation("customer");
@@ -29,6 +30,9 @@ const UpdateCustomerView = () => {
   }
 
   if (getCustomer.isError) {
+    if (getCustomer.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetCustomerById" />
+    }
     throw new Error(getCustomer.error.message);
   }
 
@@ -65,9 +69,6 @@ const UpdateCustomerView = () => {
 
           return toast.error(data.description);
         },
-        onError: () => {
-          toast.error(t("update.error"));
-        }
       }
     );
   };

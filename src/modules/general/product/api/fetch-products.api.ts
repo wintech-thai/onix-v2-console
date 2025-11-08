@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 import { Image } from "./create-product.api";
 
 export type GetProductsRequest = {
@@ -49,7 +50,7 @@ export const fetchProductsApi = {
     return api.post<GetProductsResponse>(`/api/Item/org/${params.orgId}/action/GetItems`, params)
   },
   useFetchProductQuery: (params: GetProductsRequest) => {
-    return useQuery({
+    return useQuery<AxiosResponse<GetProductsResponse>, AxiosError>({
       queryKey: [...fetchProductsApi.fetchProductKey, params],
       queryFn: () => fetchProductsApi.fetchProductFunc(params),
       staleTime: 0,
@@ -60,10 +61,10 @@ export const fetchProductsApi = {
 
   // fetch product count
   useFetchProductCount: (params: GetProductsRequest) => {
-    return useQuery({
+    return useQuery<AxiosResponse<number>, AxiosError>({
       queryKey: [...fetchProductsApi.fetchProductKey, "count", params],
-      queryFn: async () => {
-        return await api.post<number>(`/api/Item/org/${params.orgId}/action/GetItemCount`, params)
+      queryFn: () => {
+        return api.post<number>(`/api/Item/org/${params.orgId}/action/GetItemCount`, params)
       },
       staleTime: 0,
       refetchOnMount: true,

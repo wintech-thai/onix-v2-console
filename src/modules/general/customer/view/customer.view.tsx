@@ -14,6 +14,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { CustomerTable } from "../components/customer-table/customer.table";
 import { attachScanItemToCustomerApi } from "../api/attach-scan-item-to-customer.api";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const CustomerView = () => {
   const { t } = useTranslation(["customer", "common"]);
@@ -21,6 +22,7 @@ const CustomerView = () => {
   const router = useRouter();
   const [data, setData] = useState<ICustomer[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [scanItemId] = useQueryState("scanItemId");
 
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
@@ -76,6 +78,7 @@ const CustomerView = () => {
     if (fetchCustomer.data?.data) {
       setData(fetchCustomer.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchCustomer.data]);
 
@@ -91,10 +94,16 @@ const CustomerView = () => {
   });
 
   if (fetchCustomer.isError) {
+    if (fetchCustomer.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetCustomers" />
+    }
     throw new Error(fetchCustomer.error.message);
   }
 
   if (fetchCustomerCount.isError) {
+    if (fetchCustomerCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetCustomerCount" />
+    }
     throw new Error(fetchCustomerCount.error.message);
   }
 
@@ -159,44 +168,42 @@ const CustomerView = () => {
     const customerId = rows[0].original.id;
     const toastId = toast.loading(t("attach.loading"));
 
-    await attachScanItemToCustomer.mutateAsync(
-      {
+    try {
+      const result = await attachScanItemToCustomer.mutateAsync({
         orgId: params.orgId,
         scanItemId: scanItemId,
         customerId: customerId,
-      },
-      {
-        onSuccess: ({ data }) => {
-          if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || t("attach.success"), { id: toastId });
-            callback();
-            router.back();
-          } else {
-            toast.error(data.description || t("attach.error"), { id: toastId });
-          }
-        },
-        onError: (error) => {
-          toast.error(error.message || t("attach.error"), { id: toastId });
-        },
+      });
+
+      if (result.data.status === "OK" || result.data.status === "SUCCESS") {
+        toast.success(result.data.description || t("attach.success"), { id: toastId });
+        callback();
+        router.back();
+      } else {
+        toast.error(result.data.description || t("attach.error"), { id: toastId });
       }
-    );
+    } catch {
+      toast.dismiss(toastId);
+    }
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
   // Get total items count from API
-  const totalItems =
-    typeof fetchCustomer.data?.data === "number" ? fetchCustomer.data.data : 0;
+  const totalItems = fetchCustomerCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">
@@ -213,7 +220,7 @@ const CustomerView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchCustomer.isLoading && !hasLoadedBefore}
+        isLoading={(fetchCustomer.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
         scanItemId={scanItemId}
         onAttach={scanItemId ? handleAttach : undefined}
       />

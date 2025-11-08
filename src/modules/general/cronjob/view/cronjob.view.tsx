@@ -13,12 +13,14 @@ import { useTranslation } from "react-i18next";
 import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const CronJobView = () => {
   const { t } = useTranslation(["cronjob", "common"]);
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IJob[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
     message: t("delete.message"),
@@ -63,6 +65,7 @@ const CronJobView = () => {
     if (fetchCronJobs.data?.data) {
       setData(fetchCronJobs.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchCronJobs.data]);
 
@@ -76,10 +79,16 @@ const CronJobView = () => {
   });
 
   if (fetchCronJobs.isError) {
+    if (fetchCronJobs.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobs" />
+    }
     throw new Error(fetchCronJobs.error.message);
   }
 
   if (fetchCronJobsCount.isError) {
+    if (fetchCronJobsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobCount" />
+    }
     throw new Error(fetchCronJobsCount.error.message);
   }
 
@@ -135,21 +144,22 @@ const CronJobView = () => {
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
   // Get total items count from API
-  const totalItems = typeof fetchCronJobsCount.data?.data === "number"
-    ? fetchCronJobsCount.data.data
-    : 0;
+  const totalItems = fetchCronJobsCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">
@@ -164,7 +174,7 @@ const CronJobView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchCronJobs.isLoading && !hasLoadedBefore}
+        isLoading={(fetchCronJobs.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
       />
     </div>
   );

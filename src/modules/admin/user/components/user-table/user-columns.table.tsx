@@ -51,7 +51,7 @@ export const useUserTableColumns = (): UserTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary hover:underline block"
+            className="text-primary hover:underline"
             href={RouteConfig.ADMIN.USER.UPDATE(
               row.original.orgCustomId,
               row.original.orgUserId
@@ -65,6 +65,28 @@ export const useUserTableColumns = (): UserTableColumns[] => {
     {
       accessorKey: "tmpUserEmail",
       header: t("columns.email"),
+    },
+    {
+      accessorKey: "tags",
+      header: t("columns.tags"),
+      cell: ({ row }) => {
+        if (!row.original.tags) return "-";
+
+        return (
+          <div className="max-w-[300px] w-full flex flex-wrap gap-x-0.5 gap-y-0.5">
+            {row.original.tags.split(",").map((badge, i) => {
+              return (
+                <div
+                  key={i}
+                  className="bg-primary text-white rounded-lg px-2 py-1 cursor-pointer"
+                >
+                  {badge.trim()}
+                </div>
+              );
+            })}
+          </div>
+        );
+      },
     },
     {
       accessorKey: "rolesList",

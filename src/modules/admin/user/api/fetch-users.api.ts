@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 
 export interface IUser {
   orgUserId: string;
@@ -18,6 +19,7 @@ export interface IUser {
   orgName: string | null;
   orgDesc: string | null;
   roles: string[];
+  tags: string | null
 }
 
 export type FetchUsersResponse = IUser[];
@@ -34,7 +36,7 @@ export type FetchUsersRequest = {
 export const fetchUsersApi = {
   key: ["fetchUser"],
   useFetchUsers: (params: FetchUsersRequest) => {
-    return useQuery({
+    return useQuery<AxiosResponse<FetchUsersResponse>, AxiosError>({
       queryKey: [...fetchUsersApi.key, params],
       queryFn: () => {
         return api.post<FetchUsersResponse>(
@@ -48,7 +50,7 @@ export const fetchUsersApi = {
     });
   },
   useFetchUsersCount: (params: FetchUsersRequest) => {
-    return useQuery({
+    return useQuery<AxiosResponse<number>, AxiosError>({
       queryKey: [...fetchUsersApi.key, "count", params],
       queryFn: () => {
         return api.post<number>(

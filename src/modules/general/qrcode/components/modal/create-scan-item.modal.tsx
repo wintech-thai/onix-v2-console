@@ -82,9 +82,6 @@ export const CreateScanItemModal = ({ children }: CreateScanItemModalProps) => {
             });
             handleClose(false);
           },
-          onError: () => {
-            toast.error(t("qrcode.create.error", "Failed to create scan item"));
-          },
         }
       );
     } catch (error) {

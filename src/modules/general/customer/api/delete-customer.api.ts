@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface DeleteCustomerResponse {
   status: string;
@@ -16,7 +17,8 @@ export const deleteCustomerApi = {
         customerId: string;
       }) => {
         return api.delete<DeleteCustomerResponse>(`/api/Customer/org/${params.orgId}/action/DeleteCustomerCascadeById/${params.customerId}`);
-      }
+      },
+      onError: useErrorToast("DeleteCustomerCascadeById"),
     })
   }
 }

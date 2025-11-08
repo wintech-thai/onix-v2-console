@@ -3,6 +3,7 @@
     "username": "ชื่อผู้ใช้",
     "email": "อีเมล",
     "role": "บทบาท",
+    "tags": "แท็ก",
     "isOrgInitialUser": "ผู้ใช้เริ่มต้น",
     "userStatus": "สถานะ",
     "action": "การดำเนินการ"
@@ -34,7 +35,9 @@
     "userInformation": {
       "title": "ข้อมูลผู้ใช้",
       "userName": "ชื่อผู้ใช้",
-      "userEmail": "อีเมล"
+      "userEmail": "อีเมล",
+      "tags": "แท็ก",
+      "tagsPlaceholder": "กด Enter เพื่อเพิ่มแท็ก"
     },
     "userRoles": {
       "title": "บทบาทผู้ใช้",

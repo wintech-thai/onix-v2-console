@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
-import { useMutation } from "@tanstack/react-query";
 import { IApiKey } from "./fetch-apikey.api";
+import { useAxiosMutation, useErrorToast } from "@/lib/utils";
 
 export interface CreateAPIKeyRequest {
   keyName: string;
@@ -17,14 +17,18 @@ export interface CreateAPIKeyResponse {
 export const createApiKeyApi = {
   key: "create-api-key",
   useCreateApiKey: () => {
-    return useMutation({
+    return useAxiosMutation<
+      CreateAPIKeyResponse,
+      { orgId: string; values: CreateAPIKeyRequest }
+    >({
       mutationKey: [createApiKeyApi.key],
-      mutationFn: (params: {
-        orgId: string;
-        values: CreateAPIKeyRequest
-      }) => {
-        return api.post<CreateAPIKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/AddApiKey`, params.values)
-      }
-    })
-  }
-}
+      mutationFn: (params) => {
+        return api.post<CreateAPIKeyResponse>(
+          `/api/ApiKey/org/${params.orgId}/action/AddApiKey`,
+          params.values
+        );
+      },
+      onError: useErrorToast("AddApiKey"),
+    });
+  },
+};

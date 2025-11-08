@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Upload, X, Image as ImageIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useDropzone } from "react-dropzone";
 import { getItemImageUploadPresignedUrlApi } from "../api/get-item-image-upload-presigned-url.api";
 import { addItemImageApi } from "../api/add-item-image.api";
@@ -34,7 +34,7 @@ export const UploadImageModal = ({
   currentMaxSortingOrder,
   onUploadSuccess,
 }: UploadImageModalProps) => {
-  const { t } = useTranslation("product");
+  const { t } = useTranslation(["product", "common"]);
   const getItemImageUploadPresignedUrl =
     getItemImageUploadPresignedUrlApi.useMutation();
   const addImageItem = addItemImageApi.useMutation();
@@ -140,6 +140,15 @@ export const UploadImageModal = ({
       // Callback to refresh images list
       onUploadSuccess?.();
     } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 403) {
+          return toast.error(
+            t("common:error.noPermissions", {
+              apiName: "GetItemImageUploadPresignedUrl",
+            })
+          );
+        }
+      }
       console.error("Upload error:", error);
       if (error instanceof Error) {
         return toast.error(error.message);
@@ -251,9 +260,7 @@ export const UploadImageModal = ({
               </div>
               <div className="space-y-2">
                 <p className="text-lg font-medium">
-                  {isDragActive
-                    ? t("images.dragHere")
-                    : t("images.dragHere")}
+                  {isDragActive ? t("images.dragHere") : t("images.dragHere")}
                 </p>
                 <p className="text-sm text-gray-500">
                   {t("images.clickToSelect")}

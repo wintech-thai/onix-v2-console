@@ -127,11 +127,6 @@ export const ScanItemActionModal = ({
             itemId: existingData?.data?.id || "",
           },
           {
-            onError: (error) => {
-              toast.error(
-                error.message || t("scan-item:scanItemAction.error.update")
-              );
-            },
             onSuccess: ({ data }) => {
               if (data.status !== "OK") {
                 return toast.error(
@@ -151,11 +146,6 @@ export const ScanItemActionModal = ({
             orgId: params.orgId,
           },
           {
-            onError: (error) => {
-              toast.error(
-                error.message || t("scan-item:scanItemAction.error.create")
-              );
-            },
             onSuccess: ({ data }) => {
               if (data.status !== "OK") {
                 return toast.error(

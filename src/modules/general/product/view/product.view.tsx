@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { AttachScanItemToProductApi } from "../api/attach-scan-item-to-product.api";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ProductView = () => {
   const { t } = useTranslation(["scan-item", "common", "product"]);
@@ -23,6 +24,7 @@ const ProductView = () => {
   const queryClient = useQueryClient();
   const [data, setData] = useState<IProduct[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [scanItemId] = useQueryState("scanItemId");
 
   // Use nuqs to persist state in URL
@@ -83,6 +85,7 @@ const ProductView = () => {
     if (fetchProducts.data?.data) {
       setData(fetchProducts.data.data);
       setHasLoadedBefore(true);
+      setIsPageOrLimitChanging(false);
     }
   }, [fetchProducts.data]);
 
@@ -149,43 +152,52 @@ const ProductView = () => {
     const productId = rows[0].original.id;
     const toastId = toast.loading(t("product:attach.loading"));
 
-    await attachScanItemToProduct.mutateAsync(
-      {
+    try {
+      const result = await attachScanItemToProduct.mutateAsync({
         orgId: params.orgId,
         scanItemId: scanItemId,
         productId: productId,
-      },
-      {
-        onSuccess: ({ data }) => {
-          if (data.status === "OK" || data.status === "SUCCESS") {
-            toast.success(data.description || "Attached successfully", { id: toastId });
-            callback();
-            router.back();
-          } else {
-            toast.error(data.description || "Failed to attach", { id: toastId });
-          }
-        },
-        onError: (error) => {
-          toast.error(error.message || "Failed to attach", { id: toastId });
-        },
+      });
+
+      if (result.data.status === "OK" || result.data.status === "SUCCESS") {
+        toast.success(result.data.description || "Attached successfully", { id: toastId });
+        callback();
+        router.back();
+      } else {
+        toast.error(result.data.description || "Failed to attach", { id: toastId });
       }
-    );
+    } catch {
+      toast.dismiss(toastId);
+    }
   };
 
   const handlePageChange = (newPage: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
   };
 
   const handleItemsPerPageChange = (newLimit: number) => {
+    setIsPageOrLimitChanging(true);
     setQueryState({ limit: newLimit, page: 1 }); // Reset to page 1 when changing limit
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
   if (fetchProducts.isError) {
+    if (fetchProducts.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetItems" />
+    }
     throw new Error(fetchProducts.error.message);
+  }
+
+  if (fetchProductsCount.isError) {
+    if (fetchProductsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetItemCount" />
+    }
+    throw new Error(fetchProductsCount.error.message);
   }
 
   // Get total items count from API
@@ -205,7 +217,7 @@ const ProductView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={fetchProducts.isLoading && !hasLoadedBefore}
+        isLoading={(fetchProducts.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
         scanItemId={scanItemId}
         onAttach={scanItemId ? handleAttach : undefined}
       />

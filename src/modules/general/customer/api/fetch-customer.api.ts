@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 
 export type FetchCustomerRequest = {
   limit: number;
@@ -41,7 +42,7 @@ export const fetchCustomerApi = {
     orgId: string;
     params: FetchCustomerRequest;
   }) => {
-    return useQuery({
+    return useQuery<AxiosResponse<FetchCustomerResponse>, AxiosError>({
       queryKey: [...fetchCustomerApi.key, params],
       queryFn: () => {
         return api.post<FetchCustomerResponse>(`/api/Customer/org/${params.orgId}/action/GetCustomers`, params.params);
@@ -55,7 +56,7 @@ export const fetchCustomerApi = {
     orgId: string;
     params: FetchCustomerRequest;
   }) => {
-    return useQuery({
+    return useQuery<AxiosResponse<number>, AxiosError>({
       queryKey: [...fetchCustomerApi.key, "count", params],
       queryFn: () => {
         return api.post<number>(`/api/Customer/org/${params.orgId}/action/GetCustomerCount`, params.params);

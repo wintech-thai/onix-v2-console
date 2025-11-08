@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface DeleteProductResponse {
   status: string;
@@ -19,7 +20,8 @@ export const deleteProductApi = {
         productId: string,
       }) => {
         return api.delete<DeleteProductResponse>(`/api/Item/org/${orgId}/action/DeleteItemCascadeById/${productId}`)
-      }
+      },
+      onError: useErrorToast("DeleteItemCascadeById"),
     })
   }
 }

@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface CreateCronJobRequest {
   name: string;
@@ -26,7 +27,8 @@ export const createCronJobApi = {
         data: CreateCronJobRequest;
       }) => {
         return api.post<CreateCronJobResponse>(`/api/Job/org/${params.orgId}/action/CreateJobScanItemGenerator`, params.data)
-      }
+      },
+      onError: useErrorToast("CreateJobScanItemGenerator"),
     })
   }
 }

@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchUsersApi } from "../api/fetch-users.api";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const UpdateUserView = () => {
   const { t } = useTranslation("user");
@@ -29,6 +30,9 @@ const UpdateUserView = () => {
   }
 
   if (getUser.error) {
+    if (getUser.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetUserById" />
+    }
     throw new Error(getUser.error.message);
   }
 
@@ -64,9 +68,6 @@ const UpdateUserView = () => {
 
           return toast.error(data.description || t("messages.updateError"));
         },
-        onError: () => {
-          return toast.error(t("messages.updateError"));
-        },
       }
     );
   };
@@ -77,6 +78,7 @@ const UpdateUserView = () => {
         roles: userPayload.roles ?? [],
         tmpUserEmail: userPayload.tmpUserEmail ?? "",
         userName: userPayload.userName,
+        tags: userPayload.tags ?? ""
       }}
       isUpdate
       onSubmit={handleUpdateUser}

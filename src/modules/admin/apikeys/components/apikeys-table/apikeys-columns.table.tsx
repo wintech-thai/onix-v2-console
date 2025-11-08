@@ -61,7 +61,7 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
       cell: ({ row }) => {
         return (
           <Link
-            className="text-primary hover:underline block"
+            className="text-primary hover:underline"
             href={RouteConfig.ADMIN.APIKEY.UPDATE(
               row.original.orgId,
               row.original.keyId
@@ -155,9 +155,6 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
                     queryKey: fetchApiKeyApi.key,
                   });
                 },
-                onError: () => {
-                  toast.error(t("enable.error"), { id: toastId });
-                },
               }
             );
           } catch {
@@ -189,9 +186,6 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
                   queryClient.invalidateQueries({
                     queryKey: fetchApiKeyApi.key,
                   });
-                },
-                onError: () => {
-                  toast.error(t("disable.error"), { id: toastId });
                 },
               }
             );

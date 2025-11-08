@@ -18,6 +18,7 @@ import {
 import { ProductSchemaType } from "../../schema/product.schema";
 import { fetchProductsPropertiesApi } from "../../api/fetch-product-properties.api";
 import { useParams } from "next/navigation";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 type PropertyItem = {
   name: string;
@@ -215,6 +216,14 @@ export const ProductPropertiesForm = () => {
         </div>
       </div>
     );
+  }
+
+  if (fetchProductPropertiesQuery.isError) {
+    if (fetchProductPropertiesQuery.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetAllowItemPropertyNames" />;
+    }
+
+    throw new Error(fetchProductPropertiesQuery.error.message)
   }
 
   return (

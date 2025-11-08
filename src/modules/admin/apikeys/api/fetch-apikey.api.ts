@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 
 export interface IApiKey {
   keyId: string;
@@ -30,10 +31,10 @@ export const fetchApiKeyApi = {
     orgId: string;
     values: FetchApiKeyRequest;
   }) => {
-    return useQuery({
-      queryKey: [...fetchApiKeyApi.key, "count", params],
+    return useQuery<AxiosResponse<FetchApiKeyResponse>, AxiosError>({
+      queryKey: [...fetchApiKeyApi.key, params],
       queryFn: () => {
-        return api.post<FetchApiKeyResponse>(`api/ApiKey/org/${params.orgId}/action/GetApiKeys`, params.values);
+        return api.post(`api/ApiKey/org/${params.orgId}/action/GetApiKeys`, params.values);
       }
     })
   },
@@ -41,10 +42,10 @@ export const fetchApiKeyApi = {
     orgId: string;
     values: FetchApiKeyRequest;
   }) => {
-    return useQuery({
-      queryKey: [...fetchApiKeyApi.key, params],
+    return useQuery<AxiosResponse<number>, AxiosError>({
+      queryKey: [...fetchApiKeyApi.key, "count", params],
       queryFn: () => {
-        return api.post<number>(`api/ApiKey/org/${params.orgId}/action/GetApiKeyCount`, params.values);
+        return api.post(`api/ApiKey/org/${params.orgId}/action/GetApiKeyCount`, params.values);
       }
     })
   }

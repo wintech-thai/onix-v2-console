@@ -28,9 +28,6 @@ const CreateUserView = () => {
 
           return toast.error(data.description || t("messages.createError"));
         },
-        onError: () => {
-          return toast.error(t("messages.createError"));
-        },
       }
     );
   };
@@ -41,6 +38,7 @@ const CreateUserView = () => {
         roles: [],
         userName: "",
         tmpUserEmail: "",
+        tags: ""
       }}
       isUpdate={false}
       onSubmit={onSubmit}

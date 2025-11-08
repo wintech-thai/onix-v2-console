@@ -30,7 +30,12 @@
     "goBack": "Go Back",
     "errorDetails": "Error Details",
     "showDetails": "Show Details",
-    "hideDetails": "Hide Details"
+    "hideDetails": "Hide Details",
+    "noPermissions": "No permission to call API {{apiName}} please contact administrator."
+  },
+  "noPermissions": {
+    "title": "No Permission to Access API {{apiName}}",
+    "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error."
   },
   "navbar": {
     "profile": "Profile",
@@ -48,10 +53,11 @@
     "general": {
       "label": "General",
       "sub": {
-        "1": "Products",
-        "2": "Customers",
-        "3": "Scan Items",
-        "4": "Jobs"
+        "1": "Organization",
+        "2": "Products",
+        "3": "Customers",
+        "4": "Scan Items",
+        "5": "Jobs"
       }
     },
     "admin": {

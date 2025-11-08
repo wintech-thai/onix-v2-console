@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 
 export type GetScanItemsRequest = {
   orgId: string;
@@ -43,33 +44,30 @@ export interface IScanItems {
 
 export const fetchScanItemsApi = {
   fetchScanItemsKey: ["fetch-scan-items"],
-  fetchScanItemsFunc: async (params: GetScanItemsRequest) => {
-    return api.post<GetScanItemsResponse>(`/api/ScanItem/org/${params.orgId}/action/GetScanItems`, params)
-  },
   useFetchScanItemsQuery: (params: GetScanItemsRequest) => {
-    return useQuery({
+    return useQuery<AxiosResponse<GetScanItemsResponse>, AxiosError>({
       queryKey: [...fetchScanItemsApi.fetchScanItemsKey, params],
-      queryFn: () => fetchScanItemsApi.fetchScanItemsFunc(params),
-      staleTime: 0,
-      refetchOnMount: true,
-      refetchOnWindowFocus: true,
-    })
-  },
-
-  // fetch scan items count
-  useFetchScanItemsCount: (params: GetScanItemsRequest) => {
-    return useQuery({
-      queryKey: [...fetchScanItemsApi.fetchScanItemsKey, "count", params],
-      queryFn: async () => {
-        return await api.post<number>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemCount`, params)
+      queryFn: () => {
+        return api.post(`/api/ScanItem/org/${params.orgId}/action/GetScanItems`, params);
       },
       staleTime: 0,
       refetchOnMount: true,
       refetchOnWindowFocus: true,
-    })
+    });
+  },
+
+  useFetchScanItemsCount: (params: GetScanItemsRequest) => {
+    return useQuery<AxiosResponse<number>, AxiosError>({
+      queryKey: [...fetchScanItemsApi.fetchScanItemsKey, "count", params],
+      queryFn: () => {
+        return api.post<number>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemCount`, params);
+      },
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+    });
   }
 }
-
 // Backward compatibility - deprecated, use fetchScanItemsApi instead
 /** @deprecated Use fetchScanItemsApi instead */
 export const fetchQrCodeApi = fetchScanItemsApi;

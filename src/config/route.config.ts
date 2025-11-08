@@ -3,6 +3,9 @@ export const RouteConfig = {
     OVERVIEW: (orgId: string) => `/dashboard/${orgId}/overview`,
   },
   GENERAL: {
+    ORG: {
+      VIEW: (orgId: string) => `/${orgId}/general/organization`,
+    },
     PRODUCT: {
       LIST: (orgId: string) => `/${orgId}/general/products`,
       CREATE: (orgId: string) => `/${orgId}/general/products/create`,

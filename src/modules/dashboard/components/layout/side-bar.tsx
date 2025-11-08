@@ -30,6 +30,7 @@ type SidebarKeys =
   | "sidebar.general.sub.2"
   | "sidebar.general.sub.3"
   | "sidebar.general.sub.4"
+  | "sidebar.general.sub.5"
   | "sidebar.admin.label"
   | "sidebar.admin.sub.1"
   | "sidebar.admin.sub.2"
@@ -81,18 +82,22 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
         children: [
           {
             labelKey: "sidebar.general.sub.1",
-            href: RouteConfig.GENERAL.PRODUCT.LIST(params.orgId),
+            href: RouteConfig.GENERAL.ORG.VIEW(params.orgId),
           },
           {
             labelKey: "sidebar.general.sub.2",
-            href: RouteConfig.GENERAL.CUSTOMER.LIST(params.orgId),
+            href: RouteConfig.GENERAL.PRODUCT.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.general.sub.3",
-            href: RouteConfig.GENERAL.QRCODE(params.orgId),
+            href: RouteConfig.GENERAL.CUSTOMER.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.general.sub.4",
+            href: RouteConfig.GENERAL.QRCODE(params.orgId),
+          },
+          {
+            labelKey: "sidebar.general.sub.5",
             href: RouteConfig.GENERAL.JOB.LIST(params.orgId),
           },
         ],
@@ -332,10 +337,10 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
             <div className="text-base">
               versions: {env("NEXT_PUBLIC_APP_VERSION")}
             </div>
-            <div className="text-sm">
+            <Link target="_blank" href={env("NEXT_PUBLIC_PROVIDER_URL") ?? ""} className="text-sm hover:underline">
               &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All
               rights reserved.
-            </div>
+            </Link>
           </motion.footer>
         )}
       </motion.aside>

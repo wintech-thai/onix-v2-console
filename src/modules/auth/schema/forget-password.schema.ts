@@ -15,3 +15,7 @@ export const resetPasswordSchema = z
       });
     }
   });
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("auth:error.invalidEmail").min(1, "auth:error.emailRequired"),
+});

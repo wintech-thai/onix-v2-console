@@ -6,8 +6,9 @@ import "./globals.css";
 import { cookies } from "next/headers";
 import initTranslations, { i18nNamespaces } from "@/lib/i18n/i18n";
 import TranslationsProvider from "@/components/provider/translations-provider";
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "sonner";
+import { NavigationBlockerProvider } from "@/hooks/use-form-navigation-blocker";
 
 const notoSansThai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -50,10 +51,12 @@ export default async function RootLayout({
           resources={resources}
         >
           <TanstackQueryProvider>
-            <NuqsAdapter>
-              <Toaster richColors position="top-center" />
-              {children}
-            </NuqsAdapter>
+            <NavigationBlockerProvider>
+              <NuqsAdapter>
+                <Toaster expand richColors position="top-center" />
+                {children}
+              </NuqsAdapter>
+            </NavigationBlockerProvider>
           </TanstackQueryProvider>
         </TranslationsProvider>
       </body>

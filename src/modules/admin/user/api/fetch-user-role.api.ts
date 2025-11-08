@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
 
 export interface IUserRole {
   roleId: string;
@@ -26,7 +27,7 @@ export const fetchUserRoleApi = {
     orgId: string;
     values: FetchUserRoleRequest;
   }) => {
-    return useQuery({
+    return useQuery<AxiosResponse<FetchUserRoleResponse>, AxiosError>({
       queryKey: [fetchUserRoleApi.key, params],
       queryFn: () => {
         return api.post<FetchUserRoleResponse>(`/api/Role/org/${params.orgId}/action/GetRoles`, params.values)

@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { IApiKey } from "./fetch-apikey.api";
+import { AxiosError, AxiosResponse } from "axios";
 
 export interface GetApiKeyResponse {
   status: string;
@@ -11,10 +12,10 @@ export interface GetApiKeyResponse {
 export const getApiKeyApi = {
   key: "get-api-key",
   useGetApiKey: (params: { orgId: string; apikeyId: string }) => {
-    return useQuery({
+    return useQuery<AxiosResponse<GetApiKeyResponse>, AxiosError>({
       queryKey: [getApiKeyApi.key, params],
       queryFn: () => {
-        return api.get<GetApiKeyResponse>(
+        return api.get(
           `/api/ApiKey/org/${params.orgId}/action/GetApiKeyById/${params.apikeyId}`
         );
       },

@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { useErrorToast } from "@/lib/utils";
 
 export interface CreateProductRequest {
   orgId: string;
@@ -58,7 +59,8 @@ export const createProductApi = {
         params: CreateProductRequest;
       }) => {
         return await api.post<CreateProductResponse>(`/api/Item/org/${orgId}/action/AddItem`, params)
-      }
+      },
+      onError: useErrorToast("AddItem"),
     })
   }
 }

@@ -1,0 +1,73 @@
+{
+  "title": "Organization Settings",
+  "loading": "Loading organization...",
+  "error": "Error loading organization",
+  "notFound": "Organization not found",
+  "detail": {
+    "title": "Organization Details",
+    "orgId": "Organization ID",
+    "orgCustomId": "Custom ID",
+    "orgName": "Organization Name",
+    "orgDescription": "Description",
+    "tags": "Tags",
+    "tagsPlaceholder": "Enter tags separated by commas",
+    "logoImage": "Logo Image",
+    "logoImagePlaceholder": "Enter logo image URL",
+    "noLogo": "No Logo"
+  },
+  "addresses": {
+    "title": "Addresses",
+    "available": "Available Address Types",
+    "selected": "Selected Address Types",
+    "addressType": "Address Type",
+    "value": "Value",
+    "noAvailable": "No available address types",
+    "noSelected": "No selected address types",
+    "loading": "Loading address types..."
+  },
+  "channels": {
+    "title": "Channels",
+    "available": "Available Channel Types",
+    "selected": "Selected Channel Types",
+    "channelType": "Channel Type",
+    "value": "Value",
+    "noAvailable": "No available channel types",
+    "noSelected": "No selected channel types",
+    "loading": "Loading channel types..."
+  },
+  "form": {
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to cancel?",
+    "cancelEdit": "Cancel Edit"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit"
+  },
+  "validation": {
+    "orgIdRequired": "Organization ID is required",
+    "orgCustomIdRequired": "Custom ID is required",
+    "orgNameRequired": "Organization name is required",
+    "orgDescriptionRequired": "Description is required",
+    "tagsRequired": "Tags are required"
+  },
+  "messages": {
+    "updateSuccess": "Organization updated successfully",
+    "updateError": "Failed to update organization"
+  },
+  "logo": {
+    "uploadTitle": "Upload Logo",
+    "uploadDescription": "Select a PNG image for your organization logo",
+    "dragHere": "Drag and drop logo here",
+    "clickToSelect": "or click to select file",
+    "onlyJPG": "Only JPG files (.jpg, .jpeg) are supported",
+    "onlyPNG": "Only PNG files (.png) are supported",
+    "maxSize": "Maximum file size 2 MB",
+    "recommendedSize": "Recommended size 512x512 pixels",
+    "fileRequirements": "File Requirements",
+    "upload": "Upload",
+    "uploading": "Uploading...",
+    "uploadSuccess": "Logo uploaded successfully!",
+    "uploadError": "Failed to upload logo"
+  }
+}
