@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
-import { esClient } from "@/lib/es-client";
+import { getESClient } from "@/lib/es-client";
 import dayjs from "dayjs";
 
 export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
   try {
+    const esClient = getESClient();
     const indexPattern = process.env.ES_INDEX_PATTERN || "onix-v2-*";
     const envRun = process.env.ENV_RUN || process.env.NODE_ENV || "Development";
 
