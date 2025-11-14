@@ -53,6 +53,7 @@ export const Navbar = ({
           {showOrg ? (
             <OrgSwitcher
               onOrgChange={(orgId) => handleNavigation(RouteConfig.DASHBOARD.OVERVIEW(orgId))}
+              checkOrg
             />
           ) : null}
           {showIcon ? (

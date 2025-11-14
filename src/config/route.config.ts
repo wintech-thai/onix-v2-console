@@ -35,7 +35,10 @@ export const RouteConfig = {
       CREATE: (orgId: string) => `/${orgId}/admin/users/create`,
       UPDATE: (orgId: string, userId: string) => `/${orgId}/admin/users/${userId}/update`,
     },
-    AUDIT_LOG: (orgId: string) => `/${orgId}/admin/auditlog`
+    AUDIT_LOG: {
+      LIST: (orgId: string) => `/${orgId}/admin/auditlog`,
+      FULL_LOG: (orgId: string) => `/${orgId}/admin/auditlog/full-log`,
+    }
   },
   LOGIN: "/auth/sign-in",
 }

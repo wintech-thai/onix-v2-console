@@ -117,7 +117,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.admin.sub.3",
-            href: RouteConfig.ADMIN.AUDIT_LOG(params.orgId),
+            href: RouteConfig.ADMIN.AUDIT_LOG.LIST(params.orgId),
           },
         ],
       },
