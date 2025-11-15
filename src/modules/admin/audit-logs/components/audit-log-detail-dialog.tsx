@@ -21,7 +21,7 @@ export const AuditLogDetailDialog = ({
   data,
 }: AuditLogDetailDialogProps) => {
   const { t } = useTranslation("audit-log");
-  
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent iconWhite className="min-w-full md:min-w-3xl max-h-[80vh]">

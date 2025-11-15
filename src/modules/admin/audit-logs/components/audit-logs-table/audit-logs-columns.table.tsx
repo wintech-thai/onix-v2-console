@@ -18,7 +18,7 @@ export const useAuditLogTableColumns = ({
   onViewDetails,
 }: UseAuditLogTableColumnsProps): AuditLogTableColumns[] => {
   const { t } = useTranslation("audit-log");
-  
+
   return [
     {
       accessorKey: "timestamp",
