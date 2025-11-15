@@ -151,11 +151,22 @@ interface Resources {
     },
     "validation": {
       "emailFormat": "Please enter a valid email address",
+      "lastNameRequired": "Last name is required",
+      "nameRequired": "First name is required",
       "phoneNumberFormat": "Phone number must be in format: +[country code][number] (8-15 digits)",
+      "phoneNumberRequired": "Phone number is required",
       "required": "This field is required"
     }
   },
   "common": {
+    "comingSoon": {
+      "description": "We're working hard to bring you something amazing!",
+      "inDevelopment": "In Development",
+      "newFeatures": "New Features",
+      "stayTuned": "Stay Tuned",
+      "subDescription": "This feature is under development and will be available soon.",
+      "title": "Coming Soon"
+    },
     "common": {
       "cancel": "Cancel",
       "error": "An error occurred",
@@ -223,6 +234,15 @@ interface Resources {
           "3": "Customers",
           "4": "Scan Items",
           "5": "Jobs"
+        }
+      },
+      "loyalty": {
+        "label": "Loyalty",
+        "sub": {
+          "1": "Points & Wallets",
+          "2": "Privileges",
+          "3": "Point Functions",
+          "4": "Point Redeem"
         }
       }
     },

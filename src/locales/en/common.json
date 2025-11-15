@@ -60,6 +60,15 @@
         "5": "Jobs"
       }
     },
+    "loyalty": {
+      "label": "Loyalty",
+      "sub": {
+        "1": "Points & Wallets",
+        "2": "Privileges",
+        "3": "Point Functions",
+        "4": "Point Redeem"
+      }
+    },
     "admin": {
       "label": "Administration",
       "sub": {
@@ -77,5 +86,13 @@
     "rowsPerPage": "Rows per page:",
     "noResults": "No results.",
     "of": "of"
+  },
+  "comingSoon": {
+    "title": "Coming Soon",
+    "description": "We're working hard to bring you something amazing!",
+    "subDescription": "This feature is under development and will be available soon.",
+    "newFeatures": "New Features",
+    "stayTuned": "Stay Tuned",
+    "inDevelopment": "In Development"
   }
 }

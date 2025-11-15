@@ -27,6 +27,20 @@ export const RouteConfig = {
       UPDATE: (orgId: string, jobId: string) => `/${orgId}/general/jobs/${jobId}/update`,
     }
   },
+  LOYALTY: {
+    POINTS_WALLETS: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/points-wallets`,
+    },
+    PRIVILEGES: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,
+    },
+    POINT_FUNCTIONS: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/point-functions`,
+    },
+    POINT_REDEEM: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/point-redeem`,
+    },
+  },
   ADMIN: {
     APIKEY: {
       LIST: (orgId: string) => `/${orgId}/admin/apikeys`,

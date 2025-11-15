@@ -12,6 +12,7 @@ import {
   UserCogIcon,
   ChevronRight,
   ChevronDown,
+  GiftIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -31,6 +32,11 @@ type SidebarKeys =
   | "sidebar.general.sub.3"
   | "sidebar.general.sub.4"
   | "sidebar.general.sub.5"
+  | "sidebar.loyalty.label"
+  | "sidebar.loyalty.sub.1"
+  | "sidebar.loyalty.sub.2"
+  | "sidebar.loyalty.sub.3"
+  | "sidebar.loyalty.sub.4"
   | "sidebar.admin.label"
   | "sidebar.admin.sub.1"
   | "sidebar.admin.sub.2"
@@ -99,6 +105,29 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           {
             labelKey: "sidebar.general.sub.5",
             href: RouteConfig.GENERAL.JOB.LIST(params.orgId),
+          },
+        ],
+      },
+      {
+        key: "loyalty",
+        labelKey: "sidebar.loyalty.label",
+        icon: GiftIcon,
+        children: [
+          {
+            labelKey: "sidebar.loyalty.sub.1",
+            href: RouteConfig.LOYALTY.POINTS_WALLETS.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.loyalty.sub.2",
+            href: RouteConfig.LOYALTY.PRIVILEGES.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.loyalty.sub.3",
+            href: RouteConfig.LOYALTY.POINT_FUNCTIONS.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.loyalty.sub.4",
+            href: RouteConfig.LOYALTY.POINT_REDEEM.LIST(params.orgId),
           },
         ],
       },

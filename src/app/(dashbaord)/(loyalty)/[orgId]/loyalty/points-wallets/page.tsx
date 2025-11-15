@@ -1,7 +1,7 @@
 import { CommingSoon } from "@/components/ui/comming-soon";
 
-const OverViewPage = () => {
+const PointsWalletsPage = () => {
   return <CommingSoon />
-};
+}
 
-export default OverViewPage;
+export default PointsWalletsPage;
