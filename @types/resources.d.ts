@@ -757,6 +757,20 @@ interface Resources {
       "success": "Successfully deleted user(s)",
       "title": "Delete User"
     },
+    "disable": {
+      "error": "Failed to disable User",
+      "loading": "Disabling User...",
+      "message": "Are you sure you want to disable this User?",
+      "success": "Successfully disabled User",
+      "title": "Disable User"
+    },
+    "enable": {
+      "error": "Failed to enable User",
+      "loading": "Enabling User...",
+      "message": "Are you sure you want to enable this User?",
+      "success": "Successfully enabled User",
+      "title": "Enable User"
+    },
     "filter": {
       "add": "ADD",
       "delete": "DELETE",

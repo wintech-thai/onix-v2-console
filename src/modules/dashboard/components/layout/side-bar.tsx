@@ -94,7 +94,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.general.sub.4",
-            href: RouteConfig.GENERAL.QRCODE(params.orgId),
+            href: RouteConfig.GENERAL.QRCODE.INDEX(params.orgId),
           },
           {
             labelKey: "sidebar.general.sub.5",
