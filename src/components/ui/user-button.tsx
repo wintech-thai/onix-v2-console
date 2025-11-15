@@ -15,10 +15,12 @@ import Cookie from "js-cookie";
 import Image from "next/image";
 import { useState } from "react";
 import { ResetPasswordModal } from "@/modules/auth/components/modal/reset-password.modal";
+import { UpdateUserModal } from "@/modules/auth/components/modal/update-user.modal";
 
 export const UserButton = () => {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
+  const [openResetPassword, setOpenResetPassword] = useState(false);
+  const [openUpdateProfile, setOpenUpdateProfile] = useState(false);
   const userName = Cookie.get("user_name") || "User";
   const params = useParams<{ orgId: string }>();
 
@@ -37,8 +39,12 @@ export const UserButton = () => {
   return (
     <>
       <ResetPasswordModal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openResetPassword}
+        onClose={() => setOpenResetPassword(false)}
+      />
+      <UpdateUserModal
+        open={openUpdateProfile}
+        onClose={() => setOpenUpdateProfile(false)}
       />
       <DropdownMenu>
         <DropdownMenuTrigger>
@@ -53,8 +59,12 @@ export const UserButton = () => {
           </Hint>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>{t("navbar.profile")}</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>{t("navbar.updatePassword")}</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpenUpdateProfile(true)}>
+            {t("navbar.profile")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpenResetPassword(true)}>
+            {t("navbar.updatePassword")}
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={async () =>

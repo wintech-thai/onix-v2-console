@@ -87,6 +87,9 @@ interface Resources {
     }
   },
   "auth": {
+    "common": {
+      "error": "An error occurred. Please try again."
+    },
     "confirmNewPassword": "Confirm New Password",
     "confirmNewPasswordRequired": "Confirm new password is required",
     "currentPassword": "Current Password",
@@ -109,10 +112,28 @@ interface Resources {
       "success": "Password reset link has been sent to your email",
       "title": "Forgot Password"
     },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "leavePage": "Leave Page",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    },
     "newPassword": "New Password",
     "newPasswordRequired": "New password is required",
     "password": "Password",
     "passwordMismatch": "New password and confirm new password do not match",
+    "profile": {
+      "lastName": "Last Name",
+      "name": "First Name",
+      "phoneNumber": "Phone Number",
+      "secondaryEmail": "Secondary Email",
+      "updateSuccess": "Profile updated successfully",
+      "updateTitle": "Update Profile",
+      "userEmail": "Email",
+      "userName": "Username"
+    },
     "signInHeader": "Sign In to your account",
     "signInLabel": "Sign In",
     "success": {
@@ -127,6 +148,11 @@ interface Resources {
       "3": "At least 1 uppercase letter",
       "4": "At least 1 special character in this set {#, !, @, $}",
       "IDP_UPDATE_PASSWORD_ERROR": "Unable to login with current password!!!"
+    },
+    "validation": {
+      "emailFormat": "Please enter a valid email address",
+      "phoneNumberFormat": "Phone number must be in format: +[country code][number] (8-15 digits)",
+      "required": "This field is required"
     }
   },
   "common": {
