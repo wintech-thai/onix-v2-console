@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { AuditLogsFilterTable } from "./audit-logs-filter.table";
 import { DateRange } from "react-day-picker";
+import { useActiveRow } from "@/hooks/use-active-row";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,6 +53,8 @@ export function AuditLogsTable<TData, TValue>({
   initialDateRange,
   isLoading = false,
 }: DataTableProps<TData, TValue>) {
+  const { activeRowId, setActiveRowId } = useActiveRow("apikey-table");
+
   const table = useReactTable({
     data,
     columns,
@@ -101,17 +104,25 @@ export function AuditLogsTable<TData, TValue>({
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => {
                 // Check if status code is not 2xx
-                const rowData = row.original as { statusCode?: number };
+                const rowData = row.original as { id: string; statusCode?: number };
                 const is2xx =
                   typeof rowData.statusCode === "number" &&
                   rowData.statusCode >= 200 &&
                   rowData.statusCode < 300;
-                const rowClass = is2xx
+
+                const isActive = activeRowId === rowData.id;
+                const rowClass = isActive
+                  ? "bg-blue-50 hover:bg-blue-100"
+                  : is2xx
                   ? ""
                   : "bg-destructive/10 hover:bg-destructive/20";
 
                 return (
-                  <TableRow key={row.id} className={rowClass}>
+                  <TableRow
+                    key={row.id}
+                    className={`cursor-pointer transition-colors ${rowClass}`}
+                    onClick={() => setActiveRowId(rowData.id)}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(
