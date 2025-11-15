@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { IAuditLog } from "../../api/fetch-audit-logs.api";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 type AuditLogTableColumns = ColumnDef<IAuditLog> & {
   accessorKey?: keyof IAuditLog;
@@ -16,10 +17,12 @@ interface UseAuditLogTableColumnsProps {
 export const useAuditLogTableColumns = ({
   onViewDetails,
 }: UseAuditLogTableColumnsProps): AuditLogTableColumns[] => {
+  const { t } = useTranslation("audit-log");
+  
   return [
     {
       accessorKey: "timestamp",
-      header: "Time",
+      header: t("table.columns.time"),
       cell: ({ row }) => {
         const timestamp = row.original.timestamp;
         if (!timestamp) return "-";
@@ -30,56 +33,56 @@ export const useAuditLogTableColumns = ({
     },
     {
       accessorKey: "username",
-      header: "Username",
+      header: t("table.columns.username"),
       cell: ({ row }) => {
         return row.original.username || "-";
       },
     },
     {
       accessorKey: "identityType",
-      header: "Id Type",
+      header: t("table.columns.identityType"),
       cell: ({ row }) => {
         return row.original.identityType || "-";
       },
     },
     {
       accessorKey: "apiName",
-      header: "API",
+      header: t("table.columns.apiName"),
       cell: ({ row }) => {
         return row.original.apiName || "-";
       },
     },
     {
       accessorKey: "statusCode",
-      header: "Status",
+      header: t("table.columns.statusCode"),
       cell: ({ row }) => {
         return row.original.statusCode ?? "-";
       },
     },
     {
       accessorKey: "role",
-      header: "Role",
+      header: t("table.columns.role"),
       cell: ({ row }) => {
         return row.original.role || "-";
       },
     },
     {
       accessorKey: "ipAddress",
-      header: "IP Address",
+      header: t("table.columns.ipAddress"),
       cell: ({ row }) => {
         return row.original.ipAddress || "-";
       },
     },
     {
       id: "actions",
-      header: "Actions",
+      header: t("table.columns.actions"),
       cell: ({ row }) => {
         return (
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onViewDetails(row.original)}
-            title="View details"
+            title={t("table.viewDetails")}
           >
             <Eye className="h-4 w-4" />
           </Button>

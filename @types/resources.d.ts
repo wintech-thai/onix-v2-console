@@ -86,6 +86,32 @@ interface Resources {
       "ok": "OK"
     }
   },
+  "audit-log": {
+    "detail": {
+      "title": "Audit Log Details"
+    },
+    "filter": {
+      "dateRange": "Date Range",
+      "fullTextSearch": "Full Text Search",
+      "searchButton": "Search",
+      "searchField": "Search Field",
+      "searchValue": "Search Value",
+      "selectBothDates": "Please select both start and end dates"
+    },
+    "table": {
+      "columns": {
+        "actions": "Actions",
+        "apiName": "API",
+        "identityType": "Id Type",
+        "ipAddress": "IP Address",
+        "role": "Role",
+        "statusCode": "Status",
+        "time": "Time",
+        "username": "Username"
+      },
+      "viewDetails": "View details"
+    }
+  },
   "auth": {
     "common": {
       "error": "An error occurred. Please try again."

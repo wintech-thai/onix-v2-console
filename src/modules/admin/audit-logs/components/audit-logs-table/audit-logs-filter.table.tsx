@@ -15,6 +15,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { toast } from "sonner";
 import { useQueryStates, parseAsString } from "nuqs";
+import { useTranslation } from "react-i18next";
 
 interface AuditLogsFilterTableProps {
   onSearch?: (
@@ -29,6 +30,7 @@ export const AuditLogsFilterTable = ({
   onSearch,
   initialDateRange,
 }: AuditLogsFilterTableProps) => {
+  const { t } = useTranslation("audit-log");
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -45,7 +47,7 @@ export const AuditLogsFilterTable = ({
 
     // Validate date range
     if (dateRange && (!dateRange.from || !dateRange.to)) {
-      toast.error("Please select both start and end dates");
+      toast.error(t("filter.selectBothDates"));
       return;
     }
 
@@ -80,10 +82,10 @@ export const AuditLogsFilterTable = ({
               className="w-full md:w-48"
               aria-label="Select search field"
             >
-              <SelectValue placeholder="Select search field" />
+              <SelectValue placeholder={t("filter.searchField")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fullTextSearch">Full Text Search</SelectItem>
+              <SelectItem value="fullTextSearch">{t("filter.fullTextSearch")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -91,7 +93,7 @@ export const AuditLogsFilterTable = ({
         {/* Search input */}
         <div className="w-full md:w-[400px]">
           <Input
-            placeholder="Search audit logs..."
+            placeholder={t("filter.searchValue")}
             className="w-full"
             aria-label="Search"
             value={searchValue}
