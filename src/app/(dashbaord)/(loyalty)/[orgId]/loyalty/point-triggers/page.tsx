@@ -1,7 +1,7 @@
 import { CommingSoon } from "@/components/ui/comming-soon";
 
-const PointFunctionPage = () => {
+const PointTriggersPage = () => {
   return <CommingSoon />
 }
 
-export default PointFunctionPage;
+export default PointTriggersPage;

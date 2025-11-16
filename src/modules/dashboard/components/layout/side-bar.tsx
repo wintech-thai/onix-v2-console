@@ -123,11 +123,11 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.loyalty.sub.3",
-            href: RouteConfig.LOYALTY.POINT_FUNCTIONS.LIST(params.orgId),
+            href: RouteConfig.LOYALTY.POINT_RULE.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.loyalty.sub.4",
-            href: RouteConfig.LOYALTY.POINT_REDEEM.LIST(params.orgId),
+            href: RouteConfig.LOYALTY.POINT_TRIGGER.LIST(params.orgId),
           },
         ],
       },

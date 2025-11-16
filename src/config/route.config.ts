@@ -34,11 +34,11 @@ export const RouteConfig = {
     PRIVILEGES: {
       LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,
     },
-    POINT_FUNCTIONS: {
-      LIST: (orgId: string) => `/${orgId}/loyalty/point-functions`,
+    POINT_RULE: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/point-rules`,
     },
-    POINT_REDEEM: {
-      LIST: (orgId: string) => `/${orgId}/loyalty/point-redeem`,
+    POINT_TRIGGER: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/point-triggers`,
     },
   },
   ADMIN: {

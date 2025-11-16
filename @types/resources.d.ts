@@ -267,8 +267,8 @@ interface Resources {
         "sub": {
           "1": "Points & Wallets",
           "2": "Privileges",
-          "3": "Point Functions",
-          "4": "Point Redeem"
+          "3": "Point Rule",
+          "4": "Point Trigger"
         }
       }
     },

@@ -1,7 +1,7 @@
 import { CommingSoon } from "@/components/ui/comming-soon";
 
-const PointRedeemPage = () => {
+const PointRulePage = () => {
   return <CommingSoon />
 }
 
-export default PointRedeemPage;
+export default PointRulePage;
