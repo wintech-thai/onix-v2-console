@@ -691,6 +691,17 @@ interface Resources {
       "success": "Customer detached successfully",
       "title": "Confirm Detach Customer"
     },
+    "detail": {
+      "copyError": "Failed to copy",
+      "copySuccess": "Copied {{field}}!",
+      "error": "Error",
+      "grid": "Grid",
+      "id": "ID",
+      "json": "JSON",
+      "loadError": "Failed to load scan item details",
+      "noData": "No data",
+      "title": "Scan Item Details"
+    },
     "filter": {
       "add": "ADD",
       "config": "CONFIG",

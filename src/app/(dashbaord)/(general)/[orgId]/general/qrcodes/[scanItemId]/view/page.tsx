@@ -1,9 +1,7 @@
+import { ScanItemViewIdView } from "@/modules/general/qrcode/view/scan-item-view-id.view";
+
 const ScanItemIdViewPage = () => {
-  return (
-    <div>
-      scan item view page
-    </div>
-   );
-}
+  return <ScanItemViewIdView />
+};
 
 export default ScanItemIdViewPage;

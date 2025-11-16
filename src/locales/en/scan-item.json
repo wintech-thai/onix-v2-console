@@ -29,6 +29,17 @@
     "scanItemTemplate": "Scan Item Template",
     "scanItemAction": "Scan Item Action"
   },
+  "detail": {
+    "title": "Scan Item Details",
+    "id": "ID",
+    "grid": "Grid",
+    "json": "JSON",
+    "noData": "No data",
+    "copySuccess": "Copied {{field}}!",
+    "copyError": "Failed to copy",
+    "error": "Error",
+    "loadError": "Failed to load scan item details"
+  },
   "delete": {
     "title": "Confirm Deletion",
     "message": "Are you sure you want to delete the selected scan items? This action cannot be undone.",
