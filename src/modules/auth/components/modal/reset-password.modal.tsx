@@ -18,7 +18,7 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { errorMessageAsLangKey } from "@/lib/utils";
+import { errorMessageAsLangKey, useErrorToast } from "@/lib/utils";
 import { RouteConfig } from "@/config/route.config";
 
 interface ResetPasswordModalProps {
@@ -71,7 +71,8 @@ export const ResetPasswordModal = ({
         router.push(RouteConfig.LOGIN)
         return;
       }
-    }
+    },
+    onError: useErrorToast("UpdatePassword")
   });
 
   const handleSubmit = async (formData: ResetPasswordFormType) => {

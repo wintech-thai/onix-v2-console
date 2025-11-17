@@ -18,12 +18,12 @@ import { unVerifyScanItemsApi } from "../../api/unverify-scan-items";
 import { useParams as Params, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { ScanItemDetailModal } from "../modal/scan-item-detial.modal";
 import { RouteConfig } from "@/config/route.config";
 import { getScanItemUrlDryRunApi } from "../../api/get-scan-item-url-dry-run.api";
 import { QrCodeModal } from "../modal/qrcode-modal";
 import { useState as State } from "react";
 import { detachScanItemToCustomerApi } from "@/modules/general/customer/api/detach-scan-item-from-customer.api";
+import Link from "next/link";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
   accessorKey?: keyof IScanItems;
@@ -62,15 +62,23 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       header: t("columns.serial"),
       cell: ({ row }) => {
         return (
-          <ScanItemDetailModal
-            orgId={row.original.orgId}
-            scanItemId={row.original.id}
-          >
-            <div className="text-primary hover:underline cursor-pointer">
+            <Link href={RouteConfig.GENERAL.QRCODE.VIEW(
+              row.original.orgId,
+              row.original.id
+            )} className="text-primary hover:underline cursor-pointer">
               {row.getValue("serial")}
-            </div>
-          </ScanItemDetailModal>
+            </Link>
         );
+        // return (
+        //   <ScanItemDetailModal
+        //     orgId={row.original.orgId}
+        //     scanItemId={row.original.id}
+        //   >
+        //     <div className="text-primary hover:underline cursor-pointer">
+        //       {row.getValue("serial")}
+        //     </div>
+        //   </ScanItemDetailModal>
+        // );
       },
     },
     {

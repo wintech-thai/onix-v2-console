@@ -86,7 +86,36 @@ interface Resources {
       "ok": "OK"
     }
   },
+  "audit-log": {
+    "detail": {
+      "title": "Audit Log Details"
+    },
+    "filter": {
+      "dateRange": "Date Range",
+      "fullTextSearch": "Full Text Search",
+      "searchButton": "Search",
+      "searchField": "Search Field",
+      "searchValue": "Search Value",
+      "selectBothDates": "Please select both start and end dates"
+    },
+    "table": {
+      "columns": {
+        "actions": "Actions",
+        "apiName": "API",
+        "identityType": "Id Type",
+        "ipAddress": "IP Address",
+        "role": "Role",
+        "statusCode": "Status",
+        "time": "Time",
+        "username": "Username"
+      },
+      "viewDetails": "View details"
+    }
+  },
   "auth": {
+    "common": {
+      "error": "An error occurred. Please try again."
+    },
     "confirmNewPassword": "Confirm New Password",
     "confirmNewPasswordRequired": "Confirm new password is required",
     "currentPassword": "Current Password",
@@ -109,10 +138,28 @@ interface Resources {
       "success": "Password reset link has been sent to your email",
       "title": "Forgot Password"
     },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "leavePage": "Leave Page",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    },
     "newPassword": "New Password",
     "newPasswordRequired": "New password is required",
     "password": "Password",
     "passwordMismatch": "New password and confirm new password do not match",
+    "profile": {
+      "lastName": "Last Name",
+      "name": "First Name",
+      "phoneNumber": "Phone Number",
+      "secondaryEmail": "Secondary Email",
+      "updateSuccess": "Profile updated successfully",
+      "updateTitle": "Update Profile",
+      "userEmail": "Email",
+      "userName": "Username"
+    },
     "signInHeader": "Sign In to your account",
     "signInLabel": "Sign In",
     "success": {
@@ -127,9 +174,25 @@ interface Resources {
       "3": "At least 1 uppercase letter",
       "4": "At least 1 special character in this set {#, !, @, $}",
       "IDP_UPDATE_PASSWORD_ERROR": "Unable to login with current password!!!"
+    },
+    "validation": {
+      "emailFormat": "Please enter a valid email address",
+      "lastNameRequired": "Last name is required",
+      "nameRequired": "First name is required",
+      "phoneNumberFormat": "Phone number must be in format: +[country code][number] (8-15 digits)",
+      "phoneNumberRequired": "Phone number is required",
+      "required": "This field is required"
     }
   },
   "common": {
+    "comingSoon": {
+      "description": "We're working hard to bring you something amazing!",
+      "inDevelopment": "In Development",
+      "newFeatures": "New Features",
+      "stayTuned": "Stay Tuned",
+      "subDescription": "This feature is under development and will be available soon.",
+      "title": "Coming Soon"
+    },
     "common": {
       "cancel": "Cancel",
       "error": "An error occurred",
@@ -197,6 +260,15 @@ interface Resources {
           "3": "Customers",
           "4": "Scan Items",
           "5": "Jobs"
+        }
+      },
+      "loyalty": {
+        "label": "Loyalty",
+        "sub": {
+          "1": "Points & Wallets",
+          "2": "Privileges",
+          "3": "Point Rule",
+          "4": "Point Trigger"
         }
       }
     },
@@ -619,6 +691,17 @@ interface Resources {
       "success": "Customer detached successfully",
       "title": "Confirm Detach Customer"
     },
+    "detail": {
+      "copyError": "Failed to copy",
+      "copySuccess": "Copied {{field}}!",
+      "error": "Error",
+      "grid": "Grid",
+      "id": "ID",
+      "json": "JSON",
+      "loadError": "Failed to load scan item details",
+      "noData": "No data",
+      "title": "Scan Item Details"
+    },
     "filter": {
       "add": "ADD",
       "config": "CONFIG",
@@ -756,6 +839,20 @@ interface Resources {
       "message": "Are you sure you want to delete the selected user(s)?",
       "success": "Successfully deleted user(s)",
       "title": "Delete User"
+    },
+    "disable": {
+      "error": "Failed to disable User",
+      "loading": "Disabling User...",
+      "message": "Are you sure you want to disable this User?",
+      "success": "Successfully disabled User",
+      "title": "Disable User"
+    },
+    "enable": {
+      "error": "Failed to enable User",
+      "loading": "Enabling User...",
+      "message": "Are you sure you want to enable this User?",
+      "success": "Successfully enabled User",
+      "title": "Enable User"
     },
     "filter": {
       "add": "ADD",

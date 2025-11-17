@@ -6,12 +6,12 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@10.16.0 --activate
 
 COPY pnpm-lock.yaml package.json ./
-COPY . .
+RUN pnpm install --prefer-offline --frozen-lockfile
 
 ENV NEXT_PUBLIC_APP_VERSION=$version
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm install --prefer-offline --frozen-lockfile
+COPY . .
 RUN pnpm build
 
 # ---------- Run (standalone) ----------

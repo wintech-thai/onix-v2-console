@@ -1,0 +1,26 @@
+{
+  "table": {
+    "columns": {
+      "time": "เวลา",
+      "username": "ชื่อผู้ใช้",
+      "identityType": "ประเภทผู้ใช้",
+      "apiName": "API",
+      "statusCode": "สถานะ",
+      "role": "บทบาท",
+      "ipAddress": "ที่อยู่ IP",
+      "actions": "การดำเนินการ"
+    },
+    "viewDetails": "ดูรายละเอียด"
+  },
+  "detail": {
+    "title": "รายละเอียด Audit Log"
+  },
+  "filter": {
+    "searchField": "ฟิลด์ค้นหา",
+    "searchValue": "ค่าค้นหา",
+    "searchButton": "ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "dateRange": "ช่วงวันที่",
+    "selectBothDates": "กรุณาเลือกวันที่เริ่มต้นและสิ้นสุดทั้งสองวัน"
+  }
+}

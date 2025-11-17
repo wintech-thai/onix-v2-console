@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
   cookiesStore.set({
     name: "user_name",
-    value: decodedToken?.name || decodedToken?.email || "Anonymous",
+    value: decodedToken?.preferred_username,
     httpOnly: false,
     secure: true,
     sameSite: "strict",

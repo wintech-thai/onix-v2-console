@@ -1,9 +1,7 @@
+import AuditLogsView from "@/modules/admin/audit-logs/view/audit-logs.view";
+
 const AuditLogPage = () => {
-  return (
-    <div>
-      audit log page
-    </div>
-   );
+  return <AuditLogsView />;
 }
 
 export default AuditLogPage;

@@ -21,6 +21,20 @@
     "disableUser": "Disable User",
     "enableUser": "Enable User"
   },
+  "enable": {
+    "title": "Enable User",
+    "message": "Are you sure you want to enable this User?",
+    "loading": "Enabling User...",
+    "success": "Successfully enabled User",
+    "error": "Failed to enable User"
+  },
+  "disable": {
+    "title": "Disable User",
+    "message": "Are you sure you want to disable this User?",
+    "loading": "Disabling User...",
+    "success": "Successfully disabled User",
+    "error": "Failed to disable User"
+  },
   "delete": {
     "title": "Delete User",
     "message": "Are you sure you want to delete the selected user(s)?",

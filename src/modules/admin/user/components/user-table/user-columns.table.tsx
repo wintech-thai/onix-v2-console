@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { IUser } from "../../api/fetch-users.api";
+import { fetchUsersApi, IUser } from "../../api/fetch-users.api";
 import { Check, MoreHorizontalIcon, X } from "lucide-react";
 import {
   DropdownMenu,
@@ -15,6 +15,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { RouteConfig } from "@/config/route.config";
 import { useTranslation } from "react-i18next";
+import { useConfirm as Confirm } from "@/hooks/use-confirm";
+import { enabledUserApi } from "../../api/enabled-user.api";
+import { disabledUserApi } from "../../api/disabled-user.api";
+import { toast } from "sonner";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 type UserTableColumns = ColumnDef<IUser> & {
   accessorKey?: keyof IUser;
@@ -22,6 +28,8 @@ type UserTableColumns = ColumnDef<IUser> & {
 
 export const useUserTableColumns = (): UserTableColumns[] => {
   const { t } = useTranslation("user");
+  const params = useParams<{ orgId: string }>();
+  const queryClient = useQueryClient();
 
   return [
     {
@@ -133,36 +141,119 @@ export const useUserTableColumns = (): UserTableColumns[] => {
       cell: ({ row }) => {
         const userStatus = row.original.userStatus;
         const isActive = userStatus === "Active";
-        const isInactive = userStatus === "Inactive";
+        const isInactive = userStatus === "Disabled";
+
+        const [ConfirmEnableDialog, confirmEnable] = Confirm({
+          title: t("enable.title"),
+          message: t("enable.message"),
+          variant: "default",
+        });
+
+        const [ConfirmDisableDialog, confirmDisable] = Confirm({
+          title: t("disable.title"),
+          message: t("disable.message"),
+          variant: "destructive",
+        });
+
+        const enabledUser = enabledUserApi.useEnabledUser();
+        const disabledUser = disabledUserApi.useDisabledUser();
+
+
+        const handleEnableUser = async (apiKeyId: string) => {
+          const ok = await confirmEnable();
+          if (!ok) return;
+
+          const toastId = toast.loading(t("enable.loading"));
+
+          try {
+            await enabledUser.mutateAsync(
+              {
+                orgId: params.orgId,
+                userId: apiKeyId,
+              },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status != "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("enable.success"), { id: toastId });
+
+                  // Invalidate query to refetch data
+                  queryClient.invalidateQueries({
+                    queryKey: fetchUsersApi.key
+                  });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("enable.error"), { id: toastId });
+          }
+        };
+
+        const handleDisableApiKey = async (userId: string) => {
+          const ok = await confirmDisable();
+          if (!ok) return;
+
+          const toastId = toast.loading(t("disable.loading"));
+
+          try {
+            await disabledUser.mutateAsync(
+              {
+                orgId: params.orgId,
+                userId: userId,
+              },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status != "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("disable.success"), { id: toastId });
+
+                  // Invalidate query to refetch data
+                  queryClient.invalidateQueries({
+                    queryKey: fetchUsersApi.key
+                  });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("disable.error"), { id: toastId });
+          }
+        };
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon">
-                <MoreHorizontalIcon className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                disabled={!isActive}
-                onClick={() => {
-                  // TODO: Implement disable user API call
-                  console.log("Disable user:", row.original.userId);
-                }}
-              >
-                {t("actions.disableUser")}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                disabled={!isInactive}
-                onClick={() => {
-                  // TODO: Implement enable user API call
-                  console.log("Enable user:", row.original.userId);
-                }}
-              >
-                {t("actions.enableUser")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <>
+            <ConfirmDisableDialog />
+            <ConfirmEnableDialog />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <MoreHorizontalIcon className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  disabled={!isActive}
+                  onClick={() => {
+                    handleDisableApiKey(row.original.orgUserId)
+                  }}
+                >
+                  {t("actions.disableUser")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  disabled={!isInactive}
+                  onClick={() => {
+                    handleEnableUser(row.original.orgUserId)
+                  }}
+                >
+                  {t("actions.enableUser")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
         );
       },
     },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
@@ -27,6 +27,18 @@ export const OrganizationDetailForm = ({
   const { tags } = form.watch();
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [tagInput, setTagInput] = useState("");
+
+  // Listen for custom event to open upload modal
+  useEffect(() => {
+    const handleOpenModal = () => {
+      setIsUploadModalOpen(true);
+    };
+
+    window.addEventListener('openUploadLogoModal', handleOpenModal);
+    return () => {
+      window.removeEventListener('openUploadLogoModal', handleOpenModal);
+    };
+  }, []);
 
   const tagsArray = tags
     ? tags.split(",").filter((tag) => tag.trim() !== "")

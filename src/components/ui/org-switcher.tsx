@@ -29,12 +29,14 @@ interface OrgSwitcherProps {
   withFull?: boolean;
   className?: string;
   onOrgChange?: (orgId: string) => void;
+  checkOrg?: boolean;
 }
 
 export function OrgSwitcher({
   className,
   withFull,
   onOrgChange,
+  checkOrg = false,
 }: OrgSwitcherProps) {
   const params = useParams<{ orgId: string }>();
   const { t } = useTranslation();
@@ -52,6 +54,12 @@ export function OrgSwitcher({
 
   const org = organization.data ?? [];
   const selectedOrg = org.find((o: any) => o.orgCustomId === params.orgId);
+
+  if (org.length > 0 && checkOrg) {
+    if (!selectedOrg) {
+      return window.location.href = "/"
+    }
+  }
 
   const handleSelect = (currentValue: string) => {
     if (currentValue === params.orgId) return setOpen(false);

@@ -53,7 +53,7 @@ export const CustomerFilterTable = ({
 
   const handleBack = () => {
     if (scanItemId) {
-      router.replace(RouteConfig.GENERAL.QRCODE(params.orgId))
+      router.replace(RouteConfig.GENERAL.QRCODE.INDEX(params.orgId))
     }
   };
 

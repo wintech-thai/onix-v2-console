@@ -17,12 +17,29 @@ export const RouteConfig = {
       CREATE: (orgId: string) => `/${orgId}/general/customers/create`,
       UPDATE: (orgId: string, customerId: string) => `/${orgId}/general/customers/${customerId}/update`,
     },
-    QRCODE: (orgId: string) => `/${orgId}/general/qrcodes`,
+    QRCODE: {
+      INDEX: (orgId: string) => `/${orgId}/general/qrcodes`,
+      VIEW: (orgId: string, scanItemId: string) => `/${orgId}/general/qrcodes/${scanItemId}/view`,
+    },
     JOB: {
       LIST: (orgId: string) => `/${orgId}/general/jobs`,
       CREATE: (orgId: string) => `/${orgId}/general/jobs/create`,
       UPDATE: (orgId: string, jobId: string) => `/${orgId}/general/jobs/${jobId}/update`,
     }
+  },
+  LOYALTY: {
+    POINTS_WALLETS: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/points-wallets`,
+    },
+    PRIVILEGES: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,
+    },
+    POINT_RULE: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/point-rules`,
+    },
+    POINT_TRIGGER: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/point-triggers`,
+    },
   },
   ADMIN: {
     APIKEY: {
@@ -35,7 +52,10 @@ export const RouteConfig = {
       CREATE: (orgId: string) => `/${orgId}/admin/users/create`,
       UPDATE: (orgId: string, userId: string) => `/${orgId}/admin/users/${userId}/update`,
     },
-    AUDIT_LOG: (orgId: string) => `/${orgId}/admin/auditlog`
+    AUDIT_LOG: {
+      LIST: (orgId: string) => `/${orgId}/admin/auditlog`,
+      FULL_LOG: (orgId: string) => `/${orgId}/admin/auditlog/full-log`,
+    }
   },
   LOGIN: "/auth/sign-in",
 }
