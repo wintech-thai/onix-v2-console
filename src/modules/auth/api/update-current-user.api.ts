@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
 import { CurrentUserSchemaType } from "../schema/current-user.schema";
+import { useErrorToast } from "@/lib/utils";
 
 export interface UpdateCurrentUserResponse {
   status: string;
@@ -28,6 +29,7 @@ export const updateCurrentUserApi = {
         );
         return response.data;
       },
+      onError: useErrorToast("UpdateUserByUserName")
     });
   },
 };

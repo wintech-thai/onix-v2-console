@@ -103,15 +103,24 @@ export const UpdateUserModal = ({ open, onClose }: UpdateUserModalProps) => {
     }
 
     try {
-      await updateMutation.mutateAsync({
-        orgId: params.orgId,
-        userName,
-        values,
-      });
+      await updateMutation.mutateAsync(
+        {
+          orgId: params.orgId,
+          userName,
+          values,
+        },
+        {
+          onSuccess: (data) => {
+            if (data.status !== "SUCCESS") {
+              return toast.error(data.description);
+            }
 
-      toast.success(t("profile.updateSuccess"));
-      form.reset(values);
-      onClose();
+            toast.success(t("profile.updateSuccess"));
+            form.reset(values);
+            onClose();
+          },
+        }
+      );
     } catch {
       toast.error(t("common.error"));
     }
@@ -132,7 +141,8 @@ export const UpdateUserModal = ({ open, onClose }: UpdateUserModalProps) => {
             <div className="flex items-center justify-center py-8">
               <Loader className="h-6 w-6 animate-spin" />
             </div>
-          ) : getCurrentUser.isError || getCurrentUser.data?.status !== "SUCCESS" ? (
+          ) : getCurrentUser.isError ||
+            getCurrentUser.data?.status !== "SUCCESS" ? (
             <div className="flex flex-col items-center justify-center py-8 space-y-4">
               <p className="text-destructive text-center">
                 {getCurrentUser.data?.description || t("common.error")}
