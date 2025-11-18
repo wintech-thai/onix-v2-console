@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "title": "ภาพรวมแดชบอร์ด",
+    "subtitle": "ติดตามสถิติรายการสแกนของคุณแบบเรียลไทม์",
+    "refresh": "รีเฟรช",
+    "cards": {
+      "totalScanItem": {
+        "title": "รายการสแกนทั้งหมด",
+        "label": "ปัจจุบัน"
+      },
+      "totalScanned": {
+        "title": "รายการสแกนที่ถูกสแกน",
+        "label": "สแกนแล้ว"
+      },
+      "totalApplied": {
+        "title": "รายการสแกนที่ถูกใช้",
+        "label": "ใช้แล้ว"
+      }
+    },
+    "summary": {
+      "title": "สรุปสถิติ",
+      "description": "คุณมีรายการสแกนทั้งหมด <strong>{{current}}</strong> รายการ จากขอบเขต <strong>{{limit}}</strong> รายการ มีรายการที่ถูกสแกนแล้ว <strong>{{scanned}}</strong> รายการ และรายการที่ถูกใช้โดยสมาชิก <strong>{{applied}}</strong> รายการ"
+    }
+  }
+}

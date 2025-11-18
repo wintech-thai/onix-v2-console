@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "title": "Dashboard Overview",
+    "subtitle": "Monitor your scan item statistics in real-time",
+    "refresh": "Refresh",
+    "cards": {
+      "totalScanItem": {
+        "title": "Total Scan Item",
+        "label": "Current"
+      },
+      "totalScanned": {
+        "title": "Total Scan Item Scanned",
+        "label": "Scanned"
+      },
+      "totalApplied": {
+        "title": "Total Scan Item Applied",
+        "label": "Applied"
+      }
+    },
+    "summary": {
+      "title": "Statistics Summary",
+      "description": "You have <strong>{{current}}</strong> total scan items out of <strong>{{limit}}</strong> limit. <strong>{{scanned}}</strong> items have been scanned, and <strong>{{applied}}</strong> items have been applied by members."
+    }
+  }
+}

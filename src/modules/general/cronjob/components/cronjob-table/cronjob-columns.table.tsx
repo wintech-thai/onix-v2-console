@@ -6,6 +6,7 @@ import { IJob } from "../../api/fetch-cron-job.api";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { RouteConfig } from "@/config/route.config";
+import dayjs from "dayjs";
 
 type CronJobTableColumns = ColumnDef<IJob> & {
   accessorKey?: keyof IJob;
@@ -38,8 +39,8 @@ export const useCronJobTableColumns = (): CronJobTableColumns[] => {
       enableHiding: false,
     },
     {
-      accessorKey: "name",
-      header: t("columns.name"),
+      accessorKey: "createdDate",
+      header: t("columns.createdDate"),
       cell: ({ row }) => {
         return (
           <Link
@@ -49,10 +50,14 @@ export const useCronJobTableColumns = (): CronJobTableColumns[] => {
               row.original.id
             )}
           >
-            {row.original.name}
+            {dayjs(row.original.createdDate).format("DD MMM YYYY HH:mm [GMT] Z") }
           </Link>
         );
       },
+    },
+    {
+      accessorKey: "name",
+      header: t("columns.name"),
     },
     {
       accessorKey: "description",

@@ -287,7 +287,7 @@ interface Resources {
       "create-scan-item": "Create ScanItem"
     },
     "columns": {
-      "createdDate": "Created Date",
+      "createdDate": "Job Created Date",
       "description": "Description",
       "endDate": "End Date",
       "failedCount": "Failed",
@@ -431,6 +431,31 @@ interface Resources {
       "error": "Update Error",
       "notFound": "Customer Not Found",
       "success": "Update Success"
+    }
+  },
+  "dashboard": {
+    "overview": {
+      "cards": {
+        "totalApplied": {
+          "label": "Applied",
+          "title": "Total Scan Item Applied"
+        },
+        "totalScanItem": {
+          "label": "Current",
+          "title": "Total Scan Item"
+        },
+        "totalScanned": {
+          "label": "Scanned",
+          "title": "Total Scan Item Scanned"
+        }
+      },
+      "refresh": "Refresh",
+      "subtitle": "Monitor your scan item statistics in real-time",
+      "summary": {
+        "description": "You have <strong>{{current}}</strong> total scan items out of <strong>{{limit}}</strong> limit. <strong>{{scanned}}</strong> items have been scanned, and <strong>{{applied}}</strong> items have been applied by members.",
+        "title": "Statistics Summary"
+      },
+      "title": "Dashboard Overview"
     }
   },
   "organization": {
