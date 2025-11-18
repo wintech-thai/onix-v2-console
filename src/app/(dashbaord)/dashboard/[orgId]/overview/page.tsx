@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import OverViewViewPage from "@/modules/dashboard/view/overview.view";
 
 const OverViewPage = () => {
-  return <CommingSoon />
+  return <OverViewViewPage />;
 };
 
 export default OverViewPage;

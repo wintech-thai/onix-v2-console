@@ -5,8 +5,31 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import { i18nConfig } from "./i18n-config";
 
-export type i18nKeys = "common" | "product" | "auth" | "scan-item" | "cronjob" | "user" | "customer" | "apikey" | "organization" | "audit-log";
-export const i18nNamespaces: i18nKeys[] = ["common", "product", "auth", "scan-item", "cronjob", "user", "customer", "apikey", "organization", "audit-log"];
+export type i18nKeys =
+  | "common"
+  | "product"
+  | "auth"
+  | "scan-item"
+  | "cronjob"
+  | "user"
+  | "customer"
+  | "apikey"
+  | "organization"
+  | "audit-log"
+  | "dashboard";
+export const i18nNamespaces: i18nKeys[] = [
+  "common",
+  "product",
+  "auth",
+  "scan-item",
+  "cronjob",
+  "user",
+  "customer",
+  "apikey",
+  "organization",
+  "audit-log",
+  "dashboard",
+];
 
 export default async function initTranslations(
   locale: string,
@@ -27,8 +50,9 @@ export default async function initTranslations(
 
   if (!resources) {
     i18nInstance.use(
-      resourcesToBackend((language: string, namespace: string) =>
-        import(`@/locales/${language}/${namespace}.json`)
+      resourcesToBackend(
+        (language: string, namespace: string) =>
+          import(`@/locales/${language}/${namespace}.json`)
       )
     );
   }
@@ -47,8 +71,8 @@ export default async function initTranslations(
     detection:
       typeof window !== "undefined"
         ? {
-          order: ["cookie", "htmlTag", "navigator"],
-        }
+            order: ["cookie", "htmlTag", "navigator"],
+          }
         : undefined,
 
     initImmediate: false,
