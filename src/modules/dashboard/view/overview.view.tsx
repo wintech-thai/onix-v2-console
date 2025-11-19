@@ -19,6 +19,7 @@ interface StatCardProps {
   gradient: string;
   icon: React.ReactNode;
   isLoading?: boolean;
+  totalFormatted?: string;
 }
 
 const StatCard = ({
@@ -29,21 +30,11 @@ const StatCard = ({
   gradient,
   icon,
   isLoading,
+  totalFormatted,
 }: StatCardProps) => {
   const percentage = total ? Math.min((value / total) * 100, 100) : 0;
   const formattedValue = value.toLocaleString("en-US");
-  const formattedTotal = total?.toLocaleString("en-US");
-
-  if (isLoading) {
-    return (
-      <div className="relative overflow-hidden rounded-2xl border bg-card p-6">
-        <Skeleton className="h-6 w-48 mb-4" />
-        <Skeleton className="h-16 w-32 mb-4" />
-        <Skeleton className="h-4 w-24 mb-2" />
-        <Skeleton className="h-2 w-full" />
-      </div>
-    );
-  }
+  const formattedTotal = totalFormatted || total?.toLocaleString("en-US");
 
   return (
     <motion.div
@@ -70,9 +61,13 @@ const StatCard = ({
               {title}
             </p>
             <div className="flex items-baseline gap-2">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                {formattedValue}
-              </h2>
+              <div className="text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                {isLoading ? (
+                  <Skeleton className="h-10 w-32" />
+                ) : (
+                  formattedValue
+                )}
+              </div>
             </div>
           </div>
           <div className={`p-3 rounded-xl ${gradient} bg-opacity-10`}>
@@ -84,19 +79,29 @@ const StatCard = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="font-medium text-muted-foreground">{label}</span>
-            {total && (
-              <span className="font-semibold text-foreground/80">
-                {formattedTotal}
-              </span>
+            {(formattedTotal || isLoading) && (
+              <div className="font-semibold text-foreground/80">
+                {isLoading ? <Skeleton className="h-4 w-16" /> : formattedTotal}
+              </div>
             )}
           </div>
 
-          {total && (
+          {(formattedTotal || isLoading) && (
             <div className="space-y-1">
-              <Progress value={percentage} className="h-2" />
-              <p className="text-xs text-muted-foreground text-right">
-                {percentage.toFixed(1)}%
-              </p>
+              {isLoading ? (
+                <Skeleton className="h-2 w-full" />
+              ) : (
+                <Progress value={percentage} className="h-2" />
+              )}
+              {(typeof total === "number" || isLoading) && (
+                <div className="text-xs text-muted-foreground text-right">
+                  {isLoading ? (
+                    <Skeleton className="h-3 w-8 ml-auto" />
+                  ) : (
+                    `${percentage.toFixed(1)}%`
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -144,8 +149,13 @@ const OverViewViewPage = () => {
   const scanItemApplied =
     stats.find((s) => s.statCode === "ScanItemAppliedBalanceCurrent")
       ?.balanceEnd || 0;
-  const scanItemLimit =
-    limits.find((l) => l.statCode === "ScanItemBalanceCurrent")?.limit || 0;
+  const scanItemLimit = limits.find(
+    (l) => l.statCode === "ScanItemBalanceCurrent"
+  )?.limit;
+  const scanItemLimitDisplay =
+    scanItemLimit !== undefined && scanItemLimit !== null
+      ? scanItemLimit.toLocaleString()
+      : t("overview.cards.unlimited");
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -199,6 +209,7 @@ const OverViewViewPage = () => {
               title={t("overview.cards.totalScanItem.title")}
               value={scanItemCurrent}
               total={scanItemLimit}
+              totalFormatted={scanItemLimitDisplay}
               label={t("overview.cards.totalScanItem.label")}
               gradient="bg-gradient-to-br from-blue-500 to-cyan-500"
               icon="📊"
@@ -229,28 +240,32 @@ const OverViewViewPage = () => {
           </div>
 
           {/* Additional Info */}
-          {!isLoading && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-8 p-6 rounded-2xl border bg-card/50 backdrop-blur-sm"
-            >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-primary/10">
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    {t("overview.summary.title")}
-                  </h3>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-8 p-6 rounded-2xl border bg-card/50 backdrop-blur-sm"
+          >
+            <div className="flex items-start gap-4">
+              <div className="p-3 rounded-xl bg-primary/10">
+                <TrendingUp className="w-6 h-6 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold mb-2">
+                  {t("overview.summary.title")}
+                </h3>
+                {isLoading ? (
+                  <div className="space-y-2 pt-1">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </div>
+                ) : (
                   <p className="text-sm text-muted-foreground">
                     <Trans
                       i18nKey="overview.summary.description"
                       ns="dashboard"
                       values={{
                         current: scanItemCurrent.toLocaleString(),
-                        limit: scanItemLimit.toLocaleString(),
+                        limit: scanItemLimitDisplay,
                         scanned: scanItemScanned.toLocaleString(),
                         applied: scanItemApplied.toLocaleString(),
                       }}
@@ -261,10 +276,10 @@ const OverViewViewPage = () => {
                       }}
                     />
                   </p>
-                </div>
+                )}
               </div>
-            </motion.div>
-          )}
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -447,7 +447,8 @@ interface Resources {
         "totalScanned": {
           "label": "Scanned",
           "title": "Total Scan Item Scanned"
-        }
+        },
+        "unlimited": "Unlimited"
       },
       "refresh": "Refresh",
       "subtitle": "Monitor your scan item statistics in real-time",
