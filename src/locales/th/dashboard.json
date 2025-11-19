@@ -15,7 +15,8 @@
       "totalApplied": {
         "title": "รายการสแกนที่ถูกใช้",
         "label": "ใช้แล้ว"
-      }
+      },
+      "unlimited": "ไม่จำกัด"
     },
     "summary": {
       "title": "สรุปสถิติ",

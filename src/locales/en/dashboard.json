@@ -15,7 +15,8 @@
       "totalApplied": {
         "title": "Total Scan Item Applied",
         "label": "Applied"
-      }
+      },
+      "unlimited": "Unlimited"
     },
     "summary": {
       "title": "Statistics Summary",
