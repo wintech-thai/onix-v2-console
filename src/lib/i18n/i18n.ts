@@ -16,7 +16,8 @@ export type i18nKeys =
   | "apikey"
   | "organization"
   | "audit-log"
-  | "dashboard";
+  | "dashboard"
+  | "wallets";
 export const i18nNamespaces: i18nKeys[] = [
   "common",
   "product",
@@ -29,6 +30,7 @@ export const i18nNamespaces: i18nKeys[] = [
   "organization",
   "audit-log",
   "dashboard",
+  "wallets",
 ];
 
 export default async function initTranslations(

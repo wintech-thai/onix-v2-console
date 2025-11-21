@@ -1,0 +1,30 @@
+{
+  "columns": {
+    "name": "ชื่อ",
+    "description": "รายละเอียด",
+    "tags": "แท็ก",
+    "balance": "ยอดคงเหลือ",
+    "action": "การกระทำ"
+  },
+  "actions": {
+    "pointAdd": "เพิ่มพอยท์",
+    "pointDeduct": "ลดพอยท์",
+    "pointTransaction": "ธุรกรรมพอยท์",
+    "delete": "ลบ"
+  },
+  "delete": {
+    "title": "ลบกระเป๋าเงิน",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบกระเป๋าเงินนี้?",
+    "loading": "กำลังลบกระเป๋าเงิน...",
+    "success": "ลบกระเป๋าเงินสำเร็จ",
+    "error": "ลบกระเป๋าเงินไม่สำเร็จ"
+  },
+  "filter": {
+    "searchPlaceholder": "ค้นหากระเป๋าเงิน...",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาข้อความเต็ม",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม"
+  }
+}

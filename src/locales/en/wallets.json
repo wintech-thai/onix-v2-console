@@ -1,0 +1,30 @@
+{
+  "columns": {
+    "name": "Name",
+    "description": "Description",
+    "tags": "Tags",
+    "balance": "Balance",
+    "action": "Action"
+  },
+  "actions": {
+    "pointAdd": "Point Add",
+    "pointDeduct": "Point Deduct",
+    "pointTransaction": "Point Transaction",
+    "delete": "Delete"
+  },
+  "delete": {
+    "title": "Delete Wallet",
+    "message": "Are you sure you want to delete this wallet?",
+    "loading": "Deleting wallet...",
+    "success": "Successfully deleted wallet",
+    "error": "Failed to delete wallet"
+  },
+  "filter": {
+    "searchPlaceholder": "Search wallets...",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD"
+  }
+}

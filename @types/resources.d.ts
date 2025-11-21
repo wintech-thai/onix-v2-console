@@ -929,6 +929,36 @@ interface Resources {
       "updateError": "Failed to update user",
       "updateSuccess": "User updated successfully"
     }
+  },
+  "wallets": {
+    "actions": {
+      "delete": "Delete",
+      "pointAdd": "Point Add",
+      "pointDeduct": "Point Deduct",
+      "pointTransaction": "Point Transaction"
+    },
+    "columns": {
+      "action": "Action",
+      "balance": "Balance",
+      "description": "Description",
+      "name": "Name",
+      "tags": "Tags"
+    },
+    "delete": {
+      "error": "Failed to delete wallet",
+      "loading": "Deleting wallet...",
+      "message": "Are you sure you want to delete this wallet?",
+      "success": "Successfully deleted wallet",
+      "title": "Delete Wallet"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search wallets...",
+      "selectSearchField": "Select search field"
+    }
   }
 }
 
