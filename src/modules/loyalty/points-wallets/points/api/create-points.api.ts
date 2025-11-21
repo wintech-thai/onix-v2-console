@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface CreatePointsRequest {
@@ -27,6 +28,7 @@ export const createPointsApi = {
           params.params
         );
       },
+      onError: useErrorToast("AddPoint"),
     });
   },
 };

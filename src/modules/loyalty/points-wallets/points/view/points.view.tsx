@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import { IPoints, fetchPointsApi } from "../api/fetch-points.api";
 import { PointsTable } from "../components/points-table/points-table";
 import { getWalletsApi } from "../../wallets/api/get-wallets.api";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const PointViewPage = () => {
   const { t } = useTranslation(["wallets", "common"]);
@@ -88,6 +89,27 @@ const PointViewPage = () => {
   const columns = usePointsTableColumns();
   const totalItems = fetchPointsCount.data?.data ?? 0;
   const wallet = getWallet.data?.data?.wallet;
+
+  if (getWallet.isError) {
+    if (getWallet.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetWallets" />;
+    }
+    throw new Error(getWallet.error.message);
+  }
+
+  if (fetchPoints.isError) {
+    if (fetchPoints.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetPoints" />;
+    }
+    throw new Error(fetchPoints.error.message);
+  }
+
+  if (fetchPointsCount.isError) {
+    if (fetchPointsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetPointsCount" />;
+    }
+    throw new Error(fetchPointsCount.error.message);
+  }
 
   return (
     <div className="h-full flex flex-col pt-4 px-4">

@@ -10,11 +10,6 @@ export interface UpdateWalletRequest {
   description: string;
 }
 
-export interface UpdateWalletResponse {
-  status: string;
-  description: string;
-}
-
 export const updateWalletApi = {
   key: "update-wallet",
   useUpdateWallet: () => {
@@ -25,12 +20,12 @@ export const updateWalletApi = {
         walletId: string;
         params: UpdateWalletRequest;
       }) => {
-        return api.post<UpdateWalletResponse>(
-          `/api/Point/org/${params.orgId}/action/DeductPoint/${params.walletId}`,
+        return api.post(
+          `/api/Point/org/${params.orgId}/action/UpdateWalletById/${params.walletId}`,
           params.params
         );
       },
-      onError: useErrorToast("DeductPoint"),
+      onError: useErrorToast("UpdateWalletById")
     });
   },
 };

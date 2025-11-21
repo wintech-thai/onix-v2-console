@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface UpdatePointsRequest {
@@ -26,6 +27,7 @@ export const updatePointsApi = {
           params.params
         );
       },
+      onError: useErrorToast("UpdatePointById"),
     });
   },
 };
