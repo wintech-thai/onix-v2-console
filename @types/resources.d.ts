@@ -974,6 +974,35 @@ interface Resources {
         "tags": "Tags is required"
       }
     },
+    "points": {
+      "addSuccess": "Points added successfully",
+      "addTitle": "Add Points",
+      "amount": "Amount",
+      "balance": "Current Balance",
+      "columns": {
+        "createdDate": "Created Date",
+        "currentBalance": "Current Balance",
+        "description": "Description",
+        "previousBalance": "Previous Balance",
+        "tags": "Tags",
+        "txAmount": "Amount",
+        "txType": "Type"
+      },
+      "deductSuccess": "Points deducted successfully",
+      "deductTitle": "Deduct Points",
+      "description": "Description",
+      "errors": {
+        "amountRequired": "Amount is required",
+        "insufficientBalance": "Insufficient balance"
+      },
+      "newBalance": "New Balance",
+      "title": "Point Transaction",
+      "types": {
+        "add": "Add",
+        "deduct": "Deduct"
+      },
+      "wallet": "Wallet"
+    },
     "update": {
       "success": "Wallet updated successfully"
     },

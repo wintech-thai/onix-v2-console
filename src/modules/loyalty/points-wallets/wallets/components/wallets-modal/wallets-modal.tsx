@@ -142,13 +142,11 @@ export const WalletsModal = ({
             name: values.name,
             description: values.description || "",
             tags: values.tags || "",
-            customerId: "", // Assuming not needed or handled by backend if empty
-            pointBalance: 0, // Assuming not updating balance here
           },
         },
         {
           onSuccess: async (data) => {
-            if (data.data.status !== "SUCCESS") {
+            if (data.data.status !== "SUCCESS" && data.data.status !== "OK") {
               return toast.error(data.data.description);
             }
 

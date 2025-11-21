@@ -16,16 +16,33 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { WalletsModal } from "../components/wallets-modal/wallets-modal";
 
+import { PointsModal } from "../../points/components/points-modal/points-modal";
+
 const PointWalletsViewPage = () => {
   const { t } = useTranslation(["wallets", "common"]);
   const params = useParams<{ orgId: string }>();
-  const [data, setData] = useState<IWallets[]>([]);
-  const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
-  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedWalletId, setSelectedWalletId] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const deleteWallet = deleteWalletApi.useDeleteWallet();
+
+  const [pointsModalState, setPointsModalState] = useState<{
+    isOpen: boolean;
+    walletId: string | null;
+    mode: "add" | "deduct";
+    walletName: string;
+    currentBalance: number;
+  }>({
+    isOpen: false,
+    walletId: null,
+    mode: "add",
+    walletName: "",
+    currentBalance: 0,
+  });
+
+  const [data, setData] = useState<IWallets[]>([]);
+  const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
+  const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
 
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
@@ -43,7 +60,25 @@ const PointWalletsViewPage = () => {
     setIsModalOpen(true);
   };
 
-  const walletsTableColumns = useWalletsTableColumns(handleEdit);
+  const handleOpenPointsModal = (
+    walletId: string,
+    mode: "add" | "deduct",
+    walletName: string,
+    currentBalance: number
+  ) => {
+    setPointsModalState({
+      isOpen: true,
+      walletId,
+      mode,
+      walletName,
+      currentBalance,
+    });
+  };
+
+  const walletsTableColumns = useWalletsTableColumns(
+    handleEdit,
+    handleOpenPointsModal
+  );
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -179,6 +214,16 @@ const PointWalletsViewPage = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         walletId={selectedWalletId}
+      />
+      <PointsModal
+        isOpen={pointsModalState.isOpen}
+        onClose={() =>
+          setPointsModalState((prev) => ({ ...prev, isOpen: false }))
+        }
+        walletId={pointsModalState.walletId}
+        mode={pointsModalState.mode}
+        walletName={pointsModalState.walletName}
+        currentBalance={pointsModalState.currentBalance}
       />
       <WalletsTable
         columns={walletsTableColumns}

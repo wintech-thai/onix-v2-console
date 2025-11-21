@@ -11,13 +11,18 @@ export interface CreatePointsRequest {
   previousBalance: number;
 }
 
+export interface CreatePointsResponse {
+  status: string;
+  descript: string;
+}
+
 export const createPointsApi = {
   key: "create-points",
   useCreatePoints: () => {
     return useMutation({
       mutationKey: [createPointsApi.key],
       mutationFn: (params: { orgId: string; params: CreatePointsRequest }) => {
-        return api.post(
+        return api.post<CreatePointsResponse>(
           `/api/Point/org/${params.orgId}/action/AddPoint/${params.params.walletId}`,
           params.params
         );

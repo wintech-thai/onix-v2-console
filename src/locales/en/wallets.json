@@ -45,5 +45,34 @@
   },
   "update": {
     "success": "Wallet updated successfully"
+  },
+  "points": {
+    "addTitle": "Add Points",
+    "deductTitle": "Deduct Points",
+    "balance": "Current Balance",
+    "amount": "Amount",
+    "description": "Description",
+    "wallet": "Wallet",
+    "addSuccess": "Points added successfully",
+    "deductSuccess": "Points deducted successfully",
+    "newBalance": "New Balance",
+    "errors": {
+      "insufficientBalance": "Insufficient balance",
+      "amountRequired": "Amount is required"
+    },
+    "title": "Point Transaction",
+    "columns": {
+      "createdDate": "Created Date",
+      "tags": "Tags",
+      "description": "Description",
+      "txAmount": "Amount",
+      "txType": "Type",
+      "previousBalance": "Previous Balance",
+      "currentBalance": "Current Balance"
+    },
+    "types": {
+      "add": "Add Point",
+      "deduct": "Deduct Point"
+    }
   }
 }

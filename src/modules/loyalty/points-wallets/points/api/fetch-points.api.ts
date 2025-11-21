@@ -7,7 +7,7 @@ export interface FetchPointsRequest {
   limit: number;
   fromDate: string;
   toDate: string;
-  walletId: number;
+  walletId: string;
 }
 
 export interface IPoints {
@@ -30,13 +30,13 @@ export const fetchPointsApi = {
   key: "fetch-points",
   useFetchPoints: (params: {
     orgId: string;
-    walletId: number;
+    walletId: string;
     params: FetchPointsRequest;
   }) => {
-    return useQuery({
-      queryKey: [...fetchPointsApi.key],
+    return useQuery<AxiosResponse<FetchPointsResponse>, AxiosError>({
+      queryKey: [...fetchPointsApi.key, params],
       queryFn: () => {
-        return api.post<AxiosResponse<FetchPointsResponse>, AxiosError>(
+        return api.post(
           `/api/Point/org/${params.orgId}/action/GetPointTxsByWalletId/${params.walletId}`,
           params.params
         );
@@ -45,13 +45,13 @@ export const fetchPointsApi = {
   },
   useFetchPointsCount: (params: {
     orgId: string;
-    walletId: number;
+    walletId: string;
     params: FetchPointsRequest;
   }) => {
-    return useQuery({
-      queryKey: [...fetchPointsApi.key],
+    return useQuery<AxiosResponse<number>, AxiosError>({
+      queryKey: [...fetchPointsApi.key, "count", params],
       queryFn: () => {
-        return api.post<AxiosResponse<number>, AxiosError>(
+        return api.post(
           `/api/Point/org/${params.orgId}/action/GetPointTxsCountByWalletId/${params.walletId}`,
           params.params
         );

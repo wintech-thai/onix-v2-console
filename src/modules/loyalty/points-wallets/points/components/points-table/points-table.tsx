@@ -4,7 +4,6 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  Row,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -16,8 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { WalletsFilterTable } from "./wallets-filter.table";
 import {
   Select,
   SelectContent,
@@ -29,8 +26,9 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useActiveRow } from "@/hooks/use-active-row";
+import { useState } from "react";
 
-interface DataTableProps<TData, TValue> {
+interface PointsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   totalItems: number;
@@ -38,13 +36,10 @@ interface DataTableProps<TData, TValue> {
   itemsPerPage: number;
   onPageChange: (newPage: number) => void;
   onItemsPerPageChange: (newLimit: number) => void;
-  onSearch: (field: string, value: string) => void;
-  onDelete: (rows: Row<TData>[], callback: () => void) => void;
   isLoading?: boolean;
-  onAdd: () => void;
 }
 
-export function WalletsTable<TData, TValue>({
+export function PointsTable<TData, TValue>({
   columns,
   data,
   totalItems,
@@ -52,11 +47,8 @@ export function WalletsTable<TData, TValue>({
   itemsPerPage,
   onPageChange,
   onItemsPerPageChange,
-  onSearch,
-  onDelete,
   isLoading = false,
-  onAdd,
-}: DataTableProps<TData, TValue>) {
+}: PointsTableProps<TData, TValue>) {
   const { t } = useTranslation("common");
   const [rowSelection, setRowSelection] = useState({});
   const { activeRowId, setActiveRowId } = useActiveRow("wallets-table");
@@ -75,17 +67,6 @@ export function WalletsTable<TData, TValue>({
 
   return (
     <div className="h-full flex flex-col">
-      <WalletsFilterTable
-        onDelete={() =>
-          onDelete(table.getSelectedRowModel().rows, () =>
-            table.resetRowSelection()
-          )
-        }
-        isDisabled={table.getSelectedRowModel().rows.length === 0}
-        onSearch={onSearch}
-        selected={table.getSelectedRowModel().rows.length}
-        onAdd={onAdd}
-      />
       <div className="overflow-auto rounded-md border flex-1 mt-4">
         <Table>
           <TableHeader>

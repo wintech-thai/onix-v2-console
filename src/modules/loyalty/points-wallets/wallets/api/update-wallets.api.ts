@@ -8,8 +8,6 @@ export interface UpdateWalletRequest {
   name: string;
   tags: string;
   description: string;
-  customerId: string;
-  pointBalance: number;
 }
 
 export interface UpdateWalletResponse {
@@ -28,11 +26,11 @@ export const updateWalletApi = {
         params: UpdateWalletRequest;
       }) => {
         return api.post<UpdateWalletResponse>(
-          `/api/Point/org/${params.orgId}/action/UpdateWalletById/${params.walletId}`,
+          `/api/Point/org/${params.orgId}/action/DeductPoint/${params.walletId}`,
           params.params
         );
       },
-      onError: useErrorToast("UpdateWalletById"),
+      onError: useErrorToast("DeductPoint"),
     });
   },
 };

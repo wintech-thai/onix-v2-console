@@ -12,14 +12,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
 
 type WalletsTableColumns = ColumnDef<IWallets> & {
   accessorKey?: keyof IWallets;
 };
 
 export const useWalletsTableColumns = (
-  onEdit: (id: string) => void
+  onEdit: (id: string) => void,
+  onPointsAction: (
+    id: string,
+    mode: "add" | "deduct",
+    walletName: string,
+    currentBalance: number
+  ) => void
 ): WalletsTableColumns[] => {
   const { t } = useTranslation("wallets");
 
@@ -109,27 +116,38 @@ export const useWalletsTableColumns = (
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   onSelect={() => {
-                    toast.info("Point Add action clicked (Not implemented)");
-                  }}
-                >
-                  {t("actions.pointAdd", "Point Add")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onSelect={() => {
-                    toast.info("Point Deduct action clicked (Not implemented)");
-                  }}
-                >
-                  {t("actions.pointDeduct", "Point Deduct")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onSelect={() => {
-                    toast.info(
-                      "Point Transaction action clicked (Not implemented)"
+                    onPointsAction(
+                      row.original.id,
+                      "add",
+                      row.original.name,
+                      row.original.pointBalance ?? 0
                     );
                   }}
                 >
-                  {t("actions.pointTransaction", "Point Transaction")}
+                  {t("points.addTitle", "Add Points")}
                 </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => {
+                    onPointsAction(
+                      row.original.id,
+                      "deduct",
+                      row.original.name,
+                      row.original.pointBalance ?? 0
+                    );
+                  }}
+                >
+                  {t("points.deductTitle", "Deduct Points")}
+                </DropdownMenuItem>
+                <Link
+                  href={RouteConfig.LOYALTY.POINTS_WALLETS.POINTS(
+                    row.original.orgId,
+                    row.original.id
+                  )}
+                >
+                  <DropdownMenuItem>
+                    {t("actions.pointTransaction", "Point Transaction")}
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
           </>

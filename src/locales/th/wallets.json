@@ -45,5 +45,34 @@
   },
   "update": {
     "success": "แก้ไขกระเป๋าเงินสำเร็จ"
+  },
+  "points": {
+    "addTitle": "เพิ่มคะแนน",
+    "deductTitle": "ลดคะแนน",
+    "balance": "คะแนนคงเหลือ",
+    "amount": "จำนวนคะแนน",
+    "description": "รายละเอียด",
+    "wallet": "กระเป๋าเงิน",
+    "addSuccess": "เพิ่มคะแนนสำเร็จ",
+    "deductSuccess": "ลดคะแนนสำเร็จ",
+    "newBalance": "คะแนนสุทธิ",
+    "errors": {
+      "insufficientBalance": "คะแนนไม่เพียงพอ",
+      "amountRequired": "กรุณากรอกจำนวน"
+    },
+    "title": "ประวัติคะแนน",
+    "columns": {
+      "createdDate": "วันที่สร้าง",
+      "tags": "แท็ก",
+      "description": "รายละเอียด",
+      "txAmount": "จำนวน",
+      "txType": "ประเภท",
+      "previousBalance": "คะแนนก่อนหน้า",
+      "currentBalance": "คะแนนคงเหลือ"
+    },
+    "types": {
+      "add": "เพิ่มคะแนน",
+      "deduct": "ลดคะแนน"
+    }
   }
 }
