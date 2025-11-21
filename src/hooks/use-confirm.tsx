@@ -2,12 +2,12 @@ import { JSX, useState } from "react";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { useTranslation } from "react-i18next";
 
@@ -15,12 +15,16 @@ interface ConfirmProps {
   title: string;
   message: string;
   variant: ButtonProps["variant"];
+  confirmButton?: string;
+  cancelButton?: string;
 }
 
 export const useConfirm = ({
   title,
   message,
   variant,
+  confirmButton,
+  cancelButton,
 }: ConfirmProps): [() => JSX.Element, () => Promise<unknown>] => {
   const { t } = useTranslation();
   const [promise, setPromise] = useState<{
@@ -61,10 +65,10 @@ export const useConfirm = ({
               variant="secondary"
               onClick={handleClose}
             >
-              {t("common.cancel")}
+              {cancelButton ?? t("common.cancel")}
             </Button>
             <Button variant={variant} onClick={handleConfirm}>
-              {t("common.ok")}
+              {confirmButton ?? t("common.ok")}
             </Button>
           </DialogFooter>
         </DialogContent>

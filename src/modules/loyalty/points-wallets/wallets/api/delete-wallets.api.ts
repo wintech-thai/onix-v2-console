@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export const deleteWalletApi = {
@@ -11,6 +12,7 @@ export const deleteWalletApi = {
           `/api/Point/org/${params.orgId}/action/DeleteWalletById/${params.walletId}`
         );
       },
+      onError: useErrorToast("DeleteWalletById"),
     });
   },
 };

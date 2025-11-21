@@ -25,6 +25,25 @@
     "fullTextSearch": "Full Text Search",
     "search": "Search",
     "delete": "DELETE",
-    "add": "ADD"
+    "add": "Add"
+  },
+  "createTitle": "Create Wallet",
+  "updateTitle": "Update Wallet",
+  "form": {
+    "name": "Name",
+    "description": "Description",
+    "tags": "Tags",
+    "tagsPlaceholder": "Type and press Enter to add tags",
+    "validation": {
+      "name": "Name is required",
+      "description": "Description is required",
+      "tags": "Tags is required"
+    }
+  },
+  "create": {
+    "success": "Wallet created successfully"
+  },
+  "update": {
+    "success": "Wallet updated successfully"
   }
 }

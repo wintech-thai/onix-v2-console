@@ -25,9 +25,10 @@ export interface IWallets {
 export type FetchWalletsResponse = IWallets[];
 
 export const fetchWalletsApi = {
+  key: "fetch-wallets",
   useFetchWallets: (params: { orgId: string; params: FetchWalletsRequest }) => {
     return useQuery<AxiosResponse<FetchWalletsResponse>, AxiosError>({
-      queryKey: ["wallets", params.orgId, params.params],
+      queryKey: [fetchWalletsApi.key, params.orgId, params.params],
       queryFn: () => {
         return api.post(
           `/api/Point/org/${params.orgId}/action/GetWallets`,
@@ -41,7 +42,7 @@ export const fetchWalletsApi = {
     params: FetchWalletsRequest;
   }) => {
     return useQuery<AxiosResponse<number>, AxiosError>({
-      queryKey: ["wallets-count", params.orgId, params.params],
+      queryKey: [fetchWalletsApi.key, "count", params.orgId, params.params],
       queryFn: () => {
         return api.post(
           `/api/Point/org/${params.orgId}/action/GetWalletsCount`,

@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface CreateWalletRequest {
@@ -21,6 +22,7 @@ export const createWalletApi = {
           params.params
         );
       },
+      onError: useErrorToast("AddWallet"),
     });
   },
 };

@@ -18,7 +18,9 @@ type WalletsTableColumns = ColumnDef<IWallets> & {
   accessorKey?: keyof IWallets;
 };
 
-export const useWalletsTableColumns = (): WalletsTableColumns[] => {
+export const useWalletsTableColumns = (
+  onEdit: (id: string) => void
+): WalletsTableColumns[] => {
   const { t } = useTranslation("wallets");
 
   return [
@@ -46,8 +48,15 @@ export const useWalletsTableColumns = (): WalletsTableColumns[] => {
     },
     {
       accessorKey: "name",
-      header: t("columns.name", "Name"),
-      cell: ({ row }) => row.original.name || "-",
+      header: t("columns.name"),
+      cell: ({ row }) => (
+        <span
+          className="cursor-pointer hover:underline text-primary font-medium"
+          onClick={() => onEdit(row.original.id)}
+        >
+          {row.original.name}
+        </span>
+      ),
     },
     {
       accessorKey: "description",

@@ -28,6 +28,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useActiveRow } from "@/hooks/use-active-row";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -35,11 +36,12 @@ interface DataTableProps<TData, TValue> {
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
-  onPageChange: (page: number) => void;
-  onItemsPerPageChange: (items: number) => void;
-  onSearch: (searchField: string, searchValue: string) => void;
+  onPageChange: (newPage: number) => void;
+  onItemsPerPageChange: (newLimit: number) => void;
+  onSearch: (field: string, value: string) => void;
   onDelete: (rows: Row<TData>[], callback: () => void) => void;
   isLoading?: boolean;
+  onAdd: () => void;
 }
 
 export function WalletsTable<TData, TValue>({
@@ -53,9 +55,12 @@ export function WalletsTable<TData, TValue>({
   onSearch,
   onDelete,
   isLoading = false,
+  onAdd,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation("common");
   const [rowSelection, setRowSelection] = useState({});
+  const { activeRowId, setActiveRowId } = useActiveRow("wallets-table");
+  console.log("activeRowId", activeRowId);
 
   const table = useReactTable({
     data,
@@ -67,21 +72,20 @@ export function WalletsTable<TData, TValue>({
     },
   });
 
-  const rowSelected = table.getFilteredSelectedRowModel().rows;
-
-  const handleDelete = () => {
-    onDelete(rowSelected, () => setRowSelection({}));
-  };
-
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <div className="h-full flex flex-col">
       <WalletsFilterTable
-        onDelete={() => handleDelete()}
-        selected={rowSelected.length}
-        isDisabled={!rowSelected.length}
+        onDelete={() =>
+          onDelete(table.getSelectedRowModel().rows, () =>
+            table.resetRowSelection()
+          )
+        }
+        isDisabled={table.getSelectedRowModel().rows.length === 0}
         onSearch={onSearch}
+        selected={table.getSelectedRowModel().rows.length}
+        onAdd={onAdd}
       />
       <div className="overflow-auto rounded-md border flex-1 mt-4">
         <Table>
@@ -120,6 +124,14 @@ export function WalletsTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() =>
+                    setActiveRowId((row.original as { id: string }).id)
+                  }
+                  className={`cursor-pointer transition-colors ${
+                    activeRowId === (row.original as { id: string }).id
+                      ? "bg-blue-50 hover:bg-blue-100"
+                      : ""
+                  }`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

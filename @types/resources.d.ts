@@ -944,6 +944,10 @@ interface Resources {
       "name": "Name",
       "tags": "Tags"
     },
+    "create": {
+      "success": "Wallet created successfully"
+    },
+    "createTitle": "Create Wallet",
     "delete": {
       "error": "Failed to delete wallet",
       "loading": "Deleting wallet...",
@@ -952,13 +956,28 @@ interface Resources {
       "title": "Delete Wallet"
     },
     "filter": {
-      "add": "ADD",
+      "add": "Add",
       "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
       "searchPlaceholder": "Search wallets...",
       "selectSearchField": "Select search field"
-    }
+    },
+    "form": {
+      "description": "Description",
+      "name": "Name",
+      "tags": "Tags",
+      "tagsPlaceholder": "Type and press Enter to add tags",
+      "validation": {
+        "description": "Description is required",
+        "name": "Name is required",
+        "tags": "Tags is required"
+      }
+    },
+    "update": {
+      "success": "Wallet updated successfully"
+    },
+    "updateTitle": "Update Wallet"
   }
 }
 

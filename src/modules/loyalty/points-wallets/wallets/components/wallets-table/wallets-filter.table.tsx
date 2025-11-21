@@ -19,6 +19,7 @@ interface WalletsFilterTableProps {
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
+  onAdd: () => void;
 }
 
 export const WalletsFilterTable = ({
@@ -26,6 +27,7 @@ export const WalletsFilterTable = ({
   isDisabled,
   onSearch,
   selected,
+  onAdd,
 }: WalletsFilterTableProps) => {
   const { t } = useTranslation("wallets");
   const [queryState] = useQueryStates({
@@ -112,7 +114,9 @@ export const WalletsFilterTable = ({
           md:flex md:items-center
         "
       >
-        <Button className="w-full md:w-auto">{t("filter.add")}</Button>
+        <Button className="w-full md:w-auto" onClick={onAdd}>
+          {t("filter.add")}
+        </Button>
         <Button
           className="w-full md:w-auto"
           disabled={isDisabled}

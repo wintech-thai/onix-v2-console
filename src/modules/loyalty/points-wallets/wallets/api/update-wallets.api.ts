@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface UpdateWalletRequest {
@@ -11,6 +12,11 @@ export interface UpdateWalletRequest {
   pointBalance: number;
 }
 
+export interface UpdateWalletResponse {
+  status: string;
+  description: string;
+}
+
 export const updateWalletApi = {
   key: "update-wallet",
   useUpdateWallet: () => {
@@ -21,11 +27,12 @@ export const updateWalletApi = {
         walletId: string;
         params: UpdateWalletRequest;
       }) => {
-        return api.post(
+        return api.post<UpdateWalletResponse>(
           `/api/Point/org/${params.orgId}/action/UpdateWalletById/${params.walletId}`,
           params.params
         );
       },
+      onError: useErrorToast("UpdateWalletById"),
     });
   },
 };

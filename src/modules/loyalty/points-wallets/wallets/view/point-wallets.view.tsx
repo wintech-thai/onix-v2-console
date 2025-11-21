@@ -14,6 +14,7 @@ import { deleteWalletApi } from "../api/delete-wallets.api";
 import { Row } from "@tanstack/react-table";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { WalletsModal } from "../components/wallets-modal/wallets-modal";
 
 const PointWalletsViewPage = () => {
   const { t } = useTranslation(["wallets", "common"]);
@@ -21,6 +22,8 @@ const PointWalletsViewPage = () => {
   const [data, setData] = useState<IWallets[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedWalletId, setSelectedWalletId] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const deleteWallet = deleteWalletApi.useDeleteWallet();
 
@@ -30,7 +33,17 @@ const PointWalletsViewPage = () => {
     variant: "destructive",
   });
 
-  const walletsTableColumns = useWalletsTableColumns();
+  const handleEdit = (id: string) => {
+    setSelectedWalletId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setSelectedWalletId(null);
+    setIsModalOpen(true);
+  };
+
+  const walletsTableColumns = useWalletsTableColumns(handleEdit);
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -136,10 +149,7 @@ const PointWalletsViewPage = () => {
     }
 
     await queryClient.invalidateQueries({
-      queryKey: ["wallets"],
-    });
-    await queryClient.invalidateQueries({
-      queryKey: ["wallets-count"],
+      queryKey: [fetchWalletsApi.key],
     });
 
     callback();
@@ -165,6 +175,11 @@ const PointWalletsViewPage = () => {
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
+      <WalletsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        walletId={selectedWalletId}
+      />
       <WalletsTable
         columns={walletsTableColumns}
         data={data}
@@ -175,6 +190,7 @@ const PointWalletsViewPage = () => {
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
         onDelete={handleDelete}
+        onAdd={handleAdd}
         isLoading={
           (fetchWallets.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
         }
