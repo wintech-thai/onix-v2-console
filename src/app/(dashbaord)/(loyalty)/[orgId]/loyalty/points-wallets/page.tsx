@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import PointWalletsViewPage from "@/modules/loyalty/points-wallets/wallets/view/point-wallets.view";
 
 const PointsWalletsPage = () => {
-  return <CommingSoon />
-}
+  return <PointWalletsViewPage />;
+};
 
 export default PointsWalletsPage;
