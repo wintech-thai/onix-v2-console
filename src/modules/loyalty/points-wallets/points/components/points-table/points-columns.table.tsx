@@ -37,7 +37,7 @@ export const usePointsTableColumns = (): PointsTableColumns[] => {
       accessorKey: "createdDate",
       header: t("points.columns.createdDate", "Created Date"),
       cell: ({ row }) =>
-        dayjs(row.original.createdDate).format("DD MMM YYYY HH:mm"),
+        dayjs(row.original.createdDate).format("DD MMM YYYY HH:mm [GMT] Z"),
     },
     {
       accessorKey: "tags",
