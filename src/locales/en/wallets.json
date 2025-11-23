@@ -1,0 +1,78 @@
+{
+  "columns": {
+    "name": "Name",
+    "description": "Description",
+    "tags": "Tags",
+    "balance": "Balance",
+    "action": "Action"
+  },
+  "actions": {
+    "pointAdd": "Point Add",
+    "pointDeduct": "Point Deduct",
+    "pointTransaction": "Point Transaction",
+    "delete": "Delete"
+  },
+  "delete": {
+    "title": "Delete Wallet",
+    "message": "Are you sure you want to delete this wallet?",
+    "loading": "Deleting wallet...",
+    "success": "Successfully deleted wallet",
+    "error": "Failed to delete wallet"
+  },
+  "filter": {
+    "searchPlaceholder": "Search wallets...",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "Add"
+  },
+  "createTitle": "Create Wallet",
+  "updateTitle": "Update Wallet",
+  "form": {
+    "name": "Name",
+    "description": "Description",
+    "tags": "Tags",
+    "tagsPlaceholder": "Type and press Enter to add tags",
+    "validation": {
+      "name": "Name is required",
+      "description": "Description is required",
+      "tags": "Tags is required"
+    }
+  },
+  "create": {
+    "success": "Wallet created successfully"
+  },
+  "update": {
+    "success": "Wallet updated successfully"
+  },
+  "points": {
+    "addTitle": "Add Points",
+    "deductTitle": "Deduct Points",
+    "balance": "Current Balance",
+    "amount": "Amount",
+    "description": "Description",
+    "wallet": "Wallet",
+    "addSuccess": "Points added successfully",
+    "deductSuccess": "Points deducted successfully",
+    "newBalance": "New Balance",
+    "errors": {
+      "insufficientBalance": "Insufficient balance",
+      "amountRequired": "Amount is required"
+    },
+    "title": "Point Transaction",
+    "columns": {
+      "createdDate": "Created Date",
+      "tags": "Tags",
+      "description": "Description",
+      "txAmount": "Amount",
+      "txType": "Type",
+      "previousBalance": "Previous Balance",
+      "currentBalance": "Current Balance"
+    },
+    "types": {
+      "add": "Add Point",
+      "deduct": "Deduct Point"
+    }
+  }
+}

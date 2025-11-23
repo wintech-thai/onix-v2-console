@@ -1,0 +1,78 @@
+{
+  "columns": {
+    "name": "ชื่อ",
+    "description": "รายละเอียด",
+    "tags": "แท็ก",
+    "balance": "ยอดคงเหลือ",
+    "action": "การกระทำ"
+  },
+  "actions": {
+    "pointAdd": "เพิ่มพอยท์",
+    "pointDeduct": "ลดพอยท์",
+    "pointTransaction": "ธุรกรรมพอยท์",
+    "delete": "ลบ"
+  },
+  "delete": {
+    "title": "ลบกระเป๋าเงิน",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบกระเป๋าเงินนี้?",
+    "loading": "กำลังลบกระเป๋าเงิน...",
+    "success": "ลบกระเป๋าเงินสำเร็จ",
+    "error": "ลบกระเป๋าเงินไม่สำเร็จ"
+  },
+  "filter": {
+    "searchPlaceholder": "ค้นหากระเป๋าเงิน...",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาข้อความเต็ม",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม"
+  },
+  "createTitle": "สร้างกระเป๋าเงิน",
+  "updateTitle": "แก้ไขกระเป๋าเงิน",
+  "form": {
+    "name": "ชื่อ",
+    "description": "รายละเอียด",
+    "tags": "แท็ก",
+    "tagsPlaceholder": "พิมพ์และกด Enter เพื่อเพิ่มแท็ก",
+    "validation": {
+      "name": "กรุณากรอกชื่อ",
+      "description": "กรุณากรอกรายละเอียด",
+      "tags": "กรุณากรอกแท็ก"
+    }
+  },
+  "create": {
+    "success": "สร้างกระเป๋าเงินสำเร็จ"
+  },
+  "update": {
+    "success": "แก้ไขกระเป๋าเงินสำเร็จ"
+  },
+  "points": {
+    "addTitle": "เพิ่มคะแนน",
+    "deductTitle": "ลดคะแนน",
+    "balance": "คะแนนคงเหลือ",
+    "amount": "จำนวนคะแนน",
+    "description": "รายละเอียด",
+    "wallet": "กระเป๋าเงิน",
+    "addSuccess": "เพิ่มคะแนนสำเร็จ",
+    "deductSuccess": "ลดคะแนนสำเร็จ",
+    "newBalance": "คะแนนสุทธิ",
+    "errors": {
+      "insufficientBalance": "คะแนนไม่เพียงพอ",
+      "amountRequired": "กรุณากรอกจำนวน"
+    },
+    "title": "ประวัติคะแนน",
+    "columns": {
+      "createdDate": "วันที่สร้าง",
+      "tags": "แท็ก",
+      "description": "รายละเอียด",
+      "txAmount": "จำนวน",
+      "txType": "ประเภท",
+      "previousBalance": "คะแนนก่อนหน้า",
+      "currentBalance": "คะแนนคงเหลือ"
+    },
+    "types": {
+      "add": "เพิ่มคะแนน",
+      "deduct": "ลดคะแนน"
+    }
+  }
+}

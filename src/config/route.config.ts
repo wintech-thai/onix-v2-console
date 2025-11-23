@@ -30,6 +30,7 @@ export const RouteConfig = {
   LOYALTY: {
     POINTS_WALLETS: {
       LIST: (orgId: string) => `/${orgId}/loyalty/points-wallets`,
+      POINTS: (orgId: string, walletId: string) => `/${orgId}/loyalty/points-wallets/${walletId}/points`,
     },
     PRIVILEGES: {
       LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,

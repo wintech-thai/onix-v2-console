@@ -929,6 +929,84 @@ interface Resources {
       "updateError": "Failed to update user",
       "updateSuccess": "User updated successfully"
     }
+  },
+  "wallets": {
+    "actions": {
+      "delete": "Delete",
+      "pointAdd": "Point Add",
+      "pointDeduct": "Point Deduct",
+      "pointTransaction": "Point Transaction"
+    },
+    "columns": {
+      "action": "Action",
+      "balance": "Balance",
+      "description": "Description",
+      "name": "Name",
+      "tags": "Tags"
+    },
+    "create": {
+      "success": "Wallet created successfully"
+    },
+    "createTitle": "Create Wallet",
+    "delete": {
+      "error": "Failed to delete wallet",
+      "loading": "Deleting wallet...",
+      "message": "Are you sure you want to delete this wallet?",
+      "success": "Successfully deleted wallet",
+      "title": "Delete Wallet"
+    },
+    "filter": {
+      "add": "Add",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search wallets...",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "description": "Description",
+      "name": "Name",
+      "tags": "Tags",
+      "tagsPlaceholder": "Type and press Enter to add tags",
+      "validation": {
+        "description": "Description is required",
+        "name": "Name is required",
+        "tags": "Tags is required"
+      }
+    },
+    "points": {
+      "addSuccess": "Points added successfully",
+      "addTitle": "Add Points",
+      "amount": "Amount",
+      "balance": "Current Balance",
+      "columns": {
+        "createdDate": "Created Date",
+        "currentBalance": "Current Balance",
+        "description": "Description",
+        "previousBalance": "Previous Balance",
+        "tags": "Tags",
+        "txAmount": "Amount",
+        "txType": "Type"
+      },
+      "deductSuccess": "Points deducted successfully",
+      "deductTitle": "Deduct Points",
+      "description": "Description",
+      "errors": {
+        "amountRequired": "Amount is required",
+        "insufficientBalance": "Insufficient balance"
+      },
+      "newBalance": "New Balance",
+      "title": "Point Transaction",
+      "types": {
+        "add": "Add",
+        "deduct": "Deduct"
+      },
+      "wallet": "Wallet"
+    },
+    "update": {
+      "success": "Wallet updated successfully"
+    },
+    "updateTitle": "Update Wallet"
   }
 }
 
