@@ -38,9 +38,7 @@ export const fetchPointRuleApi = {
       queryFn: async () => {
         return api.post(
           `/api/PointRule/org/${params.orgId}/action/GetPointRules`,
-          {
-            params: params.values,
-          }
+          params.values
         );
       },
     });
@@ -54,9 +52,7 @@ export const fetchPointRuleApi = {
       queryFn: async () => {
         return api.post(
           `/api/PointRule/org/${params.orgId}/action/GetPointRulesCount`,
-          {
-            params: params.values,
-          }
+          params.values,
         );
       },
     });
