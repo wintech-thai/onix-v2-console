@@ -34,9 +34,9 @@ export const fetchPointRuleApi = {
     values: FetchPointRuleRequest;
   }) => {
     return useQuery<AxiosResponse<IPointRule[]>, AxiosError>({
-      queryKey: [fetchPointRuleApi.key],
+      queryKey: [fetchPointRuleApi.key, params],
       queryFn: async () => {
-        return api.get(
+        return api.post(
           `/api/PointRule/org/${params.orgId}/action/GetPointRules`,
           {
             params: params.values,
@@ -50,9 +50,9 @@ export const fetchPointRuleApi = {
     values: FetchPointRuleRequest;
   }) => {
     return useQuery<AxiosResponse<number>, AxiosError>({
-      queryKey: [fetchPointRuleApi.key, "count"],
+      queryKey: [fetchPointRuleApi.key, "count", params],
       queryFn: async () => {
-        return api.get(
+        return api.post(
           `/api/PointRule/org/${params.orgId}/action/GetPointRulesCount`,
           {
             params: params.values,

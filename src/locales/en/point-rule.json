@@ -1,0 +1,53 @@
+{
+  "columns": {
+    "ruleName": "Rule Name",
+    "description": "Description",
+    "tags": "Tags",
+    "event": "Event",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "priority": "Priority",
+    "status": "Status",
+    "action": "Action"
+  },
+  "filter": {
+    "selectSearchField": "Select field",
+    "fullTextSearch": "Full Text Search",
+    "searchPlaceholder": "Search...",
+    "search": "Search",
+    "add": "ADD",
+    "delete": "DELETE",
+    "testRule": "TEST RULE",
+    "customerRegistered": "Customer Registered"
+  },
+  "actions": {
+    "enablePointRule": "Enable",
+    "disablePointRule": "Disable"
+  },
+  "enable": {
+    "title": "Enable Point Rule",
+    "message": "Are you sure you want to enable this point rule?",
+    "loading": "Enabling point rule...",
+    "success": "Point rule enabled successfully",
+    "error": "Failed to enable point rule"
+  },
+  "disable": {
+    "title": "Disable Point Rule",
+    "message": "Are you sure you want to disable this point rule?",
+    "loading": "Disabling point rule...",
+    "success": "Point rule disabled successfully",
+    "error": "Failed to disable point rule"
+  },
+  "delete": {
+    "title": "Delete Point Rule",
+    "message": "Are you sure you want to delete the selected point rules? This action cannot be undone.",
+    "loading": "Deleting point rules...",
+    "success": "Point rules deleted successfully",
+    "error": "Failed to delete point rules"
+  },
+  "table": {
+    "noResults": "No results found.",
+    "rowsPerPage": "Rows per page",
+    "of": "of"
+  }
+}

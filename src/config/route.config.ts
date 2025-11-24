@@ -32,14 +32,16 @@ export const RouteConfig = {
       LIST: (orgId: string) => `/${orgId}/loyalty/points-wallets`,
       POINTS: (orgId: string, walletId: string) => `/${orgId}/loyalty/points-wallets/${walletId}/points`,
     },
-    PRIVILEGES: {
-      LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,
-    },
     POINT_RULE: {
       LIST: (orgId: string) => `/${orgId}/loyalty/point-rules`,
+      CREATE: (orgId: string) => `/${orgId}/loyalty/point-rules/create`,
+      UPDATE: (orgId: string, pointRuleId: string) => `/${orgId}/loyalty/point-rules/${pointRuleId}/update`,
     },
     POINT_TRIGGER: {
       LIST: (orgId: string) => `/${orgId}/loyalty/point-triggers`,
+    },
+    PRIVILEGES: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,
     },
   },
   ADMIN: {
