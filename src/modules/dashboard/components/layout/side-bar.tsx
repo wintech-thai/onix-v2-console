@@ -119,15 +119,15 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.loyalty.sub.2",
-            href: RouteConfig.LOYALTY.PRIVILEGES.LIST(params.orgId),
-          },
-          {
-            labelKey: "sidebar.loyalty.sub.3",
             href: RouteConfig.LOYALTY.POINT_RULE.LIST(params.orgId),
           },
           {
-            labelKey: "sidebar.loyalty.sub.4",
+            labelKey: "sidebar.loyalty.sub.3",
             href: RouteConfig.LOYALTY.POINT_TRIGGER.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.loyalty.sub.4",
+            href: RouteConfig.LOYALTY.PRIVILEGES.LIST(params.orgId),
           },
         ],
       },
@@ -366,7 +366,11 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
             <div className="text-base">
               versions: {env("NEXT_PUBLIC_APP_VERSION")}
             </div>
-            <Link target="_blank" href={env("NEXT_PUBLIC_PROVIDER_URL") ?? ""} className="text-sm hover:underline">
+            <Link
+              target="_blank"
+              href={env("NEXT_PUBLIC_PROVIDER_URL") ?? ""}
+              className="text-sm hover:underline"
+            >
               &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. <br /> All
               rights reserved.
             </Link>

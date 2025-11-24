@@ -64,9 +64,9 @@
       "label": "Loyalty",
       "sub": {
         "1": "Points & Wallets",
-        "2": "Privileges",
-        "3": "Point Rule",
-        "4": "Point Trigger"
+        "2": "Point Rule",
+        "3": "Point Trigger",
+        "4": "Privileges"
       }
     },
     "admin": {
