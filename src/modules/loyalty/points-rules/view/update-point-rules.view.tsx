@@ -8,8 +8,10 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
 import { Loader } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const UpdatePointRuleViewPage = () => {
+  const queryClient = useQueryClient();
   const params = useParams<{ orgId: string; pointRuleId: string }>();
   const router = useRouter();
 
@@ -22,17 +24,29 @@ const UpdatePointRuleViewPage = () => {
     updatePointRuleApi.useUpdatePointRule();
 
   const onSubmit = async (values: PointRulesSchemaType) => {
-    await updatePointRule({
-      orgId: params.orgId,
-      pointRuleId: params.pointRuleId,
-      values: {
-        ...values,
-        priority: Number(values.priority),
+    await updatePointRule(
+      {
+        orgId: params.orgId,
+        pointRuleId: params.pointRuleId,
+        values: {
+          ...values,
+          priority: Number(values.priority),
+        },
       },
-    });
+      {
+        onSuccess: ({ data }) => {
+          if (data.status !== "OK" && data.status !== "SUCCESS") {
+            return toast.error(data.description);
+          }
 
-    toast.success("Update Point Rule Success");
-    router.back();
+          toast.success("Update Point Rule Success");
+          router.back();
+          queryClient.invalidateQueries({
+            queryKey: [getPointRulesApi.key],
+          });
+        },
+      }
+    );
   };
 
   if (getPointRule.isLoading) {

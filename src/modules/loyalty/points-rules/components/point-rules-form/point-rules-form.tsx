@@ -99,6 +99,9 @@ export const PointRulesForm = ({
   };
 
   const onSubmitHandler = async (values: PointRulesSchemaType) => {
+    if (!isDirty) {
+      return router.back();
+    }
     const payload = {
       ...values,
       startDate: new Date(values.startDate).toISOString(),
