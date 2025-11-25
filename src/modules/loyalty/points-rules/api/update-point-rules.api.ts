@@ -13,8 +13,6 @@ export interface UpdatePointRuleRequest {
   description: string;
   tags: string;
   triggeredEvent: string;
-  status: string;
-  pointsReturn: number;
   priority: number;
   startDate: string;
   endDate: string;

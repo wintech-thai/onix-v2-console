@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import UpdatePointRuleViewPage from "@/modules/loyalty/points-rules/view/update-point-rules.view";
 
 const PointRuleUpdatePage = () => {
-  return <CommingSoon />;
+  return <UpdatePointRuleViewPage />;
 };
 
 export default PointRuleUpdatePage;
