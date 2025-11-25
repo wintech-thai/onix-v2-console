@@ -7,30 +7,63 @@ import {
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { RuleInputFieldsModal } from "./rule-input-fields-modal";
+import { TestRuleModal } from "./test-rule-modal";
+import { useRouter } from "next/navigation";
+import { JsonEditor } from "json-edit-react";
+import dayjs from "dayjs";
 
 interface PointRulesFormProps {
   onSubmit: (values: PointRulesSchemaType) => Promise<void>;
   defaultValues?: PointRulesSchemaType;
   isUpdate: boolean;
 }
+
 export const PointRulesForm = ({
   onSubmit,
   defaultValues,
   isUpdate,
 }: PointRulesFormProps) => {
+  const router = useRouter();
+  const [isFieldsModalOpen, setIsFieldsModalOpen] = useState(false);
+  const [isTestModalOpen, setIsTestModalOpen] = useState(false);
+
+  // Default triggeredEvent to "CustomerRegistered" if not provided
+  const initialValues = {
+    ...defaultValues,
+    triggeredEvent: defaultValues?.triggeredEvent || "CustomerRegistered",
+    priority: defaultValues?.priority ?? 0,
+    startDate: defaultValues?.startDate
+      ? new Date(defaultValues.startDate).toISOString().slice(0, 16)
+      : "",
+    endDate: defaultValues?.endDate
+      ? new Date(defaultValues.endDate).toISOString().slice(0, 16)
+      : "",
+  };
+
   const form = useForm<PointRulesSchemaType>({
-    defaultValues,
+    defaultValues: initialValues,
     resolver: zodResolver(pointRulesSchema),
   });
 
   const errors = form.formState.errors;
   const isSubmitting = form.formState.isSubmitting;
+  const triggeredEvent = form.watch("triggeredEvent");
+  const ruleDefinition = form.watch("ruleDefinition");
 
   const onSubmitHandler = async (values: PointRulesSchemaType) => {
-    await onSubmit(values);
+    const payload = {
+      ...values,
+      startDate: new Date(values.startDate).toISOString(),
+      endDate: new Date(values.endDate).toISOString(),
+    };
+    await onSubmit(payload);
   };
 
-  console.log(isUpdate);
+  const handleCancel = () => {
+    router.back();
+  };
 
   return (
     <FormProvider {...form}>
@@ -38,64 +71,58 @@ export const PointRulesForm = ({
         className="h-full flex flex-col"
         onSubmit={form.handleSubmit(onSubmitHandler)}
       >
-        <header className="p-4 border border-b">
+        <header className="p-4 border-b flex items-center gap-2">
+          <ArrowLeftIcon
+            onClick={handleCancel}
+            className="cursor-pointer h-5 w-5"
+          />
           <h1 className="text-lg font-bold">
-            <ArrowLeftIcon
-              // onClick={handleCancel}
-              className="inline cursor-pointer"
-            />{" "}
             {isUpdate ? "Update Point Rules" : "Create Point Rules"}
           </h1>
         </header>
-        <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+
+        <div className="flex-1 p-4 space-y-6 overflow-y-auto">
           <div className="grid md:grid-cols-2 gap-4">
             <Controller
               control={form.control}
               name="ruleName"
-              render={({ field }) => {
-                return (
-                  <Input
-                    {...field}
-                    label="Rule Name"
-                    isRequired
-                    disabled={isSubmitting}
-                    errorMessage={errors.ruleName?.message}
-                  />
-                );
-              }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="Name"
+                  isRequired
+                  disabled={isSubmitting}
+                  errorMessage={errors.ruleName?.message}
+                />
+              )}
             />
 
             <Controller
               control={form.control}
               name="triggeredEvent"
-              render={({ field }) => {
-                return (
-                  <Input
-                    {...field}
-                    label="Triggered Event"
-                    isRequired
-                    disabled={isSubmitting}
-                    errorMessage={errors.triggeredEvent?.message}
-                  />
-                );
-              }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="Triggered Event"
+                  isRequired
+                  disabled={true}
+                  errorMessage={errors.triggeredEvent?.message}
+                />
+              )}
             />
 
             <div className="col-span-2">
               <Controller
                 control={form.control}
                 name="description"
-                render={({ field }) => {
-                  return (
-                    <Input
-                      {...field}
-                      label="Description"
-                      isRequired
-                      disabled={isSubmitting}
-                      errorMessage={errors.description?.message}
-                    />
-                  );
-                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Description"
+                    disabled={isSubmitting}
+                    errorMessage={errors.description?.message}
+                  />
+                )}
               />
             </div>
 
@@ -103,92 +130,184 @@ export const PointRulesForm = ({
               <Controller
                 control={form.control}
                 name="tags"
-                render={({ field }) => {
-                  return (
-                    <Input
-                      {...field}
-                      label="Tags"
-                      isRequired
-                      disabled={isSubmitting}
-                      errorMessage={errors.tags?.message}
-                    />
-                  );
-                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Tags"
+                    disabled={isSubmitting}
+                    errorMessage={errors.tags?.message}
+                  />
+                )}
               />
             </div>
 
-            <div className="col-span-2 w-[200px]">
+            <div className="col-span-2 md:col-span-1">
               <Controller
                 control={form.control}
                 name="priority"
-                render={({ field }) => {
-                  return (
-                    <Input
-                      {...field}
-                      label="Priority"
-                      type="number"
-                      isRequired
-                      disabled={isSubmitting}
-                      errorMessage={errors.priority?.message}
-                      className=""
-                    />
-                  );
-                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Priority (1-100)"
+                    type="number"
+                    min={1}
+                    max={100}
+                    isRequired
+                    disabled={isSubmitting}
+                    errorMessage={errors.priority?.message}
+                  />
+                )}
               />
+            </div>
+
+            <div className="col-span-2 grid md:grid-cols-2 gap-4">
+              <Controller
+                control={form.control}
+                name="startDate"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-1 relative">
+                    <Input
+                      readOnly
+                      label="Start Date"
+                      isRequired
+                      value={
+                        field.value
+                          ? dayjs(field.value).format(
+                              "DD MMM YYYY HH:mm [GMT] Z"
+                            )
+                          : ""
+                      }
+                      disabled={isSubmitting}
+                      errorMessage={errors.startDate?.message}
+                    />
+                    <input
+                      {...field}
+                      type="datetime-local"
+                      className="absolute inset-0 w-full h-full z-10 opacity-0"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  </div>
+                )}
+              />
+
+              <Controller
+                control={form.control}
+                name="endDate"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-1 relative">
+                    <Input
+                      readOnly
+                      label="End Date"
+                      isRequired
+                      value={
+                        field.value
+                          ? dayjs(field.value).format(
+                              "DD MMM YYYY HH:mm [GMT] Z"
+                            )
+                          : ""
+                      }
+                      disabled={isSubmitting}
+                      errorMessage={errors.endDate?.message}
+                      onChange={() => {}}
+                    />
+                    <input
+                      {...field}
+                      type="datetime-local"
+                      className="absolute inset-0 w-full h-full z-10 opacity-0"
+                      disabled={isSubmitting}
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  </div>
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="border rounded-lg p-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">
+                Rule Definition (JSON)
+              </label>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsFieldsModalOpen(true)}
+                >
+                  Input Fields
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsTestModalOpen(true)}
+                >
+                  Test
+                </Button>
+              </div>
             </div>
 
             <Controller
               control={form.control}
-              name="startDate"
+              name="ruleDefinition"
               render={({ field }) => {
-                return (
-                  <Input
-                    {...field}
-                    label="Start Date"
-                    isRequired
-                    disabled={isSubmitting}
-                    errorMessage={errors.startDate?.message}
-                  />
-                );
-              }}
-            />
+                let jsonValue = {};
+                try {
+                  jsonValue = field.value ? JSON.parse(field.value) : {};
+                } catch {
+                  // If parse fails, default to empty object or handle gracefully
+                }
 
-            <Controller
-              control={form.control}
-              name="endDate"
-              render={({ field }) => {
                 return (
-                  <Input
-                    {...field}
-                    label="End Date"
-                    isRequired
-                    disabled={isSubmitting}
-                    errorMessage={errors.endDate?.message}
-                  />
+                  <div className="border rounded-md overflow-hidden w-full">
+                    <JsonEditor
+                      data={jsonValue}
+                      setData={(newData: unknown) => {
+                        field.onChange(JSON.stringify(newData, null, 2));
+                      }}
+                      minWidth="100%"
+                    />
+                  </div>
                 );
               }}
             />
+            {errors.ruleDefinition && (
+              <span className="text-xs text-red-500">
+                {errors.ruleDefinition.message}
+              </span>
+            )}
           </div>
-
-          <div className="border rounded-lg">Json Data Text</div>
         </div>
 
-        <div className="border-t py-2 px-4 shrink-0 flex items-center justify-end gap-x-2">
+        <div className="border-t py-4 px-4 shrink-0 flex items-center justify-end gap-x-2">
           <Button
-            // onClick={handleCancel}
-            // disabled={isSubmitting}
+            onClick={handleCancel}
+            disabled={isSubmitting}
             variant="destructive"
             type="button"
           >
-            {/* {t("actions.cancel")} */}
-            cancel
+            Cancel
           </Button>
-          <Button isPending={false}>
-            {/* {t("actions.save")} */}
-            save
+          <Button type="submit" isPending={isSubmitting}>
+            Save
           </Button>
         </div>
       </form>
+
+      <RuleInputFieldsModal
+        isOpen={isFieldsModalOpen}
+        onClose={() => setIsFieldsModalOpen(false)}
+        triggeredEvent={triggeredEvent}
+      />
+
+      <TestRuleModal
+        isOpen={isTestModalOpen}
+        onClose={() => setIsTestModalOpen(false)}
+        ruleDefinition={ruleDefinition}
+      />
     </FormProvider>
   );
 };

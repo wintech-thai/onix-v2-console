@@ -8,13 +8,34 @@ const CreatePointRuleViewPage = () => {
     console.log(values);
   };
 
+  const defaultJson = [
+    {
+      WorkflowName: "workflow1",
+      Rules: [
+        {
+          RuleName: "GiveDiscount10",
+          Expression: "input.ProductQuantity > 0",
+          SuccessEvent: 10,
+          Actions: {
+            OnSuccess: {
+              Name: "OutputExpression",
+              Context: {
+                Expression: "200",
+              },
+            },
+          },
+        },
+      ],
+    },
+  ];
+
   return (
     <PointRulesForm
       onSubmit={onSubmit}
       isUpdate={false}
       defaultValues={{
         description: "",
-        ruleDefinition: "[]",
+        ruleDefinition: JSON.stringify(defaultJson),
         ruleName: "",
         tags: "",
         triggeredEvent: "",
