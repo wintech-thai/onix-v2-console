@@ -2,15 +2,32 @@
 
 import { PointRulesForm } from "../components/point-rules-form/point-rules-form";
 import { PointRulesSchemaType } from "../schema/point-rules.schema";
+import { createPointRulesApi } from "../api/create-point-rules.api";
+import { useParams, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const CreatePointRuleViewPage = () => {
+  const params = useParams<{ orgId: string }>();
+  const router = useRouter();
+  const { mutateAsync: createPointRule } =
+    createPointRulesApi.useCreatePointRule();
+
   const onSubmit = async (values: PointRulesSchemaType) => {
-    console.log(values);
+    await createPointRule({
+      orgId: params.orgId,
+      values: {
+        ...values,
+        priority: Number(values.priority),
+      },
+    });
+
+    toast.success("Create Point Rule Success");
+    router.back();
   };
 
   const defaultJson = [
     {
-      WorkflowName: "workflow1",
+      WorkflowName: "Example",
       Rules: [
         {
           RuleName: "GiveDiscount10",
@@ -35,7 +52,7 @@ const CreatePointRuleViewPage = () => {
       isUpdate={false}
       defaultValues={{
         description: "",
-        ruleDefinition: JSON.stringify(defaultJson),
+        ruleDefinition: JSON.stringify(defaultJson, null, 2),
         ruleName: "",
         tags: "",
         triggeredEvent: "",

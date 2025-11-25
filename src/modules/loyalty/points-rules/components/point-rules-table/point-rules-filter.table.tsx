@@ -19,6 +19,9 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
+import { useParams } from "next/navigation";
 
 interface PointRuleFilterTableProps {
   onDelete: () => void;
@@ -34,7 +37,7 @@ export const PointRuleFilterTable = ({
   selected,
 }: PointRuleFilterTableProps) => {
   const { t } = useTranslation("point-rule");
-  // const params = useParams<{ orgId: string }>();
+  const params = useParams<{ orgId: string }>();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -137,9 +140,11 @@ export const PointRuleFilterTable = ({
             <Button className="w-full md:w-auto">{t("filter.add")}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
-              {t("filter.customerRegistered")}
-            </DropdownMenuItem>
+            <Link href={RouteConfig.LOYALTY.POINT_RULE.CREATE(params.orgId)}>
+              <DropdownMenuItem>
+                {t("filter.customerRegistered")}
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
 

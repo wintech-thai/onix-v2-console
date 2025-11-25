@@ -4,15 +4,18 @@ import {
   pointRulesSchema,
   PointRulesSchemaType,
 } from "../../schema/point-rules.schema";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, KeyboardEvent, useEffect } from "react";
 import { RuleInputFieldsModal } from "./rule-input-fields-modal";
 import { TestRuleModal } from "./test-rule-modal";
 import { useRouter } from "next/navigation";
 import { JsonEditor } from "json-edit-react";
 import dayjs from "dayjs";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
+import { Label } from "@/components/ui/label";
 
 interface PointRulesFormProps {
   onSubmit: (values: PointRulesSchemaType) => Promise<void>;
@@ -28,6 +31,12 @@ export const PointRulesForm = ({
   const router = useRouter();
   const [isFieldsModalOpen, setIsFieldsModalOpen] = useState(false);
   const [isTestModalOpen, setIsTestModalOpen] = useState(false);
+  const { setFormDirty } = useFormNavigationBlocker();
+  const [ConfirmBack, confirmBack] = useConfirm({
+    message: "You have unsaved changes. Are you sure you want to leave?",
+    title: "Unsaved Changes",
+    variant: "destructive",
+  });
 
   // Default triggeredEvent to "CustomerRegistered" if not provided
   const initialValues = {
@@ -35,12 +44,14 @@ export const PointRulesForm = ({
     triggeredEvent: defaultValues?.triggeredEvent || "CustomerRegistered",
     priority: defaultValues?.priority ?? 0,
     startDate: defaultValues?.startDate
-      ? new Date(defaultValues.startDate).toISOString().slice(0, 16)
+      ? dayjs(defaultValues.startDate).format("YYYY-MM-DDTHH:mm")
       : "",
     endDate: defaultValues?.endDate
-      ? new Date(defaultValues.endDate).toISOString().slice(0, 16)
+      ? dayjs(defaultValues.endDate).format("YYYY-MM-DDTHH:mm")
       : "",
   };
+
+  console.log({ initialValues });
 
   const form = useForm<PointRulesSchemaType>({
     defaultValues: initialValues,
@@ -49,8 +60,43 @@ export const PointRulesForm = ({
 
   const errors = form.formState.errors;
   const isSubmitting = form.formState.isSubmitting;
+  const isDirty = form.formState.isDirty;
   const triggeredEvent = form.watch("triggeredEvent");
   const ruleDefinition = form.watch("ruleDefinition");
+  const { tags } = form.watch();
+  const [tagInput, setTagInput] = useState("");
+
+  const tagsArray = tags
+    ? tags.split(",").filter((tag) => tag.trim() !== "")
+    : [];
+
+  useEffect(() => {
+    setFormDirty(isDirty);
+  }, [isDirty, setFormDirty]);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const trimmedTag = tagInput.trim();
+
+      if (trimmedTag && !tagsArray.includes(trimmedTag)) {
+        const newTags = [...tagsArray, trimmedTag];
+        form.setValue("tags", newTags.join(","), {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+        setTagInput("");
+      }
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
+    form.setValue("tags", newTags.join(","), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  };
 
   const onSubmitHandler = async (values: PointRulesSchemaType) => {
     const payload = {
@@ -59,10 +105,22 @@ export const PointRulesForm = ({
       endDate: new Date(values.endDate).toISOString(),
     };
     await onSubmit(payload);
+    setFormDirty(false);
   };
 
-  const handleCancel = () => {
-    router.back();
+  const handleCancel = async () => {
+    if (!isDirty) {
+      setFormDirty(false);
+      return router.back();
+    }
+
+    const ok = await confirmBack();
+
+    if (ok) {
+      form.reset();
+      setFormDirty(false);
+      router.back();
+    }
   };
 
   return (
@@ -71,6 +129,7 @@ export const PointRulesForm = ({
         className="h-full flex flex-col"
         onSubmit={form.handleSubmit(onSubmitHandler)}
       >
+        <ConfirmBack />
         <header className="p-4 border-b flex items-center gap-2">
           <ArrowLeftIcon
             onClick={handleCancel}
@@ -118,6 +177,7 @@ export const PointRulesForm = ({
                 render={({ field }) => (
                   <Input
                     {...field}
+                    isRequired
                     label="Description"
                     disabled={isSubmitting}
                     errorMessage={errors.description?.message}
@@ -127,18 +187,36 @@ export const PointRulesForm = ({
             </div>
 
             <div className="col-span-2">
-              <Controller
-                control={form.control}
-                name="tags"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    label="Tags"
-                    disabled={isSubmitting}
-                    errorMessage={errors.tags?.message}
-                  />
-                )}
-              />
+              <Label isRequired>Tags</Label>
+              <div className="mt-2">
+                <Input
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Type and press Enter to add tag"
+                  errorMessage={errors.tags?.message}
+                  disabled={isSubmitting}
+                />
+              </div>
+              {tagsArray.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {tagsArray.map((tag, index) => (
+                    <div
+                      key={index}
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground rounded-full text-sm"
+                    >
+                      <span>{tag}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(tag)}
+                        className="hover:bg-primary-foreground/20 rounded-full p-0.5"
+                      >
+                        <XIcon className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="col-span-2 md:col-span-1">
@@ -148,8 +226,18 @@ export const PointRulesForm = ({
                 render={({ field }) => (
                   <Input
                     {...field}
-                    label="Priority (1-100)"
                     type="number"
+                    value={
+                      isNaN(field.value) || field.value === 0 ? "" : field.value
+                    }
+                    onChange={(e) => {
+                      if (e.target.value === "") {
+                        field.onChange(0);
+                      } else {
+                        field.onChange(Number(e.target.value));
+                      }
+                    }}
+                    label="Priority (1-100)"
                     min={1}
                     max={100}
                     isRequired
