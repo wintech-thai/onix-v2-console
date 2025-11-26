@@ -23,6 +23,8 @@ import Link from "next/link";
 import { RouteConfig } from "@/config/route.config";
 import { useParams } from "next/navigation";
 
+import { EvaluateRuleModal } from "../point-rules-form/evaluate-rule-modal";
+
 interface PointRuleFilterTableProps {
   onDelete: () => void;
   isDisabled: boolean;
@@ -45,6 +47,10 @@ export const PointRuleFilterTable = ({
 
   const [searchField, setSearchField] = useState("fullTextSearch");
   const [searchValue, setSearchValue] = useState(queryState.searchValue);
+  const [evaluateModalState, setEvaluateModalState] = useState({
+    isOpen: false,
+    triggeredEvent: "",
+  });
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -129,7 +135,14 @@ export const PointRuleFilterTable = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                setEvaluateModalState({
+                  isOpen: true,
+                  triggeredEvent: "CustomerRegistered",
+                });
+              }}
+            >
               {t("filter.customerRegistered")}
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -161,6 +174,14 @@ export const PointRuleFilterTable = ({
           {t("filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
       </div>
+
+      <EvaluateRuleModal
+        isOpen={evaluateModalState.isOpen}
+        onClose={() =>
+          setEvaluateModalState((prev) => ({ ...prev, isOpen: false }))
+        }
+        triggeredEvent={evaluateModalState.triggeredEvent}
+      />
     </form>
   );
 };

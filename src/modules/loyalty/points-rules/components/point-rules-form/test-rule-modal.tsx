@@ -118,12 +118,17 @@ export const TestRuleModal = ({
     testRule(
       { orgId, values: payload },
       {
-        onSuccess: (response) => {
+        onSuccess: ({ data }) => {
+          if (data.status !== "OK" && data.status !== "SUCCESS") {
+            return toast.error(data.description);
+          }
+
           setTestResult({
-            points: Number(response.data.executionResult) || 0,
-            isMatch: response.data.isMatch,
-            message: response.data.description,
+            points: Number(data.executionResult) || 0,
+            isMatch: data.isMatch,
+            message: data.description,
           });
+
           toast.success("Test run successfully");
         },
         onError: (error: any) => {
