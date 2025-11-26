@@ -1,12 +1,12 @@
 import z from "zod";
 
 export const pointRulesSchema = z.object({
-  ruleName: z.string().min(1, "Rule Name is required"),
-  ruleDefinition: z.string().min(1, "Rule Definition is required"),
-  description: z.string().min(1, "Description is required"),
-  tags: z.string().min(1, "Tags is required"),
-  triggeredEvent: z.string().min(1, "Triggered Event is required"),
-  priority: z.number("Priority is required").min(1, "Priority is required"),
+  ruleName: z.string().min(1, "form.validation.ruleName"),
+  ruleDefinition: z.string().min(1, "form.validation.ruleDefinition"),
+  description: z.string().min(1, "form.validation.description"),
+  tags: z.string().min(1, "form.validation.tags"),
+  triggeredEvent: z.string().min(1, "form.validation.triggeredEvent"),
+  priority: z.number("form.validation.priority").min(1, "form.validation.priority"),
   startDate: z.string(),
   endDate: z.string(),
 });

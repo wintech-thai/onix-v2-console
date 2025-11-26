@@ -2,6 +2,7 @@
 import * as React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Input } from "@/components/ui/input";
 import dayjs, { Dayjs } from "dayjs";
@@ -45,9 +46,7 @@ export function MuiDateTimePicker({
   const formattedValue = React.useMemo(() => {
     if (!value) return "";
     const format =
-      type === "date"
-        ? "DD MMM YYYY HH:mm [GMT] Z"
-        : "DD MMM YYYY HH:mm [GMT] Z";
+      type === "date" ? "DD MMM YYYY" : "DD MMM YYYY HH:mm [GMT] Z";
     return dayjs(value).format(format);
   }, [value, type]);
 
@@ -78,10 +77,10 @@ export function MuiDateTimePicker({
     () => ({
       ...commonProps.slotProps,
       popper: {
-        disablePortal: false,
         sx: { zIndex: 9999, pointerEvents: "auto" },
       },
       dialog: {
+        disableEnforceFocus: true,
         sx: { zIndex: 9999, pointerEvents: "auto" },
       },
       textField: (params: any) => ({
@@ -133,21 +132,10 @@ export function MuiDateTimePicker({
            */}
 
           {type === "date" ? (
-            // <DatePicker
-            //   {...commonProps}
-            //   enableAccessibleFieldDOMStructure={false}
-            //   slotProps={slotProps}
-            //   slots={slots}
-            // />
-            <DateTimePicker
+            <DatePicker
               {...commonProps}
               enableAccessibleFieldDOMStructure={false}
               slotProps={slotProps}
-              // viewRenderers={{
-              //   hours: renderTimeViewClock,
-              //   minutes: renderTimeViewClock,
-              //   seconds: renderTimeViewClock,
-              // }}
               slots={slots}
             />
           ) : (

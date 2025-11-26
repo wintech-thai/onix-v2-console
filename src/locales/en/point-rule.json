@@ -49,5 +49,74 @@
     "noResults": "No results found.",
     "rowsPerPage": "Rows per page",
     "of": "of"
+  },
+  "form": {
+    "createTitle": "Create Point Rules",
+    "updateTitle": "Update Point Rules",
+    "ruleName": "Name",
+    "triggeredEvent": "Triggered Event",
+    "description": "Description",
+    "tags": "Tags",
+    "tagsPlaceholder": "Type and press Enter to add tag",
+    "priority": "Priority (1-100)",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "ruleDefinition": "Rule Definition (JSON)",
+    "inputFields": "Input Fields",
+    "test": "Test",
+    "cancel": "Cancel",
+    "save": "Save",
+    "unsavedChanges": {
+      "title": "Unsaved Changes",
+      "message": "You have unsaved changes. Are you sure you want to leave?"
+    },
+    "validation": {
+      "ruleName": "Rule Name is required",
+      "triggeredEvent": "Triggered Event is required",
+      "description": "Description is required",
+      "tags": "Tags is required",
+      "priority": "Priority is required",
+      "startDate": "Start Date is required",
+      "endDate": "End Date is required",
+      "ruleDefinition": "Rule Definition is required"
+    }
+  },
+  "modals": {
+    "evaluateRule": {
+      "title": "Test Rule: {{event}}",
+      "inputFields": "Input Fields",
+      "loadingFields": "Loading fields...",
+      "result": "Result",
+      "pointsCalculated": "Points Calculated",
+      "matchStatus": "Match Status",
+      "matched": "Matched",
+      "notMatched": "Not Matched",
+      "messages": "Messages",
+      "close": "Close",
+      "run": "Run",
+      "running": "Running...",
+      "success": "Evaluation run successfully",
+      "error": "Failed to run evaluation"
+    },
+    "testRule": {
+      "title": "Test Rule: {{name}}",
+      "inputFields": "Input Fields",
+      "loadingFields": "Loading fields...",
+      "noInputFields": "No input fields available for this event.",
+      "success": "Test run successfully",
+      "error": "Failed to test rule",
+      "missingDefinition": "Rule definition is missing",
+      "testResult": "Test Result",
+      "pointsCalculated": "Points Calculated",
+      "matchStatus": "Match Status",
+      "matched": "Matched",
+      "notMatched": "Not Matched"
+    },
+    "ruleInputFields": {
+      "title": "Available Input Fields",
+      "loading": "Loading...",
+      "noFields": "No input fields found for this event.",
+      "copied": "Copied {{text}} to clipboard"
+    }
   }
 }

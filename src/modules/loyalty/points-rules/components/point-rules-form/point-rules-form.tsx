@@ -17,6 +17,8 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { Label } from "@/components/ui/label";
 import { MuiDateTimePicker } from "@/components/ui/mui-date-time-picker";
+import { useTranslation } from "react-i18next";
+import { errorMessageAsLangKey } from "@/lib/utils";
 
 interface PointRulesFormProps {
   onSubmit: (values: PointRulesSchemaType) => Promise<void>;
@@ -29,13 +31,14 @@ export const PointRulesForm = ({
   defaultValues,
   isUpdate,
 }: PointRulesFormProps) => {
+  const { t } = useTranslation("point-rule");
   const router = useRouter();
   const [isFieldsModalOpen, setIsFieldsModalOpen] = useState(false);
   const [isTestModalOpen, setIsTestModalOpen] = useState(false);
   const { setFormDirty } = useFormNavigationBlocker();
   const [ConfirmBack, confirmBack] = useConfirm({
-    message: "You have unsaved changes. Are you sure you want to leave?",
-    title: "Unsaved Changes",
+    message: t("form.unsavedChanges.message"),
+    title: t("form.unsavedChanges.title"),
     variant: "destructive",
   });
 
@@ -140,7 +143,7 @@ export const PointRulesForm = ({
             className="cursor-pointer h-5 w-5"
           />
           <h1 className="text-lg font-bold">
-            {isUpdate ? "Update Point Rules" : "Create Point Rules"}
+            {isUpdate ? t("form.updateTitle") : t("form.createTitle")}
           </h1>
         </header>
 
@@ -152,10 +155,13 @@ export const PointRulesForm = ({
               render={({ field }) => (
                 <Input
                   {...field}
-                  label="Name"
+                  label={t("form.ruleName")}
                   isRequired
                   disabled={isSubmitting}
-                  errorMessage={errors.ruleName?.message}
+                  errorMessage={errorMessageAsLangKey(
+                    errors.ruleName?.message,
+                    t
+                  )}
                 />
               )}
             />
@@ -166,10 +172,13 @@ export const PointRulesForm = ({
               render={({ field }) => (
                 <Input
                   {...field}
-                  label="Triggered Event"
+                  label={t("form.triggeredEvent")}
                   isRequired
                   disabled={true}
-                  errorMessage={errors.triggeredEvent?.message}
+                  errorMessage={errorMessageAsLangKey(
+                    errors.triggeredEvent?.message,
+                    t
+                  )}
                 />
               )}
             />
@@ -182,23 +191,26 @@ export const PointRulesForm = ({
                   <Input
                     {...field}
                     isRequired
-                    label="Description"
+                    label={t("form.description")}
                     disabled={isSubmitting}
-                    errorMessage={errors.description?.message}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.description?.message,
+                      t
+                    )}
                   />
                 )}
               />
             </div>
 
             <div className="col-span-2">
-              <Label isRequired>Tags</Label>
+              <Label isRequired>{t("form.tags")}</Label>
               <div className="mt-2">
                 <Input
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Type and press Enter to add tag"
-                  errorMessage={errors.tags?.message}
+                  placeholder={t("form.tagsPlaceholder")}
+                  errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
                   disabled={isSubmitting}
                 />
               </div>
@@ -241,12 +253,15 @@ export const PointRulesForm = ({
                         field.onChange(Number(e.target.value));
                       }
                     }}
-                    label="Priority (1-100)"
+                    label={t("form.priority")}
                     min={1}
                     max={100}
                     isRequired
                     disabled={isSubmitting}
-                    errorMessage={errors.priority?.message}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.priority?.message,
+                      t
+                    )}
                   />
                 )}
               />
@@ -258,15 +273,15 @@ export const PointRulesForm = ({
                 name="startDate"
                 render={({ field }) => (
                   <MuiDateTimePicker
-                    label="Start Date"
-                    isRequired
+                    label={t("form.startDate")}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      field.onChange(
-                        date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""
-                      );
+                      field.onChange(date ? dayjs(date).toISOString() : "");
                     }}
-                    errorMessage={errors.startDate?.message}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.startDate?.message,
+                      t
+                    )}
                     disabled={isSubmitting}
                   />
                 )}
@@ -277,15 +292,15 @@ export const PointRulesForm = ({
                 name="endDate"
                 render={({ field }) => (
                   <MuiDateTimePicker
-                    label="End Date"
-                    isRequired
+                    label={t("form.endDate")}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      field.onChange(
-                        date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""
-                      );
+                      field.onChange(date ? dayjs(date).toISOString() : "");
                     }}
-                    errorMessage={errors.endDate?.message}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.endDate?.message,
+                      t
+                    )}
                     disabled={isSubmitting}
                   />
                 )}
@@ -296,7 +311,7 @@ export const PointRulesForm = ({
           <div className="border rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium">
-                Rule Definition (JSON)
+                {t("form.ruleDefinition")}
               </label>
               <div className="flex gap-2">
                 <Button
@@ -305,7 +320,7 @@ export const PointRulesForm = ({
                   size="sm"
                   onClick={() => setIsFieldsModalOpen(true)}
                 >
-                  Input Fields
+                  {t("form.inputFields")}
                 </Button>
                 <Button
                   type="button"
@@ -313,7 +328,7 @@ export const PointRulesForm = ({
                   size="sm"
                   onClick={() => setIsTestModalOpen(true)}
                 >
-                  Test
+                  {t("form.test")}
                 </Button>
               </div>
             </div>
@@ -358,10 +373,10 @@ export const PointRulesForm = ({
             variant="destructive"
             type="button"
           >
-            Cancel
+            {t("form.cancel")}
           </Button>
           <Button type="submit" isPending={isSubmitting}>
-            Save
+            {t("form.save")}
           </Button>
         </div>
       </form>

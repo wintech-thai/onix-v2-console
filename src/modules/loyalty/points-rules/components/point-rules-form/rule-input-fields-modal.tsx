@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { CopyIcon } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import { getRuleInputFieldsApi } from "../../api/fetch-rule-input-field.api";
 import { useParams } from "next/navigation";
 
@@ -22,6 +23,7 @@ export const RuleInputFieldsModal = ({
   onClose,
   triggeredEvent,
 }: RuleInputFieldsModalProps) => {
+  const { t } = useTranslation("point-rule");
   const params = useParams();
   const orgId = params?.orgId as string;
 
@@ -34,21 +36,23 @@ export const RuleInputFieldsModal = ({
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
-    toast.success(`Copied ${text} to clipboard`);
+    toast.success(t("modals.ruleInputFields.copied", { text }));
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Available Input Fields</DialogTitle>
+          <DialogTitle>{t("modals.ruleInputFields.title")}</DialogTitle>
         </DialogHeader>
         <ScrollArea className="h-[400px] pr-4">
           {isLoading ? (
-            <div className="text-center py-4">Loading...</div>
+            <div className="text-center py-4">
+              {t("modals.ruleInputFields.loading")}
+            </div>
           ) : fields.length === 0 ? (
             <div className="text-center py-4 text-muted-foreground">
-              No input fields found for this event.
+              {t("modals.ruleInputFields.noFields")}
             </div>
           ) : (
             <div className="space-y-2">

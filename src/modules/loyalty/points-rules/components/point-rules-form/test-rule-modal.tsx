@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import { testPointRulesApi } from "../../api/test-point-rules.api";
 import { useEffect, useState, useMemo } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import { CheckCircle2, XCircle } from "lucide-react";
 
 interface TestRuleModalProps {
@@ -40,6 +41,7 @@ export const TestRuleModal = ({
   triggeredEvent,
   ruleName,
 }: TestRuleModalProps) => {
+  const { t } = useTranslation("point-rule");
   const params = useParams();
   const orgId = params?.orgId as string;
   const [testResult, setTestResult] = useState<{
@@ -90,7 +92,7 @@ export const TestRuleModal = ({
 
   const onSubmit = (values: any) => {
     if (!ruleDefinition) {
-      toast.error("Rule definition is missing");
+      toast.error(t("modals.testRule.missingDefinition"));
       return;
     }
 
@@ -129,10 +131,12 @@ export const TestRuleModal = ({
             message: data.description,
           });
 
-          toast.success("Test run successfully");
+          toast.success(t("modals.testRule.success"));
         },
         onError: (error: any) => {
-          toast.error(error?.response?.data?.message || "Failed to test rule");
+          toast.error(
+            error?.response?.data?.message || t("modals.testRule.error")
+          );
         },
       }
     );
@@ -158,7 +162,9 @@ export const TestRuleModal = ({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Test Rule: {ruleName || "Untitled Rule"}</DialogTitle>
+          <DialogTitle>
+            {t("modals.testRule.title", { name: ruleName })}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto pr-2">
@@ -166,15 +172,15 @@ export const TestRuleModal = ({
             {/* Input Fields */}
             <div className="space-y-4 pl-1">
               <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">
-                Input Fields
+                {t("modals.testRule.inputFields")}
               </h3>
               {isLoadingFields ? (
                 <div className="text-sm text-muted-foreground">
-                  Loading fields...
+                  {t("modals.testRule.loadingFields")}
                 </div>
               ) : fields.length === 0 ? (
                 <div className="text-sm text-muted-foreground">
-                  No input fields available for this event.
+                  {t("modals.testRule.noInputFields")}
                 </div>
               ) : (
                 <FormProvider {...form}>
@@ -244,7 +250,7 @@ export const TestRuleModal = ({
                 isPending={isTesting}
                 disabled={isLoadingFields || fields.length === 0}
               >
-                Run Test
+                {t("form.test")}
               </Button>
             </div>
 
@@ -252,19 +258,19 @@ export const TestRuleModal = ({
             <div className="space-y-6 border-t pt-6">
               <div>
                 <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider mb-4">
-                  Test Result
+                  {t("modals.testRule.testResult")}
                 </h3>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <Label>Points Calculated</Label>
+                    <Label>{t("modals.testRule.pointsCalculated")}</Label>
                     <div className="p-3 bg-muted/50 rounded-md border font-mono text-lg font-bold h-14">
                       {testResult ? testResult.points : "-"}
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <Label>Match Status</Label>
+                    <Label>{t("modals.testRule.matchStatus")}</Label>
                     <div
                       className={`flex items-center gap-2 p-3 rounded-md border h-14 ${
                         testResult
@@ -278,12 +284,16 @@ export const TestRuleModal = ({
                         testResult.isMatch ? (
                           <>
                             <CheckCircle2 className="w-5 h-5" />
-                            <span className="font-medium">Matched</span>
+                            <span className="font-medium">
+                              {t("modals.testRule.matched")}
+                            </span>
                           </>
                         ) : (
                           <>
                             <XCircle className="w-5 h-5" />
-                            <span className="font-medium">Not Matched</span>
+                            <span className="font-medium">
+                              {t("modals.testRule.notMatched")}
+                            </span>
                           </>
                         )
                       ) : (
@@ -308,7 +318,7 @@ export const TestRuleModal = ({
 
         <div className="flex justify-end pt-4 border-t mt-4">
           <Button variant="outline" onClick={handleClose}>
-            Cancel
+            {t("form.cancel")}
           </Button>
         </div>
       </DialogContent>

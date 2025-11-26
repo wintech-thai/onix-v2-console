@@ -577,7 +577,76 @@ interface Resources {
       "search": "Search",
       "searchPlaceholder": "Search...",
       "selectSearchField": "Select field",
-      "testRule": "Test Rule"
+      "testRule": "TEST RULE"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "createTitle": "Create Point Rules",
+      "description": "Description",
+      "endDate": "End Date",
+      "inputFields": "Input Fields",
+      "priority": "Priority (1-100)",
+      "ruleDefinition": "Rule Definition (JSON)",
+      "ruleName": "Name",
+      "save": "Save",
+      "startDate": "Start Date",
+      "tags": "Tags",
+      "tagsPlaceholder": "Type and press Enter to add tag",
+      "test": "Test",
+      "triggeredEvent": "Triggered Event",
+      "unsavedChanges": {
+        "message": "You have unsaved changes. Are you sure you want to leave?",
+        "title": "Unsaved Changes"
+      },
+      "updateTitle": "Update Point Rules",
+      "validation": {
+        "description": "Description is required",
+        "endDate": "End Date is required",
+        "priority": "Priority is required",
+        "ruleDefinition": "Rule Definition is required",
+        "ruleName": "Rule Name is required",
+        "startDate": "Start Date is required",
+        "tags": "Tags is required",
+        "triggeredEvent": "Triggered Event is required"
+      }
+    },
+    "modals": {
+      "evaluateRule": {
+        "close": "Close",
+        "error": "Failed to run evaluation",
+        "inputFields": "Input Fields",
+        "loadingFields": "Loading fields...",
+        "matchStatus": "Match Status",
+        "matched": "Matched",
+        "messages": "Messages",
+        "notMatched": "Not Matched",
+        "pointsCalculated": "Points Calculated",
+        "result": "Result",
+        "run": "Run",
+        "running": "Running...",
+        "success": "Evaluation run successfully",
+        "title": "Test Rule: {{event}}"
+      },
+      "ruleInputFields": {
+        "copied": "Copied {{text}} to clipboard",
+        "loading": "Loading...",
+        "noFields": "No input fields found for this event.",
+        "title": "Available Input Fields"
+      },
+      "testRule": {
+        "error": "Failed to test rule",
+        "inputFields": "Input Fields",
+        "loadingFields": "Loading fields...",
+        "matchStatus": "Match Status",
+        "matched": "Matched",
+        "missingDefinition": "Rule definition is missing",
+        "noInputFields": "No input fields available for this event.",
+        "notMatched": "Not Matched",
+        "pointsCalculated": "Points Calculated",
+        "success": "Test run successfully",
+        "testResult": "Test Result",
+        "title": "Test Rule: {{name}}"
+      }
     },
     "table": {
       "noResults": "No results found.",
