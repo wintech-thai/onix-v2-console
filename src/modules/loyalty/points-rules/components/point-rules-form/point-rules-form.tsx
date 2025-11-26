@@ -398,6 +398,8 @@ export const PointRulesForm = ({
         isOpen={isTestModalOpen}
         onClose={() => setIsTestModalOpen(false)}
         ruleDefinition={ruleDefinition}
+        triggeredEvent={triggeredEvent}
+        ruleName={form.getValues("ruleName")}
       />
     </FormProvider>
   );

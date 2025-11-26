@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dialog,
   DialogContent,
@@ -12,27 +13,258 @@ interface TestRuleModalProps {
   ruleDefinition: string;
 }
 
+import { getRuleInputFieldsApi } from "../../api/fetch-rule-input-field.api";
+import { useParams } from "next/navigation";
+import { useForm, FormProvider } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { testPointRulesApi } from "../../api/test-point-rules.api";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { CheckCircle2, XCircle } from "lucide-react";
+
+interface TestRuleModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  ruleDefinition: string;
+  triggeredEvent: string;
+  ruleName?: string;
+}
+
 export const TestRuleModal = ({
   isOpen,
   onClose,
   ruleDefinition,
+  triggeredEvent,
+  ruleName,
 }: TestRuleModalProps) => {
+  const params = useParams();
+  const orgId = params?.orgId as string;
+  const [testResult, setTestResult] = useState<{
+    points: number;
+    isMatch: boolean;
+    message?: string;
+  } | null>(null);
+
+  const { data: fieldsData, isLoading: isLoadingFields } =
+    getRuleInputFieldsApi.useGetRuleInputFields(
+      { triggeredEvent, orgId },
+      isOpen
+    );
+
+  const { mutate: testRule, isPending: isTesting } =
+    testPointRulesApi.useTestPointRules();
+
+  const form = useForm();
+
+  const fields = fieldsData?.data || [];
+
+  // Reset form and result when modal opens or fields change
+  useEffect(() => {
+    if (isOpen) {
+      setTestResult(null);
+      form.reset();
+    }
+  }, [isOpen, form]);
+
+  // Set default values when fields are loaded
+  useEffect(() => {
+    if (fields.length > 0) {
+      const defaultValues: Record<string, any> = {};
+      fields.forEach((field) => {
+        if (field.defaultValue) {
+          defaultValues[field.fieldName] = field.defaultValue;
+        }
+      });
+      form.reset(defaultValues);
+    }
+  }, [fields, form]);
+
+  const onSubmit = (values: any) => {
+    if (!ruleDefinition) {
+      toast.error("Rule definition is missing");
+      return;
+    }
+
+    const convertedValues = { ...values };
+
+    fields.forEach((field) => {
+      const value = convertedValues[field.fieldName];
+      if (value !== undefined && value !== "") {
+        if (field.fieldType === "int") {
+          convertedValues[field.fieldName] = parseInt(value, 10);
+        } else if (
+          field.fieldType === "double" ||
+          field.fieldType === "decimal"
+        ) {
+          convertedValues[field.fieldName] = parseFloat(value);
+        }
+      }
+    });
+
+    const payload = {
+      ...convertedValues,
+      ruleDefinition: ruleDefinition,
+    };
+
+    testRule(
+      { orgId, values: payload },
+      {
+        onSuccess: (response) => {
+          setTestResult({
+            points: Number(response.data.executionResult) || 0,
+            isMatch: response.data.isMatch,
+            message: response.data.description,
+          });
+          toast.success("Test run successfully");
+        },
+        onError: (error: any) => {
+          toast.error(error?.response?.data?.message || "Failed to test rule");
+        },
+      }
+    );
+  };
+
+  const handleClose = () => {
+    onClose();
+    setTestResult(null);
+    form.reset();
+  };
+
+  const inputTypeMap: Record<string, string> = {
+    double: "number",
+    decimal: "number",
+    int: "number",
+    string: "text",
+    date: "date",
+    datetime: "datetime-local",
+    boolean: "checkbox",
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg">
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Test Rule</DialogTitle>
+          <DialogTitle>Test Rule: {ruleName || "Untitled Rule"}</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
-          <div className="p-4 bg-muted rounded text-xs font-mono whitespace-pre-wrap max-h-[300px] overflow-auto">
-            {ruleDefinition || "No rule definition"}
+
+        <div className="flex-1 overflow-y-auto pr-2">
+          <div className="flex flex-col gap-6">
+            {/* Input Fields */}
+            <div className="space-y-4 pl-1">
+              <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">
+                Input Fields
+              </h3>
+              {isLoadingFields ? (
+                <div className="text-sm text-muted-foreground">
+                  Loading fields...
+                </div>
+              ) : fields.length === 0 ? (
+                <div className="text-sm text-muted-foreground">
+                  No input fields available for this event.
+                </div>
+              ) : (
+                <FormProvider {...form}>
+                  <form
+                    id="test-rule-form"
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-4"
+                  >
+                    {fields.map((field) => (
+                      <div key={field.fieldName} className="space-y-1">
+                        <Label htmlFor={field.fieldName}>
+                          {field.fieldName}
+                          <span className="text-xs font-normal text-muted-foreground ml-2">
+                            ({field.fieldType})
+                          </span>
+                        </Label>
+                        <Input
+                          type={inputTypeMap[field.fieldType] || "text"}
+                          {...form.register(field.fieldName)}
+                          placeholder={field.defaultValue || ""}
+                          defaultValue={field.defaultValue}
+                        />
+                      </div>
+                    ))}
+                  </form>
+                </FormProvider>
+              )}
+            </div>
+
+            <div className="pt-2">
+              <Button
+                type="submit"
+                form="test-rule-form"
+                className="w-full"
+                isPending={isTesting}
+                disabled={isLoadingFields || fields.length === 0}
+              >
+                Run Test
+              </Button>
+            </div>
+
+            {/* Results */}
+            <div className="space-y-6 border-t pt-6">
+              <div>
+                <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider mb-4">
+                  Test Result
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <Label>Points Calculated</Label>
+                    <div className="p-3 bg-muted/50 rounded-md border font-mono text-lg font-bold h-14">
+                      {testResult ? testResult.points : "-"}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label>Match Status</Label>
+                    <div
+                      className={`flex items-center gap-2 p-3 rounded-md border h-14 ${
+                        testResult
+                          ? testResult.isMatch
+                            ? "bg-green-50 border-green-200 text-green-700"
+                            : "bg-red-50 border-red-200 text-red-700"
+                          : "bg-muted/50"
+                      }`}
+                    >
+                      {testResult ? (
+                        testResult.isMatch ? (
+                          <>
+                            <CheckCircle2 className="w-5 h-5" />
+                            <span className="font-medium">Matched</span>
+                          </>
+                        ) : (
+                          <>
+                            <XCircle className="w-5 h-5" />
+                            <span className="font-medium">Not Matched</span>
+                          </>
+                        )
+                      ) : (
+                        <span className="text-muted-foreground">-</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* {testResult?.message && (
+                  <div className="space-y-1">
+                    <Label>Message</Label>
+                    <div className="p-3 bg-muted/50 rounded-md border text-sm">
+                      {testResult.message}
+                    </div>
+                  </div>
+                )} */}
+              </div>
+            </div>
           </div>
-          <div className="text-center text-muted-foreground py-8">
-            Test functionality coming soon...
-          </div>
-          <div className="flex justify-end">
-            <Button onClick={onClose}>Close</Button>
-          </div>
+        </div>
+
+        <div className="flex justify-end pt-4 border-t mt-4">
+          <Button variant="outline" onClick={handleClose}>
+            Cancel
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
