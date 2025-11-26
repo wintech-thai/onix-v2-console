@@ -11,11 +11,12 @@ import { useState, KeyboardEvent, useEffect } from "react";
 import { RuleInputFieldsModal } from "./rule-input-fields-modal";
 import { TestRuleModal } from "./test-rule-modal";
 import { useRouter } from "next/navigation";
-import { JsonEditor } from "json-edit-react";
+import Editor from "@monaco-editor/react";
 import dayjs from "dayjs";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { Label } from "@/components/ui/label";
+import { MuiDateTimePicker } from "@/components/ui/mui-date-time-picker";
 
 interface PointRulesFormProps {
   onSubmit: (values: PointRulesSchemaType) => Promise<void>;
@@ -256,29 +257,18 @@ export const PointRulesForm = ({
                 control={form.control}
                 name="startDate"
                 render={({ field }) => (
-                  <div className="flex flex-col gap-1 relative">
-                    <Input
-                      readOnly
-                      label="Start Date"
-                      isRequired
-                      value={
-                        field.value
-                          ? dayjs(field.value).format(
-                              "DD MMM YYYY HH:mm [GMT] Z"
-                            )
-                          : ""
-                      }
-                      disabled={isSubmitting}
-                      errorMessage={errors.startDate?.message}
-                    />
-                    <input
-                      {...field}
-                      type="datetime-local"
-                      className="absolute inset-0 w-full h-full z-10 opacity-0"
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  </div>
+                  <MuiDateTimePicker
+                    label="Start Date"
+                    isRequired
+                    value={field.value ? new Date(field.value) : null}
+                    onChange={(date) => {
+                      field.onChange(
+                        date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""
+                      );
+                    }}
+                    errorMessage={errors.startDate?.message}
+                    disabled={isSubmitting}
+                  />
                 )}
               />
 
@@ -286,31 +276,18 @@ export const PointRulesForm = ({
                 control={form.control}
                 name="endDate"
                 render={({ field }) => (
-                  <div className="flex flex-col gap-1 relative">
-                    <Input
-                      readOnly
-                      label="End Date"
-                      isRequired
-                      value={
-                        field.value
-                          ? dayjs(field.value).format(
-                              "DD MMM YYYY HH:mm [GMT] Z"
-                            )
-                          : ""
-                      }
-                      disabled={isSubmitting}
-                      errorMessage={errors.endDate?.message}
-                      onChange={() => {}}
-                    />
-                    <input
-                      {...field}
-                      type="datetime-local"
-                      className="absolute inset-0 w-full h-full z-10 opacity-0"
-                      disabled={isSubmitting}
-                      value={field.value || ""}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  </div>
+                  <MuiDateTimePicker
+                    label="End Date"
+                    isRequired
+                    value={field.value ? new Date(field.value) : null}
+                    onChange={(date) => {
+                      field.onChange(
+                        date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : ""
+                      );
+                    }}
+                    errorMessage={errors.endDate?.message}
+                    disabled={isSubmitting}
+                  />
                 )}
               />
             </div>
@@ -345,21 +322,22 @@ export const PointRulesForm = ({
               control={form.control}
               name="ruleDefinition"
               render={({ field }) => {
-                let jsonValue = {};
-                try {
-                  jsonValue = field.value ? JSON.parse(field.value) : {};
-                } catch {
-                  // If parse fails, default to empty object or handle gracefully
-                }
-
                 return (
-                  <div className="border rounded-md overflow-hidden w-full">
-                    <JsonEditor
-                      data={jsonValue}
-                      setData={(newData: unknown) => {
-                        field.onChange(JSON.stringify(newData, null, 2));
+                  <div className="border rounded-md overflow-hidden w-full h-[400px]">
+                    <Editor
+                      height="100%"
+                      defaultLanguage="json"
+                      value={field.value}
+                      onChange={(value: string | undefined) =>
+                        field.onChange(value)
+                      }
+                      options={{
+                        minimap: { enabled: false },
+                        formatOnPaste: true,
+                        formatOnType: true,
+                        scrollBeyondLastLine: false,
+                        fontSize: 14,
                       }}
-                      minWidth="100%"
                     />
                   </div>
                 );

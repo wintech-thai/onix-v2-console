@@ -17,9 +17,11 @@ import { getRuleInputFieldsApi } from "../../api/fetch-rule-input-field.api";
 import { useParams } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { MuiDateTimePicker } from "@/components/ui/mui-date-time-picker";
+import dayjs from "dayjs";
 import { Label } from "@/components/ui/label";
 import { testPointRulesApi } from "../../api/test-point-rules.api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { toast } from "sonner";
 import { CheckCircle2, XCircle } from "lucide-react";
 
@@ -57,28 +59,34 @@ export const TestRuleModal = ({
 
   const form = useForm();
 
-  const fields = fieldsData?.data || [];
+  const fields = useMemo(() => {
+    return (
+      fieldsData?.data?.map((field: any) => ({
+        ...field,
+        // Ensure default value is correct type
+        defaultValue:
+          field.fieldType === "number"
+            ? Number(field.defaultValue)
+            : field.fieldType === "boolean"
+            ? field.defaultValue === "true"
+            : field.defaultValue,
+      })) || []
+    );
+  }, [fieldsData?.data]);
 
   // Reset form and result when modal opens or fields change
   useEffect(() => {
     if (isOpen) {
+      form.reset({});
       setTestResult(null);
-      form.reset();
-    }
-  }, [isOpen, form]);
-
-  // Set default values when fields are loaded
-  useEffect(() => {
-    if (fields.length > 0) {
-      const defaultValues: Record<string, any> = {};
-      fields.forEach((field) => {
-        if (field.defaultValue) {
-          defaultValues[field.fieldName] = field.defaultValue;
+      // Set default values
+      fields.forEach((field: any) => {
+        if (field.defaultValue !== undefined && field.defaultValue !== "") {
+          form.setValue(field.fieldName, field.defaultValue);
         }
       });
-      form.reset(defaultValues);
     }
-  }, [fields, form]);
+  }, [isOpen, form, fields]);
 
   const onSubmit = (values: any) => {
     if (!ruleDefinition) {
@@ -170,20 +178,52 @@ export const TestRuleModal = ({
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-4"
                   >
-                    {fields.map((field) => (
-                      <div key={field.fieldName} className="space-y-1">
-                        <Label htmlFor={field.fieldName}>
-                          {field.fieldName}
-                          <span className="text-xs font-normal text-muted-foreground ml-2">
-                            ({field.fieldType})
-                          </span>
-                        </Label>
-                        <Input
-                          type={inputTypeMap[field.fieldType] || "text"}
-                          {...form.register(field.fieldName)}
-                          placeholder={field.defaultValue || ""}
-                          defaultValue={field.defaultValue}
-                        />
+                    {fields.map((field: any) => (
+                      <div
+                        key={field.fieldName}
+                        className="flex flex-col gap-1"
+                      >
+                        {field.fieldType === "date" ||
+                        field.fieldType === "datetime" ? (
+                          <MuiDateTimePicker
+                            label={`${field.fieldName} (${field.fieldType})`}
+                            value={
+                              form.watch(field.fieldName)
+                                ? new Date(form.watch(field.fieldName))
+                                : null
+                            }
+                            onChange={(date: Date | null) =>
+                              form.setValue(
+                                field.fieldName,
+                                date
+                                  ? dayjs(date).format(
+                                      field.fieldType === "date"
+                                        ? "YYYY-MM-DD"
+                                        : "YYYY-MM-DDTHH:mm"
+                                    )
+                                  : ""
+                              )
+                            }
+                            type={
+                              field.fieldType === "date" ? "date" : "datetime"
+                            }
+                          />
+                        ) : (
+                          <div className="space-y-1">
+                            <Label>
+                              {field.fieldName}{" "}
+                              <span className="text-xs text-muted-foreground">
+                                ({field.fieldType})
+                              </span>
+                            </Label>
+                            <Input
+                              type={inputTypeMap[field.fieldType] || "text"}
+                              {...form.register(field.fieldName)}
+                              placeholder={field.defaultValue || ""}
+                              defaultValue={field.defaultValue}
+                            />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </form>
