@@ -7,8 +7,8 @@ export const pointRulesSchema = z.object({
   tags: z.string().min(1, "form.validation.tags"),
   triggeredEvent: z.string().min(1, "form.validation.triggeredEvent"),
   priority: z.number("form.validation.priority").min(1, "form.validation.priority"),
-  startDate: z.string(),
-  endDate: z.string(),
+  startDate: z.string().nullable(),
+  endDate: z.string().nullable(),
 });
 
 export type PointRulesSchemaType = z.infer<typeof pointRulesSchema>;

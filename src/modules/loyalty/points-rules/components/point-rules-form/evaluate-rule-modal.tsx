@@ -147,7 +147,7 @@ export const EvaluateRuleModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto z-50">
+      <DialogContent className="md:min-w-2xl max-h-[90vh] overflow-y-auto z-50">
         <DialogHeader>
           <DialogTitle>
             {t("modals.evaluateRule.title", { event: triggeredEvent })}
@@ -172,45 +172,47 @@ export const EvaluateRuleModal = ({
               onSubmit={handleRunTest}
               className="space-y-4"
             >
-              {fields.map((field: any) => (
-                <div key={field.fieldName} className="flex flex-col gap-1">
-                  {field.fieldType === "date" ||
-                  field.fieldType === "datetime" ? (
-                    <MuiDateTimePicker
-                      label={`${field.fieldName} (${field.fieldType})`}
-                      value={
-                        formValues[field.fieldName]
-                          ? new Date(formValues[field.fieldName])
-                          : null
-                      }
-                      onChange={(date) =>
-                        handleInputChange(
-                          field.fieldName,
-                          date ? dayjs(date).toISOString() : ""
-                        )
-                      }
-                      type="datetime"
-                    />
-                  ) : (
-                    <div className="space-y-1">
-                      <Label>
-                        {field.fieldName}{" "}
-                        <span className="text-xs text-muted-foreground">
-                          ({field.fieldType})
-                        </span>
-                      </Label>
-                      <Input
-                        type={inputTypeMap[field.fieldType] || "text"}
-                        value={formValues[field.fieldName] || ""}
-                        onChange={(e) =>
-                          handleInputChange(field.fieldName, e.target.value)
+              <div className="grid md:grid-cols-2 gap-4">
+                {fields.map((field: any) => (
+                  <div key={field.fieldName} className="flex flex-col gap-1">
+                    {field.fieldType === "date" ||
+                    field.fieldType === "datetime" ? (
+                      <MuiDateTimePicker
+                        label={`${field.fieldName} (${field.fieldType})`}
+                        value={
+                          formValues[field.fieldName]
+                            ? new Date(formValues[field.fieldName])
+                            : null
                         }
-                        placeholder={field.defaultValue || ""}
+                        onChange={(date) =>
+                          handleInputChange(
+                            field.fieldName,
+                            date ? dayjs(date).toISOString() : ""
+                          )
+                        }
+                        type="datetime"
                       />
-                    </div>
-                  )}
-                </div>
-              ))}
+                    ) : (
+                      <div className="space-y-1">
+                        <Label>
+                          {field.fieldName}{" "}
+                          <span className="text-xs text-muted-foreground">
+                            ({field.fieldType})
+                          </span>
+                        </Label>
+                        <Input
+                          type={inputTypeMap[field.fieldType] || "text"}
+                          value={formValues[field.fieldName] || ""}
+                          onChange={(e) =>
+                            handleInputChange(field.fieldName, e.target.value)
+                          }
+                          placeholder={field.defaultValue || ""}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </form>
           </div>
 

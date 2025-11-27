@@ -14,8 +14,8 @@ export interface CreatePointRuleRequest {
   tags: string;
   triggeredEvent: string;
   priority: number;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
 }
 
 export const createPointRulesApi = {

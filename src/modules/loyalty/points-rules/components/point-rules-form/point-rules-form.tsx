@@ -108,8 +108,10 @@ export const PointRulesForm = ({
     }
     const payload = {
       ...values,
-      startDate: new Date(values.startDate).toISOString(),
-      endDate: new Date(values.endDate).toISOString(),
+      startDate: values.startDate
+        ? new Date(values.startDate).toISOString()
+        : null,
+      endDate: values.endDate ? new Date(values.endDate).toISOString() : null,
     };
     await onSubmit(payload);
     setFormDirty(false);

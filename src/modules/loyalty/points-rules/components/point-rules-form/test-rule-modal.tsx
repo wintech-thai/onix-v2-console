@@ -189,54 +189,56 @@ export const TestRuleModal = ({
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-4"
                   >
-                    {fields.map((field: any) => (
-                      <div
-                        key={field.fieldName}
-                        className="flex flex-col gap-1"
-                      >
-                        {field.fieldType === "date" ||
-                        field.fieldType === "datetime" ? (
-                          <MuiDateTimePicker
-                            label={`${field.fieldName} (${field.fieldType})`}
-                            value={
-                              form.watch(field.fieldName)
-                                ? new Date(form.watch(field.fieldName))
-                                : null
-                            }
-                            onChange={(date: Date | null) =>
-                              form.setValue(
-                                field.fieldName,
-                                date
-                                  ? dayjs(date).format(
-                                      field.fieldType === "date"
-                                        ? "YYYY-MM-DD"
-                                        : "YYYY-MM-DDTHH:mm"
-                                    )
-                                  : ""
-                              )
-                            }
-                            type={
-                              field.fieldType === "date" ? "date" : "datetime"
-                            }
-                          />
-                        ) : (
-                          <div className="space-y-1">
-                            <Label>
-                              {field.fieldName}{" "}
-                              <span className="text-xs text-muted-foreground">
-                                ({field.fieldType})
-                              </span>
-                            </Label>
-                            <Input
-                              type={inputTypeMap[field.fieldType] || "text"}
-                              {...form.register(field.fieldName)}
-                              placeholder={field.defaultValue || ""}
-                              defaultValue={field.defaultValue}
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {fields.map((field: any) => (
+                        <div
+                          key={field.fieldName}
+                          className="flex flex-col gap-1"
+                        >
+                          {field.fieldType === "date" ||
+                          field.fieldType === "datetime" ? (
+                            <MuiDateTimePicker
+                              label={`${field.fieldName} (${field.fieldType})`}
+                              value={
+                                form.watch(field.fieldName)
+                                  ? new Date(form.watch(field.fieldName))
+                                  : null
+                              }
+                              onChange={(date: Date | null) =>
+                                form.setValue(
+                                  field.fieldName,
+                                  date
+                                    ? dayjs(date).format(
+                                        field.fieldType === "date"
+                                          ? "YYYY-MM-DD"
+                                          : "YYYY-MM-DDTHH:mm"
+                                      )
+                                    : ""
+                                )
+                              }
+                              type={
+                                field.fieldType === "date" ? "date" : "datetime"
+                              }
                             />
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                          ) : (
+                            <div className="space-y-1">
+                              <Label>
+                                {field.fieldName}{" "}
+                                <span className="text-xs text-muted-foreground">
+                                  ({field.fieldType})
+                                </span>
+                              </Label>
+                              <Input
+                                type={inputTypeMap[field.fieldType] || "text"}
+                                {...form.register(field.fieldName)}
+                                placeholder={field.defaultValue || ""}
+                                defaultValue={field.defaultValue}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </form>
                 </FormProvider>
               )}
