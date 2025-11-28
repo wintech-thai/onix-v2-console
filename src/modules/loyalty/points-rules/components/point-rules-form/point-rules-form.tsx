@@ -278,13 +278,14 @@ export const PointRulesForm = ({
                     label={t("form.startDate")}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      field.onChange(date ? dayjs(date).toISOString() : "");
+                      field.onChange(date ? dayjs(date).toISOString() : null);
                     }}
                     errorMessage={errorMessageAsLangKey(
                       errors.startDate?.message,
                       t
                     )}
                     disabled={isSubmitting}
+                    clearable
                   />
                 )}
               />
@@ -297,13 +298,14 @@ export const PointRulesForm = ({
                     label={t("form.endDate")}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      field.onChange(date ? dayjs(date).toISOString() : "");
+                      field.onChange(date ? dayjs(date).toISOString() : null);
                     }}
                     errorMessage={errorMessageAsLangKey(
                       errors.endDate?.message,
                       t
                     )}
                     disabled={isSubmitting}
+                    clearable
                   />
                 )}
               />

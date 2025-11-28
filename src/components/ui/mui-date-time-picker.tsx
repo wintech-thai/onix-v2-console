@@ -6,6 +6,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Input } from "@/components/ui/input";
 import dayjs, { Dayjs } from "dayjs";
+import { XIcon } from "lucide-react";
 
 interface MuiDateTimePickerProps {
   value: Date | null | undefined;
@@ -19,6 +20,7 @@ interface MuiDateTimePickerProps {
   placeholder?: string;
   minDate?: Date;
   maxDate?: Date;
+  clearable?: boolean;
 }
 
 export function MuiDateTimePicker({
@@ -33,6 +35,7 @@ export function MuiDateTimePicker({
   placeholder,
   minDate,
   maxDate,
+  clearable,
 }: MuiDateTimePickerProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -41,6 +44,11 @@ export function MuiDateTimePicker({
 
   const handleChange = (newValue: Dayjs | null) => {
     onChange(newValue ? newValue.toDate() : null);
+  };
+
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onChange(null);
   };
 
   const formattedValue = React.useMemo(() => {
@@ -105,7 +113,7 @@ export function MuiDateTimePicker({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="relative w-full">
+      <div className="relative w-full group">
         <Input
           label={label}
           value={formattedValue}
@@ -116,9 +124,18 @@ export function MuiDateTimePicker({
           disabled={disabled}
           readOnly
           onClick={!disabled ? handleOpen : undefined}
-          className="cursor-pointer"
+          className="cursor-pointer pr-8"
           // Add an icon if desired, or keep it simple as per request "input trigger"
         />
+
+        {clearable && value && !disabled && (
+          <div
+            className="absolute right-4 top-12 cursor-pointer text-muted-foreground hover:text-foreground"
+            onClick={handleClear}
+          >
+            <XIcon className="h-4 w-4" />
+          </div>
+        )}
 
         {/* Hidden inputs to capture focus or form submission if needed, but we rely on the visible Input */}
 

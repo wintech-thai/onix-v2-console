@@ -187,10 +187,11 @@ export const EvaluateRuleModal = ({
                         onChange={(date) =>
                           handleInputChange(
                             field.fieldName,
-                            date ? dayjs(date).toISOString() : ""
+                            date ? dayjs(date).toISOString() : undefined
                           )
                         }
                         type="datetime"
+                        clearable
                       />
                     ) : (
                       <div className="space-y-1">

@@ -213,12 +213,13 @@ export const TestRuleModal = ({
                                           ? "YYYY-MM-DD"
                                           : "YYYY-MM-DDTHH:mm"
                                       )
-                                    : ""
+                                    : undefined
                                 )
                               }
                               type={
                                 field.fieldType === "date" ? "date" : "datetime"
                               }
+                              clearable
                             />
                           ) : (
                             <div className="space-y-1">
