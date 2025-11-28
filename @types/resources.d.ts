@@ -266,9 +266,9 @@ interface Resources {
         "label": "Loyalty",
         "sub": {
           "1": "Points & Wallets",
-          "2": "Privileges",
-          "3": "Point Rule",
-          "4": "Point Trigger"
+          "2": "Point Rule",
+          "3": "Point Trigger",
+          "4": "Privileges"
         }
       }
     },
@@ -530,6 +530,128 @@ interface Resources {
       "orgIdRequired": "Organization ID is required",
       "orgNameRequired": "Organization name is required",
       "tagsRequired": "Tags are required"
+    }
+  },
+  "point-rule": {
+    "actions": {
+      "disablePointRule": "Disable",
+      "enablePointRule": "Enable"
+    },
+    "columns": {
+      "action": "Action",
+      "description": "Description",
+      "endDate": "End Date",
+      "event": "Event",
+      "priority": "Priority",
+      "ruleName": "Rule Name",
+      "startDate": "Start Date",
+      "status": "Status",
+      "tags": "Tags"
+    },
+    "delete": {
+      "error": "Failed to delete point rules",
+      "loading": "Deleting point rules...",
+      "message": "Are you sure you want to delete the selected point rules? This action cannot be undone.",
+      "success": "Point rules deleted successfully",
+      "title": "Delete Point Rule"
+    },
+    "disable": {
+      "error": "Failed to disable point rule",
+      "loading": "Disabling point rule...",
+      "message": "Are you sure you want to disable this point rule?",
+      "success": "Point rule disabled successfully",
+      "title": "Disable Point Rule"
+    },
+    "enable": {
+      "error": "Failed to enable point rule",
+      "loading": "Enabling point rule...",
+      "message": "Are you sure you want to enable this point rule?",
+      "success": "Point rule enabled successfully",
+      "title": "Enable Point Rule"
+    },
+    "filter": {
+      "add": "ADD",
+      "customerRegistered": "Customer Registered",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search...",
+      "selectSearchField": "Select field",
+      "testRule": "TEST RULE"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "createTitle": "Create Point Rules",
+      "description": "Description",
+      "endDate": "End Date",
+      "inputFields": "Input Fields",
+      "priority": "Priority (1-100)",
+      "ruleDefinition": "Rule Definition (JSON)",
+      "ruleName": "Name",
+      "save": "Save",
+      "startDate": "Start Date",
+      "tags": "Tags",
+      "tagsPlaceholder": "Type and press Enter to add tag",
+      "test": "Test",
+      "triggeredEvent": "Triggered Event",
+      "unsavedChanges": {
+        "message": "You have unsaved changes. Are you sure you want to leave?",
+        "title": "Unsaved Changes"
+      },
+      "updateTitle": "Update Point Rules",
+      "validation": {
+        "description": "Description is required",
+        "endDate": "End Date is required",
+        "priority": "Priority is required",
+        "ruleDefinition": "Rule Definition is required",
+        "ruleName": "Rule Name is required",
+        "startDate": "Start Date is required",
+        "tags": "Tags is required",
+        "triggeredEvent": "Triggered Event is required"
+      }
+    },
+    "modals": {
+      "evaluateRule": {
+        "close": "Close",
+        "error": "Failed to run evaluation",
+        "inputFields": "Input Fields",
+        "loadingFields": "Loading fields...",
+        "matchStatus": "Match Status",
+        "matched": "Matched",
+        "messages": "Messages",
+        "notMatched": "Not Matched",
+        "pointsCalculated": "Points Calculated",
+        "result": "Result",
+        "run": "Run",
+        "running": "Running...",
+        "success": "Evaluation run successfully",
+        "title": "Test Rule: {{event}}"
+      },
+      "ruleInputFields": {
+        "copied": "Copied {{text}} to clipboard",
+        "loading": "Loading...",
+        "noFields": "No input fields found for this event.",
+        "title": "Available Input Fields"
+      },
+      "testRule": {
+        "error": "Failed to test rule",
+        "inputFields": "Input Fields",
+        "loadingFields": "Loading fields...",
+        "matchStatus": "Match Status",
+        "matched": "Matched",
+        "missingDefinition": "Rule definition is missing",
+        "noInputFields": "No input fields available for this event.",
+        "notMatched": "Not Matched",
+        "pointsCalculated": "Points Calculated",
+        "success": "Test run successfully",
+        "testResult": "Test Result",
+        "title": "Test Rule: {{name}}"
+      }
+    },
+    "table": {
+      "noResults": "No results found.",
+      "of": "of",
+      "rowsPerPage": "Rows per page"
     }
   },
   "product": {
@@ -998,8 +1120,8 @@ interface Resources {
       "newBalance": "New Balance",
       "title": "Point Transaction",
       "types": {
-        "add": "Add",
-        "deduct": "Deduct"
+        "add": "Add Point",
+        "deduct": "Deduct Point"
       },
       "wallet": "Wallet"
     },
