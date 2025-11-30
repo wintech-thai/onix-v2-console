@@ -306,7 +306,7 @@ export const CronJobForm = ({
                 value={
                   cronJobData.startDate
                     ? dayjs(cronJobData.startDate).format(
-                        "DD MMM YYYY HH:mm [GMT] Z"
+                        "DD MMM YYYY HH:mm:ss [GMT] Z"
                       )
                     : "-"
                 }
@@ -318,7 +318,7 @@ export const CronJobForm = ({
                 value={
                   cronJobData.endDate
                     ? dayjs(cronJobData.endDate).format(
-                        "DD MMM YYYY HH:mm [GMT] Z"
+                        "DD MMM YYYY HH:mm:ss [GMT] Z"
                       )
                     : "-"
                 }
@@ -330,7 +330,7 @@ export const CronJobForm = ({
                 value={
                   cronJobData.pickupDate
                     ? dayjs(cronJobData.pickupDate).format(
-                        "DD MMM YYYY HH:mm [GMT] Z"
+                        "DD MMM YYYY HH:mm:ss [GMT] Z"
                       )
                     : "-"
                 }
@@ -353,7 +353,7 @@ export const CronJobForm = ({
             <div className="mt-4">
               <Label>{t("form.state.jobMessage")}</Label>
               <textarea
-                className="w-full mt-2 p-3 border rounded-md min-h-[100px] bg-gray-50 text-gray-700"
+                className="w-full mt-2 p-3 border rounded-md min-h-[300px] bg-gray-50 text-gray-700"
                 value={cronJobData.jobMessage || "-"}
                 readOnly
                 disabled
