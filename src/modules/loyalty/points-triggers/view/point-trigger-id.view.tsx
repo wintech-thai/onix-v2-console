@@ -106,7 +106,7 @@ const PointTriggerIdViewPage = () => {
           <div className="p-6">
             <div className="border rounded-md p-4 bg-slate-50 overflow-auto min-h-[400px]">
               <JsonView
-                shortenTextAfterLength={255}
+                shortenTextAfterLength={10000}
                 value={parsedParams}
                 displayDataTypes={false}
               />
@@ -121,7 +121,7 @@ const PointTriggerIdViewPage = () => {
             router.push(RouteConfig.LOYALTY.POINT_TRIGGER.LIST(params.orgId))
           }
         >
-          OK
+          {t("common:common.ok")}
         </Button>
       </div>
     </div>
