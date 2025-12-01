@@ -14,10 +14,6 @@ export const usePointTriggerTableColumns = (): ColumnDef<IPointTrigger>[] => {
 
   return [
     {
-      accessorKey: "walletId",
-      header: t("table.walletId"),
-    },
-    {
       accessorKey: "triggerName",
       header: t("table.triggerName"),
       cell: ({ row }) => {
@@ -33,6 +29,10 @@ export const usePointTriggerTableColumns = (): ColumnDef<IPointTrigger>[] => {
           </Link>
         );
       },
+    },
+    {
+      accessorKey: "walletId",
+      header: t("table.walletId"),
     },
     {
       accessorKey: "description",

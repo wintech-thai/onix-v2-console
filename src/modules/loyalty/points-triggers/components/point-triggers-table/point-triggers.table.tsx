@@ -27,6 +27,8 @@ import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { PointTriggersFilterTable } from "./point-triggers-filter.table";
 import { IPointTrigger } from "../../api/fetch-point-triggers.api";
 
+import { useActiveRow } from "@/hooks/use-active-row";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -50,6 +52,8 @@ export function PointTriggersTable<TData, TValue>({
   onSearch,
   isLoading = false,
 }: DataTableProps<TData, TValue>) {
+  const { activeRowId, setActiveRowId } = useActiveRow("point-triggers-table");
+
   const table = useReactTable({
     data,
     columns,
@@ -97,14 +101,19 @@ export function PointTriggersTable<TData, TValue>({
               table.getRowModel().rows.map((row) => {
                 const rowData = row.original as IPointTrigger;
                 const isMatch = rowData.isRuleMatch === "True";
-                const rowClass = isMatch
+
+                const isActive = activeRowId === rowData.id;
+                const rowClass = isActive
+                  ? "bg-blue-50 hover:bg-blue-100"
+                  : isMatch
                   ? ""
                   : "bg-destructive/10 hover:bg-destructive/20";
 
                 return (
                   <TableRow
                     key={row.id}
-                    className={`transition-colors ${rowClass}`}
+                    className={`cursor-pointer transition-colors ${rowClass}`}
+                    onClick={() => setActiveRowId(rowData.id)}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
