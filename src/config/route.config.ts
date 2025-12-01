@@ -39,6 +39,7 @@ export const RouteConfig = {
     },
     POINT_TRIGGER: {
       LIST: (orgId: string) => `/${orgId}/loyalty/point-triggers`,
+      VIEW: (orgId: string, pointTriggerId: string) => `/${orgId}/loyalty/point-triggers/${pointTriggerId}/view`,
     },
     PRIVILEGES: {
       LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,

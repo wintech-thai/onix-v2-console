@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import PointTriggersViewPage from "@/modules/loyalty/points-triggers/view/point-triggers.view";
 
 const PointTriggersPage = () => {
-  return <CommingSoon />
-}
+  return <PointTriggersViewPage />;
+};
 
 export default PointTriggersPage;

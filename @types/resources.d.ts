@@ -654,6 +654,28 @@ interface Resources {
       "rowsPerPage": "Rows per page"
     }
   },
+  "point-trigger": {
+    "description": "Manage your point triggers here.",
+    "detail": {
+      "title": "Point Trigger Detail",
+      "triggerParams": "Trigger Parameters"
+    },
+    "filter": {
+      "search": "Search..."
+    },
+    "table": {
+      "createdDate": "Created Date",
+      "description": "Description",
+      "isMatch": "Is Match",
+      "point": "Point",
+      "tags": "Tags",
+      "triggerDate": "Trigger Date",
+      "triggerName": "Trigger Name",
+      "triggeredEvent": "Triggered Event",
+      "walletId": "Wallet ID"
+    },
+    "title": "Point Triggers"
+  },
   "product": {
     "actions": {
       "back": "Back",

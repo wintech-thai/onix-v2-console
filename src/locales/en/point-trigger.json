@@ -1,0 +1,22 @@
+{
+  "title": "Point Triggers",
+  "description": "Manage your point triggers here.",
+  "table": {
+    "walletId": "Wallet ID",
+    "triggerName": "Trigger Name",
+    "description": "Description",
+    "tags": "Tags",
+    "triggeredEvent": "Triggered Event",
+    "point": "Point",
+    "isMatch": "Is Match",
+    "triggerDate": "Trigger Date",
+    "createdDate": "Created Date"
+  },
+  "filter": {
+    "search": "Search..."
+  },
+  "detail": {
+    "title": "Point Trigger Detail",
+    "triggerParams": "Trigger Parameters"
+  }
+}
