@@ -353,7 +353,7 @@ interface Resources {
   },
   "customer": {
     "actions": {
-      "pointManagement": "Point Management",
+      "pointTransaction": "Point Transaction",
       "updateEmail": "Update Email",
       "verifyEmail": "Update & Verify Email"
     },
