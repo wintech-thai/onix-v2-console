@@ -816,6 +816,7 @@ interface Resources {
       "bindToCustomer": "Bind to Customer",
       "bindToProduct": "Bind To Product",
       "detachCustomer": "Detach Customer",
+      "detachProduct": "Detach Product",
       "dryRun": "Dry Run",
       "scanQr": "Scan QR",
       "unVerifyScanItem": "Un-Verify Scan Item"
@@ -860,6 +861,13 @@ interface Resources {
       "message": "Are you sure you want to detach this customer from the scan item?",
       "success": "Customer detached successfully",
       "title": "Confirm Detach Customer"
+    },
+    "detachProduct": {
+      "error": "Failed to detach product",
+      "loading": "Detaching product...",
+      "message": "Are you sure you want to detach this product from the scan item?",
+      "success": "Product detached successfully",
+      "title": "Confirm Detach Product"
     },
     "detail": {
       "copyError": "Failed to copy",

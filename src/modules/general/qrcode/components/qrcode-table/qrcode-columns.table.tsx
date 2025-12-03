@@ -23,6 +23,7 @@ import { getScanItemUrlDryRunApi } from "../../api/get-scan-item-url-dry-run.api
 import { QrCodeModal } from "../modal/qrcode-modal";
 import { useState as State } from "react";
 import { detachScanItemToCustomerApi } from "@/modules/general/customer/api/detach-scan-item-from-customer.api";
+import { detachScanItemFromProductApi } from "../../api/detach-scan-item-from-product.api";
 import Link from "next/link";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
@@ -144,11 +145,17 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           message: t("detachCustomer.message"),
           variant: "destructive",
         });
+        const [DetachProductConfirmDialog, detachProductConfirm] = Confirm({
+          title: t("detachProduct.title"),
+          message: t("detachProduct.message"),
+          variant: "destructive",
+        });
         const params = Params<{ orgId: string }>();
 
         const unVerifyScanItemMutate =
           unVerifyScanItemsApi.useDeleteScanItemsMutation(params.orgId);
         const detachCustomerMutate = detachScanItemToCustomerApi.useMutation();
+        const detachProductMutate = detachScanItemFromProductApi.useDetachScanItemFromProduct();
         const getScanUrlDryRunApi = getScanItemUrlDryRunApi.useMutation();
 
         const handleUnVerify = async (scanId: string) => {
@@ -209,6 +216,38 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           }
         };
 
+        const handleDetachProduct = async (scanId: string) => {
+          const ok = await detachProductConfirm();
+
+          if (!ok) return;
+
+          const toastId = toast.loading(t("detachProduct.loading"));
+
+          try {
+            await detachProductMutate.mutateAsync(
+              {
+                orgId: params.orgId,
+                scanItemId: scanId,
+              },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status !== "OK" && data.status !== "SUCCESS") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+                  toast.success(t("detachProduct.success"), { id: toastId });
+                  queryClient.invalidateQueries({
+                    queryKey: fetchScanItemsApi.fetchScanItemsKey,
+                    refetchType: "active",
+                  });
+                },
+              }
+            );
+          } catch (error) {
+            console.error("error", error);
+            toast.error(t("detachProduct.error"), { id: toastId });
+          }
+        };
+
         const [qrCodeModal, setQrCodeModal] = State({
           open: false,
           url: "",
@@ -223,11 +262,13 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
             />
             <UnVerifyConfirmDialog />
             <DetachCustomerConfirmDialog />
+            <DetachProductConfirmDialog />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon">
                   {unVerifyScanItemMutate.isPending ||
-                  detachCustomerMutate.isPending ? (
+                  detachCustomerMutate.isPending ||
+                  detachProductMutate.isPending ? (
                     <Loader className="animate-spin size-4" />
                   ) : (
                     <MoreHorizontalIcon className="size-4" />
@@ -245,6 +286,12 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
                   onSelect={() => handleDetachCustomer(row.original.id)}
                 >
                   {t("actions.detachCustomer")}
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  onSelect={() => handleDetachProduct(row.original.id)}
+                >
+                  {t("actions.detachProduct")}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator className="my-1" />
