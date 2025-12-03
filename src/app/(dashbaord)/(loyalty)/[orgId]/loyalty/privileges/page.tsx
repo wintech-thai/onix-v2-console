@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import PrivilegesViewPage from "@/modules/loyalty/privileges/view/privileges.view";
 
 const PrivilegesPage = () => {
-  return <CommingSoon />
+  return <PrivilegesViewPage />;
 }
 
 export default PrivilegesPage;

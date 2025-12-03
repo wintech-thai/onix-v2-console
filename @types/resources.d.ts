@@ -676,6 +676,112 @@ interface Resources {
     },
     "title": "Point Triggers"
   },
+  "privileges": {
+    "actions": {
+      "addQuota": "Add Quota",
+      "deductQuota": "Deduct Quota",
+      "redeem": "Redeem",
+      "transaction": "Transaction"
+    },
+    "columns": {
+      "action": "Action",
+      "code": "Code",
+      "description": "Description",
+      "endDate": "End Date",
+      "remainingQuota": "Remaining Quota",
+      "startDate": "Start Date",
+      "status": "Status",
+      "tags": "Tags"
+    },
+    "create": {
+      "error": "Failed to create privilege",
+      "success": "Privilege created successfully"
+    },
+    "delete": {
+      "error": "Failed to delete privilege",
+      "message": "Are you sure you want to delete the selected privilege(s)?",
+      "success": "Successfully deleted privilege(s)",
+      "title": "Delete Privilege"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search privileges...",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "code": "Code",
+      "content": "Content",
+      "createTitle": "Create Privilege",
+      "description": "Description",
+      "endDate": "End Date",
+      "leavePage": "Leave Page",
+      "privilegeInformation": "Privilege Information",
+      "save": "Save",
+      "selectStatus": "Select Status",
+      "startDate": "Start Date",
+      "status": "Status",
+      "statusOptions": {
+        "approve": "Approve",
+        "disable": "Disable",
+        "pending": "Pending"
+      },
+      "tags": "Tags",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update Privilege",
+      "validation": {
+        "codeRequired": "Code is required",
+        "contentRequired": "Content is required",
+        "descriptionRequired": "Description is required",
+        "effectiveDateRequired": "Start date is required",
+        "expireDateRequired": "End date is required",
+        "statusRequired": "Status is required",
+        "tagsRequired": "At least one tag is required"
+      }
+    },
+    "messages": {
+      "updateError": "Failed to update privilege",
+      "updateSuccess": "Privilege updated successfully"
+    },
+    "quota": {
+      "addSuccess": "Quota added successfully",
+      "addTitle": "Add Quota",
+      "amount": "Amount",
+      "balance": "Current Balance",
+      "deductSuccess": "Quota deducted successfully",
+      "deductTitle": "Deduct Quota",
+      "errors": {
+        "amountRequired": "Amount is required",
+        "insufficientBalance": "Insufficient balance"
+      },
+      "newBalance": "New Balance",
+      "privilege": "Privilege"
+    },
+    "transaction": {
+      "balance": "Balance",
+      "columns": {
+        "createdDate": "Created Date",
+        "currentBalance": "Current Balance",
+        "description": "Description",
+        "previousBalance": "Previous Balance",
+        "tags": "Tags",
+        "txAmount": "Amount",
+        "txType": "Type"
+      },
+      "title": "Privilege Transaction",
+      "types": {
+        "add": "Add",
+        "deduct": "Deduct"
+      }
+    },
+    "update": {
+      "error": "Failed to update privilege",
+      "success": "Privilege updated successfully"
+    }
+  },
   "product": {
     "actions": {
       "back": "Back",

@@ -1,0 +1,106 @@
+{
+  "columns": {
+    "code": "รหัส",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "startDate": "วันที่เริ่มต้น",
+    "endDate": "วันที่สิ้นสุด",
+    "status": "สถานะ",
+    "remainingQuota": "โควต้าคงเหลือ",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "searchPlaceholder": "ค้นหาสิทธิพิเศษ...",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม"
+  },
+  "actions": {
+    "addQuota": "เพิ่มโควต้า",
+    "deductQuota": "หักโควต้า",
+    "transaction": "ประวัติการใช้งาน",
+    "redeem": "แลกรับสิทธิ์"
+  },
+  "delete": {
+    "title": "ลบสิทธิพิเศษ",
+    "message": "คุณแน่ใจหรือไม่ที่จะลบสิทธิพิเศษที่เลือก?",
+    "success": "ลบสิทธิพิเศษสำเร็จ",
+    "error": "ลบสิทธิพิเศษไม่สำเร็จ"
+  },
+  "form": {
+    "createTitle": "สร้างสิทธิพิเศษ",
+    "updateTitle": "แก้ไขสิทธิพิเศษ",
+    "privilegeInformation": "ข้อมูลสิทธิพิเศษ",
+    "content": "เนื้อหา",
+    "code": "รหัส",
+    "status": "สถานะ",
+    "selectStatus": "เลือกสถานะ",
+    "statusOptions": {
+      "pending": "รอดำเนินการ",
+      "approve": "อนุมัติ",
+      "disable": "ปิดใช้งาน"
+    },
+    "description": "คำอธิบาย",
+    "startDate": "วันที่เริ่มต้น",
+    "endDate": "วันที่สิ้นสุด",
+    "tags": "แท็ก",
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ที่จะออก?",
+    "leavePage": "ออกจากหน้า",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "validation": {
+      "codeRequired": "กรุณากรอกรหัส",
+      "statusRequired": "กรุณาเลือกสถานะ",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "effectiveDateRequired": "กรุณาเลือกวันที่เริ่มต้น",
+      "expireDateRequired": "กรุณาเลือกวันที่สิ้นสุด",
+      "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",
+      "contentRequired": "กรุณากรอกเนื้อหา"
+    }
+  },
+  "create": {
+    "success": "สร้างสิทธิพิเศษสำเร็จ",
+    "error": "สร้างสิทธิพิเศษไม่สำเร็จ"
+  },
+  "update": {
+    "success": "แก้ไขสิทธิพิเศษสำเร็จ",
+    "error": "แก้ไขสิทธิพิเศษไม่สำเร็จ"
+  },
+  "messages": {
+    "updateSuccess": "แก้ไขสิทธิพิเศษสำเร็จ",
+    "updateError": "แก้ไขสิทธิพิเศษไม่สำเร็จ"
+  },
+  "quota": {
+    "addTitle": "เพิ่มโควต้า",
+    "deductTitle": "หักโควต้า",
+    "privilege": "สิทธิพิเศษ",
+    "balance": "ยอดคงเหลือปัจจุบัน",
+    "amount": "จำนวน",
+    "newBalance": "ยอดคงเหลือใหม่",
+    "addSuccess": "เพิ่มโควต้าสำเร็จ",
+    "deductSuccess": "หักโควต้าสำเร็จ",
+    "errors": {
+      "insufficientBalance": "ยอดคงเหลือไม่เพียงพอ",
+      "amountRequired": "กรุณากรอกจำนวน"
+    }
+  },
+  "transaction": {
+    "title": "ประวัติการใช้งานสิทธิพิเศษ",
+    "balance": "ยอดคงเหลือ",
+    "columns": {
+      "createdDate": "วันที่สร้าง",
+      "tags": "แท็ก",
+      "description": "คำอธิบาย",
+      "txAmount": "จำนวน",
+      "txType": "ประเภท",
+      "currentBalance": "ยอดคงเหลือปัจจุบัน",
+      "previousBalance": "ยอดคงเหลือก่อนหน้า"
+    },
+    "types": {
+      "add": "เพิ่ม",
+      "deduct": "หัก"
+    }
+  }
+}
