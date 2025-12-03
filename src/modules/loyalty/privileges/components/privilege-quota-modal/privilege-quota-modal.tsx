@@ -19,6 +19,7 @@ import { addPrivilegeQuantityApi } from "../../api/add-privilege-quantity.api";
 import { deDuctPrivilegeQuantityApi } from "../../api/deduct-privilege-quantity.api";
 import { fetchPrivilegesApi } from "../../api/fetch-privileges.api";
 import { z } from "zod";
+import { getPrivilegesApi } from "../../api/get-privileges.api";
 
 const privilegeQuotaSchema = z.object({
   amount: z.number().min(1, "quota.errors.amountRequired"),
@@ -127,6 +128,7 @@ export const PrivilegeQuotaModal = ({
       );
 
       await queryClient.invalidateQueries({ queryKey: fetchPrivilegesApi.key });
+      await queryClient.invalidateQueries({ queryKey: [getPrivilegesApi.key] });
       form.reset();
       onClose();
     };
