@@ -43,6 +43,7 @@
       "disable": "ปิดใช้งาน"
     },
     "description": "คำอธิบาย",
+    "pointRedeem": "แต้มที่ใช้แลก",
     "startDate": "วันที่เริ่มต้น",
     "endDate": "วันที่สิ้นสุด",
     "tags": "แท็ก",
@@ -54,6 +55,7 @@
       "codeRequired": "กรุณากรอกรหัส",
       "statusRequired": "กรุณาเลือกสถานะ",
       "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "pointRedeemRequired": "แต้มที่ใช้แลกต้องมีค่าอย่างน้อย 1",
       "effectiveDateRequired": "กรุณาเลือกวันที่เริ่มต้น",
       "expireDateRequired": "กรุณาเลือกวันที่สิ้นสุด",
       "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",

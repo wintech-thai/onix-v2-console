@@ -112,7 +112,9 @@ export const usePrivilegesTableColumns = (): PrivilegesTableColumns[] => {
       header: t("columns.startDate"),
       cell: ({ row }) => {
         return row.original.effectiveDate
-          ? dayjs(row.original.effectiveDate).format("DD/MM/YYYY")
+          ? dayjs(row.original.effectiveDate).format(
+              "DD MMM YYYY HH:mm [GMT] Z"
+            )
           : "-";
       },
     },
@@ -121,7 +123,7 @@ export const usePrivilegesTableColumns = (): PrivilegesTableColumns[] => {
       header: t("columns.endDate"),
       cell: ({ row }) => {
         return row.original.expireDate
-          ? dayjs(row.original.expireDate).format("DD/MM/YYYY")
+          ? dayjs(row.original.expireDate).format("DD MMM YYYY HH:mm [GMT] Z")
           : "-";
       },
     },

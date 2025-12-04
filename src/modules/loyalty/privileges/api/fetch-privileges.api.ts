@@ -23,6 +23,7 @@ export interface IPrivileges {
   expireDate: string;
   status: string;
   currentBalance: number;
+  pointRedeem: number | null;
 }
 
 export const fetchPrivilegesApi = {

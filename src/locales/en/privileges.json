@@ -43,6 +43,7 @@
       "disable": "Disable"
     },
     "description": "Description",
+    "pointRedeem": "Point Redeem",
     "startDate": "Start Date",
     "endDate": "End Date",
     "tags": "Tags",
@@ -54,6 +55,7 @@
       "codeRequired": "Code is required",
       "statusRequired": "Status is required",
       "descriptionRequired": "Description is required",
+      "pointRedeemRequired": "Point redeem must be at least 1",
       "effectiveDateRequired": "Start date is required",
       "expireDateRequired": "End date is required",
       "tagsRequired": "At least one tag is required",

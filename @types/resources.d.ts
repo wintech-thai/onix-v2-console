@@ -719,6 +719,7 @@ interface Resources {
       "description": "Description",
       "endDate": "End Date",
       "leavePage": "Leave Page",
+      "pointRedeem": "Point Redeem",
       "privilegeInformation": "Privilege Information",
       "save": "Save",
       "selectStatus": "Select Status",
@@ -738,6 +739,7 @@ interface Resources {
         "descriptionRequired": "Description is required",
         "effectiveDateRequired": "Start date is required",
         "expireDateRequired": "End date is required",
+        "pointRedeemRequired": "Point redeem must be at least 1",
         "statusRequired": "Status is required",
         "tagsRequired": "At least one tag is required"
       }

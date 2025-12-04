@@ -84,6 +84,7 @@ const UpdatePrivilegesViewPage = () => {
         effectiveDate: privilegePayload.effectiveDate || null,
         expireDate: privilegePayload.expireDate || null,
         content: privilegePayload.content || "",
+        pointRedeem: privilegePayload.pointRedeem,
       }}
       isUpdate
       onSubmit={handleUpdatePrivilege}

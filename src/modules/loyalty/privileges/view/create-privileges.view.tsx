@@ -19,6 +19,7 @@ const CreatePrivilegesViewPage = () => {
     effectiveDate: null,
     expireDate: null,
     content: "",
+    pointRedeem: null,
   };
 
   const handleSubmit = async (values: PrivilegesSchemaType) => {
@@ -33,9 +34,12 @@ const CreatePrivilegesViewPage = () => {
         {
           onSuccess: ({ data }) => {
             if (data.status !== "OK" && data.status !== "SUCCESS") {
-              return toast.error(data.description || "Failed to create privilege", {
-                id: toastId,
-              });
+              return toast.error(
+                data.description || "Failed to create privilege",
+                {
+                  id: toastId,
+                }
+              );
             }
 
             toast.success("Privilege created successfully", { id: toastId });

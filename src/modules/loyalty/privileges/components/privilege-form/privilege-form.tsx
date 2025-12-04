@@ -220,6 +220,40 @@ export const PrivilegeForm = ({
                 );
               }}
             />
+            <Controller
+              control={form.control}
+              name="pointRedeem"
+              render={({ field }) => {
+                return (
+                  <Input
+                    {...field}
+                    type="text"
+                    inputMode="numeric"
+                    label={t("form.pointRedeem")}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.pointRedeem?.message,
+                      t
+                    )}
+                    disabled={isSubmitting}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      // Only allow digits (no decimal point, no negative sign)
+                      const sanitizedValue = value.replace(/[^0-9]/g, "");
+
+                      if (sanitizedValue === "") {
+                        field.onChange(null);
+                      } else {
+                        const intValue = parseInt(sanitizedValue, 10);
+                        if (!isNaN(intValue)) {
+                          field.onChange(intValue);
+                        }
+                      }
+                    }}
+                    value={field?.value?.toString() ?? ""}
+                  />
+                );
+              }}
+            />
           </div>
 
           <div className="mt-4 mb-4">
