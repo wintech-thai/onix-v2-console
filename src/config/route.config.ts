@@ -43,6 +43,9 @@ export const RouteConfig = {
     },
     PRIVILEGES: {
       LIST: (orgId: string) => `/${orgId}/loyalty/privileges`,
+      CREATE: (orgId: string) => `/${orgId}/loyalty/privileges/create`,
+      UPDATE: (orgId: string, privilegeId: string) => `/${orgId}/loyalty/privileges/${privilegeId}/update`,
+      TX: (orgId: string, privilegeId: string) => `/${orgId}/loyalty/privileges/${privilegeId}/transactions`,
     },
   },
   ADMIN: {

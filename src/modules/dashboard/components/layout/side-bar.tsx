@@ -156,20 +156,14 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   const activeParents = useMemo(() => {
     const actives: Record<string, boolean> = {};
     for (const m of MENU) {
-      const selfActive =
-        (m.href &&
-          (pathname === m.href || pathname.startsWith(m.href + "/"))) ||
-        false;
       const childActive =
         m.children?.some(
           (c) => pathname === c.href || pathname.startsWith(c.href + "/")
         ) ?? false;
       if (childActive) actives[m.key] = true;
-      else if (selfActive && m.children?.length)
-        actives[m.key] = openParents[m.key] ?? false;
     }
     return actives;
-  }, [pathname, openParents, MENU]);
+  }, [pathname, MENU]);
 
   const isParentActive = (m: MenuItem) => {
     const selfActive =
@@ -183,7 +177,11 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
   };
 
   const toggleParent = (key: string) =>
-    setOpenParents((s) => ({ ...s, [key]: !s[key] }));
+    setOpenParents((s) => {
+      const isCurrentlyOpen = s[key];
+      // If currently open, close it. Otherwise, close all others and open this one.
+      return isCurrentlyOpen ? { [key]: false } : { [key]: true };
+    });
 
   return (
     <>
@@ -240,8 +238,10 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
             {MENU.map((m) => {
               const Icon = m.icon;
               const active = isParentActive(m);
+              // Only use openParents state, and auto-open if child is active and nothing is manually opened
+              const hasManuallyOpenedMenu = Object.values(openParents).some(v => v === true);
               const parentOpen = expanded
-                ? openParents[m.key] ?? activeParents[m.key] ?? false
+                ? (openParents[m.key] ?? (!hasManuallyOpenedMenu && activeParents[m.key]))
                 : false;
 
               const ParentButton = (
@@ -251,7 +251,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                     if (!expanded) {
                       setExpanded(true);
                       if (m.children?.length)
-                        setOpenParents((s) => ({ ...s, [m.key]: true }));
+                        setOpenParents({ [m.key]: true });
                       return;
                     }
                     if (m.children?.length) toggleParent(m.key);

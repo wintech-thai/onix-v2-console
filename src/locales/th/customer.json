@@ -18,7 +18,7 @@
     "attach": "แนบ"
   },
   "actions": {
-    "pointManagement": "จัดการคะแนน",
+    "pointTransaction": "ธุรกรรมพอยท์",
     "verifyEmail": "อัปเดต & ยืนยันอีเมล",
     "updateEmail": "อัปเดตอีเมล"
   },

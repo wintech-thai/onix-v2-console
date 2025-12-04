@@ -16,6 +16,9 @@ import { Button } from "@/components/ui/button";
 import { useState as State } from "react";
 import { UpdateCustomerEmailModal } from "../../components/modal/update-customer-email.modal";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { getWalletByCustomerIdApi } from "@/modules/loyalty/points-wallets/wallets/api/get-wallet-by-customer-id.api";
 
 type CustomerTableColumns = ColumnDef<ICustomer> & {
   accessorKey?: keyof ICustomer;
@@ -23,6 +26,9 @@ type CustomerTableColumns = ColumnDef<ICustomer> & {
 
 export const useCustomerTableColumns = (): CustomerTableColumns[] => {
   const { t } = useTranslation("customer");
+  const router = useRouter();
+  const getWalletMutation = getWalletByCustomerIdApi.useGetWalletByCustomerId();
+
   return [
     {
       id: "select",
@@ -135,8 +141,33 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => {}}>
-                  {t("actions.pointManagement")}
+                <DropdownMenuItem
+                  disabled={getWalletMutation.isPending}
+                  onClick={() => {
+                    getWalletMutation.mutate(
+                      { orgId, customerId },
+                      {
+                        onSuccess: ({ data }) => {
+                          if (data.status !== "OK" && data.status !== "SUCCESS") {
+                            return toast.error(data.description);
+                          }
+
+                          if (!data.wallet?.id) {
+                            return toast.error("Wallet Id Not Found");
+                          }
+
+                          router.push(
+                            RouteConfig.LOYALTY.POINTS_WALLETS.POINTS(
+                              orgId,
+                              data.wallet.id
+                            )
+                          );
+                        },
+                      }
+                    );
+                  }}
+                >
+                  {t("actions.pointTransaction")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleOpenModal("verify")}>
                   {t("actions.verifyEmail")}
