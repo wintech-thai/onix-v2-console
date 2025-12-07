@@ -42,6 +42,20 @@ export const fetchPrivilegesApi = {
       },
     });
   },
+  useFetchRedeemablePrivileges: (params: {
+    orgId: string;
+    params: FetchPrivilegesRequest;
+  }) => {
+    return useQuery<AxiosResponse<IPrivileges[]>, AxiosError>({
+      queryKey: [...fetchPrivilegesApi.key, "redeemable",  params.orgId, params.params],
+      queryFn: () => {
+        return api.post(
+          `/api/Privilege/org/${params.orgId}/action/GetRedeemablePrivileges`,
+          params
+        );
+      },
+    });
+  },
   useFetchPrivilegesCount: (params: {
     orgId: string;
     params: FetchPrivilegesRequest;
