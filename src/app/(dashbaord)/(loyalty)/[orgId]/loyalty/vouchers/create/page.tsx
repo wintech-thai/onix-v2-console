@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import CreateVoucherViewPage from "@/modules/loyalty/vouchers/view/create-voucher.view";
 
 const CreateVoucherPage = () => {
-  return <CommingSoon />;
+  return <CreateVoucherViewPage />
 }
 
 export default CreateVoucherPage;

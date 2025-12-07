@@ -79,9 +79,46 @@
     "error": "ปล่อยคูปองไม่สำเร็จ"
   },
   "messages": {
-    "loadQrError": "โหลด QR code ไม่สำเร็จ"
+    "loadQrError": "โหลด QR code ไม่สำเร็จ",
+    "createSuccess": "สร้างคูปองสำเร็จ",
+    "createError": "สร้างคูปองไม่สำเร็จ"
   },
   "search": {
     "placeholder": "ค้นหาคูปอง..."
+  },
+  "form": {
+    "createTitle": "สร้างคูปอง",
+    "viewTitle": "ดูคูปอง",
+    "redeemTitle": "แลกคูปอง",
+    "customer": {
+      "title": "ข้อมูลลูกค้า",
+      "selectCustomer": "เลือกลูกค้า",
+      "customerName": "ชื่อลูกค้า",
+      "searchPlaceholder": "ค้นหาลูกค้าด้วยชื่อ, รหัส, หรืออีเมล..."
+    },
+    "privilege": {
+      "title": "ข้อมูลสิทธิพิเศษ",
+      "selectPrivilege": "เลือกสิทธิพิเศษ",
+      "privilegeName": "ชื่อสิทธิพิเศษ",
+      "searchPlaceholder": "ค้นหาสิทธิพิเศษด้วยรหัสหรือคำอธิบาย...",
+      "redeemPoints": "แต้มที่ใช้แลก"
+    },
+    "params": {
+      "title": "พารามิเตอร์คูปอง"
+    },
+    "dates": {
+      "startDate": "วันที่เริ่มต้น",
+      "endDate": "วันที่สิ้นสุด"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "redeem": "แลก"
+    },
+    "validation": {
+      "required": "กรุณากรอกข้อมูลในช่องนี้",
+      "email": "กรุณากรอกอีเมลที่ถูกต้อง",
+      "minNumber": "ค่าต้องมากกว่าหรือเท่ากับ 0",
+      "privilegeNotFound": "ไม่พบสิทธิพิเศษหรือไม่สามารถแลกได้"
+    }
   }
 }

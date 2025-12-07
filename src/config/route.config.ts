@@ -51,6 +51,7 @@ export const RouteConfig = {
       LIST: (orgId: string) => `/${orgId}/loyalty/vouchers`,
       CREATE: (orgId: string) => `/${orgId}/loyalty/vouchers/create`,
       UPDATE: (orgId: string, voucherId: string) => `/${orgId}/loyalty/vouchers/${voucherId}/update`,
+      REDEEM: (orgId: string, privilegeId: string) => `/${orgId}/loyalty/vouchers/create?privilegeId=${privilegeId}`,
     },
   },
   ADMIN: {

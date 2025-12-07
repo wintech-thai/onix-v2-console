@@ -198,6 +198,7 @@ interface Resources {
       "error": "An error occurred",
       "loading": "Loading...",
       "noData": "No data available",
+      "noResults": "No results found",
       "ok": "OK",
       "save": "Save",
       "welcome": "Welcome"
@@ -215,6 +216,11 @@ interface Resources {
       "retry": "Try Again",
       "showDetails": "Show Details",
       "title": "Oops! Something went wrong"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "leavePage": "Leave Page",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
     },
     "navbar": {
       "logout": "Logout",
@@ -1239,7 +1245,43 @@ interface Resources {
       "searchPlaceholder": "Search vouchers...",
       "selectSearchField": "Select search field"
     },
+    "form": {
+      "actions": {
+        "redeem": "Redeem",
+        "save": "Save"
+      },
+      "createTitle": "Create Voucher",
+      "customer": {
+        "customerName": "Customer Name",
+        "searchPlaceholder": "Search customer by name, code, or email...",
+        "selectCustomer": "Select Customer",
+        "title": "Customer Information"
+      },
+      "dates": {
+        "endDate": "End Date",
+        "startDate": "Start Date"
+      },
+      "params": {
+        "title": "Voucher Parameters"
+      },
+      "privilege": {
+        "privilegeName": "Privilege Name",
+        "redeemPoints": "Redeem Points",
+        "searchPlaceholder": "Search privilege by code or description...",
+        "selectPrivilege": "Select Privilege",
+        "title": "Privilege Information"
+      },
+      "redeemTitle": "Redeem Voucher",
+      "validation": {
+        "email": "Please enter a valid email address",
+        "minNumber": "Value must be greater than or equal to 0",
+        "required": "This field is required"
+      },
+      "viewTitle": "View Voucher"
+    },
     "messages": {
+      "createError": "Failed to create voucher",
+      "createSuccess": "Successfully created voucher",
       "loadQrError": "Failed to load QR code"
     },
     "preview": {

@@ -6,7 +6,13 @@
     "welcome": "Welcome",
     "save": "Save",
     "cancel": "Cancel",
-    "ok": "OK"
+    "ok": "OK",
+    "noResults": "No results found"
+  },
+  "form": {
+    "cancel": "Cancel",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "leavePage": "Leave Page"
   },
   "unsave": {
     "title": "Unsaved Changes",

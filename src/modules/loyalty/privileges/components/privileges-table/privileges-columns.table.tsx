@@ -216,7 +216,17 @@ export const usePrivilegesTableColumns = (): PrivilegesTableColumns[] => {
               >
                 {t("actions.transaction")}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => {}}>
+              <DropdownMenuItem
+                disabled={row.original.status !== "Approve"}
+                onClick={() =>
+                  router.push(
+                    RouteConfig.LOYALTY.VOUCHERS.REDEEM(
+                      params.orgId,
+                      row.original.id
+                    )
+                  )
+                }
+              >
                 {t("actions.redeem")}
               </DropdownMenuItem>
             </DropdownMenuContent>
