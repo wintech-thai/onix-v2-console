@@ -35,7 +35,7 @@ export interface IVoucher {
   customerEmail:    string;
   privilegeCode:    string;
   privilegeName:    string;
-  voucherVerifyUrl: null;
+  voucherVerifyUrl: string | null;
 }
 
 export const fetchVoucherApi = {

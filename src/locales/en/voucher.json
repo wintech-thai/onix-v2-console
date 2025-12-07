@@ -1,0 +1,87 @@
+{
+  "title": "Vouchers",
+  "columns": {
+    "voucherNo": "Voucher No",
+    "privilegeCode": "Privilege Code",
+    "tags": "Tags",
+    "used": "Used",
+    "customerEmail": "Customer Email",
+    "redeemPoint": "Redeem Point",
+    "status": "Status",
+    "expireDate": "Expire Date",
+    "startDate": "Start Date",
+    "actions": "Actions"
+  },
+  "filter": {
+    "searchPlaceholder": "Search vouchers...",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "delete": "Delete",
+    "add": "Add"
+  },
+  "actions": {
+    "enable": "Enable",
+    "disable": "Disable",
+    "preview": "Preview",
+    "verify": "Verify Voucher",
+    "release": "Release Voucher"
+  },
+  "status": {
+    "active": "Active",
+    "disabled": "Disabled"
+  },
+  "preview": {
+    "title": "Voucher Preview",
+    "voucherNo": "Voucher No",
+    "pin": "PIN",
+    "privilege": "Privilege",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "status": "Status",
+    "barcode": "Barcode",
+    "qrCode": "QR Code",
+    "qrUrlTooLong": "URL too long for QR Code",
+    "openVerificationPage": "Open Verification Page",
+    "noQrCode": "No QR Code",
+    "close": "Close"
+  },
+  "delete": {
+    "title": "Delete Voucher",
+    "message": "Are you sure you want to delete the selected voucher(s)?",
+    "success": "Successfully deleted voucher(s)",
+    "error": "Failed to delete voucher"
+  },
+  "enable": {
+    "title": "Enable Voucher",
+    "message": "Are you sure you want to enable this voucher?",
+    "loading": "Enabling voucher...",
+    "success": "Successfully enabled voucher",
+    "error": "Failed to enable voucher"
+  },
+  "disable": {
+    "title": "Disable Voucher",
+    "message": "Are you sure you want to disable this voucher?",
+    "loading": "Disabling voucher...",
+    "success": "Successfully disabled voucher",
+    "error": "Failed to disable voucher"
+  },
+  "verify": {
+    "loading": "Loading verification URL...",
+    "success": "Opening verification page",
+    "error": "Failed to get verification URL"
+  },
+  "release": {
+    "title": "Release Voucher",
+    "message": "Are you sure you want to release this voucher? This will mark it as unused.",
+    "loading": "Releasing voucher...",
+    "success": "Successfully released voucher",
+    "error": "Failed to release voucher"
+  },
+  "messages": {
+    "loadQrError": "Failed to load QR code"
+  },
+  "search": {
+    "placeholder": "Search vouchers..."
+  }
+}

@@ -1191,6 +1191,93 @@ interface Resources {
       "updateSuccess": "User updated successfully"
     }
   },
+  "voucher": {
+    "actions": {
+      "disable": "Disable",
+      "enable": "Enable",
+      "preview": "Preview",
+      "release": "Release Voucher",
+      "verify": "Verify Voucher"
+    },
+    "columns": {
+      "actions": "Actions",
+      "customerEmail": "Customer Email",
+      "expireDate": "Expire Date",
+      "privilegeCode": "Privilege Code",
+      "redeemPoint": "Redeem Point",
+      "startDate": "Start Date",
+      "status": "Status",
+      "tags": "Tags",
+      "used": "Used",
+      "voucherNo": "Voucher No"
+    },
+    "delete": {
+      "error": "Failed to delete voucher",
+      "message": "Are you sure you want to delete the selected voucher(s)?",
+      "success": "Successfully deleted voucher(s)",
+      "title": "Delete Voucher"
+    },
+    "disable": {
+      "error": "Failed to disable voucher",
+      "loading": "Disabling voucher...",
+      "message": "Are you sure you want to disable this voucher?",
+      "success": "Successfully disabled voucher",
+      "title": "Disable Voucher"
+    },
+    "enable": {
+      "error": "Failed to enable voucher",
+      "loading": "Enabling voucher...",
+      "message": "Are you sure you want to enable this voucher?",
+      "success": "Successfully enabled voucher",
+      "title": "Enable Voucher"
+    },
+    "filter": {
+      "add": "Add",
+      "delete": "Delete",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search vouchers...",
+      "selectSearchField": "Select search field"
+    },
+    "messages": {
+      "loadQrError": "Failed to load QR code"
+    },
+    "preview": {
+      "barcode": "Barcode",
+      "close": "Close",
+      "endDate": "End Date",
+      "noQrCode": "No QR Code",
+      "openVerificationPage": "Open Verification Page",
+      "pin": "PIN",
+      "privilege": "Privilege",
+      "qrCode": "QR Code",
+      "qrUrlTooLong": "URL too long for QR Code",
+      "startDate": "Start Date",
+      "status": "Status",
+      "title": "Voucher Preview",
+      "voucherNo": "Voucher No"
+    },
+    "release": {
+      "error": "Failed to release voucher",
+      "loading": "Releasing voucher...",
+      "message": "Are you sure you want to release this voucher? This will mark it as unused.",
+      "success": "Successfully released voucher",
+      "title": "Release Voucher"
+    },
+    "search": {
+      "placeholder": "Search vouchers..."
+    },
+    "status": {
+      "active": "Active",
+      "disabled": "Disabled"
+    },
+    "title": "Vouchers",
+    "verify": {
+      "error": "Failed to get verification URL",
+      "loading": "Loading verification URL...",
+      "success": "Opening verification page"
+    }
+  },
   "wallets": {
     "actions": {
       "delete": "Delete",
