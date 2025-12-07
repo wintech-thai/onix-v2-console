@@ -26,6 +26,8 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchVoucherApi } from "../../api/fetch-vouchers.api";
 import { useConfirm } from "@/hooks/use-confirm";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
 
 export const useVoucherTableColumns = () => {
   const { t } = useTranslation(["voucher", "common"]);
@@ -85,7 +87,15 @@ export const useVoucherTableColumns = () => {
       accessorKey: "voucherNo",
       header: t("columns.voucherNo"),
       cell: ({ row }) => (
-        <div className="font-medium">{row.original.voucherNo}</div>
+        <Link
+          className="text-primary hover:underline"
+          href={RouteConfig.LOYALTY.VOUCHERS.UPDATE(
+            row.original.orgId,
+            row.original.id
+          )}
+        >
+          {row.original.voucherNo}
+        </Link>
       ),
     },
     {
@@ -124,7 +134,9 @@ export const useVoucherTableColumns = () => {
         <div className="flex justify-center">
           {row.original.isUsed === "YES" ? (
             <Check className="h-4 w-4 text-green-600" />
-          ) : "-"}
+          ) : (
+            "-"
+          )}
         </div>
       ),
     },
@@ -226,8 +238,11 @@ export const useVoucherTableColumns = () => {
             const qrUrl = response.data.voucher.voucherVerifyUrl;
 
             // Check if URL is too long for QR code
-            if (qrUrl && typeof qrUrl === 'string' && qrUrl.length > 1200) {
-              toast.warning(`QR URL too long (${qrUrl.length} chars). URL will be displayed instead.`, { id: toastId });
+            if (qrUrl && typeof qrUrl === "string" && qrUrl.length > 1200) {
+              toast.warning(
+                `QR URL too long (${qrUrl.length} chars). URL will be displayed instead.`,
+                { id: toastId }
+              );
             } else {
               toast.dismiss(toastId);
             }
@@ -313,7 +328,8 @@ export const useVoucherTableColumns = () => {
           }
         };
 
-        const releaseVoucher = setVoucherUnusedByIdApi.useSetVoucherUnusedById();
+        const releaseVoucher =
+          setVoucherUnusedByIdApi.useSetVoucherUnusedById();
 
         const handleRelease = async () => {
           const confirmed = await confirmRelease();
