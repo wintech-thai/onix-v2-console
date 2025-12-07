@@ -47,6 +47,11 @@ export const RouteConfig = {
       UPDATE: (orgId: string, privilegeId: string) => `/${orgId}/loyalty/privileges/${privilegeId}/update`,
       TX: (orgId: string, privilegeId: string) => `/${orgId}/loyalty/privileges/${privilegeId}/transactions`,
     },
+    VOUCHERS: {
+      LIST: (orgId: string) => `/${orgId}/loyalty/vouchers`,
+      CREATE: (orgId: string) => `/${orgId}/loyalty/vouchers/create`,
+      UPDATE: (orgId: string, voucherId: string) => `/${orgId}/loyalty/vouchers/${voucherId}/update`,
+    },
   },
   ADMIN: {
     APIKEY: {

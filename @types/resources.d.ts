@@ -268,7 +268,8 @@ interface Resources {
           "1": "Points & Wallets",
           "2": "Point Rule",
           "3": "Point Trigger",
-          "4": "Privileges"
+          "4": "Privileges",
+          "5": "Vouchers"
         }
       }
     },
