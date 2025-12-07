@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createVoucherApi } from "../api/create-voucher.api";
 import { VoucherForm } from "../components/voucher-form/voucher-form";
 import { VoucherSchemaType } from "../schema/vouchers.schema";
@@ -12,8 +12,6 @@ import { fetchVoucherApi } from "../api/fetch-vouchers.api";
 const CreateVoucherViewPage = () => {
   const { t } = useTranslation("voucher");
   const params = useParams<{ orgId: string }>();
-  const searchParams = useSearchParams();
-  const privilegeId = searchParams.get("privilegeId");
   const router = useRouter();
   const queryClient = useQueryClient();
   const createVoucherMutation = createVoucherApi.useCreateVoucher();
