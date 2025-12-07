@@ -1256,6 +1256,8 @@ interface Resources {
         "insufficientBalance": "Insufficient balance"
       },
       "newBalance": "New Balance",
+      "tags": "Tags",
+      "tagsPlaceholder": "Press Enter to add tag",
       "title": "Point Transaction",
       "types": {
         "add": "Add Point",

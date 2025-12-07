@@ -53,6 +53,8 @@
     "amount": "จำนวนคะแนน",
     "description": "รายละเอียด",
     "wallet": "กระเป๋าเงิน",
+    "tags": "แท็ก",
+    "tagsPlaceholder": "กด Enter เพื่อเพิ่มแท็ก",
     "addSuccess": "เพิ่มคะแนนสำเร็จ",
     "deductSuccess": "ลดคะแนนสำเร็จ",
     "newBalance": "คะแนนสุทธิ",
