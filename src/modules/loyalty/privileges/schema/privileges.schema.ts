@@ -5,7 +5,7 @@ export const privilegesSchema = z.object({
   description: z.string().min(1, "form.validation.descriptionRequired"),
   tags: z.string().min(1, "form.validation.tagsRequired"),
   status: z.string().min(1, "form.validation.statusRequired"),
-  pointRedeem: z.number().min(1, "form.validation.pointRedeemRequired").nullable(),
+  pointRedeem: z.number().min(1, "form.validation.pointRedeemRequired"),
   effectiveDate: z.string().nullable(),
   expireDate: z.string().nullable(),
   content: z.string().min(1, "form.validation.contentRequired"),

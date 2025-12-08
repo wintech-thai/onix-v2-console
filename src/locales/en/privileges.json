@@ -6,6 +6,7 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "status": "Status",
+    "pointRedeem": "Point Redeem",
     "remainingQuota": "Remaining Quota",
     "action": "Action"
   },

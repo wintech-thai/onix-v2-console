@@ -132,6 +132,16 @@ export const usePrivilegesTableColumns = (): PrivilegesTableColumns[] => {
       header: t("columns.status"),
     },
     {
+      accessorKey: "pointRedeem",
+      header: t("columns.pointRedeem"),
+      cell: ({ row }) => {
+        const balance = row.original.pointRedeem ?? 0;
+        return (
+          <div className="text-right w-[80px]">{balance.toLocaleString()}</div>
+        );
+      },
+    },
+    {
       accessorKey: "currentBalance",
       header: t("columns.remainingQuota"),
       cell: ({ row }) => {

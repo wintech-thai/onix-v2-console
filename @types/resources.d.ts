@@ -695,6 +695,7 @@ interface Resources {
       "code": "Code",
       "description": "Description",
       "endDate": "End Date",
+      "pointRedeem": "Point Redeem",
       "remainingQuota": "Remaining Quota",
       "startDate": "Start Date",
       "status": "Status",
@@ -1275,6 +1276,7 @@ interface Resources {
       "validation": {
         "email": "Please enter a valid email address",
         "minNumber": "Value must be greater than or equal to 0",
+        "privilegeNotFound": "Privilege not found or not available for redemption",
         "required": "This field is required"
       },
       "viewTitle": "View Voucher"

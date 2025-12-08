@@ -19,7 +19,7 @@ const CreatePrivilegesViewPage = () => {
     effectiveDate: null,
     expireDate: null,
     content: "",
-    pointRedeem: null,
+    pointRedeem: 0,
   };
 
   const handleSubmit = async (values: PrivilegesSchemaType) => {
