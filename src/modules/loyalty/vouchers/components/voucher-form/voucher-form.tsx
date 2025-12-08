@@ -109,15 +109,16 @@ export const VoucherForm = ({
   const privilegeQuery = fetchPrivilegesApi.useFetchRedeemablePrivileges({
     orgId: params.orgId,
     params: {
-      limit: 50,
+      limit: 10,
       offset: 0,
       fromDate: dateRange.fromDate,
       toDate: dateRange.toDate,
-      fullTextSearch: privielgeId
+      privilegeId: privielgeId
         ? privielgeId
         : isUpdate
         ? initialValue.privilegeId
-        : debouncedPrivilegeSearch,
+        : "",
+      fullTextSearch: debouncedPrivilegeSearch,
       itemType: 0,
     },
   });

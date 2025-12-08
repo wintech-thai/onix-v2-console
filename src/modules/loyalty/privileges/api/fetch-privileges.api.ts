@@ -10,6 +10,9 @@ export interface FetchPrivilegesRequest {
   fullTextSearch: string;
   itemType: number;
 }
+export interface FetchRedeemPrivilege extends FetchPrivilegesRequest {
+  privilegeId: string;
+}
 
 export interface IPrivileges {
   id: string;
@@ -44,7 +47,7 @@ export const fetchPrivilegesApi = {
   },
   useFetchRedeemablePrivileges: (params: {
     orgId: string;
-    params: FetchPrivilegesRequest;
+    params: FetchRedeemPrivilege;
   }) => {
     return useQuery<AxiosResponse<IPrivileges[]>, AxiosError>({
       queryKey: [...fetchPrivilegesApi.key, "redeemable",  params.orgId, params.params],
