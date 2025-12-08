@@ -22,6 +22,7 @@ import { disabledVoucherApi } from "../../api/disabled-vouchers.api";
 import { getVoucherVerifyQrUrl } from "../../api/get-voucher-verify-qr-url.api";
 import { getVoucherverifyurlapi } from "../../api/get-voucher-verify-url.api";
 import { setVoucherUnusedByIdApi } from "../../api/set-voucher-unused-by-id.api";
+import { getVoucherApi } from "../../api/get-voucher.api";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchVoucherApi } from "../../api/fetch-vouchers.api";
@@ -225,17 +226,31 @@ export const useVoucherTableColumns = () => {
         const disableVoucher = disabledVoucherApi.useDisabledVoucher();
 
         const getQrUrl = getVoucherVerifyQrUrl.useGetVoucherVerifyQrUrl();
+        const fetchVoucher = getVoucherApi.useVoucherMutate();
 
         const handlePreview = async () => {
-          const toastId = toast.loading("Loading...");
+          const toastId = toast.loading(t("common:common.loading"));
 
           try {
-            const response = await getQrUrl.mutateAsync({
+            // Fetch full voucher data including pin and privilegeName
+            const voucherResponse = await fetchVoucher.mutateAsync({
               orgId: params.orgId,
               voucherId: voucher.id,
             });
 
-            const qrUrl = response.data.voucher.voucherVerifyUrl;
+            const fullVoucherData = voucherResponse.data.voucher;
+
+            if (!fullVoucherData) {
+              throw new Error("Failed to load voucher data");
+            }
+
+            // Fetch QR URL
+            const qrResponse = await getQrUrl.mutateAsync({
+              orgId: params.orgId,
+              voucherId: voucher.id,
+            });
+
+            const qrUrl = qrResponse.data.voucher.voucherVerifyUrl;
 
             // Check if URL is too long for QR code
             if (qrUrl && typeof qrUrl === "string" && qrUrl.length > 1200) {
@@ -247,12 +262,12 @@ export const useVoucherTableColumns = () => {
               toast.dismiss(toastId);
             }
 
-            setPreviewState({ isOpen: true, voucher, qrUrl: qrUrl || null });
+            setPreviewState({ isOpen: true, voucher: fullVoucherData, qrUrl: qrUrl || null });
           } catch (error) {
             toast.error(t("messages.loadQrError"), { id: toastId });
             // Still open modal but without QR URL
             setPreviewState({ isOpen: true, voucher, qrUrl: null });
-            console.error("Failed to load QR URL:", error);
+            console.error("Failed to load voucher data:", error);
           }
         };
 
