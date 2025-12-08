@@ -159,7 +159,7 @@ export const VoucherPreviewModal = ({
                     )}
                   </div>
                 ) : qrUrl ? (
-                  <QRCodeSVG value={qrUrl} size={windowWidth < 768 ? 120 : 160} level="L" />
+                  <QRCodeSVG value={qrUrl} size={windowWidth < 768 ? 100 : 120} level="L" />
                 ) : (
                   <div className="h-32 w-32 md:h-40 md:w-40 flex items-center justify-center text-gray-400 text-xs md:text-sm">
                     {t("preview.noQrCode")}
