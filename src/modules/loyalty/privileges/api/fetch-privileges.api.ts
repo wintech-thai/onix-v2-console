@@ -51,7 +51,7 @@ export const fetchPrivilegesApi = {
       queryFn: () => {
         return api.post(
           `/api/Privilege/org/${params.orgId}/action/GetRedeemablePrivileges`,
-          params
+          params.params
         );
       },
     });

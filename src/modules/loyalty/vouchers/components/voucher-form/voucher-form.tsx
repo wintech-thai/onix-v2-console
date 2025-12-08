@@ -85,11 +85,11 @@ export const VoucherForm = ({
 
   const dateRange = useMemo(
     () => ({
-      fromDate: dayjs().subtract(1, "year").toISOString(),
-      toDate: dayjs().add(1, "year").toISOString(),
+      fromDate: dayjs().subtract(1, "day").toISOString(),
+      toDate: dayjs().toISOString(),
     }),
     []
-  );
+  ); // Empty dependency array means dates are calculated only once
 
   // Fetch customers
   const customerQuery = fetchCustomerApi.useFetchCustomer({

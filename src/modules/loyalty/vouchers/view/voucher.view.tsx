@@ -45,11 +45,11 @@ const VoucherViewPage = () => {
   // Memoize dates to prevent infinite refetch loop
   const dateRange = useMemo(
     () => ({
-      fromDate: dayjs().subtract(1, "year").toISOString(),
+      fromDate: dayjs().subtract(1, "day").toISOString(),
       toDate: dayjs().toISOString(),
     }),
     []
-  );
+  ); // Empty dependency array means dates are calculated only once
 
   // Fetch vouchers from API
   const fetchVouchers = fetchVoucherApi.useFetchVouchers({
