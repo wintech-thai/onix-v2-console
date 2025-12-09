@@ -47,9 +47,10 @@ export const RouteConfig = {
       LIST: (orgId: string) => `/${orgId}/scan-items/scan-items`,
       CREATE: (orgId: string) => `/${orgId}/scan-items/scan-items/create`,
       UPDATE: (orgId: string, itemId: string) => `/${orgId}/scan-items/scan-items/${itemId}/update`,
+      VIEW: (orgId: string, itemId: string) => `/${orgId}/scan-items/scan-items/${itemId}/view`,
     },
     HISTORY: {
-      LIST: (orgId: string) => `/${orgId}/scan-items/scan-histories`,
+      LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-histories`,
     }
   },
   LOYALTY: {
