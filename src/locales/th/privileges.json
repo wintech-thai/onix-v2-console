@@ -6,6 +6,7 @@
     "startDate": "วันที่เริ่มต้น",
     "endDate": "วันที่สิ้นสุด",
     "status": "สถานะ",
+    "pointRedeem": "แต้มที่ใช้แลก",
     "remainingQuota": "โควต้าคงเหลือ",
     "action": "การดำเนินการ"
   },

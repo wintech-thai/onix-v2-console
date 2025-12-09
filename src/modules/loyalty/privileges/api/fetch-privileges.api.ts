@@ -10,6 +10,9 @@ export interface FetchPrivilegesRequest {
   fullTextSearch: string;
   itemType: number;
 }
+export interface FetchRedeemPrivilege extends FetchPrivilegesRequest {
+  privilegeId: string;
+}
 
 export interface IPrivileges {
   id: string;
@@ -37,6 +40,20 @@ export const fetchPrivilegesApi = {
       queryFn: () => {
         return api.post(
           `/api/Privilege/org/${params.orgId}/action/GetPrivileges`,
+          params.params
+        );
+      },
+    });
+  },
+  useFetchRedeemablePrivileges: (params: {
+    orgId: string;
+    params: FetchRedeemPrivilege;
+  }) => {
+    return useQuery<AxiosResponse<IPrivileges[]>, AxiosError>({
+      queryKey: [...fetchPrivilegesApi.key, "redeemable",  params.orgId, params.params],
+      queryFn: () => {
+        return api.post(
+          `/api/Privilege/org/${params.orgId}/action/GetRedeemablePrivileges`,
           params.params
         );
       },

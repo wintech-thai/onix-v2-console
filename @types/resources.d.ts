@@ -198,6 +198,7 @@ interface Resources {
       "error": "An error occurred",
       "loading": "Loading...",
       "noData": "No data available",
+      "noResults": "No results found",
       "ok": "OK",
       "save": "Save",
       "welcome": "Welcome"
@@ -215,6 +216,11 @@ interface Resources {
       "retry": "Try Again",
       "showDetails": "Show Details",
       "title": "Oops! Something went wrong"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "leavePage": "Leave Page",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
     },
     "navbar": {
       "logout": "Logout",
@@ -268,7 +274,8 @@ interface Resources {
           "1": "Points & Wallets",
           "2": "Point Rule",
           "3": "Point Trigger",
-          "4": "Privileges"
+          "4": "Privileges",
+          "5": "Vouchers"
         }
       }
     },
@@ -688,6 +695,7 @@ interface Resources {
       "code": "Code",
       "description": "Description",
       "endDate": "End Date",
+      "pointRedeem": "Point Redeem",
       "remainingQuota": "Remaining Quota",
       "startDate": "Start Date",
       "status": "Status",
@@ -1190,6 +1198,130 @@ interface Resources {
       "updateSuccess": "User updated successfully"
     }
   },
+  "voucher": {
+    "actions": {
+      "disable": "Disable",
+      "enable": "Enable",
+      "preview": "Preview",
+      "release": "Release Voucher",
+      "verify": "Verify Voucher"
+    },
+    "columns": {
+      "actions": "Actions",
+      "customerEmail": "Customer Email",
+      "expireDate": "Expire Date",
+      "privilegeCode": "Privilege Code",
+      "redeemPoint": "Redeem Point",
+      "startDate": "Start Date",
+      "status": "Status",
+      "tags": "Tags",
+      "used": "Used",
+      "voucherNo": "Voucher No"
+    },
+    "delete": {
+      "error": "Failed to delete voucher",
+      "message": "Are you sure you want to delete the selected voucher(s)?",
+      "success": "Successfully deleted voucher(s)",
+      "title": "Delete Voucher"
+    },
+    "disable": {
+      "error": "Failed to disable voucher",
+      "loading": "Disabling voucher...",
+      "message": "Are you sure you want to disable this voucher?",
+      "success": "Successfully disabled voucher",
+      "title": "Disable Voucher"
+    },
+    "enable": {
+      "error": "Failed to enable voucher",
+      "loading": "Enabling voucher...",
+      "message": "Are you sure you want to enable this voucher?",
+      "success": "Successfully enabled voucher",
+      "title": "Enable Voucher"
+    },
+    "filter": {
+      "add": "Add",
+      "delete": "Delete",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search vouchers...",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "actions": {
+        "redeem": "Redeem",
+        "save": "Save"
+      },
+      "createTitle": "Create Voucher",
+      "customer": {
+        "customerName": "Customer Name",
+        "searchPlaceholder": "Search customer by name, code, or email...",
+        "selectCustomer": "Select Customer",
+        "title": "Customer Information"
+      },
+      "dates": {
+        "endDate": "End Date",
+        "startDate": "Start Date"
+      },
+      "params": {
+        "title": "Voucher Parameters"
+      },
+      "privilege": {
+        "privilegeName": "Privilege Name",
+        "redeemPoints": "Redeem Points",
+        "searchPlaceholder": "Search privilege by code or description...",
+        "selectPrivilege": "Select Privilege",
+        "title": "Privilege Information"
+      },
+      "redeemTitle": "Redeem Voucher",
+      "validation": {
+        "email": "Please enter a valid email address",
+        "minNumber": "Value must be greater than or equal to 0",
+        "privilegeNotFound": "Privilege not found or not available for redemption",
+        "required": "This field is required"
+      },
+      "viewTitle": "View Voucher"
+    },
+    "messages": {
+      "createError": "Failed to create voucher",
+      "createSuccess": "Successfully created voucher",
+      "loadQrError": "Failed to load QR code"
+    },
+    "preview": {
+      "barcode": "Barcode",
+      "close": "Close",
+      "endDate": "End Date",
+      "noQrCode": "No QR Code",
+      "openVerificationPage": "Open Verification Page",
+      "pin": "PIN",
+      "privilege": "Privilege",
+      "qrCode": "QR Code",
+      "qrUrlTooLong": "URL too long for QR Code",
+      "startDate": "Start Date",
+      "status": "Status",
+      "title": "Voucher Preview",
+      "voucherNo": "Voucher No"
+    },
+    "release": {
+      "error": "Failed to release voucher",
+      "loading": "Releasing voucher...",
+      "message": "Are you sure you want to release this voucher? This will mark it as unused.",
+      "success": "Successfully released voucher",
+      "title": "Release Voucher"
+    },
+    "search": {
+      "placeholder": "Search vouchers..."
+    },
+    "status": {
+      "active": "Active",
+      "disabled": "Disabled"
+    },
+    "title": "Vouchers",
+    "verify": {
+      "error": "Failed to get verification URL",
+      "loading": "Loading verification URL...",
+      "success": "Opening verification page"
+    }
+  },
   "wallets": {
     "actions": {
       "delete": "Delete",
@@ -1256,6 +1388,8 @@ interface Resources {
         "insufficientBalance": "Insufficient balance"
       },
       "newBalance": "New Balance",
+      "tags": "Tags",
+      "tagsPlaceholder": "Press Enter to add tag",
       "title": "Point Transaction",
       "types": {
         "add": "Add Point",

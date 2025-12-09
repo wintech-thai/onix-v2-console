@@ -37,6 +37,7 @@ type SidebarKeys =
   | "sidebar.loyalty.sub.2"
   | "sidebar.loyalty.sub.3"
   | "sidebar.loyalty.sub.4"
+  | "sidebar.loyalty.sub.5"
   | "sidebar.admin.label"
   | "sidebar.admin.sub.1"
   | "sidebar.admin.sub.2"
@@ -128,6 +129,10 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           {
             labelKey: "sidebar.loyalty.sub.4",
             href: RouteConfig.LOYALTY.PRIVILEGES.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.loyalty.sub.5",
+            href: RouteConfig.LOYALTY.VOUCHERS.LIST(params.orgId),
           },
         ],
       },

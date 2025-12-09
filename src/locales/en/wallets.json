@@ -53,6 +53,8 @@
     "amount": "Amount",
     "description": "Description",
     "wallet": "Wallet",
+    "tags": "Tags",
+    "tagsPlaceholder": "Press Enter to add tag",
     "addSuccess": "Points added successfully",
     "deductSuccess": "Points deducted successfully",
     "newBalance": "New Balance",

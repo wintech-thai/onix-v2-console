@@ -201,60 +201,27 @@ export const PrivilegeForm = ({
                 );
               }}
             />
-            <Controller
-              control={form.control}
-              name="description"
-              render={({ field }) => {
-                return (
-                  <Input
-                    {...field}
-                    label={t("form.description")}
-                    isRequired
-                    errorMessage={errorMessageAsLangKey(
-                      errors.description?.message,
-                      t
-                    )}
-                    disabled={isSubmitting}
-                    maxLength={100}
-                  />
-                );
-              }}
-            />
-            <Controller
-              control={form.control}
-              name="pointRedeem"
-              render={({ field }) => {
-                return (
-                  <Input
-                    {...field}
-                    type="text"
-                    inputMode="numeric"
-                    label={t("form.pointRedeem")}
-                    errorMessage={errorMessageAsLangKey(
-                      errors.pointRedeem?.message,
-                      t
-                    )}
-                    disabled={isSubmitting}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      // Only allow digits (no decimal point, no negative sign)
-                      const sanitizedValue = value.replace(/[^0-9]/g, "");
-
-                      if (sanitizedValue === "") {
-                        field.onChange(null);
-                      } else {
-                        const intValue = parseInt(sanitizedValue, 10);
-                        if (!isNaN(intValue)) {
-                          field.onChange(intValue);
-                        }
-                      }
-                    }}
-                    value={field?.value?.toString() ?? ""}
-                  />
-                );
-              }}
-            />
           </div>
+
+          <Controller
+            control={form.control}
+            name="description"
+            render={({ field }) => {
+              return (
+                <Input
+                  {...field}
+                  label={t("form.description")}
+                  isRequired
+                  errorMessage={errorMessageAsLangKey(
+                    errors.description?.message,
+                    t
+                  )}
+                  disabled={isSubmitting}
+                  maxLength={100}
+                />
+              );
+            }}
+          />
 
           <div className="mt-4 mb-4">
             <Input
@@ -343,6 +310,43 @@ export const PrivilegeForm = ({
               }}
             />
           </div>
+
+          <Controller
+            control={form.control}
+            name="pointRedeem"
+            render={({ field }) => {
+              return (
+                <div className="md:w-1/2 md:pr-2">
+                  <Input
+                    {...field}
+                    type="text"
+                    inputMode="numeric"
+                    label={t("form.pointRedeem")}
+                    errorMessage={errorMessageAsLangKey(
+                      errors.pointRedeem?.message,
+                      t
+                    )}
+                    disabled={isSubmitting}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      // Only allow digits (no decimal point, no negative sign)
+                      const sanitizedValue = value.replace(/[^0-9]/g, "");
+
+                      if (sanitizedValue === "") {
+                        field.onChange(0);
+                      } else {
+                        const intValue = parseInt(sanitizedValue, 10);
+                        if (!isNaN(intValue)) {
+                          field.onChange(intValue);
+                        }
+                      }
+                    }}
+                    value={field?.value === 0 ? "" : (field.value?.toString() ?? "")}
+                  />
+                </div>
+              );
+            }}
+          />
         </div>
 
         <div className="p-4 md:p-6 border rounded-lg">

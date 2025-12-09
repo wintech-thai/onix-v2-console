@@ -20,7 +20,8 @@ export type i18nKeys =
   | "wallets"
   | "point-rule"
   | "point-trigger"
-  | "privileges";
+  | "privileges"
+  | "voucher";
 export const i18nNamespaces: i18nKeys[] = [
   "common",
   "product",
@@ -36,7 +37,8 @@ export const i18nNamespaces: i18nKeys[] = [
   "wallets",
   "point-rule",
   "point-trigger",
-  "privileges"
+  "privileges",
+  "voucher"
 ];
 
 export default async function initTranslations(
