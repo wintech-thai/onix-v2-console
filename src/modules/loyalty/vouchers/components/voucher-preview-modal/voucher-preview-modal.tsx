@@ -64,48 +64,86 @@ export const VoucherPreviewModal = ({
               </p>
             </div>
 
-            {/* Voucher Details */}
+            {/* Voucher Details with QR Code */}
             <div className="bg-white rounded-lg p-3 md:p-4 mb-3 md:mb-4 shadow-sm">
-              <div className="grid grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
-                <div>
-                  <span className="text-gray-500">{t("preview.voucherNo")}:</span>
-                  <p className="font-semibold text-sm md:text-lg text-gray-800 break-all">
-                    {voucher.voucherNo}
-                  </p>
+              <div className="flex gap-4">
+                {/* Left side - Voucher Information */}
+                <div className="flex-1 grid grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
+                  <div>
+                    <span className="text-gray-500">{t("preview.voucherNo")}:</span>
+                    <p className="font-semibold text-sm md:text-lg text-gray-800 break-all">
+                      {voucher.voucherNo}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">{t("preview.pin")}:</span>
+                    <p className="font-semibold text-sm md:text-lg text-gray-800 break-all">
+                      {voucher.pin || "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">{t("preview.startDate")}:</span>
+                    <p className="font-medium text-gray-800 text-xs md:text-base">
+                      {voucher.startDate
+                        ? dayjs(voucher.startDate).format("DD MMM YYYY HH:mm Z")
+                        : "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">{t("preview.endDate")}:</span>
+                    <p className="font-medium text-gray-800 text-xs md:text-base">
+                      {voucher.endDate
+                        ? dayjs(voucher.endDate).format("DD MMM YYYY HH:mm Z")
+                        : "-"}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-gray-500">{t("preview.status")}:</span>
+                    <span
+                      className={`ml-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
+                        isActive
+                          ? "bg-green-50 text-green-700 ring-green-600/20"
+                          : "bg-red-50 text-red-700 ring-red-600/20"
+                      }`}
+                    >
+                      {t(`status.${isActive ? "active" : "disabled"}`)}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-gray-500">{t("preview.pin")}:</span>
-                  <p className="font-semibold text-sm md:text-lg text-gray-800 break-all">
-                    {voucher.pin || "-"}
+
+                {/* Right side - QR Code */}
+                <div className="flex-shrink-0 flex flex-col items-center justify-center">
+                  <p className="text-xs text-gray-500 text-center mb-2">
+                    {t("preview.qrCode")}
                   </p>
-                </div>
-                <div>
-                  <span className="text-gray-500">{t("preview.startDate")}:</span>
-                  <p className="font-medium text-gray-800 text-xs md:text-base">
-                    {voucher.startDate
-                      ? dayjs(voucher.startDate).format("DD MMM YYYY")
-                      : "-"}
-                  </p>
-                </div>
-                <div>
-                  <span className="text-gray-500">{t("preview.endDate")}:</span>
-                  <p className="font-medium text-gray-800 text-xs md:text-base">
-                    {voucher.endDate
-                      ? dayjs(voucher.endDate).format("DD MMM YYYY")
-                      : "-"}
-                  </p>
-                </div>
-                <div className="col-span-2">
-                  <span className="text-gray-500">{t("preview.status")}:</span>
-                  <span
-                    className={`ml-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
-                      isActive
-                        ? "bg-green-50 text-green-700 ring-green-600/20"
-                        : "bg-gray-50 text-gray-600 ring-gray-500/10"
-                    }`}
-                  >
-                    {t(`status.${isActive ? "active" : "disabled"}`)}
-                  </span>
+                  {isQrUrlTooLong ? (
+                    <div className="h-24 w-24 md:h-32 md:w-32 flex flex-col items-center justify-center gap-1 md:gap-2 p-1 md:p-2">
+                      <div className="text-center">
+                        <p className="text-gray-600 text-[9px] md:text-[10px] font-medium mb-1">
+                          {t("preview.qrUrlTooLong")}
+                        </p>
+                        <p className="text-gray-400 text-[8px] md:text-[9px]">
+                          ({qrUrl?.length} chars)
+                        </p>
+                      </div>
+                      {qrUrl && (
+                        <a
+                          href={qrUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2 py-1 bg-blue-500 text-white text-[9px] md:text-[10px] rounded hover:bg-blue-600 transition-colors"
+                        >
+                          {t("preview.openVerificationPage")}
+                        </a>
+                      )}
+                    </div>
+                  ) : qrUrl ? (
+                    <QRCodeSVG value={qrUrl} size={windowWidth < 768 ? 80 : 120} level="L" />
+                  ) : (
+                    <div className="h-24 w-24 md:h-32 md:w-32 flex items-center justify-center text-gray-400 text-[10px] md:text-xs">
+                      {t("preview.noQrCode")}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -131,42 +169,7 @@ export const VoucherPreviewModal = ({
               </div>
             )}
 
-            {/* QR Code Section */}
-            <div className="bg-white rounded-lg p-3 md:p-4 shadow-sm">
-              <p className="text-xs text-gray-500 text-center mb-2">
-                {t("preview.qrCode")}
-              </p>
-              <div className="flex justify-center">
-                {isQrUrlTooLong ? (
-                  <div className="h-32 w-32 md:h-40 md:w-40 flex flex-col items-center justify-center gap-2 md:gap-3 p-2 md:p-3">
-                    <div className="text-center">
-                      <p className="text-gray-600 text-[10px] md:text-xs font-medium mb-1">
-                        {t("preview.qrUrlTooLong")}
-                      </p>
-                      <p className="text-gray-400 text-[9px] md:text-[10px]">
-                        ({qrUrl?.length} chars)
-                      </p>
-                    </div>
-                    {qrUrl && (
-                      <a
-                        href={qrUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-2 md:px-3 py-1 md:py-1.5 bg-blue-500 text-white text-[10px] md:text-xs rounded hover:bg-blue-600 transition-colors"
-                      >
-                        {t("preview.openVerificationPage")}
-                      </a>
-                    )}
-                  </div>
-                ) : qrUrl ? (
-                  <QRCodeSVG value={qrUrl} size={windowWidth < 768 ? 100 : 120} level="L" />
-                ) : (
-                  <div className="h-32 w-32 md:h-40 md:w-40 flex items-center justify-center text-gray-400 text-xs md:text-sm">
-                    {t("preview.noQrCode")}
-                  </div>
-                )}
-              </div>
-            </div>
+
           </div>
         </div>
       </DialogContent>
