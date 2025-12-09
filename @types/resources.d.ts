@@ -264,8 +264,7 @@ interface Resources {
           "1": "Organization",
           "2": "Products",
           "3": "Customers",
-          "4": "Scan Items",
-          "5": "Jobs"
+          "4": "Jobs"
         }
       },
       "loyalty": {
@@ -276,6 +275,16 @@ interface Resources {
           "3": "Point Trigger",
           "4": "Privileges",
           "5": "Vouchers"
+        }
+      },
+      "scanItems": {
+        "label": "Scan Items",
+        "sub": {
+          "1": "Scan Item Action",
+          "2": "Scan Item Template",
+          "3": "Scan Item Folder",
+          "4": "Scan Item",
+          "5": "Scan History"
         }
       }
     },
