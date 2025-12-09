@@ -46,7 +46,7 @@ export const ProductFilterTable = ({
 
   const handleBack = () => {
     if (scanItemId) {
-      router.replace(RouteConfig.GENERAL.QRCODE.INDEX(params.orgId))
+      router.replace(RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId))
     }
   }
 

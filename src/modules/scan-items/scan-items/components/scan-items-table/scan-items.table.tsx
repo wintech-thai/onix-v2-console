@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "../../../../../components/ui/table";
 import { useState } from "react";
-import { QrCodeFilterTable } from "./qrcode-filter.table";
+import { QrCodeFilterTable } from "./scan-items-filter.table";
 import {
   Select,
   SelectContent,

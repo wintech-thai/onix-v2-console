@@ -2,8 +2,8 @@
 
 import { useParams } from "next/navigation";
 import { fetchScanItemsApi, IScanItems } from "../api/fetch-qrcodes.api";
-import { QrCodeTable } from "../components/qrcode-table/qrcode.table";
-import { useQrcodeTableColumns } from "../components/qrcode-table/qrcode-columns.table";
+import { QrCodeTable } from "../components/scan-items-table/scan-items.table";
+import { useQrcodeTableColumns } from "../components/scan-items-table/scan-items-columns.table";
 import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { useConfirm } from "@/hooks/use-confirm";

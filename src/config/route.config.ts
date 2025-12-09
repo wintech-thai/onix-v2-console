@@ -17,10 +17,6 @@ export const RouteConfig = {
       CREATE: (orgId: string) => `/${orgId}/general/customers/create`,
       UPDATE: (orgId: string, customerId: string) => `/${orgId}/general/customers/${customerId}/update`,
     },
-    QRCODE: {
-      INDEX: (orgId: string) => `/${orgId}/general/qrcodes`,
-      VIEW: (orgId: string, scanItemId: string) => `/${orgId}/general/qrcodes/${scanItemId}/view`,
-    },
     JOB: {
       LIST: (orgId: string) => `/${orgId}/general/jobs`,
       CREATE: (orgId: string) => `/${orgId}/general/jobs/create`,

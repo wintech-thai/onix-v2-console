@@ -63,7 +63,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       header: t("columns.serial"),
       cell: ({ row }) => {
         return (
-            <Link href={RouteConfig.GENERAL.QRCODE.VIEW(
+            <Link href={RouteConfig.SCAN_ITEMS.ITEM.VIEW(
               row.original.orgId,
               row.original.id
             )} className="text-primary hover:underline cursor-pointer">
