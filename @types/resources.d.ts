@@ -1122,6 +1122,41 @@ interface Resources {
       "title": "Confirm Un-Verification"
     }
   },
+  "scan-items-action": {
+    "actions": {
+      "setDefault": "Set to Default"
+    },
+    "columns": {
+      "action": "Action",
+      "actionName": "Action Name",
+      "description": "Description",
+      "isDefault": "Default?",
+      "redirectUrl": "Redirect URL",
+      "tags": "Tags",
+      "themeVerify": "Theme"
+    },
+    "delete": {
+      "error": "Failed to delete scan item action",
+      "message": "Are you sure you want to delete the selected scan item actions? This action cannot be undone.",
+      "success": "Deleted scan item action successfully",
+      "title": "Confirm Deletion"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field"
+    },
+    "setDefault": {
+      "error": "Failed to set default",
+      "loading": "Setting default...",
+      "message": "Are you sure you want to set this as the default scan item action?",
+      "success": "Set default successfully",
+      "title": "Set Default"
+    }
+  },
   "user": {
     "actions": {
       "createUser": "Create User",

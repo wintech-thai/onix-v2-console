@@ -1,0 +1,35 @@
+{
+  "columns": {
+    "actionName": "Action Name",
+    "description": "Description",
+    "tags": "Tags",
+    "themeVerify": "Theme",
+    "redirectUrl": "Redirect URL",
+    "isDefault": "Default",
+    "action": "Action"
+  },
+  "actions": {
+    "setDefault": "Set to Default"
+  },
+  "filter": {
+    "searchPlaceholder": "Enter search value",
+    "selectSearchField": "Select search field",
+    "fullTextSearch": "Full Text Search",
+    "search": "Search",
+    "add": "ADD",
+    "delete": "DELETE"
+  },
+  "delete": {
+    "title": "Confirm Deletion",
+    "message": "Are you sure you want to delete the selected scan item actions? This action cannot be undone.",
+    "success": "Deleted scan item action successfully",
+    "error": "Failed to delete scan item action"
+  },
+  "setDefault": {
+    "title": "Set Default",
+    "message": "Are you sure you want to set this as the default scan item action?",
+    "loading": "Setting default...",
+    "success": "Set default successfully",
+    "error": "Failed to set default"
+  }
+}
