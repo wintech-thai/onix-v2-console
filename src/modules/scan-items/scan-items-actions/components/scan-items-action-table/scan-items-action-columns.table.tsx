@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { IScanItemsAction, fetchScanItemsActionsApi } from "../../api/fetch-scan-items-actions.api";
-import { Check, MoreHorizontalIcon, XIcon } from "lucide-react";
+import { Check, MoreHorizontalIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -118,7 +118,7 @@ export const useScanItemsActionTableColumns = (): ScanItemsActionTableColumns[] 
       cell: ({ row }) => {
         return row.original.isDefault === "YES" ? (
           <Check className="size-4 text-green-600" />
-        ) : <XIcon className="size-4 text-destructive" />;
+        ) : null
       },
     },
     {
