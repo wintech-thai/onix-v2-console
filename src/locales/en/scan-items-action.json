@@ -31,5 +31,44 @@
     "loading": "Setting default...",
     "success": "Set default successfully",
     "error": "Failed to set default"
+  },
+  "form": {
+    "defaultValue": "Default Value",
+    "createTitle": "Create Scan Item Action",
+    "updateTitle": "Edit Scan Item Action",
+    "generalInformation": {
+      "title": "General Information",
+      "actionName": "Action Name",
+      "description": "Description",
+      "tags": "Tags",
+      "tagsPlaceholder": "Press Enter to add tag"
+    },
+    "technicalInformation": {
+      "title": "Technical Information",
+      "themeVerify": "Theme",
+      "redirectUrl": "Redirect URL",
+      "encryptionKey": "Encryption Key",
+      "encryptionIV": "Encryption IV",
+      "registeredAwareFlag": "Re-scan Check?"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "loadingDefault": "Loading..."
+    },
+    "validation": {
+      "actionNameRequired": "Action name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "At least one tag is required",
+      "themeVerifyRequired": "Theme is required",
+      "redirectUrlRequired": "Redirect URL is required",
+      "redirectUrlInvalid": "Invalid URL format",
+      "encryptionKeyRequired": "Encryption key is required",
+      "encryptionKeyLength": "Encryption key must be exactly 16 characters",
+      "encryptionIVRequired": "Encryption IV is required",
+      "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+      "registeredAwareFlagRequired": "Re-scan check is required"
+    }
   }
 }

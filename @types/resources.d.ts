@@ -1130,7 +1130,7 @@ interface Resources {
       "action": "Action",
       "actionName": "Action Name",
       "description": "Description",
-      "isDefault": "Default?",
+      "isDefault": "Default",
       "redirectUrl": "Redirect URL",
       "tags": "Tags",
       "themeVerify": "Theme"
@@ -1148,6 +1148,45 @@ interface Resources {
       "search": "Search",
       "searchPlaceholder": "Enter search value",
       "selectSearchField": "Select search field"
+    },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "loadingDefault": "Loading...",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "createTitle": "Create Scan Item Action",
+      "defaultValue": "Default Value",
+      "generalInformation": {
+        "actionName": "Action Name",
+        "description": "Description",
+        "tags": "Tags",
+        "tagsPlaceholder": "Press Enter to add tag",
+        "title": "General Information"
+      },
+      "technicalInformation": {
+        "encryptionIV": "Encryption IV",
+        "encryptionKey": "Encryption Key",
+        "redirectUrl": "Redirect URL",
+        "registeredAwareFlag": "Re-scan Check?",
+        "themeVerify": "Theme",
+        "title": "Technical Information"
+      },
+      "updateTitle": "Edit Scan Item Action",
+      "validation": {
+        "actionNameRequired": "Action name is required",
+        "descriptionRequired": "Description is required",
+        "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+        "encryptionIVRequired": "Encryption IV is required",
+        "encryptionKeyLength": "Encryption key must be exactly 16 characters",
+        "encryptionKeyRequired": "Encryption key is required",
+        "redirectUrlInvalid": "Invalid URL format",
+        "redirectUrlRequired": "Redirect URL is required",
+        "registeredAwareFlagRequired": "Re-scan check is required",
+        "tagsRequired": "At least one tag is required",
+        "themeVerifyRequired": "Theme is required"
+      }
     },
     "setDefault": {
       "error": "Failed to set default",
