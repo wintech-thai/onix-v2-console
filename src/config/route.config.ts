@@ -17,14 +17,36 @@ export const RouteConfig = {
       CREATE: (orgId: string) => `/${orgId}/general/customers/create`,
       UPDATE: (orgId: string, customerId: string) => `/${orgId}/general/customers/${customerId}/update`,
     },
-    QRCODE: {
-      INDEX: (orgId: string) => `/${orgId}/general/qrcodes`,
-      VIEW: (orgId: string, scanItemId: string) => `/${orgId}/general/qrcodes/${scanItemId}/view`,
-    },
     JOB: {
       LIST: (orgId: string) => `/${orgId}/general/jobs`,
       CREATE: (orgId: string) => `/${orgId}/general/jobs/create`,
       UPDATE: (orgId: string, jobId: string) => `/${orgId}/general/jobs/${jobId}/update`,
+    }
+  },
+  SCAN_ITEMS: {
+    ACTION: {
+      LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-actions`,
+      CREATE: (orgId: string) => `/${orgId}/scan-items/scan-item-actions/create`,
+      UPDATE: (orgId: string, actionId: string) => `/${orgId}/scan-items/scan-item-actions/${actionId}/update`,
+    },
+    TEMPLATE: {
+      LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-templates`,
+      CREATE: (orgId: string) => `/${orgId}/scan-items/scan-item-templates/create`,
+      UPDATE: (orgId: string, templateId: string) => `/${orgId}/scan-items/scan-item-templates/${templateId}/update`,
+    },
+    FOLDER: {
+      LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-folders`,
+      CREATE: (orgId: string) => `/${orgId}/scan-items/scan-item-folders/create`,
+      UPDATE: (orgId: string, folderId: string) => `/${orgId}/scan-items/scan-item-folders/${folderId}/update`,
+    },
+    ITEM: {
+      LIST: (orgId: string) => `/${orgId}/scan-items/scan-items`,
+      CREATE: (orgId: string) => `/${orgId}/scan-items/scan-items/create`,
+      UPDATE: (orgId: string, itemId: string) => `/${orgId}/scan-items/scan-items/${itemId}/update`,
+      VIEW: (orgId: string, itemId: string) => `/${orgId}/scan-items/scan-items/${itemId}/view`,
+    },
+    HISTORY: {
+      LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-histories`,
     }
   },
   LOYALTY: {

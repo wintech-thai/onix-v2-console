@@ -1,4 +1,4 @@
-import ScanItemsView from "@/modules/general/qrcode/view/qrcode.view";
+import ScanItemsView from "@/modules/scan-items/scan-items/view/scan-items.view";
 
 const ScanItemsPage = () => {
   return <ScanItemsView />;

@@ -51,11 +51,12 @@ export async function GET(req: NextRequest) {
     const should: any[] = [];
 
     if (fullTextSearch) {
-      // fulltext กับ field ข้อความ
+      // Wildcard search for partial matching
+      const wildcardQuery = `*${fullTextSearch}*`;
+
       should.push({
-        multi_match: {
-          query: fullTextSearch,
-          type: "best_fields",
+        query_string: {
+          query: wildcardQuery,
           fields: [
             "data.userInfo.UserName^5",
             "data.api.ApiName^3",
@@ -64,8 +65,7 @@ export async function GET(req: NextRequest) {
             "data.CfClientIp",
             "data.ClientIp",
           ],
-          // operator: "and",
-          fuzziness: "AUTO",
+          default_operator: "AND",
         },
       });
 

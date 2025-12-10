@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -11,33 +11,27 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { RouteConfig } from "@/config/route.config";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
-interface CustomerFilterTableProps {
+interface ScanItemsActionFilterTableProps {
   onDelete: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
-  scanItemId?: string | null;
-  onAttach?: () => void;
 }
 
-export const CustomerFilterTable = ({
+export const ScanItemsActionFilterTable = ({
   onDelete,
   isDisabled,
   onSearch,
   selected,
-  scanItemId,
-  onAttach,
-}: CustomerFilterTableProps) => {
-  const { t } = useTranslation("customer");
+}: ScanItemsActionFilterTableProps) => {
+  const { t } = useTranslation(["scan-items-action", "common"]);
   const params = useParams<{ orgId: string }>();
-  const router = useRouter();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -51,12 +45,6 @@ export const CustomerFilterTable = ({
     onSearch(searchField, searchValue);
   };
 
-  const handleBack = () => {
-    if (scanItemId) {
-      router.replace(RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId))
-    }
-  };
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -65,7 +53,7 @@ export const CustomerFilterTable = ({
         flex flex-col gap-3
         md:flex-row md:items-center md:justify-between
       "
-      aria-label="Cronjob filter controls"
+      aria-label="Scan Item Action filter controls"
     >
       {/* Left side: search controls */}
       <div
@@ -98,7 +86,7 @@ export const CustomerFilterTable = ({
           <Input
             placeholder={t("filter.searchPlaceholder")}
             className="w-full"
-            aria-label={t("filter.searchPlaceholder")}
+            aria-label={t("filter.search")}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
@@ -128,39 +116,19 @@ export const CustomerFilterTable = ({
           md:flex md:items-center
         "
       >
-        {scanItemId && onAttach ? (
-          <>
-            <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
-              {t("filter.back")}
-            </Button>
-
-            <Button
-              className="w-full md:w-auto"
-              disabled={selected !== 1}
-              onClick={onAttach}
-            >
-              {t("filter.attach")}{" "}
-              {selected > 0 ? `(${selected})` : ""}
-            </Button>
-          </>
-        ) : (
-          <>
-            <Link
-              className={cn(buttonVariants({ variant: "default" }))}
-              href={RouteConfig.GENERAL.CUSTOMER.CREATE(params.orgId)}
-            >
-              {t("filter.add")}
-            </Link>
-            <Button
-              className="w-full md:w-auto"
-              disabled={isDisabled}
-              onClick={onDelete}
-              variant="destructive"
-            >
-              {t("filter.delete")} {selected ? `(${selected})` : ""}
-            </Button>
-          </>
-        )}
+        <Link href={RouteConfig.SCAN_ITEMS.ACTION.CREATE(params.orgId)}>
+          <Button className="w-full md:w-auto">
+            {t("filter.add")}
+          </Button>
+        </Link>
+        <Button
+          className="w-full md:w-auto"
+          disabled={isDisabled}
+          onClick={onDelete}
+          variant="destructive"
+        >
+          {t("filter.delete")} {selected ? `(${selected})` : ""}
+        </Button>
       </div>
     </form>
   );

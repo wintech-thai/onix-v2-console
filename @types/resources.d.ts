@@ -264,8 +264,7 @@ interface Resources {
           "1": "Organization",
           "2": "Products",
           "3": "Customers",
-          "4": "Scan Items",
-          "5": "Jobs"
+          "4": "Jobs"
         }
       },
       "loyalty": {
@@ -276,6 +275,16 @@ interface Resources {
           "3": "Point Trigger",
           "4": "Privileges",
           "5": "Vouchers"
+        }
+      },
+      "scanItems": {
+        "label": "Scan Items",
+        "sub": {
+          "1": "Scan Item Action",
+          "2": "Scan Item Template",
+          "3": "Scan Item Folder",
+          "4": "Scan Item",
+          "5": "Scan History"
         }
       }
     },
@@ -1111,6 +1120,80 @@ interface Resources {
       "message": "Are you sure you want to un-verify this scan item? This will remove its verification status.",
       "success": "Scan item un-verified successfully",
       "title": "Confirm Un-Verification"
+    }
+  },
+  "scan-items-action": {
+    "actions": {
+      "setDefault": "Set to Default"
+    },
+    "columns": {
+      "action": "Action",
+      "actionName": "Action Name",
+      "description": "Description",
+      "isDefault": "Default",
+      "redirectUrl": "Redirect URL",
+      "tags": "Tags",
+      "themeVerify": "Theme"
+    },
+    "delete": {
+      "error": "Failed to delete scan item action",
+      "message": "Are you sure you want to delete the selected scan item actions? This action cannot be undone.",
+      "success": "Deleted scan item action successfully",
+      "title": "Confirm Deletion"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "loadingDefault": "Loading...",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "createTitle": "Create Scan Item Action",
+      "defaultValue": "Default Value",
+      "generalInformation": {
+        "actionName": "Action Name",
+        "description": "Description",
+        "tags": "Tags",
+        "tagsPlaceholder": "Press Enter to add tag",
+        "title": "General Information"
+      },
+      "technicalInformation": {
+        "encryptionIV": "Encryption IV",
+        "encryptionKey": "Encryption Key",
+        "redirectUrl": "Redirect URL",
+        "registeredAwareFlag": "Re-scan Check?",
+        "themeVerify": "Theme",
+        "title": "Technical Information"
+      },
+      "updateTitle": "Edit Scan Item Action",
+      "validation": {
+        "actionNameRequired": "Action name is required",
+        "descriptionRequired": "Description is required",
+        "encryptionIVLength": "Encryption IV must be exactly 16 characters",
+        "encryptionIVRequired": "Encryption IV is required",
+        "encryptionKeyLength": "Encryption key must be exactly 16 characters",
+        "encryptionKeyRequired": "Encryption key is required",
+        "redirectUrlInvalid": "Invalid URL format",
+        "redirectUrlRequired": "Redirect URL is required",
+        "registeredAwareFlagRequired": "Re-scan check is required",
+        "tagsRequired": "At least one tag is required",
+        "themeVerifyRequired": "Theme is required"
+      }
+    },
+    "setDefault": {
+      "error": "Failed to set default",
+      "loading": "Setting default...",
+      "message": "Are you sure you want to set this as the default scan item action?",
+      "success": "Set default successfully",
+      "title": "Set Default"
     }
   },
   "user": {

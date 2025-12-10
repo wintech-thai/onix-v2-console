@@ -1,0 +1,74 @@
+{
+  "columns": {
+    "actionName": "ชื่อแอคชัน",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "themeVerify": "ธีม",
+    "redirectUrl": "URL เปลี่ยนเส้นทาง",
+    "isDefault": "ค่าเริ่มต้น",
+    "action": "การกระทำ"
+  },
+  "actions": {
+    "setDefault": "ตั้งเป็นค่าเริ่มต้น"
+  },
+  "filter": {
+    "searchPlaceholder": "กรอกค่าที่ต้องการค้นหา",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "search": "ค้นหา",
+    "add": "เพิ่ม",
+    "delete": "ลบ"
+  },
+  "delete": {
+    "title": "ยืนยันการลบ",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบแอคชันสแกนไอเท็มที่เลือก? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+    "success": "ลบแอคชันสแกนไอเท็มสำเร็จ",
+    "error": "ไม่สามารถลบแอคชันสแกนไอเท็มได้"
+  },
+  "setDefault": {
+    "title": "ตั้งเป็นค่าเริ่มต้น",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการตั้งค่านี้เป็นแอคชันสแกนไอเท็มเริ่มต้น?",
+    "loading": "กำลังตั้งค่าเริ่มต้น...",
+    "success": "ตั้งค่าเริ่มต้นสำเร็จ",
+    "error": "ไม่สามารถตั้งค่าเริ่มต้นได้"
+  },
+  "form": {
+    "defaultValue": "ค่าเริ่มต้น",
+    "createTitle": "สร้างแอคชันสแกนไอเท็ม",
+    "updateTitle": "แก้ไขแอคชันสแกนไอเท็ม",
+    "generalInformation": {
+      "title": "ข้อมูลทั่วไป",
+      "actionName": "ชื่อแอคชัน",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก",
+      "tagsPlaceholder": "กด Enter เพื่อเพิ่มแท็ก"
+    },
+    "technicalInformation": {
+      "title": "ข้อมูลทางเทคนิค",
+      "themeVerify": "ธีม",
+      "redirectUrl": "URL เปลี่ยนเส้นทาง",
+      "encryptionKey": "คีย์การเข้ารหัส",
+      "encryptionIV": "IV การเข้ารหัส",
+      "registeredAwareFlag": "ตรวจสอบการสแกนซ้ำ?"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "saving": "กำลังบันทึก...",
+      "loadingDefault": "กำลังโหลด..."
+    },
+    "validation": {
+      "actionNameRequired": "กรุณากรอกชื่อแอคชัน",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณาเพิ่มแท็กอย่างน้อย 1 แท็ก",
+      "themeVerifyRequired": "กรุณากรอกธีม",
+      "redirectUrlRequired": "กรุณากรอก URL เปลี่ยนเส้นทาง",
+      "redirectUrlInvalid": "รูปแบบ URL ไม่ถูกต้อง",
+      "encryptionKeyRequired": "กรุณากรอกคีย์การเข้ารหัส",
+      "encryptionKeyLength": "คีย์การเข้ารหัสต้องมีความยาว 16 ตัวอักษรเท่านั้น",
+      "encryptionIVRequired": "กรุณากรอก IV การเข้ารหัส",
+      "encryptionIVLength": "IV การเข้ารหัสต้องมีความยาว 16 ตัวอักษรเท่านั้น",
+      "registeredAwareFlagRequired": "กรุณาเลือกการตรวจสอบการสแกนซ้ำ"
+    }
+  }
+}

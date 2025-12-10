@@ -1,24 +1,24 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { fetchScanItemsApi, IScanItems } from "../api/fetch-qrcodes.api";
-import { QrCodeTable } from "../components/qrcode-table/qrcode.table";
-import { useQrcodeTableColumns } from "../components/qrcode-table/qrcode-columns.table";
+import { fetchScanItemsActionsApi, IScanItemsAction } from "../api/fetch-scan-items-actions.api";
+import { ScanItemsActionTable } from "../components/scan-items-action-table/scan-items-action.table";
+import { useScanItemsActionTableColumns } from "../components/scan-items-action-table/scan-items-action-columns.table";
 import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { useConfirm } from "@/hooks/use-confirm";
-import { deleteScanItemsApi } from "../api/delete-scan-items";
+import { deleteScanItemsActionsApi } from "../api/delete-scan-items-actions.api";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
-const ScanItemsView = () => {
-  const { t } = useTranslation(["scan-item"]);
+const ScanItemsActionViewPage = () => {
+  const { t } = useTranslation(["scan-items-action", "common"]);
   const params = useParams<{ orgId: string }>();
-  const [data, setData] = useState<IScanItems[]>([]);
+  const [data, setData] = useState<IScanItemsAction[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
@@ -28,11 +28,9 @@ const ScanItemsView = () => {
   });
   const queryClient = useQueryClient();
 
-  const scanItemsTableColumns = useQrcodeTableColumns();
+  const scanItemsActionTableColumns = useScanItemsActionTableColumns();
 
-  const deleteScanItems = deleteScanItemsApi.useDeleteScanItemsMutation(
-    params.orgId
-  );
+  const deleteScanItemsAction = deleteScanItemsActionsApi.useDeleteScanItemsActions();
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -53,55 +51,52 @@ const ScanItemsView = () => {
     []
   ); // Empty dependency array means dates are calculated only once
 
-  // Fetch scan items from API
-  const fetchScanItems = fetchScanItemsApi.useFetchScanItemsQuery({
+  // Fetch scan items actions from API
+  const fetchScanItemsActions = fetchScanItemsActionsApi.useFetchScanItemsActions({
     orgId: params.orgId,
-    fromDate: dateRange.fromDate,
-    toDate: dateRange.toDate,
-    offset: (page - 1) * limit,
-    limit: limit,
-    fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+    params: {
+      fromDate: dateRange.fromDate,
+      toDate: dateRange.toDate,
+      offset: (page - 1) * limit,
+      limit: limit,
+      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+    },
   });
 
   useEffect(() => {
-    if (fetchScanItems?.data) {
-      setData(fetchScanItems.data.data);
+    if (fetchScanItemsActions.data?.data) {
+      setData(fetchScanItemsActions.data.data);
       setHasLoadedBefore(true);
       setIsPageOrLimitChanging(false);
     }
-  }, [fetchScanItems.data]);
+  }, [fetchScanItemsActions.data]);
 
-  const fetchScanItemsCount = fetchScanItemsApi.useFetchScanItemsCount({
+  const fetchScanItemsActionsCount = fetchScanItemsActionsApi.useFetchScanItemsActionsCount({
     orgId: params.orgId,
-    fromDate: dateRange.fromDate,
-    toDate: dateRange.toDate,
-    offset: (page - 1) * limit,
-    limit: limit,
-    fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+    params: {
+      fromDate: dateRange.fromDate,
+      toDate: dateRange.toDate,
+      offset: (page - 1) * limit,
+      limit: limit,
+      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+    },
   });
 
-  if (fetchScanItems.isError) {
-    if (fetchScanItems.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItems" />
+  if (fetchScanItemsActions.isError) {
+    if (fetchScanItemsActions.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetScanItemActions" />
     }
-
-    throw new Error(fetchScanItems.error.message);
+    throw new Error(fetchScanItemsActions.error.message);
   }
 
-  if (fetchScanItemsCount.isError) {
-    if (fetchScanItemsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemCount" />
+  if (fetchScanItemsActionsCount.isError) {
+    if (fetchScanItemsActionsCount.error?.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetScanItemActionsCount" />
     }
-
-    throw new Error(fetchScanItemsCount.error.message);
+    throw new Error(fetchScanItemsActionsCount.error.message);
   }
 
-  // Local state for scan items (to handle client-side delete)
-
-  const handleDelete = async (
-    rows: Row<IScanItems>[],
-    callback: () => void
-  ) => {
+  const handleDelete = async (rows: Row<IScanItemsAction>[], callback: () => void) => {
     const ok = await confirmDelete();
     if (!ok) return;
 
@@ -111,10 +106,15 @@ const ScanItemsView = () => {
       return;
     }
 
-    const toastId = toast.loading(t("delete.loading", "Deleting items..."));
+    const toastId = toast.loading(t("common:delete.loading"));
 
     const results = await Promise.allSettled(
-      idsToDelete.map((id) => deleteScanItems.mutateAsync(id))
+      idsToDelete.map((actionId) =>
+        deleteScanItemsAction.mutateAsync({
+          orgId: params.orgId,
+          scanItemsActionId: actionId,
+        })
+      )
     );
 
     toast.dismiss(toastId);
@@ -125,26 +125,25 @@ const ScanItemsView = () => {
 
     if (successCount > 0) {
       toast.success(
-        `${t("delete.success", "Success")} (${successCount}/${totalCount})`
+        `${t("action.delete.success", "Success")} (${successCount}/${totalCount})`
       );
     }
     if (errorCount > 0) {
-      toast.error(`${t("delete.error", "Error")} (${errorCount}/${totalCount})`);
-      // Optionally log the errors
+      toast.error(
+        `${t("action.delete.error", "Error")} (${errorCount}/${totalCount})`
+      );
       results.forEach((result) => {
         if (result.status === "rejected") {
-          console.error("Failed to delete item:", result.reason);
+          console.error("Failed to delete scan item action:", result.reason);
         }
       });
     }
 
-    // Invalidate queries to refetch data
     await queryClient.invalidateQueries({
-      queryKey: fetchScanItemsApi.fetchScanItemsKey,
+      queryKey: fetchScanItemsActionsApi.key,
       refetchType: "active",
     });
 
-    // Clear selection after delete attempt
     callback();
   };
 
@@ -159,17 +158,18 @@ const ScanItemsView = () => {
   };
 
   const handleSearch = (field: string, value: string) => {
+    // ไม่ต้อง set loading เพราะ search ไม่ต้องการ loading
     setQueryState({ searchField: field, searchValue: value, page: 1 }); // Reset to page 1 when searching
   };
 
   // Get total items count from API
-  const totalItems = fetchScanItemsCount.data?.data ?? 0;
+  const totalItems = fetchScanItemsActionsCount.data?.data ?? 0;
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
-      <QrCodeTable
-        columns={scanItemsTableColumns}
+      <ScanItemsActionTable
+        columns={scanItemsActionTableColumns}
         data={data}
         onDelete={handleDelete}
         totalItems={totalItems}
@@ -178,10 +178,10 @@ const ScanItemsView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={(fetchScanItemsActions.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
       />
     </div>
   );
 };
 
-export default ScanItemsView;
+export default ScanItemsActionViewPage;

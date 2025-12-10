@@ -12,7 +12,7 @@ import {
   UserCogIcon,
   ChevronRight,
   ChevronDown,
-  GiftIcon,
+  GiftIcon, QrCodeIcon
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -32,6 +32,12 @@ type SidebarKeys =
   | "sidebar.general.sub.3"
   | "sidebar.general.sub.4"
   | "sidebar.general.sub.5"
+  | "sidebar.scanItems.label"
+  | "sidebar.scanItems.sub.1"
+  | "sidebar.scanItems.sub.2"
+  | "sidebar.scanItems.sub.3"
+  | "sidebar.scanItems.sub.4"
+  | "sidebar.scanItems.sub.5"
   | "sidebar.loyalty.label"
   | "sidebar.loyalty.sub.1"
   | "sidebar.loyalty.sub.2"
@@ -101,13 +107,36 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
           },
           {
             labelKey: "sidebar.general.sub.4",
-            href: RouteConfig.GENERAL.QRCODE.INDEX(params.orgId),
-          },
-          {
-            labelKey: "sidebar.general.sub.5",
             href: RouteConfig.GENERAL.JOB.LIST(params.orgId),
           },
         ],
+      },
+      {
+        key: "scanItem",
+        labelKey: "sidebar.scanItems.label",
+        icon: QrCodeIcon,
+        children: [
+          {
+            labelKey: "sidebar.scanItems.sub.1",
+            href: RouteConfig.SCAN_ITEMS.ACTION.LIST(params.orgId)
+          },
+          {
+            labelKey: "sidebar.scanItems.sub.2",
+            href: RouteConfig.SCAN_ITEMS.TEMPLATE.LIST(params.orgId)
+          },
+          {
+            labelKey: "sidebar.scanItems.sub.3",
+            href: RouteConfig.SCAN_ITEMS.FOLDER.LIST(params.orgId)
+          },
+          {
+            labelKey: "sidebar.scanItems.sub.4",
+            href: RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId)
+          },
+          {
+            labelKey: "sidebar.scanItems.sub.5",
+            href: RouteConfig.SCAN_ITEMS.HISTORY.LIST(params.orgId)
+          },
+        ]
       },
       {
         key: "loyalty",
