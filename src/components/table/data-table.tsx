@@ -44,6 +44,7 @@ interface DataTableProps<TData, TValue> {
   bannerComponent?: ReactNode;
   onRowSelectionChange?: (rows: Row<TData>[]) => void;
   getRowClassName?: (row: Row<TData>, isActive: boolean) => string;
+  onRowClick?: (row: Row<TData>) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -62,6 +63,7 @@ export function DataTable<TData, TValue>({
   bannerComponent,
   onRowSelectionChange,
   getRowClassName,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation("common");
   const [rowSelection, setRowSelection] = useState({});
@@ -135,11 +137,16 @@ export function DataTable<TData, TValue>({
                   ? getRowClassName(row, isActive)
                   : defaultClassName;
 
+                const handleRowClick = () => {
+                  setActiveRowId(rowId);
+                  onRowClick?.(row);
+                };
+
                 return (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    onClick={() => setActiveRowId(rowId)}
+                    onClick={handleRowClick}
                     className={`cursor-pointer transition-colors ${rowClassName}`}
                   >
                     {row.getVisibleCells().map((cell) => (
