@@ -11,6 +11,7 @@ export type i18nKeys =
   | "auth"
   | "scan-item"
   | "scan-items-action"
+  | "scan-items-template"
   | "cronjob"
   | "user"
   | "customer"
@@ -28,6 +29,8 @@ export const i18nNamespaces: i18nKeys[] = [
   "product",
   "auth",
   "scan-item",
+  "scan-items-action",
+  "scan-items-template",
   "scan-items-action",
   "cronjob",
   "user",

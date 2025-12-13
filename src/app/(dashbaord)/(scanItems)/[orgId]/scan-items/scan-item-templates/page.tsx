@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import ScanItemTemplateViewPage from "@/modules/scan-items/scan-items-templates/view/scan-items-template.view";
 
 const ScanItemTemplatePage = () => {
-  return <CommingSoon />
+  return <ScanItemTemplateViewPage />
 }
 
 export default ScanItemTemplatePage;

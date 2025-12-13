@@ -1196,6 +1196,46 @@ interface Resources {
       "title": "Set Default"
     }
   },
+  "scan-items-template": {
+    "action": {
+      "createScanItemJob": "Create Scan Item Job",
+      "delete": {
+        "error": "Failed to delete scan item template(s)",
+        "success": "Successfully deleted scan item template(s)"
+      },
+      "scanItemJobs": "Scan Item Jobs",
+      "setAsDefault": "Set as Default"
+    },
+    "columns": {
+      "action": "Action",
+      "description": "Description",
+      "isDefault": "Default",
+      "pinDigit": "PIN Digit",
+      "prefixDigit": "Prefix Digit",
+      "quantity": "Quantity",
+      "serialDigit": "Serial Digit",
+      "tags": "Tags",
+      "templateName": "Template Name",
+      "urlTemplate": "URL Template"
+    },
+    "delete": {
+      "message": "Are you sure you want to delete the selected scan item template(s)?",
+      "title": "Delete Scan Item Templates"
+    },
+    "filter": {
+      "add": "Add",
+      "delete": "Delete",
+      "fullTextSearch": "All Fields",
+      "search": "Search",
+      "searchPlaceholder": "Search scan item templates...",
+      "selectSearchField": "Select Search Field"
+    },
+    "setDefault": {
+      "error": "Failed to set as default template",
+      "success": "Successfully set as default template",
+      "title": "Set as Default"
+    }
+  },
   "user": {
     "actions": {
       "createUser": "Create User",

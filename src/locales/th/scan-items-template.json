@@ -1,0 +1,40 @@
+{
+  "columns": {
+    "templateName": "ชื่อเทมเพลต",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "prefixDigit": "หลักคำนำหน้า",
+    "quantity": "จำนวน",
+    "pinDigit": "หลัก PIN",
+    "serialDigit": "หลักซีเรียล",
+    "urlTemplate": "URL เทมเพลต",
+    "isDefault": "ค่าเริ่มต้น",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ทุกฟิลด์",
+    "searchPlaceholder": "ค้นหาเทมเพลตสแกนไอเทม..."
+  },
+  "delete": {
+    "title": "ลบเทมเพลตสแกนไอเทม",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบเทมเพลตสแกนไอเทมที่เลือก?"
+  },
+  "setDefault": {
+    "title": "ตั้งเป็นค่าเริ่มต้น",
+    "success": "ตั้งเป็นเทมเพลตเริ่มต้นสำเร็จ",
+    "error": "ไม่สามารถตั้งเป็นเทมเพลตเริ่มต้นได้"
+  },
+  "action": {
+    "setAsDefault": "ตั้งเป็นค่าเริ่มต้น",
+    "createScanItemJob": "สร้างงานสแกนไอเทม",
+    "scanItemJobs": "งานสแกนไอเทม",
+    "delete": {
+      "success": "ลบเทมเพลตสแกนไอเทมสำเร็จ",
+      "error": "ไม่สามารถลบเทมเพลตสแกนไอเทมได้"
+    }
+  }
+}

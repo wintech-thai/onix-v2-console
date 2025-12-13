@@ -1,0 +1,40 @@
+{
+  "columns": {
+    "templateName": "Template Name",
+    "description": "Description",
+    "tags": "Tags",
+    "prefixDigit": "Prefix Digit",
+    "quantity": "Quantity",
+    "pinDigit": "PIN Digit",
+    "serialDigit": "Serial Digit",
+    "urlTemplate": "URL Template",
+    "isDefault": "Default",
+    "action": "Action"
+  },
+  "filter": {
+    "search": "Search",
+    "delete": "Delete",
+    "add": "Add",
+    "selectSearchField": "Select Search Field",
+    "fullTextSearch": "All Fields",
+    "searchPlaceholder": "Search scan item templates..."
+  },
+  "delete": {
+    "title": "Delete Scan Item Templates",
+    "message": "Are you sure you want to delete the selected scan item template(s)?"
+  },
+  "setDefault": {
+    "title": "Set as Default",
+    "success": "Successfully set as default template",
+    "error": "Failed to set as default template"
+  },
+  "action": {
+    "setAsDefault": "Set as Default",
+    "createScanItemJob": "Create Scan Item Job",
+    "scanItemJobs": "Scan Item Jobs",
+    "delete": {
+      "success": "Successfully deleted scan item template(s)",
+      "error": "Failed to delete scan item template(s)"
+    }
+  }
+}
