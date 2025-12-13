@@ -6,11 +6,11 @@ import {
   useScanItemsActionsSchema,
 } from "../../schema/scan-items-actions.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon, Loader, XIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useParams, useRouter } from "next/navigation";
-import { useState, KeyboardEvent, useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useConfirm } from "@/hooks/use-confirm";
@@ -18,6 +18,7 @@ import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { useTranslation } from "react-i18next";
 import { errorMessageAsLangKey } from "@/lib/utils";
 import { getScanItemActionsDefaultApi } from "../../api/get-default-sacns-items-action.api";
+import { InputTags } from "@/components/ui/input-tags";
 
 interface ScanItemsActionFormProps {
   onSubmit: (values: ScanItemsActionsSchemaType) => Promise<void>;
@@ -46,44 +47,13 @@ export const ScanItemsActionForm = ({
     variant: "destructive",
   });
 
-  const { tags } = form.watch();
   const isSubmitting = form.formState.isSubmitting;
   const isDirty = form.formState.isDirty;
   const errors = form.formState.errors;
 
-  const [tagInput, setTagInput] = useState("");
-  const tagsArray = tags
-    ? tags.split(",").filter((tag) => tag.trim() !== "")
-    : [];
-
   // Get default values API
   const defaultValuesMutation =
     getScanItemActionsDefaultApi.useGetDefaultScanItemActions();
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const trimmedTag = tagInput.trim();
-
-      if (trimmedTag && !tagsArray.includes(trimmedTag)) {
-        const newTags = [...tagsArray, trimmedTag];
-        form.setValue("tags", newTags.join(","), {
-          shouldDirty: true,
-          shouldValidate: true,
-        });
-        form.trigger("tags");
-        setTagInput("");
-      }
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
-    form.setValue("tags", newTags.join(","), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  };
 
   // Sync form dirty state with navigation blocker
   useEffect(() => {
@@ -208,43 +178,26 @@ export const ScanItemsActionForm = ({
             />
           </div>
 
-          <div className="mt-4">
-            <Label>
-              {t("form.generalInformation.tags")}{" "}
-              <span className="text-red-500">*</span>
-            </Label>
-            <div className="mt-2">
-              <Input
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={handleKeyDown}
+          <Controller
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <InputTags
+                label={t("form.generalInformation.tags")}
                 placeholder={t("form.generalInformation.tagsPlaceholder")}
                 errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
                 maxLength={50}
                 disabled={isSubmitting}
+                isRequired
+                value={field.value}
+                onChange={(value) => {
+                  field.onChange(value);
+                  form.trigger("tags");
+                }}
+                onValidate={() => form.trigger("tags")}
               />
-            </div>
-            {tagsArray.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
-                {tagsArray.map((tag, index) => (
-                  <div
-                    key={index}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground rounded-full text-sm"
-                  >
-                    <span>{tag}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveTag(tag)}
-                      className="hover:bg-primary-foreground/20 rounded-full p-0.5 disabled:cursor-not-allowed"
-                      disabled={isSubmitting}
-                    >
-                      <XIcon className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
             )}
-          </div>
+          />
         </div>
 
         {/* Technical Information Section */}
