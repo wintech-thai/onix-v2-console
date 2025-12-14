@@ -58,7 +58,7 @@ export const useScanItemsTemplateTableColumns =
         cell: ({ row }) => {
           return (
             <Link
-              href={RouteConfig.GENERAL.JOB.UPDATE(
+              href={RouteConfig.SCAN_ITEMS.TEMPLATE.UPDATE(
                 row.original.orgId,
                 row.original.id
               )}
