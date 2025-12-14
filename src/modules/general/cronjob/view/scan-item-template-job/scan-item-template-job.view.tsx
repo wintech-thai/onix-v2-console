@@ -189,7 +189,7 @@ const ScanItemTemplateJobViewPage = () => {
 
   return (
     <div className="h-full flex flex-col pt-4 px-4">
-      <header className="flex items-center gap-2 border-b pb-2 shrink-0">
+      <header className="flex items-center gap-2 border-b pb-2 shrink-0 mb-4">
         <ArrowLeftIcon
           className="cursor-pointer size-6"
           onClick={() => router.back()}

@@ -52,7 +52,7 @@ export const fetchCronJobApi = {
         queryKey: [...fetchCronJobApi.key, params],
         queryFn: () => {
           return api.post<FetchJobsResponse>(
-            `/api/Job/org/{id}/action/GetScanItemJobsByTemplateId/${params.scanItemTemplateId}`,
+            `/api/Job/org/${params.orgId}/action/GetScanItemJobsByTemplateId/${params.scanItemTemplateId}`,
             params
           );
         },
@@ -72,7 +72,7 @@ export const fetchCronJobApi = {
         queryKey: [...fetchCronJobApi.key, "count", params],
         queryFn: () => {
           return api.post<number>(
-            `/api/Job/org/{id}/action/GetScanItemJobCountByTemplateId/${params.scanItemTemplateId}`,
+            `/api/Job/org/${params.orgId}/action/GetScanItemJobCountByTemplateId/${params.scanItemTemplateId}`,
             params
           );
         },
