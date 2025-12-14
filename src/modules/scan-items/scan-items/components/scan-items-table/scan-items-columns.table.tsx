@@ -87,36 +87,21 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       header: t("columns.pin"),
     },
     {
-      accessorKey: "registeredFlag",
-      header: t("columns.verified"),
+      accessorKey: "productCode",
+      header: t("columns.productCode"),
       cell: ({ row }) => {
-        const productCode =
-          row.original.registeredFlag ?? ("" as string | null);
-        return productCode === "TRUE" ? (
-          <CheckIcon className="size-4 text-green-500" />
-        ) : null;
+        return row.original.productCode || "-";
       },
     },
     {
-      accessorKey: "tags",
-      header: t("columns.tags"),
+      accessorKey: "registeredFlag",
+      header: t("columns.verified"),
       cell: ({ row }) => {
-        if (!row.original.tags) return "-";
-
-        return (
-          <div className="max-w-[300px] w-full flex flex-wrap gap-x-0.5 gap-y-0.5">
-            {row.original.tags.split(",").map((badge, i) => {
-              return (
-                <div
-                  key={i}
-                  className="bg-primary text-white rounded-lg px-2 py-1 cursor-pointer"
-                >
-                  {badge.trim()}
-                </div>
-              );
-            })}
-          </div>
-        );
+        const registeredFlag =
+          row.original.registeredFlag ?? ("" as string | null);
+        return registeredFlag === "TRUE" ? (
+          <CheckIcon className="size-4 text-green-500" />
+        ) : null;
       },
     },
     {
@@ -130,6 +115,27 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       },
       cell: ({ row }) => {
         return <div className="text-center">{row.getValue("scanCount")}</div>;
+      },
+    },
+    {
+      accessorKey: "scanItemActionName",
+      header: t("columns.scanItemActionName"),
+      cell: ({ row }) => {
+        return row.original.scanItemActionName || "-";
+      },
+    },
+    {
+      accessorKey: "customerEmail",
+      header: t("columns.customerEmail"),
+      cell: ({ row }) => {
+        return row.original.customerEmail || "-";
+      },
+    },
+    {
+      accessorKey: "folderName",
+      header: t("columns.folderName"),
+      cell: ({ row }) => {
+        return row.original.folderName || "-";
       },
     },
     {

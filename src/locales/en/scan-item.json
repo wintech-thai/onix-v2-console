@@ -8,6 +8,9 @@
     "productCode": "Product Code",
     "url": "URL",
     "scanCount": "Scan Count",
+    "scanItemActionName": "Action Name",
+    "customerEmail": "Customer Email",
+    "folderName": "Folder Name",
     "action": "Action"
   },
   "actions": {

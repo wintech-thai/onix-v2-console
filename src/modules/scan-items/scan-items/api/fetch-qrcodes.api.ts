@@ -39,6 +39,14 @@ export interface IScanItems {
   customerId: null | string;
   createdDate: Date;
   registeredDate: Date;
+  scanItemActionId: string | null;
+  scanItemActionName: string | null;
+  productId: string | null;
+  productDesc: string | null;
+  customerEmail: string | null;
+  folderName: string | null;
+  productDescLegacy: string | null;
+  productCodeLegacy: string | null;
 }
 
 

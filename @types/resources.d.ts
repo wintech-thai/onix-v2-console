@@ -948,9 +948,12 @@ interface Resources {
     },
     "columns": {
       "action": "Action",
+      "customerEmail": "Customer Email",
+      "folderName": "Folder Name",
       "pin": "Pin",
       "productCode": "Product Code",
       "scanCount": "Scan Count",
+      "scanItemActionName": "Action Name",
       "serial": "Serial",
       "tags": "tags",
       "url": "URL",
