@@ -53,7 +53,7 @@ export const fetchCronJobApi = {
         queryFn: () => {
           return api.post<FetchJobsResponse>(
             `/api/Job/org/${params.orgId}/action/GetScanItemJobsByTemplateId/${params.scanItemTemplateId}`,
-            params
+            params.params
           );
         },
         staleTime: 0,
@@ -73,7 +73,7 @@ export const fetchCronJobApi = {
         queryFn: () => {
           return api.post<number>(
             `/api/Job/org/${params.orgId}/action/GetScanItemJobCountByTemplateId/${params.scanItemTemplateId}`,
-            params
+            params.params
           );
         },
         staleTime: 0,

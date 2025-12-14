@@ -1,7 +1,6 @@
 "use client";
 
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
-import { RouteConfig } from "@/config/route.config";
 import { useQueryClient } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -66,7 +65,7 @@ const CreateScanItemTemplateJobViewPage = () => {
             refetchType: "active",
           });
 
-          router.push(RouteConfig.SCAN_ITEMS.TEMPLATE.LIST(params.orgId));
+          router.back();
         },
       }
     );
