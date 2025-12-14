@@ -25,6 +25,9 @@
   },
   "setDefault": {
     "title": "ตั้งเป็นค่าเริ่มต้น",
+    "confirmTitle": "ตั้งเป็นเทมเพลตเริ่มต้น",
+    "confirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการตั้งเทมเพลตนี้เป็นค่าเริ่มต้น?",
+    "loading": "กำลังตั้งเป็นค่าเริ่มต้น...",
     "success": "ตั้งเป็นเทมเพลตเริ่มต้นสำเร็จ",
     "error": "ไม่สามารถตั้งเป็นเทมเพลตเริ่มต้นได้"
   },
@@ -36,5 +39,48 @@
       "success": "ลบเทมเพลตสแกนไอเทมสำเร็จ",
       "error": "ไม่สามารถลบเทมเพลตสแกนไอเทมได้"
     }
+  },
+  "form": {
+    "createTitle": "สร้างเทมเพลตสแกนไอเทม",
+    "updateTitle": "แก้ไขเทมเพลตสแกนไอเทม",
+    "generalInformation": {
+      "title": "ข้อมูลทั่วไป",
+      "templateName": "ชื่อเทมเพลต",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก",
+      "tagsPlaceholder": "ใส่แท็กแล้วกด Enter"
+    },
+    "templateConfiguration": {
+      "title": "การตั้งค่าเทมเพลต",
+      "urlTemplate": "URL เทมเพลต",
+      "serialPrefixDigit": "หลักคำนำหน้าซีเรียล",
+      "pinDigit": "หลัก PIN",
+      "serialDigit": "หลักซีเรียล",
+      "generatorCount": "จำนวนการสร้าง",
+      "notificationEmail": "อีเมลแจ้งเตือน"
+    },
+    "validation": {
+      "templateNameRequired": "กรุณาระบุชื่อเทมเพลต",
+      "descriptionRequired": "กรุณาระบุคำอธิบาย",
+      "tagsRequired": "กรุณาระบุแท็ก",
+      "urlTemplateRequired": "กรุณาระบุ URL เทมเพลต",
+      "serialPrefixDigitMin": "หลักคำนำหน้าซีเรียลต้องมากกว่าหรือเท่ากับ 1",
+      "pinDigitMin": "หลัก PIN ต้องมากกว่าหรือเท่ากับ 1",
+      "serialDigitMin": "หลักซีเรียลต้องมากกว่าหรือเท่ากับ 1",
+      "generatorCountMin": "จำนวนการสร้างต้องมากกว่าหรือเท่ากับ 1",
+      "notificationEmailInvalid": "รูปแบบอีเมลไม่ถูกต้อง"
+    },
+    "actions": {
+      "cancel": "ยกเลิก",
+      "save": "บันทึก",
+      "saving": "กำลังบันทึก..."
+    }
+  },
+  "messages": {
+    "createSuccess": "สร้างเทมเพลตสแกนไอเทมสำเร็จ",
+    "createError": "ไม่สามารถสร้างเทมเพลตสแกนไอเทมได้",
+    "updateSuccess": "แก้ไขเทมเพลตสแกนไอเทมสำเร็จ",
+    "updateError": "ไม่สามารถแก้ไขเทมเพลตสแกนไอเทมได้",
+    "notFound": "ไม่พบเทมเพลตสแกนไอเทม"
   }
 }

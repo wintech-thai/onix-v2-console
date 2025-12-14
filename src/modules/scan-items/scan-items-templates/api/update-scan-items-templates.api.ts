@@ -13,7 +13,7 @@ export const updateScanItemsTemplatesApi = {
         templateId: string;
         values: ScanItemTemplateSchemaType;
       }) => {
-        return api.put(
+        return api.post(
           `/api/ScanItemTemplate/org/${params.orgId}/action/UpdateScanItemTemplateById/${params.templateId}`,
           params.values
         );

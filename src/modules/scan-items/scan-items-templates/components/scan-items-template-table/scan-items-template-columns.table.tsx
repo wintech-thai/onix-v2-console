@@ -13,36 +13,13 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchScanItemsTemplatesApi } from "../../api/fetch-scan-items-templates.api";
 import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
+import { useConfirm as Confirm } from "@/hooks/use-confirm";
 
 export const useScanItemsTemplateTableColumns = (): ColumnDef<IScanItemTemplate>[] => {
   const { t } = useTranslation("scan-items-template");
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
-  const setDefaultMutation = setDefaultScanItemsTemplatesApi.useSetDefaultScanItemsTemplates();
-
-  const handleSetDefault = async (templateId: string) => {
-    const toastId = toast.loading(t("setDefault.title"));
-
-    try {
-      await setDefaultMutation.mutateAsync({
-        orgId: params.orgId,
-        templateId: templateId,
-      });
-
-      toast.dismiss(toastId);
-      toast.success(t("setDefault.success"));
-
-      // Invalidate queries to refresh the data
-      await queryClient.invalidateQueries({
-        queryKey: [fetchScanItemsTemplatesApi.key],
-        refetchType: "active",
-      });
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(t("setDefault.error"));
-      console.error("Failed to set default:", error);
-    }
-  };
 
   return [
     {
@@ -73,7 +50,10 @@ export const useScanItemsTemplateTableColumns = (): ColumnDef<IScanItemTemplate>
       cell: ({ row }) => {
         return (
           <Link
-            href={`/${params.orgId}/scan-items/scan-items-templates/update/${row.original.id}`}
+            href={RouteConfig.SCAN_ITEMS.TEMPLATE.UPDATE(
+              row.original.orgId,
+              row.original.id
+            )}
             className="text-blue-600 hover:underline"
           >
             {row.getValue("templateName")}
@@ -92,26 +72,20 @@ export const useScanItemsTemplateTableColumns = (): ColumnDef<IScanItemTemplate>
       accessorKey: "tags",
       header: t("columns.tags"),
       cell: ({ row }) => {
-        const tags = row.getValue("tags") as string;
-        const tagArray = tags ? tags.split(",").filter((tag) => tag.trim() !== "") : [];
-
-        if (tagArray.length === 0) return <span className="text-muted-foreground">-</span>;
+        if (!row.original.tags) return "-";
 
         return (
-          <div className="flex flex-wrap gap-1">
-            {tagArray.slice(0, 3).map((tag, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
-              >
-                {tag}
-              </span>
-            ))}
-            {tagArray.length > 3 && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted">
-                +{tagArray.length - 3}
-              </span>
-            )}
+          <div className="max-w-[300px] w-full flex flex-wrap gap-x-0.5 gap-y-0.5">
+            {row.original.tags.split(",").map((badge, i) => {
+              return (
+                <div
+                  key={i}
+                  className="bg-primary text-white rounded-lg px-2 py-1 cursor-pointer"
+                >
+                  {badge.trim()}
+                </div>
+              );
+            })}
           </div>
         );
       },
@@ -170,29 +144,76 @@ export const useScanItemsTemplateTableColumns = (): ColumnDef<IScanItemTemplate>
       cell: ({ row }) => {
         const isDefault = row.original.isDefault === "TRUE";
 
+        const [ConfirmSetDefaultDialog, confirmSetDefault] = Confirm({
+          variant: "default",
+          title: t("setDefault.confirmTitle"),
+          message: t("setDefault.confirmMessage"),
+        });
+
+        const setDefaultMutation = setDefaultScanItemsTemplatesApi.useSetDefaultScanItemsTemplates();
+
+        const handleSetDefault = async (templateId: string) => {
+          const ok = await confirmSetDefault();
+
+          if (!ok) return;
+
+          const toastId = toast.loading(t("setDefault.loading"));
+
+          try {
+            await setDefaultMutation.mutateAsync(
+              {
+                orgId: params.orgId,
+                templateId: templateId,
+              },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status !== "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("setDefault.success"), { id: toastId });
+
+                  // Invalidate queries to refresh the data
+                  queryClient.invalidateQueries({
+                    queryKey: [fetchScanItemsTemplatesApi.key],
+                    refetchType: "active",
+                  });
+                },
+              }
+            );
+          } catch (error) {
+            toast.error(t("setDefault.error"), { id: toastId });
+            console.error("Failed to set default:", error);
+          }
+        };
+
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                disabled={isDefault || setDefaultMutation.isPending}
-                onClick={() => handleSetDefault(row.original.id)}
-              >
-                {t("action.setAsDefault")}
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled>
-                {t("action.createScanItemJob")}
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled>
-                {t("action.scanItemJobs")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <>
+            <ConfirmSetDefaultDialog />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontalIcon className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  disabled={isDefault || setDefaultMutation.isPending}
+                  onClick={() => handleSetDefault(row.original.id)}
+                >
+                  {t("action.setAsDefault")}
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                  {t("action.createScanItemJob")}
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                  {t("action.scanItemJobs")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
         );
       },
     },

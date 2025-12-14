@@ -1230,8 +1230,54 @@ interface Resources {
       "searchPlaceholder": "Search scan item templates...",
       "selectSearchField": "Select Search Field"
     },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "createTitle": "Create Scan Item Template",
+      "generalInformation": {
+        "description": "Description",
+        "tags": "Tags",
+        "tagsPlaceholder": "Enter tags and press Enter",
+        "templateName": "Template Name",
+        "title": "General Information"
+      },
+      "templateConfiguration": {
+        "generatorCount": "Generator Count",
+        "notificationEmail": "Notification Email",
+        "pinDigit": "PIN Digit",
+        "serialDigit": "Serial Digit",
+        "serialPrefixDigit": "Serial Prefix Digit",
+        "title": "Template Configuration",
+        "urlTemplate": "URL Template"
+      },
+      "updateTitle": "Update Scan Item Template",
+      "validation": {
+        "descriptionRequired": "Description is required",
+        "generatorCountMin": "Generator count must be at least 1",
+        "notificationEmailInvalid": "Invalid email address",
+        "pinDigitMin": "PIN digit must be at least 1",
+        "serialDigitMin": "Serial digit must be at least 1",
+        "serialPrefixDigitMin": "Serial prefix digit must be at least 1",
+        "tagsRequired": "Tags are required",
+        "templateNameRequired": "Template name is required",
+        "urlTemplateRequired": "URL template is required"
+      }
+    },
+    "messages": {
+      "createError": "Failed to create scan item template",
+      "createSuccess": "Scan item template created successfully",
+      "notFound": "Scan Item Template Not Found",
+      "updateError": "Failed to update scan item template",
+      "updateSuccess": "Scan item template updated successfully"
+    },
     "setDefault": {
+      "confirmMessage": "Are you sure you want to set this template as the default?",
+      "confirmTitle": "Set as Default Template",
       "error": "Failed to set as default template",
+      "loading": "Setting as default...",
       "success": "Successfully set as default template",
       "title": "Set as Default"
     }

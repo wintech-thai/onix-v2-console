@@ -14,6 +14,7 @@ import { useState } from "react";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useParams, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { RouteConfig } from "@/config/route.config";
 
 interface ScanItemsTemplateFilterProps {
   onSearch: (field: string, value: string) => void;
@@ -44,7 +45,7 @@ export const ScanItemsTemplateFilter = ({
   };
 
   const handleAddClick = () => {
-    router.push(`/${params.orgId}/scan-items/scan-items-templates/create`);
+    router.push(RouteConfig.SCAN_ITEMS.TEMPLATE.CREATE(params.orgId));
   };
 
   const selectedCount = hasSelectedRows ? 1 : 0;
