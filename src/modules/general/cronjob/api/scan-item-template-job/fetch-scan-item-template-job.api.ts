@@ -69,7 +69,7 @@ export const fetchCronJobApi = {
       params: FetchJobRequest;
     }) => {
       return useQuery<AxiosResponse<number>, AxiosError>({
-        queryKey: [...fetchCronJobApi.key, params],
+        queryKey: [...fetchCronJobApi.key, "count", params],
         queryFn: () => {
           return api.post<number>(
             `/api/Job/org/{id}/action/GetScanItemJobCountByTemplateId/${params.scanItemTemplateId}`,
