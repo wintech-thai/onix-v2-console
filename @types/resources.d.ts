@@ -330,7 +330,7 @@ interface Resources {
       "selectSearchField": "Select search field"
     },
     "form": {
-      "createTitle": "Create Cronjob",
+      "createTitle": "Create Scan Item Job",
       "detail": {
         "description": "Description",
         "name": "Name",
@@ -357,7 +357,7 @@ interface Resources {
         "type": "Type"
       },
       "tagsPlaceholder": "Type and press Enter to add tag",
-      "updateTitle": "Update Cronjob",
+      "updateTitle": "Update Scan Item Job",
       "validation": {
         "descriptionRequired": "Description is required",
         "nameRequired": "Name is required",

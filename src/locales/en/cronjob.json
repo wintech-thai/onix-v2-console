@@ -30,8 +30,8 @@
     "error": "Failed to delete cronjob"
   },
   "form": {
-    "createTitle": "Create Cronjob",
-    "updateTitle": "Update Cronjob",
+    "createTitle": "Create Scan Item Job",
+    "updateTitle": "Update Scan Item Job",
     "detail": {
       "title": "Cronjob Detail",
       "name": "Name",
