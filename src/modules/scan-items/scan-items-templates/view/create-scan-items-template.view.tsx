@@ -13,7 +13,7 @@ const CreateScanItemTemplateViewPage = () => {
   const router = useRouter();
   const createScanItemTemplateMutation = createScanItemsTemplatesApi.useCreateScanItemsTemplates();
 
-  const onSubmit = async (values: ScanItemTemplateSchemaType) => {
+  const onSubmit = async (values: ScanItemTemplateSchemaType, callback: () => void) => {
     await createScanItemTemplateMutation.mutateAsync(
       {
         orgId: params.orgId,
@@ -23,6 +23,7 @@ const CreateScanItemTemplateViewPage = () => {
         onSuccess: ({ data }) => {
           if (data.status === "OK") {
             toast.success(t("messages.createSuccess"));
+            callback?.();
             return router.back();
           }
 

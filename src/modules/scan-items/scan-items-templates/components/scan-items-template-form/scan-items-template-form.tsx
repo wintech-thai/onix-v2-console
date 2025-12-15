@@ -18,7 +18,7 @@ import { errorMessageAsLangKey } from "@/lib/utils";
 import { InputTags } from "@/components/ui/input-tags";
 
 interface ScanItemTemplateFormProps {
-  onSubmit: (values: ScanItemTemplateSchemaType) => Promise<void>;
+  onSubmit: (values: ScanItemTemplateSchemaType, callback: () => void) => Promise<void>;
   initialValue: ScanItemTemplateSchemaType;
   isUpdate: boolean;
 }
@@ -55,9 +55,10 @@ export const ScanItemTemplateForm = ({
     if (!isDirty) {
       return router.back();
     }
-    await onSubmit(values);
-    form.reset();
-    setFormDirty(false);
+    await onSubmit(values, () => {
+      form.reset();
+      setFormDirty(false);
+    });
   };
 
   const handleCancel = async () => {

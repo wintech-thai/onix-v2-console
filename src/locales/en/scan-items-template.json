@@ -64,9 +64,9 @@
       "descriptionRequired": "Description is required",
       "tagsRequired": "Tags are required",
       "urlTemplateRequired": "URL template is required",
-      "serialPrefixDigitMin": "Serial prefix digit must be at least 1",
-      "pinDigitMin": "PIN digit must be at least 1",
-      "serialDigitMin": "Serial digit must be at least 1",
+      "serialPrefixDigitRange": "Serial prefix digit must be between 2-3",
+      "pinDigitRange": "PIN digit must be between 5-7",
+      "serialDigitRange": "Serial digit must be between 6-7",
       "generatorCountMin": "Generator count must be at least 1",
       "notificationEmailInvalid": "Invalid email address"
     },

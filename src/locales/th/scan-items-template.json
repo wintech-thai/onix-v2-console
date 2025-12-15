@@ -64,9 +64,9 @@
       "descriptionRequired": "กรุณาระบุคำอธิบาย",
       "tagsRequired": "กรุณาระบุแท็ก",
       "urlTemplateRequired": "กรุณาระบุ URL เทมเพลต",
-      "serialPrefixDigitMin": "หลักคำนำหน้าซีเรียลต้องมากกว่าหรือเท่ากับ 1",
-      "pinDigitMin": "หลัก PIN ต้องมากกว่าหรือเท่ากับ 1",
-      "serialDigitMin": "หลักซีเรียลต้องมากกว่าหรือเท่ากับ 1",
+      "serialPrefixDigitRange": "หลักคำนำหน้าซีเรียลต้องเป็นตัวเลข 2-3",
+      "pinDigitRange": "หลัก PIN ต้องเป็นตัวเลข 5-7",
+      "serialDigitRange": "หลักซีเรียลต้องเป็นตัวเลข 6-7",
       "generatorCountMin": "จำนวนการสร้างต้องมากกว่าหรือเท่ากับ 1",
       "notificationEmailInvalid": "รูปแบบอีเมลไม่ถูกต้อง"
     },

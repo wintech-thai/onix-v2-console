@@ -1261,9 +1261,9 @@ interface Resources {
         "descriptionRequired": "Description is required",
         "generatorCountMin": "Generator count must be at least 1",
         "notificationEmailInvalid": "Invalid email address",
-        "pinDigitMin": "PIN digit must be at least 1",
-        "serialDigitMin": "Serial digit must be at least 1",
-        "serialPrefixDigitMin": "Serial prefix digit must be at least 1",
+        "pinDigitRange": "PIN digit must be between 5-7",
+        "serialDigitRange": "Serial digit must be between 6-7",
+        "serialPrefixDigitRange": "Serial prefix digit must be between 2-3",
         "tagsRequired": "Tags are required",
         "templateNameRequired": "Template name is required",
         "urlTemplateRequired": "URL template is required"

@@ -45,7 +45,7 @@ const UpdateScanItemTemplateViewPage = () => {
     throw new Error("Scan Item Template Not Found");
   }
 
-  const handleUpdateScanItemTemplate = async (values: ScanItemTemplateSchemaType) => {
+  const handleUpdateScanItemTemplate = async (values: ScanItemTemplateSchemaType, callback: () => void) => {
     await updateScanItemTemplateMutation.mutateAsync(
       {
         orgId: params.orgId,
@@ -64,6 +64,8 @@ const UpdateScanItemTemplateViewPage = () => {
               queryKey: [fetchScanItemsTemplatesApi.key],
               refetchType: "active",
             });
+
+            callback?.();
 
             toast.success(t("messages.updateSuccess"));
             return router.back();
