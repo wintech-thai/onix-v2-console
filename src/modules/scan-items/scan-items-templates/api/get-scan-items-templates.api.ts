@@ -16,7 +16,7 @@ export const getScanItemsTemplatesApi = {
     scanItemTemplateId: string;
   }) => {
     return useQuery<AxiosResponse<GetScanItemsTemplatesResponse>, AxiosError>({
-      queryKey: [getScanItemsTemplatesApi.key],
+      queryKey: [getScanItemsTemplatesApi.key, params],
       queryFn: () => {
         return api.get(
           `/api/ScanItemTemplate/org/${params.orgId}/action/GetScanItemTemplateById/${params.scanItemTemplateId}`

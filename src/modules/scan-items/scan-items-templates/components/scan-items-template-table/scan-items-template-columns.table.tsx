@@ -156,7 +156,7 @@ export const useScanItemsTemplateTableColumns =
         accessorKey: "isDefault",
         header: t("columns.isDefault"),
         cell: ({ row }) => {
-          const isDefault = row.getValue("isDefault") === "TRUE";
+          const isDefault = row.getValue("isDefault") === "YES";
           return (
             <div className="flex justify-center">
               {isDefault && <CheckIcon className="h-5 w-5 text-green-600" />}
@@ -168,7 +168,7 @@ export const useScanItemsTemplateTableColumns =
         id: "actions",
         header: t("columns.action"),
         cell: ({ row }) => {
-          const isDefault = row.original.isDefault === "TRUE";
+          const isDefault = row.original.isDefault === "YES";
 
           const [ConfirmSetDefaultDialog, confirmSetDefault] = Confirm({
             variant: "default",
