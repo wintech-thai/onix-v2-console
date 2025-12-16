@@ -33,6 +33,8 @@ export const RouteConfig = {
       LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-templates`,
       CREATE: (orgId: string) => `/${orgId}/scan-items/scan-item-templates/create`,
       UPDATE: (orgId: string, templateId: string) => `/${orgId}/scan-items/scan-item-templates/${templateId}/update`,
+      CREATE_JOB: (orgId: string, templateId: string) => `/${orgId}/scan-items/scan-item-templates/jobs/${templateId}/create`,
+      LIST_JOBS: (orgId: string, templateId: string) => `/${orgId}/scan-items/scan-item-templates/jobs/${templateId}`,
     },
     FOLDER: {
       LIST: (orgId: string) => `/${orgId}/scan-items/scan-item-folders`,

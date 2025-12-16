@@ -9,12 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -150,7 +144,7 @@ export const QrCodeFilterTable = ({
           {t("filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
 
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="w-full md:w-auto" variant="outline">
               {t("filter.config")}
@@ -164,7 +158,7 @@ export const QrCodeFilterTable = ({
               {t("filter.scanItemAction")}
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
     </form>
   );

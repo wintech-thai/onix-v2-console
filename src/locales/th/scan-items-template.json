@@ -1,0 +1,86 @@
+{
+  "columns": {
+    "templateName": "ชื่อเทมเพลต",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "prefixDigit": "หลักคำนำหน้า",
+    "quantity": "จำนวน",
+    "pinDigit": "หลัก PIN",
+    "serialDigit": "หลักซีเรียล",
+    "urlTemplate": "URL เทมเพลต",
+    "isDefault": "ค่าเริ่มต้น",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "search": "ค้นหา",
+    "delete": "ลบ",
+    "add": "เพิ่ม",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ทุกฟิลด์",
+    "searchPlaceholder": "ค้นหาเทมเพลตสแกนไอเทม..."
+  },
+  "delete": {
+    "title": "ลบเทมเพลตสแกนไอเทม",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบเทมเพลตสแกนไอเทมที่เลือก?"
+  },
+  "setDefault": {
+    "title": "ตั้งเป็นค่าเริ่มต้น",
+    "confirmTitle": "ตั้งเป็นเทมเพลตเริ่มต้น",
+    "confirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการตั้งเทมเพลตนี้เป็นค่าเริ่มต้น?",
+    "loading": "กำลังตั้งเป็นค่าเริ่มต้น...",
+    "success": "ตั้งเป็นเทมเพลตเริ่มต้นสำเร็จ",
+    "error": "ไม่สามารถตั้งเป็นเทมเพลตเริ่มต้นได้"
+  },
+  "action": {
+    "setAsDefault": "ตั้งเป็นค่าเริ่มต้น",
+    "createScanItemJob": "สร้างงานสแกนไอเทม",
+    "scanItemJobs": "งานสแกนไอเทม",
+    "delete": {
+      "success": "ลบเทมเพลตสแกนไอเทมสำเร็จ",
+      "error": "ไม่สามารถลบเทมเพลตสแกนไอเทมได้"
+    }
+  },
+  "form": {
+    "createTitle": "สร้างเทมเพลตสแกนไอเทม",
+    "updateTitle": "แก้ไขเทมเพลตสแกนไอเทม",
+    "generalInformation": {
+      "title": "ข้อมูลทั่วไป",
+      "templateName": "ชื่อเทมเพลต",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก",
+      "tagsPlaceholder": "ใส่แท็กแล้วกด Enter"
+    },
+    "templateConfiguration": {
+      "title": "การตั้งค่าเทมเพลต",
+      "urlTemplate": "URL เทมเพลต",
+      "serialPrefixDigit": "หลักคำนำหน้าซีเรียล",
+      "pinDigit": "หลัก PIN",
+      "serialDigit": "หลักซีเรียล",
+      "generatorCount": "จำนวนการสร้าง",
+      "notificationEmail": "อีเมลแจ้งเตือน"
+    },
+    "validation": {
+      "templateNameRequired": "กรุณาระบุชื่อเทมเพลต",
+      "descriptionRequired": "กรุณาระบุคำอธิบาย",
+      "tagsRequired": "กรุณาระบุแท็ก",
+      "urlTemplateRequired": "กรุณาระบุ URL เทมเพลต",
+      "serialPrefixDigitRange": "หลักคำนำหน้าซีเรียลต้องเป็นตัวเลข 2-3",
+      "pinDigitRange": "หลัก PIN ต้องเป็นตัวเลข 5-7",
+      "serialDigitRange": "หลักซีเรียลต้องเป็นตัวเลข 6-7",
+      "generatorCountMin": "จำนวนการสร้างต้องมากกว่าหรือเท่ากับ 1",
+      "notificationEmailInvalid": "รูปแบบอีเมลไม่ถูกต้อง"
+    },
+    "actions": {
+      "cancel": "ยกเลิก",
+      "save": "บันทึก",
+      "saving": "กำลังบันทึก..."
+    }
+  },
+  "messages": {
+    "createSuccess": "สร้างเทมเพลตสแกนไอเทมสำเร็จ",
+    "createError": "ไม่สามารถสร้างเทมเพลตสแกนไอเทมได้",
+    "updateSuccess": "แก้ไขเทมเพลตสแกนไอเทมสำเร็จ",
+    "updateError": "ไม่สามารถแก้ไขเทมเพลตสแกนไอเทมได้",
+    "notFound": "ไม่พบเทมเพลตสแกนไอเทม"
+  }
+}

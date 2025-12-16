@@ -1,11 +1,11 @@
-import { ArrowLeftIcon, XIcon } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { CronJobScehmaType, cronJobSchema } from "../../schema/cronjob.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
+import { InputTags } from "@/components/ui/input-tags";
 import { Label } from "@/components/ui/label";
-import { useState, KeyboardEvent } from "react";
 import { errorMessageAsLangKey } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { IJob } from "../../api/fetch-cron-job.api";
@@ -62,44 +62,12 @@ export const CronJobForm = ({
   };
 
   const isSubmitting = form.formState.isSubmitting;
-  const { tags } = form.watch();
-  const [tagInput, setTagInput] = useState("");
 
   // Use field array for parameters
   const { fields: parameterFields } = useFieldArray({
     control: form.control,
     name: "parameters",
   });
-
-  // Handle tags
-  const tagsArray = tags
-    ? tags.split(",").filter((tag) => tag.trim() !== "")
-    : [];
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const trimmedTag = tagInput.trim();
-
-      if (trimmedTag && !tagsArray.includes(trimmedTag)) {
-        const newTags = [...tagsArray, trimmedTag];
-        form.setValue("tags", newTags.join(","), {
-          shouldDirty: true,
-          shouldValidate: true,
-        });
-        form.trigger("tags");
-        setTagInput("");
-      }
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
-    form.setValue("tags", newTags.join(","), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  };
 
   const handleFormSubmit = form.handleSubmit(async (data) => {
     if (!isDirty) {
@@ -173,44 +141,29 @@ export const CronJobForm = ({
           </div>
 
           <div className="mt-4">
-            <Label>
-              {t("form.detail.tags")} <span className="text-red-500">*</span>
-            </Label>
-            <div className="mt-2">
-              <Input
-                readOnly={isUpdate}
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={t("form.tagsPlaceholder")}
-                errorMessage={errorMessageAsLangKey(
-                  form.formState.errors.tags?.message,
-                  t
-                )}
-                maxLength={30}
-                disabled={isSubmitting}
-              />
-            </div>
-            {tagsArray.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
-                {tagsArray.map((tag, index) => (
-                  <div
-                    key={index}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground rounded-full text-sm"
-                  >
-                    <span>{tag}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveTag(tag)}
-                      className="hover:bg-primary-foreground/20 rounded-full p-0.5 disabled:cursor-not-allowed"
-                      disabled={isSubmitting || isUpdate}
-                    >
-                      <XIcon className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+            <Controller
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <InputTags
+                  label={t("form.detail.tags")}
+                  placeholder={t("form.tagsPlaceholder")}
+                  errorMessage={errorMessageAsLangKey(
+                    form.formState.errors.tags?.message,
+                    t
+                  )}
+                  maxLength={30}
+                  disabled={isSubmitting || isUpdate}
+                  isRequired
+                  value={field.value}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    form.trigger("tags");
+                  }}
+                  onValidate={() => form.trigger("tags")}
+                />
+              )}
+            />
           </div>
         </div>
 

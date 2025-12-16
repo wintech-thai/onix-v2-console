@@ -20,7 +20,6 @@ import { useParams } from "next/navigation";
 import { enabledVoucherApi } from "../../api/enabled-vouchers.api";
 import { disabledVoucherApi } from "../../api/disabled-vouchers.api";
 import { getVoucherVerifyQrUrl } from "../../api/get-voucher-verify-qr-url.api";
-import { getVoucherverifyurlapi } from "../../api/get-voucher-verify-url.api";
 import { setVoucherUnusedByIdApi } from "../../api/set-voucher-unused-by-id.api";
 import { getVoucherApi } from "../../api/get-voucher.api";
 import { toast } from "sonner";
@@ -319,14 +318,13 @@ export const useVoucherTableColumns = () => {
           }
         };
 
-        const getVerifyUrl = getVoucherverifyurlapi.useGetVoucherVerifyUrl();
-
         const handleVerify = async () => {
           const toastId = toast.loading(t("verify.loading"));
 
           try {
-            const response = await getVerifyUrl.mutateAsync({
+            const response = await getQrUrl.mutateAsync({
               orgId: params.orgId,
+              voucherId: voucher.id,
             });
 
             const verifyUrl = response.data.voucher.voucherVerifyUrl;

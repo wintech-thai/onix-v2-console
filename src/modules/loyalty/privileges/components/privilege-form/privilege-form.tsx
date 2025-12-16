@@ -1,25 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { CKEditorComponent } from "@/components/ui/ckeditor";
 import { Input } from "@/components/ui/input";
-import { ArrowLeftIcon, XIcon } from "lucide-react";
+import { InputTags } from "@/components/ui/input-tags";
+import { ArrowLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import {
-  privilegesSchema,
-  PrivilegesSchemaType,
+    privilegesSchema,
+    PrivilegesSchemaType,
 } from "../../schema/privileges.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyboardEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useTranslation } from "react-i18next";
 import { errorMessageAsLangKey } from "@/lib/utils";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { MuiDateTimePicker } from "@/components/ui/mui-date-time-picker";
 
@@ -52,43 +53,11 @@ export const PrivilegeForm = ({
   const isSubmitting = form.formState.isSubmitting;
   const isDirty = form.formState.isDirty;
   const errors = form.formState.errors;
-  const { tags } = form.watch();
-  const [tagInput, setTagInput] = useState("");
 
   // Sync form dirty state with navigation blocker
   useEffect(() => {
     setFormDirty(isDirty);
   }, [isDirty, setFormDirty]);
-
-  // Handle tags
-  const tagsArray = tags
-    ? tags.split(",").filter((tag) => tag.trim() !== "")
-    : [];
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const trimmedTag = tagInput.trim();
-
-      if (trimmedTag && !tagsArray.includes(trimmedTag)) {
-        const newTags = [...tagsArray, trimmedTag];
-        form.setValue("tags", newTags.join(","), {
-          shouldDirty: true,
-          shouldValidate: true,
-        });
-        form.trigger("tags");
-        setTagInput("");
-      }
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
-    form.setValue("tags", newTags.join(","), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  };
 
   const handleCancel = async () => {
     if (!isDirty) {
@@ -224,36 +193,25 @@ export const PrivilegeForm = ({
           />
 
           <div className="mt-4 mb-4">
-            <Input
-              label={t("form.tags")}
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              maxLength={30}
-              disabled={isSubmitting}
-              isRequired
-              errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
+            <Controller
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <InputTags
+                  label={t("form.tags")}
+                  maxLength={30}
+                  disabled={isSubmitting}
+                  isRequired
+                  errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
+                  value={field.value}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    form.trigger("tags");
+                  }}
+                  onValidate={() => form.trigger("tags")}
+                />
+              )}
             />
-            {tagsArray.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
-                {tagsArray.map((tag, index) => (
-                  <div
-                    key={index}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground rounded-full text-sm"
-                  >
-                    <span>{tag}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveTag(tag)}
-                      className="hover:bg-primary-foreground/20 rounded-full p-0.5 disabled:cursor-not-allowed"
-                      disabled={isSubmitting}
-                    >
-                      <XIcon className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 mb-4">

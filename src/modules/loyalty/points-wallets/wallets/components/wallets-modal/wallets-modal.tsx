@@ -6,13 +6,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { InputTags } from "@/components/ui/input-tags";
 import { useConfirm } from "@/hooks/use-confirm";
 import { errorMessageAsLangKey } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { XIcon } from "lucide-react";
+
 import { useParams } from "next/navigation";
-import { KeyboardEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -60,9 +61,6 @@ export const WalletsModal = ({
   const errors = form.formState.errors;
   const isSubmitting = form.formState.isSubmitting;
 
-  const tags = form.watch("tags");
-  const [tagInput, setTagInput] = useState("");
-
   useEffect(() => {
     if (isOpen && walletId && getWallet.data?.data) {
       const wallet = getWallet.data.data;
@@ -96,38 +94,7 @@ export const WalletsModal = ({
       }
       onClose();
       form.reset();
-      setTagInput("");
     }
-  };
-
-  // Tag handling logic
-  const tagsArray = tags
-    ? tags.split(",").filter((tag) => tag.trim() !== "")
-    : [];
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const trimmedTag = tagInput.trim();
-
-      if (trimmedTag && !tagsArray.includes(trimmedTag)) {
-        const newTags = [...tagsArray, trimmedTag];
-        form.setValue("tags", newTags.join(","), {
-          shouldDirty: true,
-          shouldValidate: true,
-        });
-        form.trigger("tags");
-        setTagInput("");
-      }
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    const newTags = tagsArray.filter((tag) => tag !== tagToRemove);
-    form.setValue("tags", newTags.join(","), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
   };
 
   const onSubmit = async (values: WalletsSchemaType) => {
@@ -240,38 +207,25 @@ export const WalletsModal = ({
             )}
           />
 
-          <div className="space-y-2">
-            <Input
-              label={t("form.tags")}
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              maxLength={30}
-              disabled={isSubmitting}
-              placeholder={t("form.tagsPlaceholder")}
-              errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
-            />
-            {tagsArray.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {tagsArray.map((tag, index) => (
-                  <div
-                    key={index}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground rounded-full text-sm"
-                  >
-                    <span>{tag}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveTag(tag)}
-                      className="hover:bg-primary-foreground/20 rounded-full p-0.5 disabled:cursor-not-allowed"
-                      disabled={isSubmitting}
-                    >
-                      <XIcon className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
+          <Controller
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <InputTags
+                label={t("form.tags")}
+                placeholder={t("form.tagsPlaceholder")}
+                maxLength={30}
+                disabled={isSubmitting}
+                errorMessage={errorMessageAsLangKey(errors.tags?.message, t)}
+                value={field.value ?? ""}
+                onChange={(value) => {
+                  field.onChange(value);
+                  form.trigger("tags");
+                }}
+                onValidate={() => form.trigger("tags")}
+              />
             )}
-          </div>
+          />
 
           <div className="flex justify-end gap-2 pt-4">
             <Button

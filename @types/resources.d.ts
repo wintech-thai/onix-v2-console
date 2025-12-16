@@ -330,7 +330,7 @@ interface Resources {
       "selectSearchField": "Select search field"
     },
     "form": {
-      "createTitle": "Create Cronjob",
+      "createTitle": "Create Scan Item Job",
       "detail": {
         "description": "Description",
         "name": "Name",
@@ -357,7 +357,7 @@ interface Resources {
         "type": "Type"
       },
       "tagsPlaceholder": "Type and press Enter to add tag",
-      "updateTitle": "Update Cronjob",
+      "updateTitle": "Update Scan Item Job",
       "validation": {
         "descriptionRequired": "Description is required",
         "nameRequired": "Name is required",
@@ -948,9 +948,12 @@ interface Resources {
     },
     "columns": {
       "action": "Action",
+      "customerEmail": "Customer Email",
+      "folderName": "Folder Name",
       "pin": "Pin",
       "productCode": "Product Code",
       "scanCount": "Scan Count",
+      "scanItemActionName": "Action Name",
       "serial": "Serial",
       "tags": "tags",
       "url": "URL",
@@ -1194,6 +1197,92 @@ interface Resources {
       "message": "Are you sure you want to set this as the default scan item action?",
       "success": "Set default successfully",
       "title": "Set Default"
+    }
+  },
+  "scan-items-template": {
+    "action": {
+      "createScanItemJob": "Create Scan Item Job",
+      "delete": {
+        "error": "Failed to delete scan item template(s)",
+        "success": "Successfully deleted scan item template(s)"
+      },
+      "scanItemJobs": "Scan Item Jobs",
+      "setAsDefault": "Set as Default"
+    },
+    "columns": {
+      "action": "Action",
+      "description": "Description",
+      "isDefault": "Default",
+      "pinDigit": "PIN Digit",
+      "prefixDigit": "Prefix Digit",
+      "quantity": "Quantity",
+      "serialDigit": "Serial Digit",
+      "tags": "Tags",
+      "templateName": "Template Name",
+      "urlTemplate": "URL Template"
+    },
+    "delete": {
+      "message": "Are you sure you want to delete the selected scan item template(s)?",
+      "title": "Delete Scan Item Templates"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "All Fields",
+      "search": "Search",
+      "searchPlaceholder": "Search scan item templates...",
+      "selectSearchField": "Select Search Field"
+    },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "createTitle": "Create Scan Item Template",
+      "generalInformation": {
+        "description": "Description",
+        "tags": "Tags",
+        "tagsPlaceholder": "Enter tags and press Enter",
+        "templateName": "Template Name",
+        "title": "General Information"
+      },
+      "templateConfiguration": {
+        "generatorCount": "Generator Count",
+        "notificationEmail": "Notification Email",
+        "pinDigit": "PIN Digit",
+        "serialDigit": "Serial Digit",
+        "serialPrefixDigit": "Serial Prefix Digit",
+        "title": "Template Configuration",
+        "urlTemplate": "URL Template"
+      },
+      "updateTitle": "Update Scan Item Template",
+      "validation": {
+        "descriptionRequired": "Description is required",
+        "generatorCountMin": "Generator count must be at least 1",
+        "notificationEmailInvalid": "Invalid email address",
+        "pinDigitRange": "PIN digit must be between 5-7",
+        "serialDigitRange": "Serial digit must be between 6-7",
+        "serialPrefixDigitRange": "Serial prefix digit must be between 2-3",
+        "tagsRequired": "Tags are required",
+        "templateNameRequired": "Template name is required",
+        "urlTemplateRequired": "URL template is required"
+      }
+    },
+    "messages": {
+      "createError": "Failed to create scan item template",
+      "createSuccess": "Scan item template created successfully",
+      "notFound": "Scan Item Template Not Found",
+      "updateError": "Failed to update scan item template",
+      "updateSuccess": "Scan item template updated successfully"
+    },
+    "setDefault": {
+      "confirmMessage": "Are you sure you want to set this template as the default?",
+      "confirmTitle": "Set as Default Template",
+      "error": "Failed to set as default template",
+      "loading": "Setting as default...",
+      "success": "Successfully set as default template",
+      "title": "Set as Default"
     }
   },
   "user": {

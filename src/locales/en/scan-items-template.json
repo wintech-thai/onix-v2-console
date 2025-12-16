@@ -1,0 +1,86 @@
+{
+  "columns": {
+    "templateName": "Template Name",
+    "description": "Description",
+    "tags": "Tags",
+    "prefixDigit": "Prefix Digit",
+    "quantity": "Quantity",
+    "pinDigit": "PIN Digit",
+    "serialDigit": "Serial Digit",
+    "urlTemplate": "URL Template",
+    "isDefault": "Default",
+    "action": "Action"
+  },
+  "filter": {
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD",
+    "selectSearchField": "Select Search Field",
+    "fullTextSearch": "All Fields",
+    "searchPlaceholder": "Search scan item templates..."
+  },
+  "delete": {
+    "title": "Delete Scan Item Templates",
+    "message": "Are you sure you want to delete the selected scan item template(s)?"
+  },
+  "setDefault": {
+    "title": "Set as Default",
+    "confirmTitle": "Set as Default Template",
+    "confirmMessage": "Are you sure you want to set this template as the default?",
+    "loading": "Setting as default...",
+    "success": "Successfully set as default template",
+    "error": "Failed to set as default template"
+  },
+  "action": {
+    "setAsDefault": "Set as Default",
+    "createScanItemJob": "Create Scan Item Job",
+    "scanItemJobs": "Scan Item Jobs",
+    "delete": {
+      "success": "Successfully deleted scan item template(s)",
+      "error": "Failed to delete scan item template(s)"
+    }
+  },
+  "form": {
+    "createTitle": "Create Scan Item Template",
+    "updateTitle": "Update Scan Item Template",
+    "generalInformation": {
+      "title": "General Information",
+      "templateName": "Template Name",
+      "description": "Description",
+      "tags": "Tags",
+      "tagsPlaceholder": "Enter tags and press Enter"
+    },
+    "templateConfiguration": {
+      "title": "Template Configuration",
+      "urlTemplate": "URL Template",
+      "serialPrefixDigit": "Serial Prefix Digit",
+      "pinDigit": "PIN Digit",
+      "serialDigit": "Serial Digit",
+      "generatorCount": "Generator Count",
+      "notificationEmail": "Notification Email"
+    },
+    "validation": {
+      "templateNameRequired": "Template name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "Tags are required",
+      "urlTemplateRequired": "URL template is required",
+      "serialPrefixDigitRange": "Serial prefix digit must be between 2-3",
+      "pinDigitRange": "PIN digit must be between 5-7",
+      "serialDigitRange": "Serial digit must be between 6-7",
+      "generatorCountMin": "Generator count must be at least 1",
+      "notificationEmailInvalid": "Invalid email address"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    }
+  },
+  "messages": {
+    "createSuccess": "Scan item template created successfully",
+    "createError": "Failed to create scan item template",
+    "updateSuccess": "Scan item template updated successfully",
+    "updateError": "Failed to update scan item template",
+    "notFound": "Scan Item Template Not Found"
+  }
+}

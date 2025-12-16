@@ -16,12 +16,14 @@ export const getCronJobApi = {
     }
   },
   defaultCronJob: {
-    useQuery: (orgId: string, key: string) => {
+    useQuery: (orgId: string) => {
       return useQuery<AxiosResponse<IJob>, AxiosError>({
-        queryKey: ["defaultCronJob", orgId, key],
+        queryKey: ["defaultCronJob", orgId],
         queryFn: () => {
           return api.get<IJob>(`/api/Job/org/${orgId}/action/GetJobDefault/ScanItemGenerator`)
-        }
+        },
+        staleTime: 0,
+        gcTime: 0
       })
     }
   }

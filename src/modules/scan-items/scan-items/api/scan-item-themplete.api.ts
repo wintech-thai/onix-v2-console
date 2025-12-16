@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ScanItemTemplateSchemaType } from "../schema/scan-item-themplate.schema";
+import { AxiosError, AxiosResponse } from "axios";
 
 export interface ScanItemThemplate {
   id: string;
@@ -57,6 +58,21 @@ export const scanItemThemplateApi = {
         mutationFn: (orgId: string) => {
           return api.get<GetScanItemThemplateResponse>(`/api/ScanItemTemplate/org/${orgId}/action/GetScanItemTemplateDefault`)
         }
+      })
+    }
+  },
+
+
+  getScanItemThemplateDefaultQuery: {
+    key: "getScanItemThemplateDefault",
+    useQuery: (params: { orgId: string }) => {
+      return useQuery<AxiosResponse<GetScanItemThemplateResponse>, AxiosError>({
+        queryKey: [scanItemThemplateApi.getScanItemThemplateDefault.key, params],
+        queryFn: () => {
+          return api.get<GetScanItemThemplateResponse>(`/api/ScanItemTemplate/org/${params.orgId}/action/GetScanItemTemplateDefault`)
+        },
+        staleTime: 0,
+        gcTime: 0,
       })
     }
   },
