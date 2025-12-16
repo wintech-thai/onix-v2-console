@@ -17,15 +17,17 @@ import { useTranslation } from "react-i18next";
 import { RouteConfig } from "@/config/route.config";
 
 interface ScanItemsTemplateFilterProps {
-  onSearch: (field: string, value: string) => void;
   onDelete: () => void;
-  hasSelectedRows: boolean;
+  isDisabled: boolean;
+  onSearch: (searchField: string, searchValue: string) => void;
+  selected: number;
 }
 
 export const ScanItemsTemplateFilter = ({
-  onSearch,
   onDelete,
-  hasSelectedRows,
+  isDisabled,
+  onSearch,
+  selected,
 }: ScanItemsTemplateFilterProps) => {
   const { t } = useTranslation("scan-items-template");
   const router = useRouter();
@@ -47,8 +49,6 @@ export const ScanItemsTemplateFilter = ({
   const handleAddClick = () => {
     router.push(RouteConfig.SCAN_ITEMS.TEMPLATE.CREATE(params.orgId));
   };
-
-  const selectedCount = hasSelectedRows ? 1 : 0;
 
   return (
     <form
@@ -130,12 +130,11 @@ export const ScanItemsTemplateFilter = ({
         </Button>
         <Button
           className="w-full md:w-auto"
-          disabled={!hasSelectedRows}
+          disabled={isDisabled}
           onClick={onDelete}
           variant="destructive"
-          type="button"
         >
-          {t("filter.delete")} {hasSelectedRows ? `(${selectedCount})` : ""}
+          {t("filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
       </div>
     </form>

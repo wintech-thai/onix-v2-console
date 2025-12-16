@@ -82,9 +82,10 @@ export const ScanItemsTemplateTable = ({
   return (
     <div className="h-full flex flex-col">
       <ScanItemsTemplateFilter
+        onDelete={() => handleDelete()}
+        selected={rowSelected.length}
+        isDisabled={!rowSelected.length}
         onSearch={onSearch}
-        onDelete={handleDelete}
-        hasSelectedRows={rowSelected.length > 0}
       />
 
       <div className="overflow-auto rounded-md border flex-1 mt-4">

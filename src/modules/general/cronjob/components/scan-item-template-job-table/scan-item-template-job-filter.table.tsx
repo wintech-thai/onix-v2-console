@@ -13,9 +13,6 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
-import { useParams } from "next/navigation";
-import { RouteConfig } from "@/config/route.config";
-import Link from "next/link";
 
 interface ScanItemTemplateJobFilterTableProps {
   onDelete: () => void;
@@ -25,13 +22,13 @@ interface ScanItemTemplateJobFilterTableProps {
 }
 
 export const ScanItemTemplateJobFilterTable = ({
-  onDelete,
-  isDisabled,
+  // onDelete,
+  // isDisabled,
   onSearch,
-  selected,
+  // selected,
 }: ScanItemTemplateJobFilterTableProps) => {
   const { t } = useTranslation("cronjob");
-  const params = useParams<{ orgId: string; scanItemTemplateId: string }>();
+  // const params = useParams<{ orgId: string; scanItemTemplateId: string }>();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -109,7 +106,7 @@ export const ScanItemTemplateJobFilterTable = ({
       </div>
 
       {/* Right side: actions */}
-      <div
+      {/* <div
         className="
           w-full md:w-auto
           grid grid-cols-1 gap-2
@@ -129,7 +126,7 @@ export const ScanItemTemplateJobFilterTable = ({
         >
           {t("filter.delete")} {selected ? `(${selected})` : ""}
         </Button>
-      </div>
+      </div> */}
     </form>
   );
 };

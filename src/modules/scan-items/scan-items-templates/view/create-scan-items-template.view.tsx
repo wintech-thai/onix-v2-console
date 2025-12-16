@@ -6,12 +6,41 @@ import { ScanItemTemplateForm } from "../components/scan-items-template-form/sca
 import { ScanItemTemplateSchemaType } from "../schema/scan-items-templates.schema";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { NoPermissionsPage } from "@/components/ui/no-permissions";
+import { LoaderIcon } from "lucide-react";
+import { scanItemThemplateApi } from "../../scan-items/api/scan-item-themplete.api";
+import { useId } from "react";
 
 const CreateScanItemTemplateViewPage = () => {
   const { t } = useTranslation("scan-items-template");
   const params = useParams<{ orgId: string }>();
   const router = useRouter();
+
+  const getScanItemDefaultTemplate =
+    scanItemThemplateApi.getScanItemThemplateDefaultQuery.useQuery({
+      orgId: params.orgId,
+      key: useId()
+    });
+
   const createScanItemTemplateMutation = createScanItemsTemplatesApi.useCreateScanItemsTemplates();
+
+
+  if (getScanItemDefaultTemplate.isLoading) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <LoaderIcon className="size-4 animate-spin" />
+      </div>
+    );
+  }
+
+  if (getScanItemDefaultTemplate.isError) {
+    if (getScanItemDefaultTemplate.error.response?.status === 403) {
+      return <NoPermissionsPage apiName="GetJobDefault/ScanItemGenerator" />;
+    }
+    throw new Error(getScanItemDefaultTemplate.error.message);
+  }
+
+  const getScanItemDefulatPayload = getScanItemDefaultTemplate.data?.data;
 
   const onSubmit = async (values: ScanItemTemplateSchemaType, callback: () => void) => {
     await createScanItemTemplateMutation.mutateAsync(
@@ -39,12 +68,12 @@ const CreateScanItemTemplateViewPage = () => {
         templateName: "",
         description: "",
         tags: "",
-        urlTemplate: "",
-        serialPrefixDigit: 0,
-        pinDigit: 0,
-        serialDigit: 0,
-        generatorCount: 0,
-        notificationEmail: "",
+        urlTemplate: getScanItemDefulatPayload?.urlTemplate ?? "",
+        serialPrefixDigit: getScanItemDefulatPayload?.serialPrefixDigit ?? 0,
+        generatorCount: getScanItemDefulatPayload?.generatorCount ?? 0,
+        serialDigit: getScanItemDefulatPayload?.serialDigit ?? 0,
+        pinDigit: getScanItemDefulatPayload?.pinDigit ?? 0,
+        notificationEmail: getScanItemDefulatPayload?.notificationEmail ?? "",
       }}
       isUpdate={false}
       onSubmit={onSubmit}

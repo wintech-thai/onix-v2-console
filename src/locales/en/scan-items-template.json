@@ -13,8 +13,8 @@
   },
   "filter": {
     "search": "Search",
-    "delete": "Delete",
-    "add": "Add",
+    "delete": "DELETE",
+    "add": "ADD",
     "selectSearchField": "Select Search Field",
     "fullTextSearch": "All Fields",
     "searchPlaceholder": "Search scan item templates..."

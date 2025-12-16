@@ -164,8 +164,6 @@ const ScanItemTemplateViewPage = () => {
   // Get total items count from API
   const totalItems = fetchScanItemsTemplatesCount.data?.data ?? 0;
 
-  console.log(data)
-
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />

@@ -1226,8 +1226,8 @@ interface Resources {
       "title": "Delete Scan Item Templates"
     },
     "filter": {
-      "add": "Add",
-      "delete": "Delete",
+      "add": "ADD",
+      "delete": "DELETE",
       "fullTextSearch": "All Fields",
       "search": "Search",
       "searchPlaceholder": "Search scan item templates...",
