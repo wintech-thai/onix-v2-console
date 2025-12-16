@@ -10,17 +10,13 @@ import { CronJobScehmaType } from "../../schema/cronjob.schema";
 import { ScanItemTemplateJobForm } from "../../components/scan-item-template-job-form/scan-item-template-job-form";
 import { createScanItemTemplateJobApi } from "../../api/scan-item-template-job/create-scan-item-template-job.api";
 import { getDefaultScanItemsTemplatesApi } from "@/modules/scan-items/scan-items-templates/api/get-default-scan-items-templates.api";
-import { useId } from "react";
 
 const CreateScanItemTemplateJobViewPage = () => {
   const router = useRouter();
   const params = useParams<{ orgId: string; scanItemTemplateId: string }>();
 
   const getScanItemTemplateDefaultValue =
-    getDefaultScanItemsTemplatesApi.useGetDefaultScanItemsTemplates({
-      ...params,
-      key: useId()
-    });
+    getDefaultScanItemsTemplatesApi.useGetDefaultScanItemsTemplates(params);
   const queryClient = useQueryClient();
 
   const createScanItemTemplateJob = createScanItemTemplateJobApi.useMutation();

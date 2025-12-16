@@ -10,14 +10,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { fetchCronJobApi } from "../api/fetch-cron-job.api";
 import { toast } from "sonner";
 import { RouteConfig } from "@/config/route.config";
-import { useId } from "react";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const CreateCronJobView = () => {
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
-  const key = useId();
-  const getDefaultValue = getCronJobApi.defaultCronJob.useQuery(params.orgId, key);
+  const getDefaultValue = getCronJobApi.defaultCronJob.useQuery(params.orgId);
   const queryClient = useQueryClient();
 
   const createCronJob = createCronJobApi.useMutation();

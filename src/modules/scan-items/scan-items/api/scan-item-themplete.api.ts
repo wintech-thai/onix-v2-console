@@ -65,12 +65,14 @@ export const scanItemThemplateApi = {
 
   getScanItemThemplateDefaultQuery: {
     key: "getScanItemThemplateDefault",
-    useQuery: (params: { orgId: string, key: string }) => {
+    useQuery: (params: { orgId: string }) => {
       return useQuery<AxiosResponse<GetScanItemThemplateResponse>, AxiosError>({
         queryKey: [scanItemThemplateApi.getScanItemThemplateDefault.key, params],
         queryFn: () => {
           return api.get<GetScanItemThemplateResponse>(`/api/ScanItemTemplate/org/${params.orgId}/action/GetScanItemTemplateDefault`)
-        }
+        },
+        staleTime: 0,
+        gcTime: 0,
       })
     }
   },

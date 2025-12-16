@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
 import { LoaderIcon } from "lucide-react";
 import { scanItemThemplateApi } from "../../scan-items/api/scan-item-themplete.api";
-import { useId } from "react";
 
 const CreateScanItemTemplateViewPage = () => {
   const { t } = useTranslation("scan-items-template");
@@ -19,7 +18,6 @@ const CreateScanItemTemplateViewPage = () => {
   const getScanItemDefaultTemplate =
     scanItemThemplateApi.getScanItemThemplateDefaultQuery.useQuery({
       orgId: params.orgId,
-      key: useId()
     });
 
   const createScanItemTemplateMutation = createScanItemsTemplatesApi.useCreateScanItemsTemplates();

@@ -14,7 +14,6 @@ export const getDefaultScanItemsTemplatesApi = {
   useGetDefaultScanItemsTemplates: (params: {
     orgId: string;
     scanItemTemplateId: string;
-    key: string;
   }) => {
     return useQuery<
       AxiosResponse<GetDefaultScanItemsTemplatesResponse>,
@@ -26,6 +25,8 @@ export const getDefaultScanItemsTemplatesApi = {
           `/api/ScanItemTemplate/org/${params.orgId}/action/GetJobDefaultByTemplateId/${params.scanItemTemplateId}`
         );
       },
+      staleTime: 0,
+      gcTime: 0
     });
   },
 };
