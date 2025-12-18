@@ -157,3 +157,20 @@ export const updateScanItemFolder = createMutationService<
     `/api/ScanItemFolder/org/${params.orgId}/action/UpdateScanItemFolderById/${params.folderId}`,
   method: "post",
 });
+
+export interface MoveScanItemToFolderParams {
+  orgId: string;
+  scanItemId: string;
+  folderId: string;
+}
+
+export const moveScanItemToFolder = createMutationService<
+  ScanItemsFolderResponse,
+  void,
+  MoveScanItemToFolderParams
+>({
+  apiName: "moveScanItemToFolder",
+  url: (params) =>
+    `/api/ScanItem/org/${params.orgId}/action/MoveScanItemToFolder/${params.scanItemId}/${params.folderId}`,
+  method: "post",
+});

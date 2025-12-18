@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onDelete: (rows: Row<TData>[], callback: () => void) => void;
+  onMoveToFolder?: (rows: Row<TData>[], callback: () => void) => void;
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
@@ -41,12 +42,14 @@ interface DataTableProps<TData, TValue> {
   onItemsPerPageChange: (items: number) => void;
   onSearch: (searchField: string, searchValue: string) => void;
   isLoading?: boolean;
+  folderId?: string | null;
 }
 
 export function QrCodeTable<TData, TValue>({
   columns,
   data,
   onDelete,
+  onMoveToFolder,
   totalItems,
   currentPage,
   itemsPerPage,
@@ -54,6 +57,7 @@ export function QrCodeTable<TData, TValue>({
   onItemsPerPageChange,
   onSearch,
   isLoading = false,
+  folderId,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
   const [rowSelection, setRowSelection] = useState({});
@@ -75,15 +79,23 @@ export function QrCodeTable<TData, TValue>({
     onDelete(rowSelected, () => setRowSelection({}));
   };
 
+  const handleMoveToFolder = () => {
+    if (onMoveToFolder) {
+      onMoveToFolder(rowSelected, () => setRowSelection({}));
+    }
+  };
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <div className="h-full flex flex-col">
       <QrCodeFilterTable
         onDelete={() => handleDelete()}
+        onMoveToFolder={onMoveToFolder ? () => handleMoveToFolder() : undefined}
         selected={rowSelected.length}
         isDisabled={!rowSelected.length}
         onSearch={onSearch}
+        folderId={folderId}
       />
       <div className="overflow-auto rounded-md border flex-1 mt-4">
         <Table>
@@ -122,9 +134,13 @@ export function QrCodeTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => setActiveRowId((row.original as { id: string }).id)}
+                  onClick={() =>
+                    setActiveRowId((row.original as { id: string }).id)
+                  }
                   className={`cursor-pointer transition-colors ${
-                    activeRowId === (row.original as { id: string }).id ? "bg-blue-50 hover:bg-blue-100" : ""
+                    activeRowId === (row.original as { id: string }).id
+                      ? "bg-blue-50 hover:bg-blue-100"
+                      : ""
                   }`}
                 >
                   {row.getVisibleCells().map((cell) => (

@@ -19,16 +19,20 @@ import { ScanItemTemplateModal } from "../modal/scan-item-template.modal";
 
 interface QrCodeFilterTableProps {
   onDelete: () => void;
+  onMoveToFolder?: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
+  folderId?: string | null;
 }
 
 export const QrCodeFilterTable = ({
   onDelete,
+  onMoveToFolder,
   isDisabled,
   onSearch,
   selected,
+  folderId,
 }: QrCodeFilterTableProps) => {
   const { t } = useTranslation("scan-item");
   const [queryState] = useQueryStates({
@@ -45,7 +49,8 @@ export const QrCodeFilterTable = ({
   };
 
   const [openScanItemModal, setOpenScanItemModal] = useState(false);
-  const [openScanItemThemplateModal, setOpenScanItemThemplateModal] = useState(false);
+  const [openScanItemThemplateModal, setOpenScanItemThemplateModal] =
+    useState(false);
 
   return (
     <form
@@ -129,6 +134,15 @@ export const QrCodeFilterTable = ({
           md:flex md:items-center
         "
       >
+        <Button
+          className="w-full md:w-auto"
+          disabled={isDisabled || !folderId}
+          onClick={onMoveToFolder}
+          variant="outline"
+        >
+          {t("filter.moveToFolder")} {selected ? `(${selected})` : ""}
+        </Button>
+
         <CreateScanItemModal>
           <Button className="w-full md:w-auto col-span-3">
             {t("filter.add")}

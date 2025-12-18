@@ -1013,6 +1013,7 @@ interface Resources {
       "config": "CONFIG",
       "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
+      "moveToFolder": "MOVE TO FOLDER",
       "scanItemAction": "Scan Item Action",
       "scanItemTemplate": "Scan Item Template",
       "search": "Search",
@@ -1047,6 +1048,14 @@ interface Resources {
       "loading": "Loading scan item details...",
       "qrcodeTitle": "QR Code",
       "title": "Scan Item Detail"
+    },
+    "moveToFolder": {
+      "error": "Error",
+      "loading": "Moving items to folder...",
+      "message": "Are you sure you want to move selected items to this folder?",
+      "noFolder": "No folder selected",
+      "success": "Success",
+      "title": "Move to Folder"
     },
     "scanItemAction": {
       "buttons": {

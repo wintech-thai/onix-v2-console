@@ -14,6 +14,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
+import { useMoveScanItemToFolder } from "../../scan-items-folders/hooks/scan-items-hooks";
 
 const ScanItemsView = () => {
   const { t } = useTranslation(["scan-item"]);
@@ -26,7 +27,13 @@ const ScanItemsView = () => {
     message: t("delete.message"),
     variant: "destructive",
   });
+  const [MoveToFolderConfirmationDialog, confirmMoveToFolder] = useConfirm({
+    title: t("moveToFolder.title"),
+    message: t("moveToFolder.message"),
+    variant: "default",
+  });
   const queryClient = useQueryClient();
+  const moveScanItemToFolder = useMoveScanItemToFolder();
 
   const scanItemsTableColumns = useQrcodeTableColumns();
 
@@ -40,9 +47,10 @@ const ScanItemsView = () => {
     limit: parseAsInteger.withDefault(25),
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
+    folderId: parseAsString,
   });
 
-  const { page, limit, searchField, searchValue } = queryState;
+  const { page, limit, searchField, searchValue, folderId } = queryState;
 
   // Memoize dates to prevent infinite refetch loop
   const dateRange = useMemo(
@@ -82,7 +90,7 @@ const ScanItemsView = () => {
 
   if (fetchScanItems.isError) {
     if (fetchScanItems.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItems" />
+      return <NoPermissionsPage apiName="GetScanItems" />;
     }
 
     throw new Error(fetchScanItems.error.message);
@@ -90,7 +98,7 @@ const ScanItemsView = () => {
 
   if (fetchScanItemsCount.isError) {
     if (fetchScanItemsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemCount" />
+      return <NoPermissionsPage apiName="GetScanItemCount" />;
     }
 
     throw new Error(fetchScanItemsCount.error.message);
@@ -129,7 +137,9 @@ const ScanItemsView = () => {
       );
     }
     if (errorCount > 0) {
-      toast.error(`${t("delete.error", "Error")} (${errorCount}/${totalCount})`);
+      toast.error(
+        `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
+      );
       // Optionally log the errors
       results.forEach((result) => {
         if (result.status === "rejected") {
@@ -145,6 +155,76 @@ const ScanItemsView = () => {
     });
 
     // Clear selection after delete attempt
+    callback();
+  };
+
+  const handleMoveToFolder = async (
+    rows: Row<IScanItems>[],
+    callback: () => void
+  ) => {
+    if (!folderId) {
+      toast.error(t("moveToFolder.noFolder", "No folder selected"));
+      return;
+    }
+
+    const ok = await confirmMoveToFolder();
+    if (!ok) return;
+
+    const idsToMove = rows.map((row) => row.original.id);
+
+    if (idsToMove.length === 0) {
+      return;
+    }
+
+    const toastId = toast.loading(
+      t("moveToFolder.loading", "Moving items to folder...")
+    );
+
+    const results = await Promise.allSettled(
+      idsToMove.map((scanItemId) =>
+        moveScanItemToFolder.mutateAsync({
+          params: {
+            orgId: params.orgId,
+            scanItemId: scanItemId,
+            folderId: folderId,
+          },
+        })
+      )
+    );
+
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = idsToMove.length;
+
+    if (successCount > 0) {
+      toast.success(
+        `${t(
+          "moveToFolder.success",
+          "Success"
+        )} (${successCount}/${totalCount})`
+      );
+    }
+    if (errorCount > 0) {
+      toast.error(
+        `${t("moveToFolder.error", "Error")} (${errorCount}/${totalCount})`
+      );
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to move item:", result.reason);
+        }
+      });
+    }
+
+    // Invalidate queries to refetch data
+    await queryClient.invalidateQueries({
+      queryKey: fetchScanItemsApi.fetchScanItemsKey,
+      refetchType: "active",
+    });
+
+    // Clear folderId and selection after move
+    setQueryState({ folderId: null });
     callback();
   };
 
@@ -168,17 +248,23 @@ const ScanItemsView = () => {
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
+      <MoveToFolderConfirmationDialog />
       <QrCodeTable
         columns={scanItemsTableColumns}
         data={data}
         onDelete={handleDelete}
+        onMoveToFolder={folderId ? handleMoveToFolder : undefined}
         totalItems={totalItems}
         currentPage={page}
         itemsPerPage={limit}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchScanItems.isLoading && !hasLoadedBefore) ||
+          isPageOrLimitChanging
+        }
+        folderId={folderId}
       />
     </div>
   );
