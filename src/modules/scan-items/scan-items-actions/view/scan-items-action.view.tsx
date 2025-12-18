@@ -1,7 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { fetchScanItemsActionsApi, IScanItemsAction } from "../api/fetch-scan-items-actions.api";
+import {
+  fetchScanItemsActionsApi,
+  IScanItemsAction,
+} from "../api/fetch-scan-items-actions.api";
 import { ScanItemsActionTable } from "../components/scan-items-action-table/scan-items-action.table";
 import { useScanItemsActionTableColumns } from "../components/scan-items-action-table/scan-items-action-columns.table";
 import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
@@ -13,6 +16,9 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { useAttachScanItemFolderToAction } from "@/modules/scan-items/scan-items-folders/hooks/scan-items-hooks";
+import { useQueryState } from "nuqs";
+import { useRouter } from "next/navigation";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ScanItemsActionViewPage = () => {
@@ -26,11 +32,23 @@ const ScanItemsActionViewPage = () => {
     message: t("delete.message"),
     variant: "destructive",
   });
+
+  const [AttachFolderConfirmationDialog, confirmAttachFolder] = useConfirm({
+    title: "Attach Folder to Action",
+    message:
+      "Are you sure you want to attach this folder to the selected action?",
+    variant: "default",
+  });
+
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const [folderId] = useQueryState("folderId");
 
   const scanItemsActionTableColumns = useScanItemsActionTableColumns();
 
-  const deleteScanItemsAction = deleteScanItemsActionsApi.useDeleteScanItemsActions();
+  const deleteScanItemsAction =
+    deleteScanItemsActionsApi.useDeleteScanItemsActions();
+  const attachFolderToAction = useAttachScanItemFolderToAction();
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -52,16 +70,17 @@ const ScanItemsActionViewPage = () => {
   ); // Empty dependency array means dates are calculated only once
 
   // Fetch scan items actions from API
-  const fetchScanItemsActions = fetchScanItemsActionsApi.useFetchScanItemsActions({
-    orgId: params.orgId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-    },
-  });
+  const fetchScanItemsActions =
+    fetchScanItemsActionsApi.useFetchScanItemsActions({
+      orgId: params.orgId,
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+        fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+      },
+    });
 
   useEffect(() => {
     if (fetchScanItemsActions.data?.data) {
@@ -71,32 +90,36 @@ const ScanItemsActionViewPage = () => {
     }
   }, [fetchScanItemsActions.data]);
 
-  const fetchScanItemsActionsCount = fetchScanItemsActionsApi.useFetchScanItemsActionsCount({
-    orgId: params.orgId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-    },
-  });
+  const fetchScanItemsActionsCount =
+    fetchScanItemsActionsApi.useFetchScanItemsActionsCount({
+      orgId: params.orgId,
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+        fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+      },
+    });
 
   if (fetchScanItemsActions.isError) {
     if (fetchScanItemsActions.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemActions" />
+      return <NoPermissionsPage apiName="GetScanItemActions" />;
     }
     throw new Error(fetchScanItemsActions.error.message);
   }
 
   if (fetchScanItemsActionsCount.isError) {
     if (fetchScanItemsActionsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemActionsCount" />
+      return <NoPermissionsPage apiName="GetScanItemActionsCount" />;
     }
     throw new Error(fetchScanItemsActionsCount.error.message);
   }
 
-  const handleDelete = async (rows: Row<IScanItemsAction>[], callback: () => void) => {
+  const handleDelete = async (
+    rows: Row<IScanItemsAction>[],
+    callback: () => void
+  ) => {
     const ok = await confirmDelete();
     if (!ok) return;
 
@@ -125,7 +148,10 @@ const ScanItemsActionViewPage = () => {
 
     if (successCount > 0) {
       toast.success(
-        `${t("action.delete.success", "Success")} (${successCount}/${totalCount})`
+        `${t(
+          "action.delete.success",
+          "Success"
+        )} (${successCount}/${totalCount})`
       );
     }
     if (errorCount > 0) {
@@ -147,6 +173,52 @@ const ScanItemsActionViewPage = () => {
     callback();
   };
 
+  const handleAttach = async (
+    rows: Row<IScanItemsAction>[],
+    callback: () => void
+  ) => {
+    if (!folderId || rows.length !== 1) return;
+
+    const ok = await confirmAttachFolder();
+
+    if (!ok) return;
+
+    const actionId = rows[0].original.id;
+    const toastId = toast.loading(
+      t("attach.loading", "Attaching folder to action...")
+    );
+
+    try {
+      const result = await attachFolderToAction.mutateAsync({
+        params: {
+          orgId: params.orgId,
+          folderId: folderId,
+          actionId: actionId,
+        },
+      });
+
+      if (result.data.status === "OK" || result.data.status === "SUCCESS") {
+        toast.success(
+          result.data.description ||
+            t("attach.success", "Folder attached successfully"),
+          { id: toastId }
+        );
+        callback();
+        router.back();
+      } else {
+        toast.error(
+          result.data.description ||
+            t("attach.error", "Failed to attach folder"),
+          {
+            id: toastId,
+          }
+        );
+      }
+    } catch {
+      toast.dismiss(toastId);
+    }
+  };
+
   const handlePageChange = (newPage: number) => {
     setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
@@ -165,9 +237,22 @@ const ScanItemsActionViewPage = () => {
   // Get total items count from API
   const totalItems = fetchScanItemsActionsCount.data?.data ?? 0;
 
+  // Determine attachment mode
+  const attachmentId = folderId;
+  const attachmentMode = folderId
+    ? {
+        title: t("attach.mode.title", "Attach Folder Mode"),
+        description: t(
+          "attach.mode.description",
+          "Select an action to attach the folder. You can only select one action at a time."
+        ),
+      }
+    : undefined;
+
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
+      <AttachFolderConfirmationDialog />
       <ScanItemsActionTable
         columns={scanItemsActionTableColumns}
         data={data}
@@ -178,7 +263,13 @@ const ScanItemsActionViewPage = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItemsActions.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchScanItemsActions.isLoading && !hasLoadedBefore) ||
+          isPageOrLimitChanging
+        }
+        attachmentId={attachmentId}
+        onAttach={attachmentId ? handleAttach : undefined}
+        attachmentMode={attachmentMode}
       />
     </div>
   );

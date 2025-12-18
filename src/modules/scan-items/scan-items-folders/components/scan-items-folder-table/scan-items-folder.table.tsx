@@ -4,10 +4,9 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  Row,
   useReactTable,
+  Row,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -15,9 +14,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../../../components/ui/table";
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
+import { ScanItemsFolderFilter } from "./scan-items-folder-filter.table";
+import { useActiveRow } from "@/hooks/use-active-row";
+import { IScanItemsFolder } from "../../api/scan-items-service";
 import { useState } from "react";
-import { ProductFilterTable } from "./product-filter.table";
 import {
   Select,
   SelectContent,
@@ -25,33 +28,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useActiveRow } from "@/hooks/use-active-row";
 
-interface AttachmentMode {
-  title: string;
-  description: string;
-}
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  onDelete: (rows: Row<TData>[], callback: () => void) => void;
+interface ScanItemsFolderTableProps {
+  columns: ColumnDef<IScanItemsFolder>[];
+  data: IScanItemsFolder[];
+  onDelete: (rows: Row<IScanItemsFolder>[], callback: () => void) => void;
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
-  onItemsPerPageChange: (items: number) => void;
-  onSearch: (searchField: string, searchValue: string) => void;
+  onItemsPerPageChange: (itemsPerPage: number) => void;
+  onSearch: (field: string, value: string) => void;
   isLoading?: boolean;
-  attachmentId?: string | null;
-  onAttach?: (rows: Row<TData>[], callback: () => void) => void;
-  attachmentMode?: AttachmentMode;
 }
 
-export function ProductTable<TData, TValue>({
+export const ScanItemsFolderTable = ({
   columns,
   data,
   onDelete,
@@ -62,23 +54,23 @@ export function ProductTable<TData, TValue>({
   onItemsPerPageChange,
   onSearch,
   isLoading = false,
-  attachmentId,
-  onAttach,
-  attachmentMode,
-}: DataTableProps<TData, TValue>) {
-  const { t } = useTranslation(["common", "product"]);
+}: ScanItemsFolderTableProps) => {
+  const { t } = useTranslation("common");
   const [rowSelection, setRowSelection] = useState({});
-  const { activeRowId, setActiveRowId } = useActiveRow("product-table");
+  const { activeRowId, setActiveRowId } = useActiveRow(
+    "scan-items-folder-table"
+  );
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
+    pageCount: Math.ceil(totalItems / itemsPerPage),
     onRowSelectionChange: setRowSelection,
     state: {
       rowSelection,
     },
-    enableMultiRowSelection: !attachmentId, // Disable multi-selection when in attachment mode
   });
 
   const rowSelected = table.getFilteredSelectedRowModel().rows;
@@ -87,69 +79,32 @@ export function ProductTable<TData, TValue>({
     onDelete(rowSelected, () => setRowSelection({}));
   };
 
-  const handleAttach = () => {
-    if (onAttach) {
-      onAttach(rowSelected, () => setRowSelection({}));
-    }
-  };
-
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <div className="h-full flex flex-col">
-      {/* Attach Mode Banner */}
-      {attachmentId && attachmentMode && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center gap-3 mb-2">
-          <div className="flex-shrink-0">
-            <svg
-              className="w-6 h-6 text-blue-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <h3 className="text-sm font-semibold text-blue-900">
-              {attachmentMode.title}
-            </h3>
-            <p className="text-sm text-blue-700 mt-1">
-              {attachmentMode.description}
-            </p>
-          </div>
-        </div>
-      )}
-      <ProductFilterTable
+      <ScanItemsFolderFilter
         onDelete={() => handleDelete()}
+        selected={rowSelected.length}
         isDisabled={!rowSelected.length}
         onSearch={onSearch}
-        selected={rowSelected.length}
-        attachmentId={attachmentId}
-        onAttach={attachmentId && onAttach ? () => handleAttach() : undefined}
       />
+
       <div className="overflow-auto rounded-md border flex-1 mt-4">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -170,11 +125,9 @@ export function ProductTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() =>
-                    setActiveRowId((row.original as { id: string }).id)
-                  }
+                  onClick={() => setActiveRowId(row.original.id)}
                   className={`cursor-pointer transition-colors ${
-                    activeRowId === (row.original as { id: string }).id
+                    activeRowId === row.original.id
                       ? "bg-blue-50 hover:bg-blue-100"
                       : ""
                   }`}
@@ -202,6 +155,7 @@ export function ProductTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+
       <div className="flex items-center justify-end">
         <div className="flex items-center space-x-2">
           <span className="hidden text-sm text-gray-500 md:block">
@@ -250,4 +204,4 @@ export function ProductTable<TData, TValue>({
       </div>
     </div>
   );
-}
+};

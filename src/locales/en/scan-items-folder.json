@@ -1,0 +1,60 @@
+{
+  "columns": {
+    "folderName": "Folder Name",
+    "description": "Description",
+    "tags": "Tags",
+    "actionName": "Action Name",
+    "productCode": "Product Code",
+    "productDesc": "Product Description",
+    "scanItemCount": "Scan Item Count",
+    "action": "Action"
+  },
+  "filter": {
+    "selectSearchField": "Select Search Field",
+    "fullTextSearch": "Full Text Search",
+    "searchPlaceholder": "Search...",
+    "search": "Search",
+    "delete": "Delete"
+  },
+  "delete": {
+    "title": "Delete Scan Item Folders",
+    "message": "Are you sure you want to delete the selected folders?"
+  },
+  "action": {
+    "delete": {
+      "success": "Deleted successfully",
+      "error": "Failed to delete"
+    },
+    "attachToProduct": "Attach to Product",
+    "attachToAction": "Attach to Action"
+  },
+  "form": {
+    "createTitle": "Create Scan Item Folder",
+    "updateTitle": "Update Scan Item Folder",
+    "leavePage": "Leave Page?",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "generalInformation": {
+      "title": "General Information",
+      "folderName": "Folder Name",
+      "description": "Description",
+      "tags": "Tags",
+      "tagsPlaceholder": "Enter tags separated by commas"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "saving": "Saving..."
+    },
+    "validation": {
+      "folderNameRequired": "Folder name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "Tags are required"
+    }
+  },
+  "messages": {
+    "createSuccess": "Folder created successfully",
+    "createError": "Failed to create folder",
+    "updateSuccess": "Folder updated successfully",
+    "updateError": "Failed to update folder"
+  }
+}

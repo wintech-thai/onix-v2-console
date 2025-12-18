@@ -1,0 +1,60 @@
+{
+  "columns": {
+    "folderName": "ชื่อโฟลเดอร์",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "actionName": "ชื่อแอคชั่น",
+    "productCode": "รหัสผลิตภัณฑ์",
+    "productDesc": "รายละเอียดผลิตภัณฑ์",
+    "scanItemCount": "จำนวนสแกนไอเทม",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "searchPlaceholder": "ค้นหา...",
+    "search": "ค้นหา",
+    "delete": "ลบ"
+  },
+  "delete": {
+    "title": "ลบโฟลเดอร์สแกนไอเทม",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ที่เลือก?"
+  },
+  "action": {
+    "delete": {
+      "success": "ลบสำเร็จ",
+      "error": "ไม่สามารถลบได้"
+    },
+    "attachToProduct": "แนบกับผลิตภัณฑ์",
+    "attachToAction": "แนบกับแอคชั่น"
+  },
+  "form": {
+    "createTitle": "สร้างโฟลเดอร์สแกนไอเท็ม",
+    "updateTitle": "แก้ไขโฟลเดอร์สแกนไอเท็ม",
+    "leavePage": "ออกจากหน้านี้?",
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ว่าต้องการออก?",
+    "generalInformation": {
+      "title": "ข้อมูลทั่วไป",
+      "folderName": "ชื่อโฟลเดอร์",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก",
+      "tagsPlaceholder": "กรอกแท็กคั่นด้วยเครื่องหมายจุลภาค"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "saving": "กำลังบันทึก..."
+    },
+    "validation": {
+      "folderNameRequired": "กรุณากรอกชื่อโฟลเดอร์",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณากรอกแท็ก"
+    }
+  },
+  "messages": {
+    "createSuccess": "สร้างโฟลเดอร์สำเร็จ",
+    "createError": "ไม่สามารถสร้างโฟลเดอร์ได้",
+    "updateSuccess": "แก้ไขโฟลเดอร์สำเร็จ",
+    "updateError": "ไม่สามารถแก้ไขโฟลเดอร์ได้"
+  }
+}

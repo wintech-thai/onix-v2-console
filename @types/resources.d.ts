@@ -1129,6 +1129,15 @@ interface Resources {
     "actions": {
       "setDefault": "Set to Default"
     },
+    "attach": {
+      "error": "Failed to attach folder",
+      "loading": "Attaching folder to action...",
+      "mode": {
+        "description": "Select an action to attach the folder. You can only select one action at a time.",
+        "title": "Attach Folder Mode"
+      },
+      "success": "Folder attached successfully"
+    },
     "columns": {
       "action": "Action",
       "actionName": "Action Name",
@@ -1146,6 +1155,7 @@ interface Resources {
     },
     "filter": {
       "add": "ADD",
+      "attach": "Attach",
       "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
@@ -1197,6 +1207,66 @@ interface Resources {
       "message": "Are you sure you want to set this as the default scan item action?",
       "success": "Set default successfully",
       "title": "Set Default"
+    }
+  },
+  "scan-items-folder": {
+    "action": {
+      "attachToAction": "Attach to Action",
+      "attachToProduct": "Attach to Product",
+      "delete": {
+        "error": "Failed to delete",
+        "success": "Deleted successfully"
+      }
+    },
+    "columns": {
+      "action": "Action",
+      "actionName": "Action Name",
+      "description": "Description",
+      "folderName": "Folder Name",
+      "productCode": "Product Code",
+      "productDesc": "Product Description",
+      "scanItemCount": "Scan Item Count",
+      "tags": "Tags"
+    },
+    "delete": {
+      "message": "Are you sure you want to delete the selected folders?",
+      "title": "Delete Scan Item Folders"
+    },
+    "filter": {
+      "delete": "Delete",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search...",
+      "selectSearchField": "Select Search Field"
+    },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "createTitle": "Create Scan Item Folder",
+      "generalInformation": {
+        "description": "Description",
+        "folderName": "Folder Name",
+        "tags": "Tags",
+        "tagsPlaceholder": "Enter tags separated by commas",
+        "title": "General Information"
+      },
+      "leavePage": "Leave Page?",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update Scan Item Folder",
+      "validation": {
+        "descriptionRequired": "Description is required",
+        "folderNameRequired": "Folder name is required",
+        "tagsRequired": "Tags are required"
+      }
+    },
+    "messages": {
+      "createError": "Failed to create folder",
+      "createSuccess": "Folder created successfully",
+      "updateError": "Failed to update folder",
+      "updateSuccess": "Folder updated successfully"
     }
   },
   "scan-items-template": {

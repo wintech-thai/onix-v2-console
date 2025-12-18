@@ -17,7 +17,8 @@
     "fullTextSearch": "Full Text Search",
     "search": "Search",
     "add": "ADD",
-    "delete": "DELETE"
+    "delete": "DELETE",
+    "attach": "Attach"
   },
   "delete": {
     "title": "Confirm Deletion",
@@ -31,6 +32,15 @@
     "loading": "Setting default...",
     "success": "Set default successfully",
     "error": "Failed to set default"
+  },
+  "attach": {
+    "mode": {
+      "title": "Attach Folder Mode",
+      "description": "Select an action to attach the folder. You can only select one action at a time."
+    },
+    "loading": "Attaching folder to action...",
+    "success": "Folder attached successfully",
+    "error": "Failed to attach folder"
   },
   "form": {
     "defaultValue": "Default Value",

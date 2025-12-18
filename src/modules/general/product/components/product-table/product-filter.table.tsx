@@ -21,7 +21,7 @@ interface ProductFilterTableProps {
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
-  scanItemId?: string | null;
+  attachmentId?: string | null;
   onAttach?: () => void;
 }
 
@@ -30,7 +30,7 @@ export const ProductFilterTable = ({
   isDisabled,
   onSearch,
   selected,
-  scanItemId,
+  attachmentId,
   onAttach,
 }: ProductFilterTableProps) => {
   const { t } = useTranslation("product");
@@ -45,10 +45,10 @@ export const ProductFilterTable = ({
   };
 
   const handleBack = () => {
-    if (scanItemId) {
-      router.replace(RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId))
+    if (attachmentId) {
+      router.replace(RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId));
     }
-  }
+  };
 
   return (
     <form
@@ -76,9 +76,7 @@ export const ProductFilterTable = ({
               className="w-full md:w-48"
               aria-label={t("table.filter.selectSearchField")}
             >
-              <SelectValue
-                placeholder={t("table.filter.selectSearchField")}
-              />
+              <SelectValue placeholder={t("table.filter.selectSearchField")} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="fullTextSearch">
@@ -126,9 +124,14 @@ export const ProductFilterTable = ({
           md:flex md:items-center
         "
       >
-        {scanItemId && onAttach ? (
+        {attachmentId && onAttach ? (
           <>
-            <Button type="button" onClick={handleBack} className="w-full md:w-auto" variant="destructive">
+            <Button
+              type="button"
+              onClick={handleBack}
+              className="w-full md:w-auto"
+              variant="destructive"
+            >
               {t("table.filter.back")}
             </Button>
 
@@ -137,8 +140,7 @@ export const ProductFilterTable = ({
               disabled={selected !== 1}
               onClick={onAttach}
             >
-              {t("table.filter.attach")}{" "}
-              {selected > 0 ? `(${selected})` : ""}
+              {t("table.filter.attach")} {selected > 0 ? `(${selected})` : ""}
             </Button>
           </>
         ) : (
@@ -155,8 +157,7 @@ export const ProductFilterTable = ({
               onClick={onDelete}
               variant="destructive"
             >
-              {t("table.filter.delete")}{" "}
-              {selected > 0 ? `(${selected})` : ""}
+              {t("table.filter.delete")} {selected > 0 ? `(${selected})` : ""}
             </Button>
           </>
         )}

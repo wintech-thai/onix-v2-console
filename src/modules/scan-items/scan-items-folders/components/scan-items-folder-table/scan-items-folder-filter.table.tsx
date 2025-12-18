@@ -12,31 +12,23 @@ import {
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { parseAsString, useQueryStates } from "nuqs";
-import { useParams, useRouter } from "next/navigation";
-import { RouteConfig } from "@/config/route.config";
-import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-interface ScanItemsActionFilterTableProps {
+interface ScanItemsFolderFilterProps {
   onDelete: () => void;
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
-  attachmentId?: string | null;
-  onAttach?: () => void;
 }
 
-export const ScanItemsActionFilterTable = ({
+export const ScanItemsFolderFilter = ({
   onDelete,
   isDisabled,
   onSearch,
   selected,
-  attachmentId,
-  onAttach,
-}: ScanItemsActionFilterTableProps) => {
-  const { t } = useTranslation(["scan-items-action", "common"]);
-  const params = useParams<{ orgId: string }>();
-  const router = useRouter();
+}: ScanItemsFolderFilterProps) => {
+  const { t } = useTranslation("scan-items-folder");
+
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -50,12 +42,6 @@ export const ScanItemsActionFilterTable = ({
     onSearch(searchField, searchValue);
   };
 
-  const handleBack = () => {
-    if (attachmentId) {
-      router.replace(RouteConfig.SCAN_ITEMS.FOLDER.LIST(params.orgId));
-    }
-  };
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -64,7 +50,7 @@ export const ScanItemsActionFilterTable = ({
         flex flex-col gap-3
         md:flex-row md:items-center md:justify-between
       "
-      aria-label="Scan Item Action filter controls"
+      aria-label="Scan Items Folder filter controls"
     >
       {/* Left side: search controls */}
       <div
@@ -127,40 +113,14 @@ export const ScanItemsActionFilterTable = ({
           md:flex md:items-center
         "
       >
-        {attachmentId && onAttach ? (
-          <>
-            <Button
-              type="button"
-              onClick={handleBack}
-              className="w-full md:w-auto"
-              variant="destructive"
-            >
-              {t("common:table.filter.back", "Back")}
-            </Button>
-            <Button
-              className="w-full md:w-auto"
-              disabled={selected !== 1}
-              onClick={onAttach}
-            >
-              {t("filter.attach", "Attach")}{" "}
-              {selected > 0 ? `(${selected})` : ""}
-            </Button>
-          </>
-        ) : (
-          <>
-            <Link href={RouteConfig.SCAN_ITEMS.ACTION.CREATE(params.orgId)}>
-              <Button className="w-full md:w-auto">{t("filter.add")}</Button>
-            </Link>
-            <Button
-              className="w-full md:w-auto"
-              disabled={isDisabled}
-              onClick={onDelete}
-              variant="destructive"
-            >
-              {t("filter.delete")} {selected ? `(${selected})` : ""}
-            </Button>
-          </>
-        )}
+        <Button
+          className="w-full md:w-auto"
+          disabled={isDisabled}
+          onClick={onDelete}
+          variant="destructive"
+        >
+          {t("filter.delete")} {selected ? `(${selected})` : ""}
+        </Button>
       </div>
     </form>
   );

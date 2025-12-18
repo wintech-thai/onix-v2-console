@@ -4,7 +4,12 @@ import { useParams, useRouter } from "next/navigation";
 import { fetchProductsApi, IProduct } from "../api/fetch-products.api";
 import { ProductTable } from "../components/product-table/product.table";
 import { getProductTableColumns } from "../components/product-table/product-columns.table";
-import { useQueryStates, parseAsInteger, parseAsString, useQueryState } from "nuqs";
+import {
+  useQueryStates,
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { deleteProductApi } from "../api/delete-product.api";
 import { useTranslation } from "react-i18next";
@@ -14,6 +19,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { AttachScanItemToProductApi } from "../api/attach-scan-item-to-product.api";
+import { useAttachScanItemFolderToProduct } from "@/modules/scan-items/scan-items-folders/hooks/scan-items-hooks";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
 
 const ProductView = () => {
@@ -26,6 +32,7 @@ const ProductView = () => {
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
   const [scanItemId] = useQueryState("scanItemId");
+  const [folderId] = useQueryState("folderId");
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -47,8 +54,16 @@ const ProductView = () => {
     variant: "default",
   });
 
+  const [AttachFolderConfirmationDialog, confirmAttachFolder] = useConfirm({
+    title: "Attach Folder to Product",
+    message:
+      "Are you sure you want to attach this folder to the selected product?",
+    variant: "default",
+  });
+
   const deleteProduct = deleteProductApi.useMutation();
   const attachScanItemToProduct = AttachScanItemToProductApi.useMutation();
+  const attachFolderToProduct = useAttachScanItemFolderToProduct();
 
   const { page, limit, searchField, searchValue } = queryState;
 
@@ -120,12 +135,18 @@ const ProductView = () => {
 
     if (successCount > 0) {
       toast.success(
-        `${t("product:messages.deleteSuccess", "Success")} (${successCount}/${totalCount})`
+        `${t(
+          "product:messages.deleteSuccess",
+          "Success"
+        )} (${successCount}/${totalCount})`
       );
     }
     if (errorCount > 0) {
       toast.error(
-        `${t("product:messages.deleteError", "Error")} (${errorCount}/${totalCount})`
+        `${t(
+          "product:messages.deleteError",
+          "Error"
+        )} (${errorCount}/${totalCount})`
       );
       results.forEach((result) => {
         if (result.status === "rejected") {
@@ -143,28 +164,53 @@ const ProductView = () => {
   };
 
   const handleAttach = async (rows: Row<IProduct>[], callback: () => void) => {
-    if (!scanItemId || rows.length !== 1) return;
+    const isScanItem = !!scanItemId;
+    const isFolder = !!folderId;
 
-    const ok = await confirmAttach();
+    if ((!isScanItem && !isFolder) || rows.length !== 1) return;
+
+    const ok = isScanItem ? await confirmAttach() : await confirmAttachFolder();
 
     if (!ok) return;
 
     const productId = rows[0].original.id;
-    const toastId = toast.loading(t("product:attach.loading"));
+    const toastId = toast.loading(
+      isScanItem
+        ? t("product:attach.loading")
+        : "Attaching folder to product..."
+    );
 
     try {
-      const result = await attachScanItemToProduct.mutateAsync({
-        orgId: params.orgId,
-        scanItemId: scanItemId,
-        productId: productId,
-      });
+      const result = isScanItem
+        ? await attachScanItemToProduct.mutateAsync({
+            orgId: params.orgId,
+            scanItemId: scanItemId!,
+            productId: productId,
+          })
+        : await attachFolderToProduct.mutateAsync({
+            params: {
+              orgId: params.orgId,
+              folderId: folderId!,
+              productId: productId,
+            },
+          });
 
       if (result.data.status === "OK" || result.data.status === "SUCCESS") {
-        toast.success(result.data.description || "Attached successfully", { id: toastId });
+        toast.success(
+          result.data.description ||
+            (isScanItem
+              ? "Attached successfully"
+              : "Folder attached successfully"),
+          { id: toastId }
+        );
         callback();
         router.back();
       } else {
-        toast.error(result.data.description || "Failed to attach", { id: toastId });
+        toast.error(
+          result.data.description ||
+            (isScanItem ? "Failed to attach" : "Failed to attach folder"),
+          { id: toastId }
+        );
       }
     } catch {
       toast.dismiss(toastId);
@@ -188,14 +234,14 @@ const ProductView = () => {
 
   if (fetchProducts.isError) {
     if (fetchProducts.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetItems" />
+      return <NoPermissionsPage apiName="GetItems" />;
     }
     throw new Error(fetchProducts.error.message);
   }
 
   if (fetchProductsCount.isError) {
     if (fetchProductsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetItemCount" />
+      return <NoPermissionsPage apiName="GetItemCount" />;
     }
     throw new Error(fetchProductsCount.error.message);
   }
@@ -203,10 +249,20 @@ const ProductView = () => {
   // Get total items count from API
   const totalItems = fetchProductsCount.data?.data ?? 0;
 
+  // Determine attachment mode
+  const attachmentId = scanItemId || folderId;
+  const attachmentMode = attachmentId
+    ? {
+        title: t("product:attach.mode.title"),
+        description: t("product:attach.mode.description"),
+      }
+    : undefined;
+
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
       <AttachConfirmationDialog />
+      <AttachFolderConfirmationDialog />
       <ProductTable
         columns={getProductTableColumns(productLang)}
         data={data}
@@ -217,9 +273,12 @@ const ProductView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchProducts.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
-        scanItemId={scanItemId}
-        onAttach={scanItemId ? handleAttach : undefined}
+        isLoading={
+          (fetchProducts.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+        }
+        attachmentId={attachmentId}
+        onAttach={attachmentId ? handleAttach : undefined}
+        attachmentMode={attachmentMode}
       />
     </div>
   );
