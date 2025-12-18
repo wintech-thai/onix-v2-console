@@ -20,10 +20,14 @@ const UpdateScanItemsFolderViewPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const getScanItemFolder = useGetScanItemFolderById({
-    orgId: params.orgId,
-    folderId: params.scanItemFolderId,
-  });
+  const getScanItemFolder = useGetScanItemFolderById(
+    {
+      orgId: params.orgId,
+      folderId: params.scanItemFolderId,
+    },
+    undefined,
+    { staleTime: 0, gcTime: 0 }
+  );
 
   const updateScanItemFolder = useUpdateScanItemFolder();
 
