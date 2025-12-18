@@ -13,6 +13,8 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useTranslation } from "react-i18next";
+import { useParams, useRouter } from "next/navigation";
+import { RouteConfig } from "@/config/route.config";
 
 interface ScanItemsFolderFilterProps {
   onDelete: () => void;
@@ -28,6 +30,8 @@ export const ScanItemsFolderFilter = ({
   selected,
 }: ScanItemsFolderFilterProps) => {
   const { t } = useTranslation("scan-items-folder");
+  const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
@@ -113,6 +117,15 @@ export const ScanItemsFolderFilter = ({
           md:flex md:items-center
         "
       >
+        <Button
+          type="button"
+          className="w-full md:w-auto"
+          onClick={() =>
+            router.push(RouteConfig.SCAN_ITEMS.FOLDER.CREATE(params.orgId))
+          }
+        >
+          {t("filter.add")}
+        </Button>
         <Button
           className="w-full md:w-auto"
           disabled={isDisabled}

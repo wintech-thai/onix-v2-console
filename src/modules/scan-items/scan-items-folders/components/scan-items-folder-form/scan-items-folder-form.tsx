@@ -3,6 +3,7 @@ import {
   scanItemsFolderSchema,
   ScanItemsFolderSchemaType,
 } from "../../schema/scan-items-folders.schema";
+import type { IScanItemsFolder } from "../../api/scan-items-service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -19,12 +20,14 @@ interface ScanItemsFolderFormProps {
   onSubmit: (values: ScanItemsFolderSchemaType) => Promise<void>;
   initialValue: ScanItemsFolderSchemaType;
   isUpdate: boolean;
+  folderData?: IScanItemsFolder;
 }
 
 export const ScanItemsFolderForm = ({
   onSubmit,
   initialValue,
   isUpdate,
+  folderData,
 }: ScanItemsFolderFormProps) => {
   const { t } = useTranslation("scan-items-folder");
   const router = useRouter();
@@ -166,6 +169,41 @@ export const ScanItemsFolderForm = ({
             />
           </div>
         </div>
+
+        {/* Readonly Information Section - Only show in update mode */}
+        {isUpdate && folderData && (
+          <div className="p-4 md:p-6 border rounded-lg">
+            <header className="text-lg font-bold">
+              {t("form.attachedInformation.title")}
+            </header>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <Input
+                label={t("form.attachedInformation.actionName")}
+                value={folderData.scanItemActionName || "-"}
+                disabled
+                readOnly
+              />
+              <Input
+                label={t("form.attachedInformation.productCode")}
+                value={folderData.productCode || "-"}
+                disabled
+                readOnly
+              />
+              <Input
+                label={t("form.attachedInformation.productName")}
+                value={folderData.productDesc || "-"}
+                disabled
+                readOnly
+              />
+              <Input
+                label={t("form.attachedInformation.scanItemCount")}
+                value={folderData.scanItemCount?.toString() || "0"}
+                disabled
+                readOnly
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Footer Actions */}

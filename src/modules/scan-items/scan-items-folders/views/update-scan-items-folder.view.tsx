@@ -92,6 +92,7 @@ const UpdateScanItemsFolderViewPage = () => {
       }}
       isUpdate
       onSubmit={handleUpdateFolder}
+      folderData={folderData}
     />
   );
 };

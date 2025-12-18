@@ -14,7 +14,8 @@
     "fullTextSearch": "Full Text Search",
     "searchPlaceholder": "Search...",
     "search": "Search",
-    "delete": "Delete"
+    "add": "ADD",
+    "delete": "DELETE"
   },
   "delete": {
     "title": "Delete Scan Item Folders",
@@ -39,6 +40,13 @@
       "description": "Description",
       "tags": "Tags",
       "tagsPlaceholder": "Enter tags separated by commas"
+    },
+    "attachedInformation": {
+      "title": "Attached Information",
+      "actionName": "Action Name",
+      "productCode": "Product Code",
+      "productName": "Product Name",
+      "scanItemCount": "Scan Item Count"
     },
     "actions": {
       "save": "Save",

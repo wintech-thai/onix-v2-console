@@ -14,6 +14,7 @@
     "fullTextSearch": "ค้นหาทั้งหมด",
     "searchPlaceholder": "ค้นหา...",
     "search": "ค้นหา",
+    "add": "เพิ่ม",
     "delete": "ลบ"
   },
   "delete": {
@@ -39,6 +40,13 @@
       "description": "คำอธิบาย",
       "tags": "แท็ก",
       "tagsPlaceholder": "กรอกแท็กคั่นด้วยเครื่องหมายจุลภาค"
+    },
+    "attachedInformation": {
+      "title": "ข้อมูลที่แนบ",
+      "actionName": "ชื่อแอคชัน",
+      "productCode": "รหัสผลิตภัณฑ์",
+      "productName": "ชื่อผลิตภัณฑ์",
+      "scanItemCount": "จำนวนสแกนไอเท็ม"
     },
     "actions": {
       "save": "บันทึก",

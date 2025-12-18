@@ -1233,7 +1233,8 @@ interface Resources {
       "title": "Delete Scan Item Folders"
     },
     "filter": {
-      "delete": "Delete",
+      "add": "ADD",
+      "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
       "searchPlaceholder": "Search...",
@@ -1244,6 +1245,13 @@ interface Resources {
         "cancel": "Cancel",
         "save": "Save",
         "saving": "Saving..."
+      },
+      "attachedInformation": {
+        "actionName": "Action Name",
+        "productCode": "Product Code",
+        "productName": "Product Name",
+        "scanItemCount": "Scan Item Count",
+        "title": "Attached Information"
       },
       "createTitle": "Create Scan Item Folder",
       "generalInformation": {
