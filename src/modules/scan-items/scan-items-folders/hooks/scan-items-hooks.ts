@@ -13,7 +13,6 @@ import {
   updateScanItemFolder,
   moveScanItemToFolder,
 } from "../api/scan-items-service";
-import { fetchScanItemsApi } from "../../scan-items/api/fetch-qrcodes.api";
 
 export const useGetScanItemFolders = createQueryHook(getScanItemFolders);
 
@@ -68,10 +67,4 @@ export const useUpdateScanItemFolder = createMutationHook(
 
 export const useMoveScanItemToFolder = createMutationHook(
   moveScanItemToFolder,
-  {
-    invalidates: [
-      { queryKey: getScanItemFolders.key },
-      { queryKey: fetchScanItemsApi.fetchScanItemsKey },
-    ],
-  }
 );

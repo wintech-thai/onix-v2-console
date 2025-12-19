@@ -112,9 +112,7 @@ export const useScanItemsFolderTableColumns =
         accessorKey: "productCode",
         header: t("columns.productCode"),
         cell: ({ row }) => {
-          return (
-            <div className="text-center">{row.getValue("productCode")}</div>
-          );
+          return <div className="text-left">{row.getValue("productCode")}</div>;
         },
       },
       {
@@ -130,11 +128,18 @@ export const useScanItemsFolderTableColumns =
       },
       {
         accessorKey: "scanItemCount",
-        header: t("columns.scanItemCount"),
+        // header: t("columns.scanItemCount"),
+        header: () => {
+          return (
+            <div className="text-right w-[75px]">
+              {t("columns.scanItemCount")}
+            </div>
+          );
+        },
         cell: ({ row }) => {
           const value = row.getValue("scanItemCount") as number;
           return (
-            <div className="text-right">
+            <div className="text-right w-[75px]">
               {value ? Number(value).toLocaleString() : "-"}
             </div>
           );
@@ -162,6 +167,14 @@ export const useScanItemsFolderTableColumns =
             );
           };
 
+          const handleMoveScanItemToFolder = () => {
+            router.push(
+              `${RouteConfig.SCAN_ITEMS.ITEM.LIST(
+                params.orgId
+              )}?folderId=${folderId}`
+            );
+          };
+
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -171,6 +184,9 @@ export const useScanItemsFolderTableColumns =
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleMoveScanItemToFolder}>
+                  {t("action.moveScanItemToFolder")}
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleAttachToProduct}>
                   {t("action.attachToProduct")}
                 </DropdownMenuItem>

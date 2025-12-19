@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetchScanItemsApi, IScanItems } from "../api/fetch-qrcodes.api";
 import { QrCodeTable } from "../components/scan-items-table/scan-items.table";
 import { useQrcodeTableColumns } from "../components/scan-items-table/scan-items-columns.table";
@@ -17,6 +17,7 @@ import { NoPermissionsPage } from "@/components/ui/no-permissions";
 import { useMoveScanItemToFolder } from "../../scan-items-folders/hooks/scan-items-hooks";
 
 const ScanItemsView = () => {
+  const router = useRouter();
   const { t } = useTranslation(["scan-item"]);
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IScanItems[]>([]);
@@ -226,6 +227,7 @@ const ScanItemsView = () => {
     // Clear folderId and selection after move
     setQueryState({ folderId: null });
     callback();
+    return router.back();
   };
 
   const handlePageChange = (newPage: number) => {

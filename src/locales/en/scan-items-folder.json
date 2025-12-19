@@ -26,6 +26,7 @@
       "success": "Deleted successfully",
       "error": "Failed to delete"
     },
+    "moveScanItemToFolder": "Move Scan Item to Folder",
     "attachToProduct": "Attach to Product",
     "attachToAction": "Attach to Action"
   },
@@ -40,6 +41,11 @@
       "description": "Description",
       "tags": "Tags",
       "tagsPlaceholder": "Enter tags separated by commas"
+    },
+    "validate": {
+      "folderNameRequired": "Folder name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "Tags are required"
     },
     "attachedInformation": {
       "title": "Attached Information",

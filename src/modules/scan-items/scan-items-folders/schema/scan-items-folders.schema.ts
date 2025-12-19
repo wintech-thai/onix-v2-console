@@ -1,9 +1,9 @@
 import z from "zod";
 
 export const scanItemsFolderSchema = z.object({
-  folderName: z.string().min(1),
-  description: z.string().min(1),
-  tags: z.string().min(1),
+  folderName: z.string().min(1, "form.validate.folderNameRequired"),
+  description: z.string().min(1, "form.validate.descriptionRequired"),
+  tags: z.string().min(1, "form.validate.tagsRequired"),
 });
 
 export type ScanItemsFolderSchemaType = z.infer<typeof scanItemsFolderSchema>;

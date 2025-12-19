@@ -1225,7 +1225,8 @@ interface Resources {
       "delete": {
         "error": "Failed to delete",
         "success": "Deleted successfully"
-      }
+      },
+      "moveScanItemToFolder": "Move Scan Item to Folder"
     },
     "columns": {
       "action": "Action",
@@ -1273,6 +1274,11 @@ interface Resources {
       "leavePage": "Leave Page?",
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
       "updateTitle": "Update Scan Item Folder",
+      "validate": {
+        "descriptionRequired": "Description is required",
+        "folderNameRequired": "Folder name is required",
+        "tagsRequired": "Tags are required"
+      },
       "validation": {
         "descriptionRequired": "Description is required",
         "folderNameRequired": "Folder name is required",

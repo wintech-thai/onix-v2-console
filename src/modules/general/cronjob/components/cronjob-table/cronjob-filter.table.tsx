@@ -13,11 +13,6 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface CronJobFilterTableProps {
   onDelete: () => void;
@@ -118,18 +113,18 @@ export const CronJobFilterTable = ({
           md:flex md:items-center
         "
       >
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button>{t("filter.add")}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {/* <Link href={RouteConfig.GENERAL.JOB.CREATE(params.orgId)}>
+            <Link href={RouteConfig.GENERAL.JOB.CREATE(params.orgId)}>
               <DropdownMenuItem>
                 {t("actions.create-scan-item")}
               </DropdownMenuItem>
-            </Link> */}
+            </Link>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
         <Button
           className="w-full md:w-auto"
           disabled={isDisabled}

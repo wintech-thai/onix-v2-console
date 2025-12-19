@@ -26,6 +26,7 @@
       "success": "ลบสำเร็จ",
       "error": "ไม่สามารถลบได้"
     },
+    "moveScanItemToFolder": "ย้ายสแกนไอเท็มไปยังโฟลเดอร์",
     "attachToProduct": "แนบกับผลิตภัณฑ์",
     "attachToAction": "แนบกับแอคชั่น"
   },
@@ -40,6 +41,11 @@
       "description": "คำอธิบาย",
       "tags": "แท็ก",
       "tagsPlaceholder": "กรอกแท็กคั่นด้วยเครื่องหมายจุลภาค"
+    },
+    "validate": {
+      "folderNameRequired": "กรุณากรอกชื่อโฟลเดอร์",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณากรอกแท็ก"
     },
     "attachedInformation": {
       "title": "ข้อมูลที่แนบ",
