@@ -131,7 +131,7 @@ export const useScanItemsFolderTableColumns =
         // header: t("columns.scanItemCount"),
         header: () => {
           return (
-            <div className="text-right w-[75px]">
+            <div className="text-center w-[130px]">
               {t("columns.scanItemCount")}
             </div>
           );
@@ -139,7 +139,7 @@ export const useScanItemsFolderTableColumns =
         cell: ({ row }) => {
           const value = row.getValue("scanItemCount") as number;
           return (
-            <div className="text-right w-[75px]">
+            <div className="w-[130px] text-right">
               {value ? Number(value).toLocaleString() : "-"}
             </div>
           );
