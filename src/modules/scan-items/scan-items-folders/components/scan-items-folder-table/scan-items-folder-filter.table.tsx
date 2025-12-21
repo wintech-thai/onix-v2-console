@@ -21,6 +21,9 @@ interface ScanItemsFolderFilterProps {
   isDisabled: boolean;
   onSearch: (searchField: string, searchValue: string) => void;
   selected: number;
+  scanItemIds?: string | null;
+  onAttach?: () => void;
+  onBack?: () => void;
 }
 
 export const ScanItemsFolderFilter = ({
@@ -28,6 +31,9 @@ export const ScanItemsFolderFilter = ({
   isDisabled,
   onSearch,
   selected,
+  scanItemIds,
+  onAttach,
+  onBack,
 }: ScanItemsFolderFilterProps) => {
   const { t } = useTranslation("scan-items-folder");
   const router = useRouter();
@@ -117,23 +123,46 @@ export const ScanItemsFolderFilter = ({
           md:flex md:items-center
         "
       >
-        <Button
-          type="button"
-          className="w-full md:w-auto"
-          onClick={() =>
-            router.push(RouteConfig.SCAN_ITEMS.FOLDER.CREATE(params.orgId))
-          }
-        >
-          {t("filter.add")}
-        </Button>
-        <Button
-          className="w-full md:w-auto"
-          disabled={isDisabled}
-          onClick={onDelete}
-          variant="destructive"
-        >
-          {t("filter.delete")} {selected ? `(${selected})` : ""}
-        </Button>
+        {scanItemIds && onAttach ? (
+          <>
+            {onBack && (
+              <Button
+                variant="destructive"
+                className="w-full md:w-auto"
+                onClick={onBack}
+              >
+                {t("filter.back", "Back")}
+              </Button>
+            )}
+            <Button
+              className="w-full md:w-auto"
+              disabled={isDisabled}
+              onClick={onAttach}
+            >
+              {t("filter.attach")}{" "}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              type="button"
+              className="w-full md:w-auto"
+              onClick={() =>
+                router.push(RouteConfig.SCAN_ITEMS.FOLDER.CREATE(params.orgId))
+              }
+            >
+              {t("filter.add")}
+            </Button>
+            <Button
+              className="w-full md:w-auto"
+              disabled={isDisabled}
+              onClick={onDelete}
+              variant="destructive"
+            >
+              {t("filter.delete")} {selected ? `(${selected})` : ""}
+            </Button>
+          </>
+        )}
       </div>
     </form>
   );

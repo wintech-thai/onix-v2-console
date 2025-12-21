@@ -15,6 +15,8 @@
     "searchPlaceholder": "Search...",
     "search": "Search",
     "add": "ADD",
+    "back": "BACK",
+    "attach": "ATTACH",
     "delete": "DELETE"
   },
   "delete": {
@@ -29,6 +31,17 @@
     "moveScanItemToFolder": "Move Scan Item to Folder",
     "attachToProduct": "Attach to Product",
     "attachToAction": "Attach to Action"
+  },
+  "attachmentMode": {
+    "title": "Move Scan Items to Folder",
+    "description": "Select a folder to move the selected scan items",
+    "confirmTitle": "Confirm Move",
+    "confirmMessage": "Are you sure you want to move the selected scan items to this folder?",
+    "noItems": "No scan items selected",
+    "noFolder": "Please select a folder",
+    "loading": "Moving items to folder...",
+    "success": "Successfully moved items",
+    "error": "Failed to move some items"
   },
   "form": {
     "createTitle": "Create Scan Item Folder",

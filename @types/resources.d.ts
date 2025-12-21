@@ -1228,6 +1228,17 @@ interface Resources {
       },
       "moveScanItemToFolder": "Move Scan Item to Folder"
     },
+    "attachmentMode": {
+      "confirmMessage": "Are you sure you want to move the selected scan items to this folder?",
+      "confirmTitle": "Confirm Move",
+      "description": "Select a folder to move the selected scan items",
+      "error": "Failed to move some items",
+      "loading": "Moving items to folder...",
+      "noFolder": "Please select a folder",
+      "noItems": "No scan items selected",
+      "success": "Successfully moved items",
+      "title": "Move Scan Items to Folder"
+    },
     "columns": {
       "action": "Action",
       "actionName": "Action Name",
@@ -1244,6 +1255,8 @@ interface Resources {
     },
     "filter": {
       "add": "ADD",
+      "attach": "ATTACH",
+      "back": "BACK",
       "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",

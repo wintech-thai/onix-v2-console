@@ -167,14 +167,6 @@ export const useScanItemsFolderTableColumns =
             );
           };
 
-          const handleMoveScanItemToFolder = () => {
-            router.push(
-              `${RouteConfig.SCAN_ITEMS.ITEM.LIST(
-                params.orgId
-              )}?folderId=${folderId}`
-            );
-          };
-
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -184,9 +176,6 @@ export const useScanItemsFolderTableColumns =
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={handleMoveScanItemToFolder}>
-                  {t("action.moveScanItemToFolder")}
-                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleAttachToProduct}>
                   {t("action.attachToProduct")}
                 </DropdownMenuItem>

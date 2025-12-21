@@ -32,7 +32,6 @@ export const QrCodeFilterTable = ({
   isDisabled,
   onSearch,
   selected,
-  folderId,
 }: QrCodeFilterTableProps) => {
   const { t } = useTranslation("scan-item");
   const [queryState] = useQueryStates({
@@ -136,7 +135,7 @@ export const QrCodeFilterTable = ({
       >
         <Button
           className="w-full md:w-auto"
-          disabled={isDisabled || !folderId}
+          disabled={isDisabled}
           onClick={onMoveToFolder}
           variant="outline"
         >

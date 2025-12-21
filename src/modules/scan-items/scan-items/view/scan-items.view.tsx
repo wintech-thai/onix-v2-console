@@ -14,7 +14,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
-import { useMoveScanItemToFolder } from "../../scan-items-folders/hooks/scan-items-hooks";
+import { RouteConfig } from "@/config/route.config";
 
 const ScanItemsView = () => {
   const router = useRouter();
@@ -28,13 +28,7 @@ const ScanItemsView = () => {
     message: t("delete.message"),
     variant: "destructive",
   });
-  const [MoveToFolderConfirmationDialog, confirmMoveToFolder] = useConfirm({
-    title: t("moveToFolder.title"),
-    message: t("moveToFolder.message"),
-    variant: "default",
-  });
   const queryClient = useQueryClient();
-  const moveScanItemToFolder = useMoveScanItemToFolder();
 
   const scanItemsTableColumns = useQrcodeTableColumns();
 
@@ -163,71 +157,21 @@ const ScanItemsView = () => {
     rows: Row<IScanItems>[],
     callback: () => void
   ) => {
-    if (!folderId) {
-      toast.error(t("moveToFolder.noFolder", "No folder selected"));
-      return;
-    }
-
-    const ok = await confirmMoveToFolder();
-    if (!ok) return;
-
     const idsToMove = rows.map((row) => row.original.id);
 
     if (idsToMove.length === 0) {
+      console.log("idsToMove", idsToMove);
       return;
     }
 
-    const toastId = toast.loading(
-      t("moveToFolder.loading", "Moving items to folder...")
+    // Redirect to folders page with scanItemIds
+    const scanItemIds = idsToMove.join(",");
+    callback(); // Clear selection before redirect
+    return router.push(
+      `${RouteConfig.SCAN_ITEMS.FOLDER.LIST(
+        params.orgId
+      )}?scanItemIds=${scanItemIds}`
     );
-
-    const results = await Promise.allSettled(
-      idsToMove.map((scanItemId) =>
-        moveScanItemToFolder.mutateAsync({
-          params: {
-            orgId: params.orgId,
-            scanItemId: scanItemId,
-            folderId: folderId,
-          },
-        })
-      )
-    );
-
-    toast.dismiss(toastId);
-
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
-    const totalCount = idsToMove.length;
-
-    if (successCount > 0) {
-      toast.success(
-        `${t(
-          "moveToFolder.success",
-          "Success"
-        )} (${successCount}/${totalCount})`
-      );
-    }
-    if (errorCount > 0) {
-      toast.error(
-        `${t("moveToFolder.error", "Error")} (${errorCount}/${totalCount})`
-      );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to move item:", result.reason);
-        }
-      });
-    }
-
-    // Invalidate queries to refetch data
-    await queryClient.invalidateQueries({
-      queryKey: fetchScanItemsApi.fetchScanItemsKey,
-      refetchType: "active",
-    });
-
-    // Clear folderId and selection after move
-    setQueryState({ folderId: null });
-    callback();
-    return router.back();
   };
 
   const handlePageChange = (newPage: number) => {
@@ -250,12 +194,11 @@ const ScanItemsView = () => {
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
-      <MoveToFolderConfirmationDialog />
       <QrCodeTable
         columns={scanItemsTableColumns}
         data={data}
         onDelete={handleDelete}
-        onMoveToFolder={folderId ? handleMoveToFolder : undefined}
+        onMoveToFolder={handleMoveToFolder}
         totalItems={totalItems}
         currentPage={page}
         itemsPerPage={limit}

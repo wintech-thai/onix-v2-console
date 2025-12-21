@@ -19,6 +19,8 @@ import {
 } from "../hooks/scan-items-hooks";
 import { IScanItemsFolder } from "../api/scan-items-service";
 import { getScanItemFolders } from "../api/scan-items-service";
+import { useMoveScanItemToFolder } from "../hooks/scan-items-hooks";
+import { useRouter } from "next/navigation";
 
 const ScanItemsFolderViewPage = () => {
   const { t } = useTranslation(["scan-items-folder", "common"]);
@@ -30,6 +32,14 @@ const ScanItemsFolderViewPage = () => {
     title: t("delete.title"),
     message: t("delete.message"),
     variant: "destructive",
+  });
+  const [AttachConfirmationDialog, confirmAttach] = useConfirm({
+    title: t("attachmentMode.confirmTitle", "Confirm Move"),
+    message: t(
+      "attachmentMode.confirmMessage",
+      "Are you sure you want to move the selected scan items to this folder?"
+    ),
+    variant: "default",
   });
   const queryClient = useQueryClient();
 
@@ -43,9 +53,12 @@ const ScanItemsFolderViewPage = () => {
     limit: parseAsInteger.withDefault(25),
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
+    scanItemIds: parseAsString,
   });
 
-  const { page, limit, searchField, searchValue } = queryState;
+  const { page, limit, searchField, searchValue, scanItemIds } = queryState;
+  const router = useRouter();
+  const moveScanItemToFolder = useMoveScanItemToFolder();
 
   // Memoize dates to prevent infinite refetch loop
   const dateRange = useMemo(
@@ -155,6 +168,78 @@ const ScanItemsFolderViewPage = () => {
     callback();
   };
 
+  const handleAttach = async (
+    rows: Row<IScanItemsFolder>[],
+    callback: () => void
+  ) => {
+    if (!scanItemIds) {
+      toast.error(t("attachmentMode.noItems", "No scan items selected"));
+      return;
+    }
+
+    if (rows.length === 0) {
+      toast.error(t("attachmentMode.noFolder", "Please select a folder"));
+      return;
+    }
+
+    // Show confirmation dialog
+    const ok = await confirmAttach();
+    if (!ok) return;
+
+    const folderId = rows[0].original.id; // Select only first folder
+    const itemIds = scanItemIds.split(",");
+
+    const toastId = toast.loading(
+      t("attachmentMode.loading", "Moving items to folder...")
+    );
+
+    const results = await Promise.allSettled(
+      itemIds.map((scanItemId) =>
+        moveScanItemToFolder.mutateAsync({
+          params: {
+            orgId: params.orgId,
+            scanItemId: scanItemId,
+            folderId: folderId,
+          },
+        })
+      )
+    );
+
+    toast.dismiss(toastId);
+
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+    const errorCount = results.filter((r) => r.status === "rejected").length;
+    const totalCount = itemIds.length;
+
+    if (successCount > 0) {
+      toast.success(
+        `${t(
+          "attachmentMode.success",
+          "Success"
+        )} (${successCount}/${totalCount})`
+      );
+    }
+    if (errorCount > 0) {
+      toast.error(
+        `${t("attachmentMode.error", "Error")} (${errorCount}/${totalCount})`
+      );
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("Failed to move item:", result.reason);
+        }
+      });
+    }
+
+    // Invalidate queries to refetch data
+    await queryClient.invalidateQueries({
+      queryKey: getScanItemFolders.key,
+      refetchType: "active",
+    });
+
+    callback();
+    router.back(); // Go back to scan items page
+  };
+
   const handlePageChange = (newPage: number) => {
     setIsPageOrLimitChanging(true);
     setQueryState({ page: newPage });
@@ -172,9 +257,24 @@ const ScanItemsFolderViewPage = () => {
   // Get total items count from API
   const totalItems = fetchScanItemFoldersCount.data?.data ?? 0;
 
+  // Attachment mode configuration
+  const attachmentMode = scanItemIds
+    ? {
+        title: t("attachmentMode.title", "Move Scan Items to Folder"),
+        description: t(
+          "attachmentMode.description",
+          `Select a folder to move ${
+            scanItemIds.split(",").length
+          } scan item(s)`
+        ),
+        onBack: () => router.back(),
+      }
+    : undefined;
+
   return (
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
+      <AttachConfirmationDialog />
       <ScanItemsFolderTable
         columns={scanItemsFolderTableColumns}
         data={data}
@@ -189,6 +289,9 @@ const ScanItemsFolderViewPage = () => {
           (fetchScanItemFolders.isLoading && !hasLoadedBefore) ||
           isPageOrLimitChanging
         }
+        scanItemIds={scanItemIds}
+        onAttach={scanItemIds ? handleAttach : undefined}
+        attachmentMode={attachmentMode}
       />
     </div>
   );
