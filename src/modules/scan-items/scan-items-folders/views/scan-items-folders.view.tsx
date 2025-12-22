@@ -129,21 +129,27 @@ const ScanItemsFolderViewPage = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((scanItemActionId) =>
-        deleteScanItemFolder.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const scanItemActionId of idsToDelete) {
+      try {
+        await deleteScanItemFolder.mutateAsync({
           params: {
             orgId: params.orgId,
             scanItemActionId: scanItemActionId,
           },
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete scan item folder:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -153,11 +159,6 @@ const ScanItemsFolderViewPage = () => {
     }
     if (errorCount > 0) {
       toast.error(`${t("action.delete.error")} (${errorCount}/${totalCount})`);
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete scan item folder:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({
@@ -193,22 +194,28 @@ const ScanItemsFolderViewPage = () => {
       t("attachmentMode.loading", "Moving items to folder...")
     );
 
-    const results = await Promise.allSettled(
-      itemIds.map((scanItemId) =>
-        moveScanItemToFolder.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const scanItemId of itemIds) {
+      try {
+        await moveScanItemToFolder.mutateAsync({
           params: {
             orgId: params.orgId,
             scanItemId: scanItemId,
             folderId: folderId,
           },
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to move item:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = itemIds.length;
 
     if (successCount > 0) {
@@ -223,11 +230,6 @@ const ScanItemsFolderViewPage = () => {
       toast.error(
         `${t("attachmentMode.error", "Error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to move item:", result.reason);
-        }
-      });
     }
 
     // Invalidate queries to refetch data

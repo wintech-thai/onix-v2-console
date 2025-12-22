@@ -131,19 +131,25 @@ const ScanItemsActionViewPage = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((actionId) =>
-        deleteScanItemsAction.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const actionId of idsToDelete) {
+      try {
+        await deleteScanItemsAction.mutateAsync({
           orgId: params.orgId,
           scanItemsActionId: actionId,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete scan items action:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -158,11 +164,6 @@ const ScanItemsActionViewPage = () => {
       toast.error(
         `${t("action.delete.error", "Error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete scan item action:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

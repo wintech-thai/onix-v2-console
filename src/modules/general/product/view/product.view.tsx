@@ -5,10 +5,10 @@ import { fetchProductsApi, IProduct } from "../api/fetch-products.api";
 import { ProductTable } from "../components/product-table/product.table";
 import { getProductTableColumns } from "../components/product-table/product-columns.table";
 import {
-  useQueryStates,
-  parseAsInteger,
-  parseAsString,
-  useQueryState,
+    useQueryStates,
+    parseAsInteger,
+    parseAsString,
+    useQueryState,
 } from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { deleteProductApi } from "../api/delete-product.api";
@@ -118,19 +118,25 @@ const ProductView = () => {
       t("common:delete.loading", "Deleting items...")
     );
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((id) =>
-        deleteProduct.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const id of idsToDelete) {
+      try {
+        await deleteProduct.mutateAsync({
           orgId: params.orgId,
           productId: id,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete product:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -148,11 +154,6 @@ const ProductView = () => {
           "Error"
         )} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete product:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

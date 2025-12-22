@@ -156,19 +156,25 @@ const PointWalletsViewPage = () => {
 
     const toastId = toast.loading(t("delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((walletId) =>
-        deleteWallet.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const walletId of idsToDelete) {
+      try {
+        await deleteWallet.mutateAsync({
           orgId: params.orgId,
           walletId: walletId,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete wallet:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -176,11 +182,6 @@ const PointWalletsViewPage = () => {
     }
     if (errorCount > 0) {
       toast.error(`${t("delete.error")} (${errorCount}/${totalCount})`);
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete wallet:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

@@ -104,19 +104,25 @@ const CronJobView = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((id) =>
-        deleteCronJob.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const id of idsToDelete) {
+      try {
+        await deleteCronJob.mutateAsync({
           orgId: params.orgId,
           jobId: id,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete cron job:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -128,11 +134,6 @@ const CronJobView = () => {
       toast.error(
         `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete cron job:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({
