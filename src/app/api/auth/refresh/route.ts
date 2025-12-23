@@ -44,6 +44,7 @@ export async function POST() {
     const data = await response.json();
     const at = data?.token?.access_token as string | undefined;
     const newRt = data?.token?.refresh_token as string | undefined;
+    const expiresIn = data?.token?.expires_in as number | undefined; // in seconds
 
     if (!at) {
       return NextResponse.json(
@@ -54,12 +55,14 @@ export async function POST() {
 
     const now = Date.now();
 
-    // Set access token cookie
+    // Set access token cookie (use expires_in from API)
     cookiesStore.set({
       name: COOKIE_NAMES.ACCESS_TOKEN,
       value: at,
       ...COOKIE_OPTIONS,
-      expires: new Date(now + TOKEN_EXPIRY.ACCESS_TOKEN_MS),
+      expires: new Date(
+        now + (expiresIn || TOKEN_EXPIRY.DEFAULT_ACCESS_TOKEN_SECONDS) * 1000
+      ),
     });
 
     // Update refresh token if provided

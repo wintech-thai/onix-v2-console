@@ -20,6 +20,7 @@ export async function POST(req: Request) {
 
   const accessToken = r.data.token.access_token;
   const refreshToken = r.data.token.refresh_token;
+  const expiresIn = r.data.token.expires_in; // in seconds
   const decodedToken = jwt.decode(accessToken) as { [key: string]: any } | null;
   const now = Date.now();
 
@@ -32,12 +33,12 @@ export async function POST(req: Request) {
     sameSite: COOKIE_OPTIONS.sameSite,
   });
 
-  // Set access_token cookie (15 minutes)
+  // Set access_token cookie (use expires_in from API)
   cookiesStore.set({
     name: COOKIE_NAMES.ACCESS_TOKEN,
     value: accessToken,
     ...COOKIE_OPTIONS,
-    expires: new Date(now + TOKEN_EXPIRY.ACCESS_TOKEN_MS),
+    expires: new Date(now + expiresIn * 1000), // convert seconds to milliseconds
   });
 
   // Set refresh_token cookie (60 days)

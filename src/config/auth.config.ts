@@ -11,7 +11,7 @@ export const COOKIE_NAMES = {
 
 // Token expiration times
 export const TOKEN_EXPIRY = {
-  ACCESS_TOKEN_MS: 14 * 60 * 1000, // 14 minutes in milliseconds
+  DEFAULT_ACCESS_TOKEN_SECONDS: 14 * 60, // 5 minutes in seconds (fallback if API doesn't provide)
   REFRESH_TOKEN_SECONDS: 60 * 24 * 60 * 60, // 60 days in seconds
 } as const;
 
