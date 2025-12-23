@@ -1,14 +1,12 @@
+import { COOKIE_NAMES, COOKIE_OPTIONS, TOKEN_EXPIRY } from "@/config/auth.config";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 const AUTH = process.env.NEXT_PUBLIC_API_URL!;
-const REFRESH_TOKEN = "refresh_token";
-const ACCESS_TOKEN = "access_token";
-const FIFTEEN_MIN_MS = 15 * 60 * 1000;
 
 export async function POST() {
   const cookiesStore = await cookies();
-  const rt = cookiesStore.get(REFRESH_TOKEN)?.value;
+  const rt = cookiesStore.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
   if (!rt) {
     return NextResponse.json(
@@ -27,8 +25,8 @@ export async function POST() {
 
     if (response.status === 401) {
       // RT หมดอายุ - ลบ cookies
-      cookiesStore.delete(ACCESS_TOKEN);
-      cookiesStore.delete(REFRESH_TOKEN);
+      cookiesStore.delete(COOKIE_NAMES.ACCESS_TOKEN);
+      cookiesStore.delete(COOKIE_NAMES.REFRESH_TOKEN);
       return NextResponse.json(
         { error: "Refresh token expired" },
         { status: 401 }
@@ -58,24 +56,19 @@ export async function POST() {
 
     // Set access token cookie
     cookiesStore.set({
-      name: ACCESS_TOKEN,
+      name: COOKIE_NAMES.ACCESS_TOKEN,
       value: at,
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      path: "/",
-      expires: new Date(now + FIFTEEN_MIN_MS),
+      ...COOKIE_OPTIONS,
+      expires: new Date(now + TOKEN_EXPIRY.ACCESS_TOKEN_MS),
     });
 
     // Update refresh token if provided
     if (newRt) {
       cookiesStore.set({
-        name: REFRESH_TOKEN,
+        name: COOKIE_NAMES.REFRESH_TOKEN,
         value: String(newRt),
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        path: "/",
+        ...COOKIE_OPTIONS,
+        maxAge: TOKEN_EXPIRY.REFRESH_TOKEN_SECONDS,
       });
     }
 
