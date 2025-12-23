@@ -196,13 +196,19 @@ const ScanItemsFolderViewPage = () => {
     await batchOp.execute({
       items: itemIds,
       operation: async (scanItemId) => {
-        await moveScanItemToFolder.mutateAsync({
+        const result = await moveScanItemToFolder.mutateAsync({
           params: {
             orgId: params.orgId,
             scanItemId: scanItemId,
             folderId: folderId,
           },
         });
+
+        // Treat non-success status as error
+        if (result.data.status !== "SUCCESS" && result.data.status !== "OK") {
+          toast.error(result.data.description || "Failed to move item");
+          throw new Error(result.data.description || "Failed to move item");
+        }
       },
       onComplete: async () => {
         // await queryClient.invalidateQueries({
