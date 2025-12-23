@@ -22,11 +22,6 @@ export const useGetScanItemFolderById = createQueryHook(getScanItemFolderById);
 
 export const useDeleteScanItemFolder = createMutationHook(
   deleteScanItemFolder,
-  {
-    invalidates: [
-      { queryKey: getScanItemFolders.key },
-    ],
-  }
 );
 
 export const useAttachScanItemFolderToAction = createMutationHook(
