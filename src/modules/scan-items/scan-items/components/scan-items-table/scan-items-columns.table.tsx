@@ -25,6 +25,7 @@ import { useState as State } from "react";
 import { detachScanItemToCustomerApi } from "@/modules/general/customer/api/detach-scan-item-from-customer.api";
 import { detachScanItemFromProductApi } from "../../api/detach-scan-item-from-product.api";
 import Link from "next/link";
+import { createRangeSelectableCheckboxCell } from "@/lib/table-helpers";
 
 type qrcodeTableColumns = ColumnDef<IScanItems> & {
   accessorKey?: keyof IScanItems;
@@ -48,13 +49,7 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
           aria-label="Select all"
         />
       ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
+      cell: createRangeSelectableCheckboxCell(),
       enableSorting: false,
       enableHiding: false,
     },
@@ -63,12 +58,15 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
       header: t("columns.serial"),
       cell: ({ row }) => {
         return (
-            <Link href={RouteConfig.SCAN_ITEMS.ITEM.VIEW(
+          <Link
+            href={RouteConfig.SCAN_ITEMS.ITEM.VIEW(
               row.original.orgId,
               row.original.id
-            )} className="text-primary hover:underline cursor-pointer">
-              {row.getValue("serial")}
-            </Link>
+            )}
+            className="text-primary hover:underline cursor-pointer"
+          >
+            {row.getValue("serial")}
+          </Link>
         );
         // return (
         //   <ScanItemDetailModal
@@ -161,7 +159,8 @@ export const useQrcodeTableColumns = (): qrcodeTableColumns[] => {
         const unVerifyScanItemMutate =
           unVerifyScanItemsApi.useDeleteScanItemsMutation(params.orgId);
         const detachCustomerMutate = detachScanItemToCustomerApi.useMutation();
-        const detachProductMutate = detachScanItemFromProductApi.useDetachScanItemFromProduct();
+        const detachProductMutate =
+          detachScanItemFromProductApi.useDetachScanItemFromProduct();
         const getScanUrlDryRunApi = getScanItemUrlDryRunApi.useMutation();
 
         const handleUnVerify = async (scanId: string) => {
