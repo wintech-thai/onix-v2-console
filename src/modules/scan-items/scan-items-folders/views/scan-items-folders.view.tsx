@@ -21,6 +21,8 @@ import { IScanItemsFolder } from "../api/scan-items-service";
 import { getScanItemFolders } from "../api/scan-items-service";
 import { useMoveScanItemToFolder } from "../hooks/scan-items-hooks";
 import { useRouter } from "next/navigation";
+import { useBatchOperation } from "@/hooks/use-batch-operation";
+import { BatchOperationModal } from "@/components/ui/batch-operation-modal";
 
 const ScanItemsFolderViewPage = () => {
   const { t } = useTranslation(["scan-items-folder", "common"]);
@@ -46,6 +48,8 @@ const ScanItemsFolderViewPage = () => {
   const scanItemsFolderTableColumns = useScanItemsFolderTableColumns();
 
   const deleteScanItemFolder = useDeleteScanItemFolder();
+  const moveScanItemToFolder = useMoveScanItemToFolder();
+  const batchOp = useBatchOperation();
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -58,7 +62,6 @@ const ScanItemsFolderViewPage = () => {
 
   const { page, limit, searchField, searchValue, scanItemIds } = queryState;
   const router = useRouter();
-  const moveScanItemToFolder = useMoveScanItemToFolder();
 
   // Memoize dates to prevent infinite refetch loop
   const dateRange = useMemo(
@@ -187,19 +190,12 @@ const ScanItemsFolderViewPage = () => {
     const ok = await confirmAttach();
     if (!ok) return;
 
-    const folderId = rows[0].original.id; // Select only first folder
+    const folderId = rows[0].original.id;
     const itemIds = scanItemIds.split(",");
 
-    const toastId = toast.loading(
-      t("attachmentMode.loading", "Moving items to folder...")
-    );
-
-    let successCount = 0;
-    let errorCount = 0;
-
-    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
-    for (const scanItemId of itemIds) {
-      try {
+    await batchOp.execute({
+      items: itemIds,
+      operation: async (scanItemId) => {
         await moveScanItemToFolder.mutateAsync({
           params: {
             orgId: params.orgId,
@@ -207,39 +203,16 @@ const ScanItemsFolderViewPage = () => {
             folderId: folderId,
           },
         });
-        successCount++;
-      } catch (error) {
-        errorCount++;
-        console.error("Failed to move item:", error);
-      }
-    }
-
-    toast.dismiss(toastId);
-
-    const totalCount = itemIds.length;
-
-    if (successCount > 0) {
-      toast.success(
-        `${t(
-          "attachmentMode.success",
-          "Success"
-        )} (${successCount}/${totalCount})`
-      );
-    }
-    if (errorCount > 0) {
-      toast.error(
-        `${t("attachmentMode.error", "Error")} (${errorCount}/${totalCount})`
-      );
-    }
-
-    // Invalidate queries to refetch data
-    await queryClient.invalidateQueries({
-      queryKey: getScanItemFolders.key,
-      refetchType: "active",
+      },
+      onComplete: async () => {
+        // await queryClient.invalidateQueries({
+        //   queryKey: getScanItemFolders.key,
+        //   refetchType: "active",
+        // });
+        callback();
+      },
+      getItemId: (id) => id,
     });
-
-    callback();
-    router.back(); // Go back to scan items page
   };
 
   const handlePageChange = (newPage: number) => {
@@ -277,6 +250,19 @@ const ScanItemsFolderViewPage = () => {
     <div className="h-full pt-4 px-4 space-y-4">
       <DeleteConfirmationDialog />
       <AttachConfirmationDialog />
+      <BatchOperationModal
+        {...batchOp.state}
+        onCancel={batchOp.cancel}
+        onComplete={batchOp.close}
+        messages={{
+          title: t("moveProgress.title"),
+          completed: t("moveProgress.completed"),
+          processing: t("moveProgress.moving"),
+          processed: t("moveProgress.moved"),
+          allSuccess: t("moveProgress.allSuccess"),
+          partialSuccess: t("moveProgress.partialSuccess"),
+        }}
+      />
       <ScanItemsFolderTable
         columns={scanItemsFolderTableColumns}
         data={data}

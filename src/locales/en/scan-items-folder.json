@@ -43,6 +43,22 @@
     "success": "Successfully moved items",
     "error": "Failed to move some items"
   },
+  "moveProgress": {
+    "title": "Moving Items to Folder",
+    "moving": "Moving",
+    "moved": "Moved",
+    "of": "of",
+    "errors": "Errors",
+    "cancel": "Cancel",
+    "completed": "Move Completed",
+    "allSuccess": "All items moved successfully!",
+    "partialSuccess": "Move completed with some errors",
+    "total": "Total",
+    "success": "Success",
+    "close": "Close",
+    "successAll": "Successfully moved all items",
+    "successPartial": "Moved {success} items, {errors} failed"
+  },
   "form": {
     "createTitle": "Create Scan Item Folder",
     "updateTitle": "Update Scan Item Folder",

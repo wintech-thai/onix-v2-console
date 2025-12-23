@@ -185,6 +185,14 @@ interface Resources {
     }
   },
   "common": {
+    "batchOperation": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "errors": "Errors",
+      "of": "of",
+      "success": "Success",
+      "total": "Total"
+    },
     "comingSoon": {
       "description": "We're working hard to bring you something amazing!",
       "inDevelopment": "In Development",
@@ -1303,6 +1311,22 @@ interface Resources {
       "createSuccess": "Folder created successfully",
       "updateError": "Failed to update folder",
       "updateSuccess": "Folder updated successfully"
+    },
+    "moveProgress": {
+      "allSuccess": "All items moved successfully!",
+      "cancel": "Cancel",
+      "close": "Close",
+      "completed": "Move Completed",
+      "errors": "Errors",
+      "moved": "Moved",
+      "moving": "Moving",
+      "of": "of",
+      "partialSuccess": "Move completed with some errors",
+      "success": "Success",
+      "successAll": "Successfully moved all items",
+      "successPartial": "Moved {success} items, {errors} failed",
+      "title": "Moving Items to Folder",
+      "total": "Total"
     }
   },
   "scan-items-template": {
