@@ -111,19 +111,25 @@ const PointRuleViewPage = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((pointRuleId) =>
-        deletePointRule.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const pointRuleId of idsToDelete) {
+      try {
+        await deletePointRule.mutateAsync({
           orgId: params.orgId,
           pointRuleId: pointRuleId,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete Point Rule:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -135,11 +141,6 @@ const PointRuleViewPage = () => {
       toast.error(
         `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete Point Rule:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

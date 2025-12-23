@@ -108,19 +108,25 @@ const VoucherViewPage = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((voucherId) =>
-        deleteVoucher.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const voucherId of idsToDelete) {
+      try {
+        await deleteVoucher.mutateAsync({
           orgId: params.orgId,
           voucherId: voucherId,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete voucher:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -132,11 +138,6 @@ const VoucherViewPage = () => {
       toast.error(
         `${t("delete.error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete voucher:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

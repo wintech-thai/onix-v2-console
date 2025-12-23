@@ -12,6 +12,7 @@ export type i18nKeys =
   | "scan-item"
   | "scan-items-action"
   | "scan-items-template"
+  | "scan-items-folder"
   | "cronjob"
   | "user"
   | "customer"
@@ -31,6 +32,7 @@ export const i18nNamespaces: i18nKeys[] = [
   "scan-item",
   "scan-items-action",
   "scan-items-template",
+  "scan-items-folder",
   "scan-items-action",
   "cronjob",
   "user",

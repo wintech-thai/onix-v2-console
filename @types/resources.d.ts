@@ -185,6 +185,14 @@ interface Resources {
     }
   },
   "common": {
+    "batchOperation": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "errors": "Errors",
+      "of": "of",
+      "success": "Success",
+      "total": "Total"
+    },
     "comingSoon": {
       "description": "We're working hard to bring you something amazing!",
       "inDevelopment": "In Development",
@@ -1013,6 +1021,7 @@ interface Resources {
       "config": "CONFIG",
       "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
+      "moveToFolder": "MOVE TO FOLDER",
       "scanItemAction": "Scan Item Action",
       "scanItemTemplate": "Scan Item Template",
       "search": "Search",
@@ -1047,6 +1056,14 @@ interface Resources {
       "loading": "Loading scan item details...",
       "qrcodeTitle": "QR Code",
       "title": "Scan Item Detail"
+    },
+    "moveToFolder": {
+      "error": "Error",
+      "loading": "Moving items to folder...",
+      "message": "Are you sure you want to move selected items to this folder?",
+      "noFolder": "No folder selected",
+      "success": "Success",
+      "title": "Move to Folder"
     },
     "scanItemAction": {
       "buttons": {
@@ -1129,6 +1146,15 @@ interface Resources {
     "actions": {
       "setDefault": "Set to Default"
     },
+    "attach": {
+      "error": "Failed to attach folder",
+      "loading": "Attaching folder to action...",
+      "mode": {
+        "description": "Select an action to attach the folder. You can only select one action at a time.",
+        "title": "Attach Folder Mode"
+      },
+      "success": "Folder attached successfully"
+    },
     "columns": {
       "action": "Action",
       "actionName": "Action Name",
@@ -1146,6 +1172,7 @@ interface Resources {
     },
     "filter": {
       "add": "ADD",
+      "attach": "Attach",
       "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
@@ -1197,6 +1224,109 @@ interface Resources {
       "message": "Are you sure you want to set this as the default scan item action?",
       "success": "Set default successfully",
       "title": "Set Default"
+    }
+  },
+  "scan-items-folder": {
+    "action": {
+      "attachToAction": "Attach to Action",
+      "attachToProduct": "Attach to Product",
+      "delete": {
+        "error": "Failed to delete",
+        "success": "Deleted successfully"
+      },
+      "moveScanItemToFolder": "Move Scan Item to Folder"
+    },
+    "attachmentMode": {
+      "confirmMessage": "Are you sure you want to move the selected scan items to this folder?",
+      "confirmTitle": "Confirm Move",
+      "description": "Select a folder to move the selected scan items",
+      "error": "Failed to move some items",
+      "loading": "Moving items to folder...",
+      "noFolder": "Please select a folder",
+      "noItems": "No scan items selected",
+      "success": "Successfully moved items",
+      "title": "Move Scan Items to Folder"
+    },
+    "columns": {
+      "action": "Action",
+      "actionName": "Action Name",
+      "description": "Description",
+      "folderName": "Folder Name",
+      "productCode": "Product Code",
+      "productDesc": "Product Description",
+      "scanItemCount": "Scan Item Count",
+      "tags": "Tags"
+    },
+    "delete": {
+      "message": "Are you sure you want to delete the selected folders?",
+      "title": "Delete Scan Item Folders"
+    },
+    "filter": {
+      "add": "ADD",
+      "attach": "ATTACH",
+      "back": "BACK",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search...",
+      "selectSearchField": "Select Search Field"
+    },
+    "form": {
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "attachedInformation": {
+        "actionName": "Action Name",
+        "productCode": "Product Code",
+        "productName": "Product Name",
+        "scanItemCount": "Scan Item Count",
+        "title": "Attached Information"
+      },
+      "createTitle": "Create Scan Item Folder",
+      "generalInformation": {
+        "description": "Description",
+        "folderName": "Folder Name",
+        "tags": "Tags",
+        "tagsPlaceholder": "Enter tags separated by commas",
+        "title": "General Information"
+      },
+      "leavePage": "Leave Page?",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update Scan Item Folder",
+      "validate": {
+        "descriptionRequired": "Description is required",
+        "folderNameRequired": "Folder name is required",
+        "tagsRequired": "Tags are required"
+      },
+      "validation": {
+        "descriptionRequired": "Description is required",
+        "folderNameRequired": "Folder name is required",
+        "tagsRequired": "Tags are required"
+      }
+    },
+    "messages": {
+      "createError": "Failed to create folder",
+      "createSuccess": "Folder created successfully",
+      "updateError": "Failed to update folder",
+      "updateSuccess": "Folder updated successfully"
+    },
+    "moveProgress": {
+      "allSuccess": "All items moved successfully!",
+      "cancel": "Cancel",
+      "close": "Close",
+      "completed": "Move Completed",
+      "errors": "Errors",
+      "moved": "Moved",
+      "moving": "Moving",
+      "of": "of",
+      "partialSuccess": "Move completed with some errors",
+      "success": "Success",
+      "successAll": "Successfully moved all items",
+      "successPartial": "Moved {success} items, {errors} failed",
+      "title": "Moving Items to Folder",
+      "total": "Total"
     }
   },
   "scan-items-template": {

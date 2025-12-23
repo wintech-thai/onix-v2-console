@@ -104,19 +104,25 @@ const UserView = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((userId) =>
-        deleteUser.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const userId of idsToDelete) {
+      try {
+        await deleteUser.mutateAsync({
           orgId: params.orgId,
           userId: userId,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete user:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -128,11 +134,6 @@ const UserView = () => {
       toast.error(
         `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete user:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

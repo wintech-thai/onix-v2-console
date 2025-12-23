@@ -29,6 +29,7 @@
     "search": "Search",
     "add": "ADD",
     "delete": "DELETE",
+    "moveToFolder": "MOVE TO FOLDER",
     "config": "CONFIG",
     "scanItemTemplate": "Scan Item Template",
     "scanItemAction": "Scan Item Action"
@@ -70,6 +71,14 @@
     "loading": "Detaching product...",
     "success": "Product detached successfully",
     "error": "Failed to detach product"
+  },
+  "moveToFolder": {
+    "title": "Move to Folder",
+    "message": "Are you sure you want to move selected items to this folder?",
+    "noFolder": "No folder selected",
+    "loading": "Moving items to folder...",
+    "success": "Success",
+    "error": "Error"
   },
   "modal": {
     "title": "Scan Item Detail",

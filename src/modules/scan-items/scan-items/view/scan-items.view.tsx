@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetchScanItemsApi, IScanItems } from "../api/fetch-qrcodes.api";
 import { QrCodeTable } from "../components/scan-items-table/scan-items.table";
 import { useQrcodeTableColumns } from "../components/scan-items-table/scan-items-columns.table";
@@ -14,8 +14,10 @@ import { useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
+import { RouteConfig } from "@/config/route.config";
 
 const ScanItemsView = () => {
+  const router = useRouter();
   const { t } = useTranslation(["scan-item"]);
   const params = useParams<{ orgId: string }>();
   const [data, setData] = useState<IScanItems[]>([]);
@@ -40,9 +42,10 @@ const ScanItemsView = () => {
     limit: parseAsInteger.withDefault(25),
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
+    folderId: parseAsString,
   });
 
-  const { page, limit, searchField, searchValue } = queryState;
+  const { page, limit, searchField, searchValue, folderId } = queryState;
 
   // Memoize dates to prevent infinite refetch loop
   const dateRange = useMemo(
@@ -82,7 +85,7 @@ const ScanItemsView = () => {
 
   if (fetchScanItems.isError) {
     if (fetchScanItems.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItems" />
+      return <NoPermissionsPage apiName="GetScanItems" />;
     }
 
     throw new Error(fetchScanItems.error.message);
@@ -90,7 +93,7 @@ const ScanItemsView = () => {
 
   if (fetchScanItemsCount.isError) {
     if (fetchScanItemsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemCount" />
+      return <NoPermissionsPage apiName="GetScanItemCount" />;
     }
 
     throw new Error(fetchScanItemsCount.error.message);
@@ -113,14 +116,22 @@ const ScanItemsView = () => {
 
     const toastId = toast.loading(t("delete.loading", "Deleting items..."));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((id) => deleteScanItems.mutateAsync(id))
-    );
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const id of idsToDelete) {
+      try {
+        await deleteScanItems.mutateAsync(id);
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete item:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -129,13 +140,9 @@ const ScanItemsView = () => {
       );
     }
     if (errorCount > 0) {
-      toast.error(`${t("delete.error", "Error")} (${errorCount}/${totalCount})`);
-      // Optionally log the errors
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete item:", result.reason);
-        }
-      });
+      toast.error(
+        `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
+      );
     }
 
     // Invalidate queries to refetch data
@@ -146,6 +153,27 @@ const ScanItemsView = () => {
 
     // Clear selection after delete attempt
     callback();
+  };
+
+  const handleMoveToFolder = async (
+    rows: Row<IScanItems>[],
+    callback: () => void
+  ) => {
+    const idsToMove = rows.map((row) => row.original.id);
+
+    if (idsToMove.length === 0) {
+      console.log("idsToMove", idsToMove);
+      return;
+    }
+
+    // Redirect to folders page with scanItemIds
+    const scanItemIds = idsToMove.join(",");
+    callback(); // Clear selection before redirect
+    return router.push(
+      `${RouteConfig.SCAN_ITEMS.FOLDER.LIST(
+        params.orgId
+      )}?scanItemIds=${scanItemIds}`
+    );
   };
 
   const handlePageChange = (newPage: number) => {
@@ -172,13 +200,18 @@ const ScanItemsView = () => {
         columns={scanItemsTableColumns}
         data={data}
         onDelete={handleDelete}
+        onMoveToFolder={handleMoveToFolder}
         totalItems={totalItems}
         currentPage={page}
         itemsPerPage={limit}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItems.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchScanItems.isLoading && !hasLoadedBefore) ||
+          isPageOrLimitChanging
+        }
+        folderId={folderId}
       />
     </div>
   );

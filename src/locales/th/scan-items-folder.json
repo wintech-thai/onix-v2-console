@@ -1,0 +1,103 @@
+{
+  "columns": {
+    "folderName": "ชื่อโฟลเดอร์",
+    "description": "คำอธิบาย",
+    "tags": "แท็ก",
+    "actionName": "ชื่อแอคชั่น",
+    "productCode": "รหัสผลิตภัณฑ์",
+    "productDesc": "รายละเอียดผลิตภัณฑ์",
+    "scanItemCount": "จำนวนสแกนไอเทม",
+    "action": "การดำเนินการ"
+  },
+  "filter": {
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "fullTextSearch": "ค้นหาทั้งหมด",
+    "searchPlaceholder": "ค้นหา...",
+    "search": "ค้นหา",
+    "back": "กลับ",
+    "add": "เพิ่ม",
+    "attach": "แนบ",
+    "delete": "ลบ"
+  },
+  "delete": {
+    "title": "ลบโฟลเดอร์สแกนไอเทม",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ที่เลือก?"
+  },
+  "action": {
+    "delete": {
+      "success": "ลบสำเร็จ",
+      "error": "ไม่สามารถลบได้"
+    },
+    "moveScanItemToFolder": "ย้ายสแกนไอเท็มไปยังโฟลเดอร์",
+    "attachToProduct": "แนบกับผลิตภัณฑ์",
+    "attachToAction": "แนบกับแอคชั่น"
+  },
+  "attachmentMode": {
+    "title": "ย้ายสแกนไอเท็มไปยังโฟลเดอร์",
+    "description": "เลือกโฟลเดอร์เพื่อย้ายสแกนไอเท็มที่เลือก",
+    "confirmTitle": "ยืนยันการย้าย",
+    "confirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการย้ายสแกนไอเท็มที่เลือกไปยังโฟลเดอร์นี้?",
+    "noItems": "ไม่ได้เลือกสแกนไอเท็ม",
+    "noFolder": "กรุณาเลือกโฟลเดอร์",
+    "loading": "กำลังย้ายรายการไปยังโฟลเดอร์...",
+    "success": "ย้ายรายการสำเร็จ",
+    "error": "ไม่สามารถย้ายบางรายการได้"
+  },
+  "moveProgress": {
+    "title": "กำลังย้ายรายการไปยังโฟลเดอร์",
+    "moving": "กำลังย้าย",
+    "moved": "ย้ายแล้ว",
+    "of": "จาก",
+    "errors": "ข้อผิดพลาด",
+    "cancel": "ยกเลิก",
+    "completed": "ย้ายเสร็จสมบูรณ์",
+    "allSuccess": "ย้ายรายการทั้งหมดสำเร็จ!",
+    "partialSuccess": "ย้ายเสร็จสมบูรณ์แต่มีข้อผิดพลาดบางรายการ",
+    "total": "ทั้งหมด",
+    "success": "สำเร็จ",
+    "close": "ปิด",
+    "successAll": "ย้ายรายการทั้งหมดสำเร็จ",
+    "successPartial": "ย้าย {success} รายการ, {errors} ล้มเหลว"
+  },
+  "form": {
+    "createTitle": "สร้างโฟลเดอร์สแกนไอเท็ม",
+    "updateTitle": "แก้ไขโฟลเดอร์สแกนไอเท็ม",
+    "leavePage": "ออกจากหน้านี้?",
+    "unsavedChanges": "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณแน่ใจหรือไม่ว่าต้องการออก?",
+    "generalInformation": {
+      "title": "ข้อมูลทั่วไป",
+      "folderName": "ชื่อโฟลเดอร์",
+      "description": "คำอธิบาย",
+      "tags": "แท็ก",
+      "tagsPlaceholder": "กรอกแท็กคั่นด้วยเครื่องหมายจุลภาค"
+    },
+    "validate": {
+      "folderNameRequired": "กรุณากรอกชื่อโฟลเดอร์",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณากรอกแท็ก"
+    },
+    "attachedInformation": {
+      "title": "ข้อมูลที่แนบ",
+      "actionName": "ชื่อแอคชัน",
+      "productCode": "รหัสผลิตภัณฑ์",
+      "productName": "ชื่อผลิตภัณฑ์",
+      "scanItemCount": "จำนวนสแกนไอเท็ม"
+    },
+    "actions": {
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "saving": "กำลังบันทึก..."
+    },
+    "validation": {
+      "folderNameRequired": "กรุณากรอกชื่อโฟลเดอร์",
+      "descriptionRequired": "กรุณากรอกคำอธิบาย",
+      "tagsRequired": "กรุณากรอกแท็ก"
+    }
+  },
+  "messages": {
+    "createSuccess": "สร้างโฟลเดอร์สำเร็จ",
+    "createError": "ไม่สามารถสร้างโฟลเดอร์ได้",
+    "updateSuccess": "แก้ไขโฟลเดอร์สำเร็จ",
+    "updateError": "ไม่สามารถแก้ไขโฟลเดอร์ได้"
+  }
+}

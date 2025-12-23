@@ -13,15 +13,6 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { parseAsString, useQueryStates } from "nuqs";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useParams } from "next/navigation";
-import { RouteConfig } from "@/config/route.config";
-import Link from "next/link";
 
 interface CronJobFilterTableProps {
   onDelete: () => void;
@@ -37,7 +28,7 @@ export const CronJobFilterTable = ({
   selected,
 }: CronJobFilterTableProps) => {
   const { t } = useTranslation("cronjob");
-  const params = useParams<{ orgId: string }>();
+  // const params = useParams<{ orgId: string }>();
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
@@ -122,7 +113,7 @@ export const CronJobFilterTable = ({
           md:flex md:items-center
         "
       >
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button>{t("filter.add")}</Button>
           </DropdownMenuTrigger>
@@ -133,7 +124,7 @@ export const CronJobFilterTable = ({
               </DropdownMenuItem>
             </Link>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
         <Button
           className="w-full md:w-auto"
           disabled={isDisabled}

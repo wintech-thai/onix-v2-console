@@ -103,6 +103,14 @@
     "noResults": "No results.",
     "of": "of"
   },
+  "batchOperation": {
+    "of": "of",
+    "total": "Total",
+    "success": "Success",
+    "errors": "Errors",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
   "comingSoon": {
     "title": "Coming Soon",
     "description": "We're working hard to bring you something amazing!",

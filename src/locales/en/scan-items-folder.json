@@ -1,0 +1,103 @@
+{
+  "columns": {
+    "folderName": "Folder Name",
+    "description": "Description",
+    "tags": "Tags",
+    "actionName": "Action Name",
+    "productCode": "Product Code",
+    "productDesc": "Product Description",
+    "scanItemCount": "Scan Item Count",
+    "action": "Action"
+  },
+  "filter": {
+    "selectSearchField": "Select Search Field",
+    "fullTextSearch": "Full Text Search",
+    "searchPlaceholder": "Search...",
+    "search": "Search",
+    "add": "ADD",
+    "back": "BACK",
+    "attach": "ATTACH",
+    "delete": "DELETE"
+  },
+  "delete": {
+    "title": "Delete Scan Item Folders",
+    "message": "Are you sure you want to delete the selected folders?"
+  },
+  "action": {
+    "delete": {
+      "success": "Deleted successfully",
+      "error": "Failed to delete"
+    },
+    "moveScanItemToFolder": "Move Scan Item to Folder",
+    "attachToProduct": "Attach to Product",
+    "attachToAction": "Attach to Action"
+  },
+  "attachmentMode": {
+    "title": "Move Scan Items to Folder",
+    "description": "Select a folder to move the selected scan items",
+    "confirmTitle": "Confirm Move",
+    "confirmMessage": "Are you sure you want to move the selected scan items to this folder?",
+    "noItems": "No scan items selected",
+    "noFolder": "Please select a folder",
+    "loading": "Moving items to folder...",
+    "success": "Successfully moved items",
+    "error": "Failed to move some items"
+  },
+  "moveProgress": {
+    "title": "Moving Items to Folder",
+    "moving": "Moving",
+    "moved": "Moved",
+    "of": "of",
+    "errors": "Errors",
+    "cancel": "Cancel",
+    "completed": "Move Completed",
+    "allSuccess": "All items moved successfully!",
+    "partialSuccess": "Move completed with some errors",
+    "total": "Total",
+    "success": "Success",
+    "close": "Close",
+    "successAll": "Successfully moved all items",
+    "successPartial": "Moved {success} items, {errors} failed"
+  },
+  "form": {
+    "createTitle": "Create Scan Item Folder",
+    "updateTitle": "Update Scan Item Folder",
+    "leavePage": "Leave Page?",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "generalInformation": {
+      "title": "General Information",
+      "folderName": "Folder Name",
+      "description": "Description",
+      "tags": "Tags",
+      "tagsPlaceholder": "Enter tags separated by commas"
+    },
+    "validate": {
+      "folderNameRequired": "Folder name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "Tags are required"
+    },
+    "attachedInformation": {
+      "title": "Attached Information",
+      "actionName": "Action Name",
+      "productCode": "Product Code",
+      "productName": "Product Name",
+      "scanItemCount": "Scan Item Count"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "saving": "Saving..."
+    },
+    "validation": {
+      "folderNameRequired": "Folder name is required",
+      "descriptionRequired": "Description is required",
+      "tagsRequired": "Tags are required"
+    }
+  },
+  "messages": {
+    "createSuccess": "Folder created successfully",
+    "createError": "Failed to create folder",
+    "updateSuccess": "Folder updated successfully",
+    "updateError": "Failed to update folder"
+  }
+}

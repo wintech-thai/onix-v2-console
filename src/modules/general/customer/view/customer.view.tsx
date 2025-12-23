@@ -119,19 +119,25 @@ const CustomerView = () => {
 
     const toastId = toast.loading(t("common:delete.loading"));
 
-    const results = await Promise.allSettled(
-      idsToDelete.map((id) =>
-        deleteCustomer.mutateAsync({
+    let successCount = 0;
+    let errorCount = 0;
+
+    // ยิงทีละอันเพื่อป้องกัน race condition และ rate limit
+    for (const id of idsToDelete) {
+      try {
+        await deleteCustomer.mutateAsync({
           orgId: params.orgId,
           customerId: id,
-        })
-      )
-    );
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete customer:", error);
+      }
+    }
 
     toast.dismiss(toastId);
 
-    const successCount = results.filter((r) => r.status === "fulfilled").length;
-    const errorCount = results.filter((r) => r.status === "rejected").length;
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
@@ -143,11 +149,6 @@ const CustomerView = () => {
       toast.error(
         `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
       );
-      results.forEach((result) => {
-        if (result.status === "rejected") {
-          console.error("Failed to delete customer:", result.reason);
-        }
-      });
     }
 
     await queryClient.invalidateQueries({

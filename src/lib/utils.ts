@@ -94,6 +94,7 @@ export function useErrorToast(apiName: string) {
       return;
     }
 
-    toast.error(t("common.error"));
+    // toast.error(t("common.error"));
+    toast.error(error.message);
   };
 }

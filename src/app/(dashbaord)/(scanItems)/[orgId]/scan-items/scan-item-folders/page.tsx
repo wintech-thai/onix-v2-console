@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import ScanItemsFolderViewPage from "@/modules/scan-items/scan-items-folders/views/scan-items-folders.view";
 
 const ScanItemFolderPage = () => {
-  return <CommingSoon />
-}
+  return <ScanItemsFolderViewPage />;
+};
 
 export default ScanItemFolderPage;

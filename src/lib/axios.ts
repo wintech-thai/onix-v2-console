@@ -26,16 +26,80 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// axios
+// Track ongoing refresh to prevent race condition
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value?: any) => void;
+  reject: (reason?: any) => void;
+}> = [];
+
+function processQueue(error: any = null) {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve();
+    }
+  });
+  failedQueue = [];
+}
+
+async function refreshToken(): Promise<void> {
+  // เรียก refresh endpoint ที่ backend
+  const response = await fetch("/api/auth/refresh", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Refresh token failed");
+  }
+}
+
+// axios response interceptor with refresh logic
 api.interceptors.response.use(
   (res) => res,
-  (err) => {
+  async (err) => {
+    const originalRequest = err.config;
     const status = err?.response?.status;
 
+    // ถ้าเป็น 401 และยังไม่เคย retry
+    if (status === 401 && !originalRequest._retry) {
+      // ถ้ามีการ refresh อยู่แล้ว ให้ queue ไว้รอ
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => api(originalRequest))
+          .catch((err) => Promise.reject(err));
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        // Refresh token ที่ client
+        await refreshToken();
+        isRefreshing = false;
+        processQueue(null);
+
+        // Retry original request
+        return api(originalRequest);
+      } catch (refreshError) {
+        isRefreshing = false;
+        processQueue(refreshError);
+
+        // Refresh ล้มเหลว -> redirect ไป login
+        window.location.href = "/auth/sign-in";
+        return Promise.reject(refreshError);
+      }
+    }
+
+    // กรณีอื่นๆ ที่ไม่ใช่ 401
     if (status === 401) {
       window.location.href = "/auth/sign-in";
-      return;
     }
+
     return Promise.reject(err);
   }
 );
