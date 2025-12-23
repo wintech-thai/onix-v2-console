@@ -36,9 +36,9 @@ export const useScanItemsTemplateTableColumns =
               table.getIsAllPageRowsSelected() ||
               (table.getIsSomePageRowsSelected() && "indeterminate")
             }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
+            // onCheckedChange={(value) =>
+            //   table.toggleAllPageRowsSelected(!!value)
+            // }
             aria-label="Select all"
           />
         ),
