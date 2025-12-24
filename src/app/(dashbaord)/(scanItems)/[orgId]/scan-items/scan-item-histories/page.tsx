@@ -1,7 +1,7 @@
-import { CommingSoon } from "@/components/ui/comming-soon";
+import ScanItemHistoryViewPage from "@/modules/scan-items/scan-items-history/view/scan-items-history.view";
 
 const ScanItemHistory = () => {
-  return <CommingSoon />
-}
+  return <ScanItemHistoryViewPage />;
+};
 
 export default ScanItemHistory;

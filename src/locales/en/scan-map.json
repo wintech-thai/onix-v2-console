@@ -1,0 +1,32 @@
+{
+  "title": "Scan Map",
+  "analytics": "Analytics",
+  "locations": "locations",
+  "tooltip": {
+    "product": "Product",
+    "email": "Email",
+    "province": "Province",
+    "country": "Country",
+    "notAvailable": "N/A"
+  },
+  "aggregations": {
+    "product": {
+      "title": "Product",
+      "name": "Name",
+      "count": "Count",
+      "noData": "No data"
+    },
+    "province": {
+      "title": "Province",
+      "name": "Name",
+      "count": "Count",
+      "noData": "No data"
+    },
+    "email": {
+      "title": "Email",
+      "address": "Address",
+      "count": "Count",
+      "noData": "No data"
+    }
+  }
+}
