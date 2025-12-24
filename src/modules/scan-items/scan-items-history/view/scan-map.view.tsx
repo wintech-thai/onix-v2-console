@@ -50,7 +50,10 @@ const ScanMapView = () => {
     searchValue: searchValue || undefined,
   });
 
-  const mapData = fetchScanMapData.data?.mapData || [];
+  const mapData = useMemo(
+    () => fetchScanMapData.data?.mapData || [],
+    [fetchScanMapData.data?.mapData]
+  );
   const aggregations = fetchScanMapData.data?.aggregations;
 
   // Generate color palette for products
