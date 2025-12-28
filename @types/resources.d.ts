@@ -1330,6 +1330,12 @@ interface Resources {
     }
   },
   "scan-items-history": {
+    "chart": {
+      "loading": "Loading chart...",
+      "noData": "No scan activity in this period",
+      "scans": "Scans",
+      "title": "Scan Activity Timeline"
+    },
     "filter": {
       "dateRange": "Date Range",
       "search": "Search",

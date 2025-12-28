@@ -18,5 +18,11 @@
     "search": "Search",
     "dateRange": "Date Range"
   },
+  "chart": {
+    "title": "Scan Activity Timeline",
+    "scans": "Scans",
+    "noData": "No scan activity in this period",
+    "loading": "Loading chart..."
+  },
   "noData": "No data available"
 }

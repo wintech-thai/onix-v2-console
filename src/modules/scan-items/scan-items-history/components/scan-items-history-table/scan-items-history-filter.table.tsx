@@ -151,8 +151,7 @@ export const ScanItemsHistoryFilterTable = ({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              variant="outline"
-              className="w-full md:w-auto"
+              className="w-full md:w-auto bg-green-500 hover:bg-green-400 transition"
               type="button"
             >
               <BarChart3 className="size-4 mr-2" />

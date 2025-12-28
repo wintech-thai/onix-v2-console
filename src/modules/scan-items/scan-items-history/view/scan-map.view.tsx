@@ -34,7 +34,9 @@ const ScanMapView = () => {
   const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [queryState] = useQueryStates({
-    dateFrom: parseAsString.withDefault(dayjs().startOf("day").toISOString()),
+    dateFrom: parseAsString.withDefault(
+      dayjs().startOf("day").subtract(30, "day").toISOString()
+    ),
     dateTo: parseAsString.withDefault(dayjs().endOf("day").toISOString()),
     searchField: parseAsString.withDefault(""),
     searchValue: parseAsString.withDefault(""),

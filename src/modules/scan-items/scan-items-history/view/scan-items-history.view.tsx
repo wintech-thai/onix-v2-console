@@ -4,6 +4,8 @@ import {
   fetchScanItemsHistoryApi,
   IScanItemHistory,
 } from "../api/fetch-scan-items-history.api";
+import { fetchScanTimelineApi } from "../api/fetch-scan-timeline.api";
+import { ScanTimelineChart } from "../components/scan-timeline-chart";
 import { ScanItemsHistoryTable } from "../components/scan-items-history-table/scan-items-history.table";
 import { useScanItemHistoryTableColumns } from "../components/scan-items-history-table/scan-items-history-columns.table";
 import { ScanItemHistoryDetailDialog } from "../components/scan-items-history-detail-dialog";
@@ -38,7 +40,9 @@ const ScanItemHistoryViewPage = () => {
     limit: parseAsInteger.withDefault(50),
     searchField: parseAsString.withDefault("fullTextSearch"),
     searchValue: parseAsString.withDefault(""),
-    dateFrom: parseAsString.withDefault(dayjs().startOf("day").toISOString()),
+    dateFrom: parseAsString.withDefault(
+      dayjs().startOf("day").subtract(30, "day").toISOString()
+    ),
     dateTo: parseAsString.withDefault(dayjs().endOf("day").toISOString()),
   });
 
@@ -55,7 +59,6 @@ const ScanItemHistoryViewPage = () => {
     return undefined;
   }, [dateFrom, dateTo]);
 
-  // Fetch scan items history from API
   const fetchScanItemsHistory =
     fetchScanItemsHistoryApi.useFetchScanItemsHistory({
       orgId: params.orgId,
@@ -65,6 +68,37 @@ const ScanItemHistoryViewPage = () => {
       dateFrom,
       dateTo,
     });
+
+  // Fetch timeline data
+  const fetchScanTimeline = fetchScanTimelineApi.useFetchScanTimeline({
+    orgId: params.orgId,
+    dateFrom,
+    dateTo,
+    searchValue,
+  });
+
+  // Generate color palette for products
+  const productColors = useMemo(() => {
+    const timelineData = fetchScanTimeline.data?.data || [];
+    const uniqueProducts = new Set<string>();
+
+    timelineData.forEach((point) => {
+      Object.keys(point.productCounts).forEach((product) => {
+        uniqueProducts.add(product);
+      });
+    });
+
+    const products = Array.from(uniqueProducts).sort();
+    const colors: Record<string, string> = {};
+    const hueStep = 360 / Math.max(products.length, 1);
+
+    products.forEach((product, index) => {
+      const hue = (index * hueStep) % 360;
+      colors[product] = `hsl(${hue}, 70%, 50%)`;
+    });
+
+    return colors;
+  }, [fetchScanTimeline.data]);
 
   useEffect(() => {
     if (fetchScanItemsHistory.data?.items) {
@@ -129,6 +163,15 @@ const ScanItemHistoryViewPage = () => {
 
   return (
     <div className="h-full pt-4 px-4 space-y-4">
+      {/* Timeline Chart */}
+      <ScanTimelineChart
+        data={fetchScanTimeline.data?.data || []}
+        productColors={productColors}
+        isLoading={fetchScanTimeline.isLoading}
+        interval={fetchScanTimeline.data?.interval}
+      />
+
+      {/* Table */}
       <ScanItemsHistoryTable
         columns={scanItemHistoryTableColumns}
         data={data}
