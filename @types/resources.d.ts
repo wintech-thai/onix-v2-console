@@ -1329,6 +1329,34 @@ interface Resources {
       "total": "Total"
     }
   },
+  "scan-items-history": {
+    "chart": {
+      "loading": "Loading chart...",
+      "noData": "No scan activity in this period",
+      "scans": "Scans",
+      "title": "Scan Activity Timeline"
+    },
+    "filter": {
+      "dateRange": "Date Range",
+      "search": "Search",
+      "searchPlaceholder": "Enter search value",
+      "selectSearchField": "Select search field"
+    },
+    "noData": "No data available",
+    "scanMap": "Scan Map",
+    "table": {
+      "columns": {
+        "action": "Action",
+        "country": "Country",
+        "customerEmail": "Customer Email",
+        "folderName": "Folder Name",
+        "productCode": "Product Code",
+        "province": "Province",
+        "timestamp": "Timestamp"
+      }
+    },
+    "title": "Scan Items History"
+  },
   "scan-items-template": {
     "action": {
       "createScanItemJob": "Create Scan Item Job",
@@ -1413,6 +1441,38 @@ interface Resources {
       "loading": "Setting as default...",
       "success": "Successfully set as default template",
       "title": "Set as Default"
+    }
+  },
+  "scan-map": {
+    "aggregations": {
+      "email": {
+        "address": "Address",
+        "count": "Count",
+        "noData": "No data",
+        "title": "Email"
+      },
+      "product": {
+        "count": "Count",
+        "name": "Name",
+        "noData": "No data",
+        "title": "Product"
+      },
+      "province": {
+        "count": "Count",
+        "name": "Name",
+        "noData": "No data",
+        "title": "Province"
+      }
+    },
+    "analytics": "Analytics",
+    "locations": "locations",
+    "title": "Scan Map",
+    "tooltip": {
+      "country": "Country",
+      "email": "Email",
+      "notAvailable": "N/A",
+      "product": "Product",
+      "province": "Province"
     }
   },
   "user": {

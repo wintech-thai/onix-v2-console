@@ -1,0 +1,28 @@
+{
+  "title": "Scan Items History",
+  "scanMap": "Scan Map",
+  "table": {
+    "columns": {
+      "timestamp": "Timestamp",
+      "customerEmail": "Customer Email",
+      "productCode": "Product Code",
+      "folderName": "Folder Name",
+      "country": "Country",
+      "province": "Province",
+      "action": "Action"
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Enter search value",
+    "selectSearchField": "Select search field",
+    "search": "Search",
+    "dateRange": "Date Range"
+  },
+  "chart": {
+    "title": "Scan Activity Timeline",
+    "scans": "Scans",
+    "noData": "No scan activity in this period",
+    "loading": "Loading chart..."
+  },
+  "noData": "No data available"
+}

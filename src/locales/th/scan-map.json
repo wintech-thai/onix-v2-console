@@ -1,0 +1,32 @@
+{
+  "title": "แผนที่การสแกน",
+  "analytics": "วิเคราะห์",
+  "locations": "ตำแหน่ง",
+  "tooltip": {
+    "product": "สินค้า",
+    "email": "อีเมล",
+    "province": "จังหวัด",
+    "country": "ประเทศ",
+    "notAvailable": "ไม่มีข้อมูล"
+  },
+  "aggregations": {
+    "product": {
+      "title": "สินค้า",
+      "name": "ชื่อ",
+      "count": "จำนวน",
+      "noData": "ไม่มีข้อมูล"
+    },
+    "province": {
+      "title": "จังหวัด",
+      "name": "ชื่อ",
+      "count": "จำนวน",
+      "noData": "ไม่มีข้อมูล"
+    },
+    "email": {
+      "title": "อีเมล",
+      "address": "ที่อยู่",
+      "count": "จำนวน",
+      "noData": "ไม่มีข้อมูล"
+    }
+  }
+}

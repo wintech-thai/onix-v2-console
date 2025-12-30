@@ -13,6 +13,8 @@ export type i18nKeys =
   | "scan-items-action"
   | "scan-items-template"
   | "scan-items-folder"
+  | "scan-map"
+  | "scan-items-history"
   | "cronjob"
   | "user"
   | "customer"
@@ -24,7 +26,7 @@ export type i18nKeys =
   | "point-rule"
   | "point-trigger"
   | "privileges"
-  | "voucher";
+  | "voucher"
 export const i18nNamespaces: i18nKeys[] = [
   "common",
   "product",
@@ -34,6 +36,8 @@ export const i18nNamespaces: i18nKeys[] = [
   "scan-items-template",
   "scan-items-folder",
   "scan-items-action",
+  "scan-map",
+  "scan-items-history",
   "cronjob",
   "user",
   "customer",
@@ -45,7 +49,7 @@ export const i18nNamespaces: i18nKeys[] = [
   "point-rule",
   "point-trigger",
   "privileges",
-  "voucher"
+  "voucher",
 ];
 
 export default async function initTranslations(

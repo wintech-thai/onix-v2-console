@@ -1,0 +1,28 @@
+{
+  "title": "ประวัติการสแกน",
+  "scanMap": "แผนที่การสแกน",
+  "table": {
+    "columns": {
+      "timestamp": "เวลา",
+      "customerEmail": "อีเมลลูกค้า",
+      "productCode": "รหัสสินค้า",
+      "folderName": "ชื่อโฟลเดอร์",
+      "country": "ประเทศ",
+      "province": "จังหวัด",
+      "action": "การดำเนินการ"
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "ใส่คำค้นหา",
+    "selectSearchField": "เลือกฟิลด์ค้นหา",
+    "search": "ค้นหา",
+    "dateRange": "ช่วงวันที่"
+  },
+  "chart": {
+    "title": "กราฟกิจกรรมการสแกน",
+    "scans": "จำนวนการสแกน",
+    "noData": "ไม่มีกิจกรรมการสแกนในช่วงเวลานี้",
+    "loading": "กำลังโหลดกราฟ..."
+  },
+  "noData": "ไม่มีข้อมูล"
+}
