@@ -944,6 +944,28 @@ interface Resources {
       "tagsRequired": "At least one tag is required"
     }
   },
+  "role-permissions": {
+    "columns": {
+      "action": "Action",
+      "description": "Description",
+      "roleName": "Role Name",
+      "tags": "Tags"
+    },
+    "delete": {
+      "error": "Failed to delete role permissions",
+      "message": "Are you sure you want to delete the selected role permissions?",
+      "success": "Role permissions deleted successfully",
+      "title": "Delete Role Permissions"
+    },
+    "filter": {
+      "delete": "Delete",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search role permissions...",
+      "selectSearchField": "Select search field"
+    },
+    "title": "Role Permissions"
+  },
   "scan-item": {
     "actions": {
       "bindToCustomer": "Bind to Customer",

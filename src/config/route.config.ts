@@ -79,6 +79,9 @@ export const RouteConfig = {
     },
   },
   ADMIN: {
+    ROLE_PERMISSIONS: {
+      LIST: (orgId: string) => `/${orgId}/admin/role-permissions`,
+    },
     APIKEY: {
       LIST: (orgId: string) => `/${orgId}/admin/apikeys`,
       CREATE: (orgId: string) => `/${orgId}/admin/apikeys/create`,

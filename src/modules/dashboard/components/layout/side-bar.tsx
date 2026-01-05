@@ -12,7 +12,8 @@ import {
   UserCogIcon,
   ChevronRight,
   ChevronDown,
-  GiftIcon, QrCodeIcon
+  GiftIcon,
+  QrCodeIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -47,7 +48,8 @@ type SidebarKeys =
   | "sidebar.admin.label"
   | "sidebar.admin.sub.1"
   | "sidebar.admin.sub.2"
-  | "sidebar.admin.sub.3";
+  | "sidebar.admin.sub.3"
+  | "sidebar.admin.sub.4";
 
 type ChildItem = {
   labelKey: SidebarKeys;
@@ -118,25 +120,25 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
         children: [
           {
             labelKey: "sidebar.scanItems.sub.1",
-            href: RouteConfig.SCAN_ITEMS.ACTION.LIST(params.orgId)
+            href: RouteConfig.SCAN_ITEMS.ACTION.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.scanItems.sub.2",
-            href: RouteConfig.SCAN_ITEMS.TEMPLATE.LIST(params.orgId)
+            href: RouteConfig.SCAN_ITEMS.TEMPLATE.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.scanItems.sub.3",
-            href: RouteConfig.SCAN_ITEMS.FOLDER.LIST(params.orgId)
+            href: RouteConfig.SCAN_ITEMS.FOLDER.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.scanItems.sub.4",
-            href: RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId)
+            href: RouteConfig.SCAN_ITEMS.ITEM.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.scanItems.sub.5",
-            href: RouteConfig.SCAN_ITEMS.HISTORY.LIST(params.orgId)
+            href: RouteConfig.SCAN_ITEMS.HISTORY.LIST(params.orgId),
           },
-        ]
+        ],
       },
       {
         key: "loyalty",
@@ -172,10 +174,14 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
         children: [
           {
             labelKey: "sidebar.admin.sub.1",
-            href: RouteConfig.ADMIN.APIKEY.LIST(params.orgId),
+            href: RouteConfig.ADMIN.ROLE_PERMISSIONS.LIST(params.orgId),
           },
           {
             labelKey: "sidebar.admin.sub.2",
+            href: RouteConfig.ADMIN.APIKEY.LIST(params.orgId),
+          },
+          {
+            labelKey: "sidebar.admin.sub.3",
             href: RouteConfig.ADMIN.USER.LIST(params.orgId),
           },
           {
@@ -273,9 +279,12 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
               const Icon = m.icon;
               const active = isParentActive(m);
               // Only use openParents state, and auto-open if child is active and nothing is manually opened
-              const hasManuallyOpenedMenu = Object.values(openParents).some(v => v === true);
+              const hasManuallyOpenedMenu = Object.values(openParents).some(
+                (v) => v === true
+              );
               const parentOpen = expanded
-                ? (openParents[m.key] ?? (!hasManuallyOpenedMenu && activeParents[m.key]))
+                ? openParents[m.key] ??
+                  (!hasManuallyOpenedMenu && activeParents[m.key])
                 : false;
 
               const ParentButton = (
@@ -284,8 +293,7 @@ export function Sidebar({ expanded, setExpanded, isMobile = false }: Props) {
                   onClick={() => {
                     if (!expanded) {
                       setExpanded(true);
-                      if (m.children?.length)
-                        setOpenParents({ [m.key]: true });
+                      if (m.children?.length) setOpenParents({ [m.key]: true });
                       return;
                     }
                     if (m.children?.length) toggleParent(m.key);
