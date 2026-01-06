@@ -98,7 +98,7 @@ export const PermissionsTree = ({
   }
 
   return (
-    <div className="space-y-0 overflow-y-auto border rounded-lg p-4 relative">
+    <div className="space-y-0 border rounded-lg p-4 relative">
       {filteredPermissions.map((controller, filteredIndex) => {
         // Find the original index in the permissions array
         const originalIndex = permissions.findIndex(
