@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -13,6 +13,10 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useTranslation } from "react-i18next";
+import { useParams } from "next/navigation";
+import { RouteConfig } from "@/config/route.config";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface RolePermissionsFilterProps {
   onDelete: () => void;
@@ -28,6 +32,7 @@ export const RolePermissionsFilter = ({
   selected,
 }: RolePermissionsFilterProps) => {
   const { t } = useTranslation("role-permissions");
+  const params = useParams<{ orgId: string }>();
 
   const [queryState] = useQueryStates({
     searchField: parseAsString.withDefault("fullTextSearch"),
@@ -113,6 +118,12 @@ export const RolePermissionsFilter = ({
           md:flex md:items-center
         "
       >
+        <Link
+          className={cn(buttonVariants({ variant: "default" }))}
+          href={RouteConfig.ADMIN.ROLE_PERMISSIONS.CREATE(params.orgId)}
+        >
+          {t("filter.add")}
+        </Link>
         <Button
           className="w-full md:w-auto"
           disabled={isDisabled}

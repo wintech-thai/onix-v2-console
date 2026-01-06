@@ -108,6 +108,10 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
       header: t("columns.status"),
     },
     {
+      accessorKey: "customRoleName",
+      header: t("columns.customRoleName"),
+    },
+    {
       id: "actions",
       header: t("columns.action"),
       cell: ({ row }) => {

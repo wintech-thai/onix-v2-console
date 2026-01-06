@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
+import Link from "next/link";
+import { RouteConfig } from "@/config/route.config";
 
 export const useRolePermissionsTableColumns =
   (): ColumnDef<IRolePermissions>[] => {
@@ -42,9 +44,15 @@ export const useRolePermissionsTableColumns =
         header: t("columns.roleName"),
         cell: ({ row }) => {
           return (
-            <div className="max-w-[300px] truncate">
-              {row.getValue("roleName") || "-"}
-            </div>
+            <Link
+              className="text-primary hover:underline"
+              href={RouteConfig.ADMIN.ROLE_PERMISSIONS.UPDATE(
+                row.original.orgId,
+                row.original.roleId
+              )}
+            >
+              {row.original.roleName}
+            </Link>
           );
         },
       },

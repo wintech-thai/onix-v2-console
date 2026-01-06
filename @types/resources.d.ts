@@ -7,6 +7,7 @@ interface Resources {
     },
     "columns": {
       "action": "Action",
+      "customRoleName": "Custom Role",
       "keyDescription": "Description",
       "keyName": "Key Name",
       "rolesList": "Roles",
@@ -49,8 +50,13 @@ interface Resources {
       },
       "createTitle": "Create API Key",
       "keyInformation": {
+        "customRole": "Custom Role",
         "keyDescription": "Key Description",
         "keyName": "Key Name",
+        "noCustomRole": "No custom role",
+        "noRoleFound": "No role found",
+        "searchCustomRole": "Search custom role...",
+        "selectCustomRole": "Select a custom role",
         "title": "API Key Information"
       },
       "keyRoles": {
@@ -255,9 +261,10 @@ interface Resources {
       "admin": {
         "label": "Administration",
         "sub": {
-          "1": "API Keys",
-          "2": "Users",
-          "3": "Audit Log"
+          "1": "Custom Role",
+          "2": "API Keys",
+          "3": "Users",
+          "4": "Audit Log"
         }
       },
       "dashboard": {
@@ -951,6 +958,10 @@ interface Resources {
       "roleName": "Role Name",
       "tags": "Tags"
     },
+    "create": {
+      "error": "Failed to create role permission",
+      "success": "Role permission created successfully"
+    },
     "delete": {
       "error": "Failed to delete role permissions",
       "message": "Are you sure you want to delete the selected role permissions?",
@@ -958,13 +969,38 @@ interface Resources {
       "title": "Delete Role Permissions"
     },
     "filter": {
+      "add": "Add",
       "delete": "Delete",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
       "searchPlaceholder": "Search role permissions...",
       "selectSearchField": "Select search field"
     },
-    "title": "Role Permissions"
+    "form": {
+      "cancel": "Cancel",
+      "createTitle": "Create Role Permission",
+      "leavePage": "Leave Page?",
+      "permissions": "Permissions",
+      "roleDescription": "Description",
+      "roleInformation": "Role Information",
+      "roleName": "Role Name",
+      "save": "Save",
+      "searchPermissions": "Search permissions...",
+      "tags": "Tags",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update Role Permission",
+      "validation": {
+        "roleDescriptionRequired": "Description is required",
+        "roleNameRequired": "Role name is required",
+        "tagsRequired": "Tags are required"
+      }
+    },
+    "title": "Role Permissions",
+    "update": {
+      "error": "Failed to update role permission",
+      "notFound": "Role permission not found",
+      "success": "Role permission updated successfully"
+    }
   },
   "scan-item": {
     "actions": {

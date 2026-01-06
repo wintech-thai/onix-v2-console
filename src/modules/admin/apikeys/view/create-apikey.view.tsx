@@ -36,7 +36,7 @@ const CreateApiKeyView = () => {
           }
 
           return toast.error(data.description || t("messages.createError"));
-        }
+        },
       }
     );
   };
@@ -49,6 +49,9 @@ const CreateApiKeyView = () => {
           keyName: "",
           keyDescription: "",
           roles: [],
+          customRoleDesc: null,
+          customRoleId: null,
+          customRoleName: null,
         }}
         isUpdate={false}
         onSubmit={onSubmit}

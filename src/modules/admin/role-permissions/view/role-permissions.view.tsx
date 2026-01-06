@@ -11,18 +11,25 @@ import { useState, useMemo, useEffect } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   useGetCustomRoles,
   useGetCustomRoleCount,
+  useDeleteCustomRoleById,
 } from "../hooks/role-permissions-hooks";
-import { IRolePermissions } from "../api/role-permissions.service";
+import {
+  IRolePermissions,
+  getCustomRoles,
+} from "../api/role-permissions.service";
 
 const RolePermissionsViewPage = () => {
   const { t } = useTranslation(["role-permissions", "common"]);
   const params = useParams<{ orgId: string }>();
+  const queryClient = useQueryClient();
   const [data, setData] = useState<IRolePermissions[]>([]);
   const [hasLoadedBefore, setHasLoadedBefore] = useState(false);
   const [isPageOrLimitChanging, setIsPageOrLimitChanging] = useState(false);
+
   const [DeleteConfirmationDialog, confirmDelete] = useConfirm({
     title: t("delete.title"),
     message: t("delete.message"),
@@ -30,6 +37,7 @@ const RolePermissionsViewPage = () => {
   });
 
   const rolePermissionsTableColumns = useRolePermissionsTableColumns();
+  const deleteCustomRole = useDeleteCustomRoleById();
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -104,8 +112,53 @@ const RolePermissionsViewPage = () => {
     const ok = await confirmDelete();
     if (!ok) return;
 
-    // TODO: Implement delete functionality
-    toast.info("Delete functionality not implemented yet");
+    const idsToDelete = rows.map((row) => row.original.roleId);
+
+    if (idsToDelete.length === 0) {
+      return;
+    }
+
+    const toastId = toast.loading(t("common:delete.loading"));
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    // Delete one by one to prevent race condition and rate limit
+    for (const id of idsToDelete) {
+      try {
+        await deleteCustomRole.mutateAsync({
+          params: {
+            id: id,
+            orgId: params.orgId,
+          },
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+        console.error("Failed to delete role:", error);
+      }
+    }
+
+    toast.dismiss(toastId);
+
+    const totalCount = idsToDelete.length;
+
+    if (successCount > 0) {
+      toast.success(
+        `${t("delete.success", "Success")} (${successCount}/${totalCount})`
+      );
+    }
+    if (errorCount > 0) {
+      toast.error(
+        `${t("delete.error", "Error")} (${errorCount}/${totalCount})`
+      );
+    }
+
+    await queryClient.invalidateQueries({
+      queryKey: getCustomRoles.key,
+      refetchType: "active",
+    });
+
     callback();
   };
 

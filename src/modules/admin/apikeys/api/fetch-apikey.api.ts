@@ -13,6 +13,9 @@ export interface IApiKey {
   keyStatus: string;
   rolesList: string;
   roles: string[];
+  customRoleId: string | null;
+  customRoleName: string | null;
+  customRoleDesc: string | null;
 }
 
 export type FetchApiKeyResponse = IApiKey[];

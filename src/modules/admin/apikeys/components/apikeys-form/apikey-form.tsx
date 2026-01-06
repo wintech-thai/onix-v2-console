@@ -8,7 +8,10 @@ import {
   Loader,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { fetchUserRoleApi, IUserRole } from "../../../user/api/fetch-user-role.api";
+import {
+  fetchUserRoleApi,
+  IUserRole,
+} from "../../../user/api/fetch-user-role.api";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -126,7 +129,7 @@ export const ApiKeyForm = ({
 
   if (userRole.isError) {
     if (userRole.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetRoles" />
+      return <NoPermissionsPage apiName="GetRoles" />;
     }
 
     throw new Error(userRole.error.message);

@@ -73,7 +73,7 @@ const UpdateApiKeyView = () => {
           }
 
           return toast.error(data.description || t("messages.updateError"));
-        }
+        },
       }
     );
   };
@@ -84,6 +84,9 @@ const UpdateApiKeyView = () => {
         keyName: apiKeyPayload.keyName || "",
         keyDescription: apiKeyPayload.keyDescription || "",
         roles: apiKeyPayload.roles ?? [],
+        customRoleDesc: apiKeyPayload.customRoleDesc || null,
+        customRoleId: apiKeyPayload.customRoleId || null,
+        customRoleName: apiKeyPayload.customRoleName || null,
       }}
       isUpdate
       onSubmit={handleUpdateApiKey}
