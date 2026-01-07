@@ -20,7 +20,10 @@
   "actions": {
     "pointTransaction": "Point Transaction",
     "verifyEmail": "Update & Verify Email",
-    "updateEmail": "Update Email"
+    "updateEmail": "Update Email",
+    "sendCreationEmail": "Send Creation Email",
+    "enableUser": "Enable User",
+    "disableUser": "Disable User"
   },
   "delete": {
     "title": "Delete Customer",
@@ -78,5 +81,26 @@
     "updateError": "Update Error",
     "verifySuccess": "send email to {{email}}",
     "verifyError": "Verify Error"
+  },
+  "sendEmail": {
+    "title": "Send Creation Email",
+    "message": "Are you sure you want to send creation email to this customer?",
+    "loading": "Sending email...",
+    "success": "Email sent successfully",
+    "error": "Failed to send email"
+  },
+  "enable": {
+    "title": "Enable Customer User",
+    "message": "Are you sure you want to enable this customer user?",
+    "loading": "Enabling user...",
+    "success": "User enabled successfully",
+    "error": "Failed to enable user"
+  },
+  "disable": {
+    "title": "Disable Customer User",
+    "message": "Are you sure you want to disable this customer user?",
+    "loading": "Disabling user...",
+    "success": "User disabled successfully",
+    "error": "Failed to disable user"
   }
 }

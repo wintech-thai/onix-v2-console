@@ -31,7 +31,7 @@ const UpdateUserView = () => {
 
   if (getUser.error) {
     if (getUser.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetUserById" />
+      return <NoPermissionsPage apiName="GetUserById" />;
     }
     throw new Error(getUser.error.message);
   }
@@ -78,7 +78,10 @@ const UpdateUserView = () => {
         roles: userPayload.roles ?? [],
         tmpUserEmail: userPayload.tmpUserEmail ?? "",
         userName: userPayload.userName,
-        tags: userPayload.tags ?? ""
+        tags: userPayload.tags ?? "",
+        customRoleDesc: userPayload.customRoleDesc ?? "",
+        customRoleName: userPayload.customRoleName ?? "",
+        customRoleId: userPayload.customRoleId ?? "",
       }}
       isUpdate
       onSubmit={handleUpdateUser}

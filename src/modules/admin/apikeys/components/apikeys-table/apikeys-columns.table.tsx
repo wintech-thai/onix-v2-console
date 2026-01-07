@@ -80,6 +80,13 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
       },
     },
     {
+      accessorKey: "customRoleName",
+      header: t("columns.customRoleName"),
+      cell: ({ row }) => {
+        return row.original.customRoleName || "-";
+      },
+    },
+    {
       accessorKey: "rolesList",
       header: t("columns.rolesList"),
       cell: ({ row }) => {
@@ -106,10 +113,6 @@ export const useApiKeyTableColumns = (): ApiKeyTableColumns[] => {
     {
       accessorKey: "keyStatus",
       header: t("columns.status"),
-    },
-    {
-      accessorKey: "customRoleName",
-      header: t("columns.customRoleName"),
     },
     {
       id: "actions",

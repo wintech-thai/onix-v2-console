@@ -49,14 +49,16 @@ interface Resources {
         "update": "Update API Key"
       },
       "createTitle": "Create API Key",
+      "customRole": {
+        "noResults": "No custom role found.",
+        "placeholder": "Select custom role...",
+        "search": "Search custom role...",
+        "selectRole": "Select Custom Role",
+        "title": "Custom Role"
+      },
       "keyInformation": {
-        "customRole": "Custom Role",
         "keyDescription": "Key Description",
         "keyName": "Key Name",
-        "noCustomRole": "No custom role",
-        "noRoleFound": "No role found",
-        "searchCustomRole": "Search custom role...",
-        "selectCustomRole": "Select a custom role",
         "title": "API Key Information"
       },
       "keyRoles": {
@@ -384,7 +386,10 @@ interface Resources {
   },
   "customer": {
     "actions": {
+      "disableUser": "Disable User",
+      "enableUser": "Enable User",
       "pointTransaction": "Point Transaction",
+      "sendCreationEmail": "Send Creation Email",
       "updateEmail": "Update Email",
       "verifyEmail": "Update & Verify Email"
     },
@@ -414,6 +419,20 @@ interface Resources {
       "message": "Are you sure you want to delete this customer?",
       "success": "Deleted customer successfully",
       "title": "Delete Customer"
+    },
+    "disable": {
+      "error": "Failed to disable user",
+      "loading": "Disabling user...",
+      "message": "Are you sure you want to disable this customer user?",
+      "success": "User disabled successfully",
+      "title": "Disable Customer User"
+    },
+    "enable": {
+      "error": "Failed to enable user",
+      "loading": "Enabling user...",
+      "message": "Are you sure you want to enable this customer user?",
+      "success": "User enabled successfully",
+      "title": "Enable Customer User"
     },
     "filter": {
       "add": "ADD",
@@ -457,6 +476,13 @@ interface Resources {
       "verifyEmailTitle": "Verify Customer Email",
       "verifyError": "Verify Error",
       "verifySuccess": "send email to {{email}}"
+    },
+    "sendEmail": {
+      "error": "Failed to send email",
+      "loading": "Sending email...",
+      "message": "Are you sure you want to send creation email to this customer?",
+      "success": "Email sent successfully",
+      "title": "Send Creation Email"
     },
     "update": {
       "error": "Update Error",
@@ -969,8 +995,8 @@ interface Resources {
       "title": "Delete Role Permissions"
     },
     "filter": {
-      "add": "Add",
-      "delete": "Delete",
+      "add": "ADD",
+      "delete": "DELETE",
       "fullTextSearch": "Full Text Search",
       "search": "Search",
       "searchPlaceholder": "Search role permissions...",
@@ -1541,6 +1567,7 @@ interface Resources {
     },
     "columns": {
       "action": "Action",
+      "customRoleName": "Custom Role",
       "email": "Email",
       "isOrgInitialUser": "Initial User",
       "role": "Role",
@@ -1585,6 +1612,13 @@ interface Resources {
         "update": "Update User"
       },
       "createTitle": "Create User",
+      "customRole": {
+        "noResults": "No custom role found.",
+        "placeholder": "Select custom role...",
+        "search": "Search custom role...",
+        "selectRole": "Select Custom Role",
+        "title": "Custom Role"
+      },
       "leavePage": "Leave Page",
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
       "updateTitle": "Update User",

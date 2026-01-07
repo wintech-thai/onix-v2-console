@@ -5,6 +5,9 @@ export const userSchema = z.object({
   tmpUserEmail: z.string().email("form.validation.emailInvalid"),
   roles: z.array(z.string()).min(1, "form.validation.rolesRequired"),
   tags: z.string().min(1),
+  customRoleId: z.string().nullable().optional(),
+  customRoleName: z.string().nullable().optional(),
+  customRoleDesc: z.string().nullable().optional(),
 });
 
 export type UserSchemaType = z.infer<typeof userSchema>;

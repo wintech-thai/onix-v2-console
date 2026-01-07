@@ -2,6 +2,7 @@
   "columns": {
     "username": "Username",
     "email": "Email",
+    "customRoleName": "Custom Role",
     "role": "Role",
     "tags": "Tags",
     "isOrgInitialUser": "Initial User",
@@ -52,6 +53,13 @@
       "userEmail": "Email",
       "tags": "Tags",
       "tagsPlaceholder": "Press Enter to add tag"
+    },
+    "customRole": {
+      "title": "Custom Role",
+      "selectRole": "Select Custom Role",
+      "placeholder": "Select custom role...",
+      "search": "Search custom role...",
+      "noResults": "No custom role found."
     },
     "userRoles": {
       "title": "User Roles",

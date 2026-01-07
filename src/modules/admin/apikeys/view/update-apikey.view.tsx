@@ -49,11 +49,7 @@ const UpdateApiKeyView = () => {
       {
         orgId: params.orgId,
         apiKeyId: params.apikeyId,
-        values: {
-          keyName: values.keyName,
-          keyDescription: values.keyDescription,
-          roles: values.roles,
-        },
+        values: values,
       },
       {
         onSuccess: async ({ data }) => {
