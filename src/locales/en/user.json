@@ -62,7 +62,7 @@
       "noResults": "No custom role found."
     },
     "userRoles": {
-      "title": "User Roles",
+      "title": "System Roles",
       "availableRoles": "Available Roles",
       "selectedRoles": "Selected Roles",
       "noAvailable": "No available roles",
@@ -79,7 +79,8 @@
       "userNameRequired": "Username is required",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
-      "rolesRequired": "At least one role is required"
+      "rolesRequired": "At least one role is required",
+      "tagsRequired": "At least one tag is required"
     }
   },
   "messages": {

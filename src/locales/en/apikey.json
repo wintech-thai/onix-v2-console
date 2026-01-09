@@ -58,7 +58,7 @@
       "noResults": "No custom role found."
     },
     "keyRoles": {
-      "title": "API Key Roles",
+      "title": "System Roles",
       "availableRoles": "Available Roles",
       "selectedRoles": "Selected Roles",
       "noAvailable": "No available roles",

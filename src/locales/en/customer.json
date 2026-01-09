@@ -3,6 +3,7 @@
     "code": "Code",
     "name": "Name",
     "primaryEmail": "Email",
+    "userStatus": "User Status",
     "totalPoint": "Total Point",
     "tags": "Tags",
     "action": "Action"
@@ -85,8 +86,8 @@
   "sendEmail": {
     "title": "Send Creation Email",
     "message": "Are you sure you want to send creation email to this customer?",
-    "loading": "Sending email...",
-    "success": "Email sent successfully",
+    "loading": "Sending email to {{email}}...",
+    "success": "Send email to {{email}} successfully",
     "error": "Failed to send email"
   },
   "enable": {

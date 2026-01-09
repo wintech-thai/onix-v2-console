@@ -66,7 +66,7 @@ interface Resources {
         "noAvailable": "No available roles",
         "noSelected": "No selected roles",
         "selectedRoles": "Selected Roles",
-        "title": "API Key Roles"
+        "title": "System Roles"
       },
       "leavePage": "Leave Page",
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
@@ -408,7 +408,8 @@ interface Resources {
       "name": "Name",
       "primaryEmail": "Email",
       "tags": "Tags",
-      "totalPoint": "Total Point"
+      "totalPoint": "Total Point",
+      "userStatus": "User Status"
     },
     "create": {
       "error": "Create Error",
@@ -479,9 +480,9 @@ interface Resources {
     },
     "sendEmail": {
       "error": "Failed to send email",
-      "loading": "Sending email...",
+      "loading": "Sending email to {{email}}...",
       "message": "Are you sure you want to send creation email to this customer?",
-      "success": "Email sent successfully",
+      "success": "Send email to {{email}} successfully",
       "title": "Send Creation Email"
     },
     "update": {
@@ -1634,12 +1635,13 @@ interface Resources {
         "noAvailable": "No available roles",
         "noSelected": "No selected roles",
         "selectedRoles": "Selected Roles",
-        "title": "User Roles"
+        "title": "System Roles"
       },
       "validation": {
         "emailInvalid": "Invalid email format",
         "emailRequired": "Email is required",
         "rolesRequired": "At least one role is required",
+        "tagsRequired": "At least one tag is required",
         "userNameRequired": "Username is required"
       }
     },

@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -96,6 +97,10 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
       },
     },
     {
+      accessorKey: "userStatus",
+      header: t("columns.userStatus"),
+    },
+    {
       accessorKey: "totalPoint",
       header: t("columns.totalPoint"),
       cell: ({ row }) => {
@@ -174,7 +179,11 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
           const ok = await confirmSendEmail();
           if (!ok) return;
 
-          const toastId = toast.loading(t("sendEmail.loading"));
+          const toastId = toast.loading(
+            t("sendEmail.loading", {
+              email: row.original.primaryEmail,
+            })
+          );
 
           try {
             await sendEmailMutation.mutateAsync(
@@ -185,7 +194,12 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
                     return toast.error(data.description, { id: toastId });
                   }
 
-                  toast.success(t("sendEmail.success"), { id: toastId });
+                  toast.success(
+                    t("sendEmail.success", {
+                      email: row.original.primaryEmail,
+                    }),
+                    { id: toastId }
+                  );
                   queryClient.invalidateQueries({
                     queryKey: fetchCustomerApi.key,
                   });
@@ -300,6 +314,7 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
                 <DropdownMenuItem onClick={() => handleOpenModal("update")}>
                   {t("actions.updateEmail")}
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSendCreationEmail}>
                   {t("actions.sendCreationEmail")}
                 </DropdownMenuItem>
