@@ -5,10 +5,10 @@ import { fetchProductsApi, IProduct } from "../api/fetch-products.api";
 import { ProductTable } from "../components/product-table/product.table";
 import { getProductTableColumns } from "../components/product-table/product-columns.table";
 import {
-    useQueryStates,
-    parseAsInteger,
-    parseAsString,
-    useQueryState,
+  useQueryStates,
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
 } from "nuqs";
 import { Row } from "@tanstack/react-table";
 import { deleteProductApi } from "../api/delete-product.api";
@@ -235,14 +235,14 @@ const ProductView = () => {
 
   if (fetchProducts.isError) {
     if (fetchProducts.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetItems" />;
+      return <NoPermissionsPage errors={fetchProducts.error} />;
     }
     throw new Error(fetchProducts.error.message);
   }
 
   if (fetchProductsCount.isError) {
     if (fetchProductsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetItemCount" />;
+      return <NoPermissionsPage errors={fetchProductsCount.error} />;
     }
     throw new Error(fetchProductsCount.error.message);
   }

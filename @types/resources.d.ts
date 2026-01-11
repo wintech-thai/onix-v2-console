@@ -246,6 +246,7 @@ interface Resources {
     },
     "noPermissions": {
       "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error.",
+      "genericTitle": "No Permission to Access This Resource",
       "title": "No Permission to Access API {{apiName}}"
     },
     "not-found": {
@@ -389,7 +390,7 @@ interface Resources {
       "disableUser": "Disable User",
       "enableUser": "Enable User",
       "pointTransaction": "Point Transaction",
-      "sendCreationEmail": "Send Creation Email",
+      "sendCreationEmail": "Create User",
       "updateEmail": "Update Email",
       "verifyEmail": "Update & Verify Email"
     },

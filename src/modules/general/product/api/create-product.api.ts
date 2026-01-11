@@ -60,7 +60,7 @@ export const createProductApi = {
       }) => {
         return await api.post<CreateProductResponse>(`/api/Item/org/${orgId}/action/AddItem`, params)
       },
-      onError: useErrorToast("AddItem"),
+      onError: useErrorToast(),
     })
   }
 }

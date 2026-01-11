@@ -86,19 +86,22 @@ const PrivilegesViewPage = () => {
 
   if (fetchPrivileges.isError) {
     if (fetchPrivileges.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPrivileges" />;
+      return <NoPermissionsPage errors={fetchPrivileges.error} />;
     }
     throw new Error(fetchPrivileges.error.message);
   }
 
   if (fetchPrivilegesCount.isError) {
     if (fetchPrivilegesCount.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPrivilegeCount" />;
+      return <NoPermissionsPage errors={fetchPrivilegesCount.error} />;
     }
     throw new Error(fetchPrivilegesCount.error.message);
   }
 
-  const handleDelete = async (rows: Row<IPrivileges>[], callback: () => void) => {
+  const handleDelete = async (
+    rows: Row<IPrivileges>[],
+    callback: () => void
+  ) => {
     const ok = await confirmDelete();
     if (!ok) return;
 
@@ -180,7 +183,10 @@ const PrivilegesViewPage = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchPrivileges.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchPrivileges.isLoading && !hasLoadedBefore) ||
+          isPageOrLimitChanging
+        }
       />
     </div>
   );

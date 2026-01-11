@@ -30,7 +30,7 @@ const CreateCronJobView = () => {
 
   if (getDefaultValue.isError) {
     if (getDefaultValue.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobDefault/ScanItemGenerator" />;
+      return <NoPermissionsPage errors={getDefaultValue.error} />;
     }
     throw new Error(getDefaultValue.error.message);
   }

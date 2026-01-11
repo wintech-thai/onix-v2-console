@@ -18,7 +18,7 @@ export const disableApiKeyApi = {
       }) => {
         return api.post<DisableApiKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/DisableApiKeyById/${params.apiKeyId}`)
       },
-      onError: useErrorToast("DisableApiKeyById"),
+      onError: useErrorToast(),
     })
   }
 }

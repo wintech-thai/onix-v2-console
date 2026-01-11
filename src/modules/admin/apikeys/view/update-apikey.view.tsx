@@ -32,7 +32,7 @@ const UpdateApiKeyView = () => {
 
   if (getApiKey.isError) {
     if (getApiKey.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetApiKeyById" />;
+      return <NoPermissionsPage errors={getApiKey.error} />;
     }
 
     throw new Error(getApiKey.error.message);

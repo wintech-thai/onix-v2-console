@@ -71,7 +71,7 @@ export function createMutationHook<TResponse, TRequest, TParams>(
 
     return useMutation({
       mutationFn: ({ params, data }) => service.mutate(params, data),
-      onError: useErrorToast(service.apiName),
+      onError: useErrorToast(),
       onSuccess: async (data, variables, onMutateResult, context) => {
         if (config?.invalidates) {
           const invalidateConfigs =

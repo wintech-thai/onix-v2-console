@@ -18,7 +18,7 @@ export const enableCustomerUserApi = {
       }) => {
         return api.post<EnableCustomerUserResponse>(`/api/Customer/org/${params.orgId}/action/EnableCustomerUserById/${params.entityId}`)
       },
-      onError: useErrorToast("EnableCustomerUserById"),
+      onError: useErrorToast(),
     })
   }
 }

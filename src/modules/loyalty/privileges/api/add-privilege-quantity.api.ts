@@ -32,7 +32,7 @@ export const addPrivilegeQuantityApi = {
           params.body
         );
       },
-      onError: useErrorToast("AddPrivilegeQuantity"),
+      onError: useErrorToast(),
     });
   },
 };

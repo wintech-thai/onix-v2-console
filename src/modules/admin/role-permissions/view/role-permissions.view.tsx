@@ -93,14 +93,14 @@ const RolePermissionsViewPage = () => {
 
   if (fetchCustomRoles.isError) {
     if (fetchCustomRoles.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomRoles" />;
+      return <NoPermissionsPage errors={fetchCustomRoles.error} />;
     }
     throw new Error(fetchCustomRoles.error.message);
   }
 
   if (fetchCustomRoleCount.isError) {
     if (fetchCustomRoleCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomRoleCount" />;
+      return <NoPermissionsPage errors={fetchCustomRoleCount.error} />;
     }
     throw new Error(fetchCustomRoleCount.error.message);
   }

@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { ScanItem } from "./get-scan-items";
+import { useErrorToast } from "@/lib/utils";
 
 export interface GetScanItemURLDryRunResponse {
   status: string;
@@ -16,6 +17,7 @@ export const getScanItemUrlDryRunApi = {
       mutationFn: async (params: { orgId: string; scanItemId: string }) => {
         return api.get<GetScanItemURLDryRunResponse>(`/api/ScanItem/org/${params.orgId}/action/GetScanItemUrlDryRunById/${params.scanItemId}`);
       },
+      onError: useErrorToast(),
     });
   },
 };

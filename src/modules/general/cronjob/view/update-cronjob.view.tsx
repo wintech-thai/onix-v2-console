@@ -20,7 +20,7 @@ const UpdateCronJobView = () => {
 
   if (getCronJob.error) {
     if (getCronJob.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobById" />
+      return <NoPermissionsPage errors={getCronJob.error} />;
     }
     throw new Error(getCronJob.error.message);
   }

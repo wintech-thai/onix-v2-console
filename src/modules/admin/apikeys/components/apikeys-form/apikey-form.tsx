@@ -164,7 +164,7 @@ export const ApiKeyForm = ({
 
   if (userRole.isError) {
     if (userRole.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetRoles" />;
+      return <NoPermissionsPage errors={userRole.error} />;
     }
 
     throw new Error(userRole.error.message);

@@ -25,7 +25,7 @@ export const updateWalletApi = {
           params.params
         );
       },
-      onError: useErrorToast("UpdateWalletById")
+      onError: useErrorToast()
     });
   },
 };

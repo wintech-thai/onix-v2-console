@@ -73,14 +73,14 @@ const PointTriggersView = () => {
 
   if (fetchPointTriggers.isError) {
     if (fetchPointTriggers.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointTriggers" />;
+      return <NoPermissionsPage errors={fetchPointTriggers.error} />;
     }
     throw new Error(fetchPointTriggers.error.message);
   }
 
   if (fetchPointTriggersCount.isError) {
     if (fetchPointTriggersCount.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointTriggerCount" />;
+      return <NoPermissionsPage errors={fetchPointTriggersCount.error} />;
     }
     throw new Error(fetchPointTriggersCount.error.message);
   }

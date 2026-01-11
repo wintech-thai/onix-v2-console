@@ -28,7 +28,7 @@ export const createPointsApi = {
           params.params
         );
       },
-      onError: useErrorToast("AddPoint"),
+      onError: useErrorToast(),
     });
   },
 };

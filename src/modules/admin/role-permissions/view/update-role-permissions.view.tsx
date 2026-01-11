@@ -36,7 +36,7 @@ const UpdateRolePermissionsViewPage = () => {
 
   if (getCustomRole.isError) {
     if (getCustomRole.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomRoleById" />;
+      return <NoPermissionsPage errors={getCustomRole.error} />;
     }
     throw new Error(getCustomRole.error.message);
   }

@@ -41,6 +41,7 @@
   },
   "noPermissions": {
     "title": "No Permission to Access API {{apiName}}",
+    "genericTitle": "No Permission to Access This Resource",
     "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error."
   },
   "navbar": {

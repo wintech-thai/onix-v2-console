@@ -17,7 +17,7 @@ export const detachScanItemToCustomerApi = {
           `/api/ScanItem/org/${params.orgId}/action/DetachScanItemFromCustomer/${params.scanItemId}`
         );
       },
-      onError: useErrorToast("DetachScanItemFromCustomer"),
+      onError: useErrorToast(),
     });
   },
 };

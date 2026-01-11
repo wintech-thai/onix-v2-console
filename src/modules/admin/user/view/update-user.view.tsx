@@ -31,7 +31,7 @@ const UpdateUserView = () => {
 
   if (getUser.error) {
     if (getUser.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetUserById" />;
+      return <NoPermissionsPage errors={getUser.error} />;
     }
     throw new Error(getUser.error.message);
   }

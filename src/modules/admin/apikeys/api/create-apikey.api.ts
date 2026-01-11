@@ -28,7 +28,7 @@ export const createApiKeyApi = {
           params.values
         );
       },
-      onError: useErrorToast("AddApiKey"),
+      onError: useErrorToast(),
     });
   },
 };

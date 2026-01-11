@@ -19,7 +19,7 @@ export const getWalletByCustomerIdApi = {
           `/api/Point/org/${params.orgId}/action/GetWalletByCustomerId/${params.customerId}`
         );
       },
-      onError: useErrorToast("GetWalletByCustomerId"),
+      onError: useErrorToast(),
     });
   },
 };

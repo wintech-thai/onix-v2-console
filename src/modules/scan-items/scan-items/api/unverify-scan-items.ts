@@ -17,7 +17,7 @@ export const unVerifyScanItemsApi = {
     return useMutation({
       mutationKey: [...unVerifyScanItemsApi.deleteScanItemsKey, orgId],
       mutationFn: (id: string) => unVerifyScanItemsApi.unVerifyScanItemFunc(orgId, id),
-      onError: useErrorToast("UnVerifyScanItemById"),
+      onError: useErrorToast(),
     });
   }
 }

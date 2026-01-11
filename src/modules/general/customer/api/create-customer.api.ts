@@ -19,7 +19,7 @@ export const createCustomerApi = {
       }) => {
         return api.post(`/api/Customer/org/${params.orgId}/action/AddCustomer`, params.values)
       },
-      onError: useErrorToast("AddCustomer"),
+      onError: useErrorToast(),
     })
   }
 }

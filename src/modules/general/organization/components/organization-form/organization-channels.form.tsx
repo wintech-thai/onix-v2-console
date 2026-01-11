@@ -29,7 +29,9 @@ interface OrganizationChannelsFormProps {
   isViewMode: boolean;
 }
 
-export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFormProps) => {
+export const OrganizationChannelsForm = ({
+  isViewMode,
+}: OrganizationChannelsFormProps) => {
   const { t } = useTranslation("organization");
   const params = useParams<{ orgId: string }>();
   const form = useFormContext<OrganizationSchemaType>();
@@ -42,7 +44,8 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
   const [leftChecked, setLeftChecked] = useState<Set<string>>(new Set());
   const [rightChecked, setRightChecked] = useState<Set<string>>(new Set());
 
-  const fetchChannelNamesQuery = getAllowChannelNamesApi.useGetAllowChannelNames(params);
+  const fetchChannelNamesQuery =
+    getAllowChannelNamesApi.useGetAllowChannelNames(params);
 
   // Initialize available and selected channels from API
   useEffect(() => {
@@ -79,8 +82,8 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
       leftChecked.has(channel.name)
     );
 
-    const newSelected = [...selectedChannels, ...channelsToMove].sort(
-      (a, b) => a.name.localeCompare(b.name)
+    const newSelected = [...selectedChannels, ...channelsToMove].sort((a, b) =>
+      a.name.localeCompare(b.name)
     );
 
     setSelectedChannels(newSelected);
@@ -103,8 +106,8 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
         )?.value || "",
     }));
 
-    const newAvailable = [...availableChannels, ...resetChannels].sort(
-      (a, b) => a.name.localeCompare(b.name)
+    const newAvailable = [...availableChannels, ...resetChannels].sort((a, b) =>
+      a.name.localeCompare(b.name)
     );
 
     setAvailableChannels(newAvailable);
@@ -172,9 +175,7 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
   if (fetchChannelNamesQuery.isLoading) {
     return (
       <div className="p-4 md:p-6 border rounded-lg">
-        <header className="text-lg font-bold">
-          {t("channels.title")}
-        </header>
+        <header className="text-lg font-bold">{t("channels.title")}</header>
         <div className="mt-4 text-center text-muted-foreground">
           {t("channels.loading")}
         </div>
@@ -184,7 +185,7 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
 
   if (fetchChannelNamesQuery.isError) {
     if (fetchChannelNamesQuery.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetAllowChannelNames" />;
+      return <NoPermissionsPage errors={fetchChannelNamesQuery.error} />;
     }
 
     throw new Error(fetchChannelNamesQuery.error.message);
@@ -192,9 +193,7 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">
-        {t("channels.title")}
-      </header>
+      <header className="text-lg font-bold">{t("channels.title")}</header>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
         {/* Left Panel - Available Channels */}
@@ -234,7 +233,10 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
                       <Checkbox
                         checked={leftChecked.has(channel.name)}
                         onCheckedChange={(checked) =>
-                          handleLeftCheckboxChange(channel.name, checked as boolean)
+                          handleLeftCheckboxChange(
+                            channel.name,
+                            checked as boolean
+                          )
                         }
                         disabled={isViewMode || isSubmitting}
                       />
@@ -307,7 +309,10 @@ export const OrganizationChannelsForm = ({ isViewMode }: OrganizationChannelsFor
                       <Checkbox
                         checked={rightChecked.has(channel.name)}
                         onCheckedChange={(checked) =>
-                          handleRightCheckboxChange(channel.name, checked as boolean)
+                          handleRightCheckboxChange(
+                            channel.name,
+                            checked as boolean
+                          )
                         }
                         disabled={isViewMode || isSubmitting}
                       />

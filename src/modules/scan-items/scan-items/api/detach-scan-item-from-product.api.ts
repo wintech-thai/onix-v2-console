@@ -19,7 +19,7 @@ export const detachScanItemFromProductApi = {
       }) => {
         return api.post<DetachScanItemFromProductResponse>(`/api/ScanItem/org/${params.orgId}/action/DetachScanItemFromProduct/${params.scanItemId}`)
       },
-      onError: useErrorToast("DetachScanItemFromProduct")
+      onError: useErrorToast()
     })
   }
 }

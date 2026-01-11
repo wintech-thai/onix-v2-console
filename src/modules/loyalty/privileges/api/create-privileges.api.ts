@@ -14,7 +14,7 @@ export const createPrivilegesApi = {
           params.values
         );
       },
-      onError: useErrorToast("AddPrivilege"),
+      onError: useErrorToast(),
     });
   },
 };

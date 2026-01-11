@@ -1,7 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { fetchScanItemsTemplatesApi, IScanItemTemplate } from "../api/fetch-scan-items-templates.api";
+import {
+  fetchScanItemsTemplatesApi,
+  IScanItemTemplate,
+} from "../api/fetch-scan-items-templates.api";
 import { ScanItemsTemplateTable } from "../components/scan-items-template-table/scan-items-template.table";
 import { useScanItemsTemplateTableColumns } from "../components/scan-items-template-table/scan-items-template-columns.table";
 import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
@@ -30,7 +33,8 @@ const ScanItemTemplateViewPage = () => {
 
   const scanItemsTemplateTableColumns = useScanItemsTemplateTableColumns();
 
-  const deleteScanItemsTemplate = deleteScanItemsTemplatesApi.useDeleteScanItemsTemplates();
+  const deleteScanItemsTemplate =
+    deleteScanItemsTemplatesApi.useDeleteScanItemsTemplates();
 
   // Use nuqs to persist state in URL
   const [queryState, setQueryState] = useQueryStates({
@@ -52,16 +56,17 @@ const ScanItemTemplateViewPage = () => {
   );
 
   // Fetch scan items templates from API
-  const fetchScanItemsTemplates = fetchScanItemsTemplatesApi.useFetchScanItemsTemplates({
-    orgId: params.orgId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-    },
-  });
+  const fetchScanItemsTemplates =
+    fetchScanItemsTemplatesApi.useFetchScanItemsTemplates({
+      orgId: params.orgId,
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+        fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+      },
+    });
 
   useEffect(() => {
     if (fetchScanItemsTemplates.data?.data) {
@@ -71,32 +76,36 @@ const ScanItemTemplateViewPage = () => {
     }
   }, [fetchScanItemsTemplates.data]);
 
-  const fetchScanItemsTemplatesCount = fetchScanItemsTemplatesApi.useFetchScanItemsTemplatesCount({
-    orgId: params.orgId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-    },
-  });
+  const fetchScanItemsTemplatesCount =
+    fetchScanItemsTemplatesApi.useFetchScanItemsTemplatesCount({
+      orgId: params.orgId,
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+        fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+      },
+    });
 
   if (fetchScanItemsTemplates.isError) {
     if (fetchScanItemsTemplates.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemTemplates" />
+      return <NoPermissionsPage errors={fetchScanItemsTemplates.error} />;
     }
     throw new Error(fetchScanItemsTemplates.error.message);
   }
 
   if (fetchScanItemsTemplatesCount.isError) {
     if (fetchScanItemsTemplatesCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemTemplateCount" />
+      return <NoPermissionsPage errors={fetchScanItemsTemplatesCount.error} />;
     }
     throw new Error(fetchScanItemsTemplatesCount.error.message);
   }
 
-  const handleDelete = async (rows: Row<IScanItemTemplate>[], callback: () => void) => {
+  const handleDelete = async (
+    rows: Row<IScanItemTemplate>[],
+    callback: () => void
+  ) => {
     const ok = await confirmDelete();
     if (!ok) return;
 
@@ -135,9 +144,7 @@ const ScanItemTemplateViewPage = () => {
       );
     }
     if (errorCount > 0) {
-      toast.error(
-        `${t("action.delete.error")} (${errorCount}/${totalCount})`
-      );
+      toast.error(`${t("action.delete.error")} (${errorCount}/${totalCount})`);
     }
 
     await queryClient.invalidateQueries({
@@ -178,11 +185,13 @@ const ScanItemTemplateViewPage = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchScanItemsTemplates.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchScanItemsTemplates.isLoading && !hasLoadedBefore) ||
+          isPageOrLimitChanging
+        }
       />
     </div>
   );
 };
 
 export default ScanItemTemplateViewPage;
-

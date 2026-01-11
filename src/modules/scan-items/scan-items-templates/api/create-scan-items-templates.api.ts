@@ -17,7 +17,7 @@ export const createScanItemsTemplatesApi = {
           params.values
         );
       },
-      onError: useErrorToast("AddScanItemTemplate"),
+      onError: useErrorToast(),
     });
   },
 };

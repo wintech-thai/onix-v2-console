@@ -32,7 +32,7 @@ export const createScanItemTemplateJobApi = {
           params.data
         );
       },
-      onError: useErrorToast("CreateJobScanItemGeneratorWithTemplate"),
+      onError: useErrorToast(),
     });
   },
 };

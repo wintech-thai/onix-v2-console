@@ -208,9 +208,7 @@ export const ProductPropertiesForm = () => {
   if (fetchProductPropertiesQuery.isLoading) {
     return (
       <div className="p-4 md:p-6 border">
-        <header className="text-lg font-bold">
-          {t("properties.title")}
-        </header>
+        <header className="text-lg font-bold">{t("properties.title")}</header>
         <div className="mt-4 text-center text-muted-foreground">
           {t("properties.loading")}
         </div>
@@ -220,17 +218,15 @@ export const ProductPropertiesForm = () => {
 
   if (fetchProductPropertiesQuery.isError) {
     if (fetchProductPropertiesQuery.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetAllowItemPropertyNames" />;
+      return <NoPermissionsPage errors={fetchProductPropertiesQuery.error} />;
     }
 
-    throw new Error(fetchProductPropertiesQuery.error.message)
+    throw new Error(fetchProductPropertiesQuery.error.message);
   }
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">
-        {t("properties.title")}
-      </header>
+      <header className="text-lg font-bold">{t("properties.title")}</header>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
         {/* Left Panel - Available Properties */}

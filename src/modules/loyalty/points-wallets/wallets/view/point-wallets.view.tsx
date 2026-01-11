@@ -132,14 +132,14 @@ const PointWalletsViewPage = () => {
 
   if (fetchWallets.isError) {
     if (fetchWallets.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetWallets" />;
+      return <NoPermissionsPage errors={fetchWallets.error} />;
     }
     throw new Error(fetchWallets.error.message);
   }
 
   if (fetchWalletsCount.isError) {
     if (fetchWalletsCount.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetWalletsCount" />;
+      return <NoPermissionsPage errors={fetchWalletsCount.error} />;
     }
     throw new Error(fetchWalletsCount.error.message);
   }

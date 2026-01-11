@@ -18,7 +18,7 @@ export const disableCustomerUserApi = {
       }) => {
         return api.post<DisableCustomerUserResponse>(`/api/Customer/org/${params.orgId}/action/DisableCustomerUserById/${params.entityId}`)
       },
-      onError: useErrorToast("DisableCustomerUserById"),
+      onError: useErrorToast(),
     })
   }
 }

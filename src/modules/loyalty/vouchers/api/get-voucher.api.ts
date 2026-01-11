@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { IVoucher } from "./fetch-vouchers.api";
+import { useErrorToast } from "@/lib/utils";
 
 export interface GetVoucherResponse {
   status: string;
@@ -37,6 +38,7 @@ export const getVoucherApi = {
           `/api/Voucher/org/${params.orgId}/action/GetVoucherById/${params.voucherId}`
         );
       },
+      onError: useErrorToast(),
     });
   },
 };

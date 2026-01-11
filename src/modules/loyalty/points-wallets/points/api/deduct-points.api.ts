@@ -28,7 +28,7 @@ export const deductPointsApi = {
           params.params
         );
       },
-      onError: useErrorToast("DeductPoint"),
+      onError: useErrorToast(),
     });
   },
 };

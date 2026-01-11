@@ -17,7 +17,7 @@ export const disabledPointRuleApi = {
           `/api/PointRule/org/${params.orgId}/action/UpdatePointRuleStatusByIdDisable/${params.pointRuleId}`
         );
       },
-      onError: useErrorToast("UpdatePointRuleStatusByIdDisable"),
+      onError: useErrorToast(),
     });
   },
 };

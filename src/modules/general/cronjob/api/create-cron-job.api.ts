@@ -28,7 +28,7 @@ export const createCronJobApi = {
       }) => {
         return api.post<CreateCronJobResponse>(`/api/Job/org/${params.orgId}/action/CreateJobScanItemGenerator`, params.data)
       },
-      onError: useErrorToast("CreateJobScanItemGenerator"),
+      onError: useErrorToast(),
     })
   }
 }

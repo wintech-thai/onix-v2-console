@@ -18,7 +18,7 @@ export const sendCustomerUserCreationEmailApi = {
       }) => {
         return api.post<SendCustomerUserCreationEmailResponse>(`/api/Customer/org/${params.orgId}/action/SendCustomerUserCreationEmail/${params.entityId}`)
       },
-      onError: useErrorToast("SendCustomerUserCreationEmail"),
+      onError: useErrorToast(),
     })
   }
 }

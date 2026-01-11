@@ -17,7 +17,7 @@ export const deleteVoucherApi = {
           `/api/Voucher/org/${params.orgId}/action/DeleteVoucherById/${params.voucherId}`
         );
       },
-      onError: useErrorToast("DeleteVoucherById"),
+      onError: useErrorToast(),
     });
   },
 };

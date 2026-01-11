@@ -21,7 +21,7 @@ export const deleteProductApi = {
       }) => {
         return api.delete<DeleteProductResponse>(`/api/Item/org/${orgId}/action/DeleteItemCascadeById/${productId}`)
       },
-      onError: useErrorToast("DeleteItemCascadeById"),
+      onError: useErrorToast(),
     })
   }
 }

@@ -17,7 +17,7 @@ export const deleteScanItemsApi = {
     return useMutation({
       mutationKey: [...deleteScanItemsApi.deleteScanItemsKey, orgId],
       mutationFn: (id: string) => deleteScanItemsApi.deleteScanItemsFunc(orgId, id),
-      onError: useErrorToast("DeleteScanItemById"),
+      onError: useErrorToast(),
     });
   }
 }

@@ -1,7 +1,10 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { fetchCronJobApi, IJob } from "../../api/scan-item-template-job/fetch-scan-item-template-job.api";
+import {
+  fetchCronJobApi,
+  IJob,
+} from "../../api/scan-item-template-job/fetch-scan-item-template-job.api";
 import { ScanItemTemplateJobTable } from "../../components/scan-item-template-job-table/scan-item-template-job.table";
 import { useScanItemTemplateJobTableColumns } from "../../components/scan-item-template-job-table/scan-item-template-job-columns.table";
 import { useQueryStates, parseAsInteger, parseAsString } from "nuqs";
@@ -46,10 +49,12 @@ const ScanItemTemplateJobViewPage = () => {
   const { page, limit, searchField, searchValue } = queryState;
 
   // Get scan item template info
-  const getScanItemTemplate = getScanItemsTemplatesApi.useGetScanItemsTemplates({
-    orgId: params.orgId,
-    scanItemTemplateId: params.scanItemTemplateId,
-  });
+  const getScanItemTemplate = getScanItemsTemplatesApi.useGetScanItemsTemplates(
+    {
+      orgId: params.orgId,
+      scanItemTemplateId: params.scanItemTemplateId,
+    }
+  );
 
   // Memoize dates to prevent infinite refetch loop
   const dateRange = useMemo(
@@ -61,19 +66,20 @@ const ScanItemTemplateJobViewPage = () => {
   );
 
   // Fetch scan item template jobs from API
-  const fetchScanItemTemplateJobs = fetchCronJobApi.useFetchScanItemTemplateJob.useQuery({
-    orgId: params.orgId,
-    scanItemTemplateId: params.scanItemTemplateId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-      jobType: "",
+  const fetchScanItemTemplateJobs =
+    fetchCronJobApi.useFetchScanItemTemplateJob.useQuery({
+      orgId: params.orgId,
       scanItemTemplateId: params.scanItemTemplateId,
-    },
-  });
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+        fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+        jobType: "",
+        scanItemTemplateId: params.scanItemTemplateId,
+      },
+    });
 
   useEffect(() => {
     if (fetchScanItemTemplateJobs.data?.data) {
@@ -83,37 +89,40 @@ const ScanItemTemplateJobViewPage = () => {
     }
   }, [fetchScanItemTemplateJobs.data]);
 
-  const fetchScanItemTemplateJobsCount = fetchCronJobApi.useFetchScanItemTemplateJobCount.useQuery({
-    orgId: params.orgId,
-    scanItemTemplateId: params.scanItemTemplateId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-      jobType: "",
+  const fetchScanItemTemplateJobsCount =
+    fetchCronJobApi.useFetchScanItemTemplateJobCount.useQuery({
+      orgId: params.orgId,
       scanItemTemplateId: params.scanItemTemplateId,
-    },
-  });
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+        fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+        jobType: "",
+        scanItemTemplateId: params.scanItemTemplateId,
+      },
+    });
 
   if (getScanItemTemplate.isError) {
     if (getScanItemTemplate.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemTemplateById" />
+      return <NoPermissionsPage errors={getScanItemTemplate.error} />;
     }
     throw new Error(getScanItemTemplate.error.message);
   }
 
   if (fetchScanItemTemplateJobs.isError) {
     if (fetchScanItemTemplateJobs.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemJobsByTemplateId" />
+      return <NoPermissionsPage errors={fetchScanItemTemplateJobs.error} />;
     }
     throw new Error(fetchScanItemTemplateJobs.error.message);
   }
 
   if (fetchScanItemTemplateJobsCount.isError) {
     if (fetchScanItemTemplateJobsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemJobCountByTemplateId" />
+      return (
+        <NoPermissionsPage errors={fetchScanItemTemplateJobsCount.error} />
+      );
     }
     throw new Error(fetchScanItemTemplateJobsCount.error.message);
   }
@@ -222,7 +231,10 @@ const ScanItemTemplateJobViewPage = () => {
           onPageChange={handlePageChange}
           onItemsPerPageChange={handleItemsPerPageChange}
           onSearch={handleSearch}
-          isLoading={(fetchScanItemTemplateJobs.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+          isLoading={
+            (fetchScanItemTemplateJobs.isLoading && !hasLoadedBefore) ||
+            isPageOrLimitChanging
+          }
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios"
 import { useMutation } from "@tanstack/react-query"
 import { ProductImageSchemaType } from "../schema/product-image.schema"
+import { useErrorToast } from "@/lib/utils"
 
 export const updateItemImageByItemImageIdApi = {
   key: "update-item-image-by-item-image-id",
@@ -13,7 +14,8 @@ export const updateItemImageByItemImageIdApi = {
         itemImageId: string
       }) => {
         return api.post(`/api/Item/org/${params.orgId}/action/UpdateItemImageByItemImageId/${params.itemImageId}`, params.value)
-      }
+      },
+      onError: useErrorToast(),
     })
   }
 }

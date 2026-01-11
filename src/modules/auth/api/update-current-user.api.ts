@@ -29,7 +29,7 @@ export const updateCurrentUserApi = {
         );
         return response.data;
       },
-      onError: useErrorToast("UpdateUserByUserName")
+      onError: useErrorToast()
     });
   },
 };

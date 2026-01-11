@@ -36,7 +36,7 @@ const UpdateProductView = () => {
 
   if (productQuery.isError) {
     if (productQuery.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetItemById" />
+      return <NoPermissionsPage errors={productQuery.error} />;
     }
     throw new Error(productQuery.error.message);
   }

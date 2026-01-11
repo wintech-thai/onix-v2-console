@@ -17,7 +17,7 @@ export const setDefaultScanItemsTemplatesApi = {
           `/api/ScanItemTemplate/org/${params.orgId}/action/SetDefaultScanItemTemplateById/${params.templateId}`
         );
       },
-      onError: useErrorToast("SetDefaultScanItemTemplateById")
+      onError: useErrorToast()
     });
   },
 };

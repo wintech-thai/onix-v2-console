@@ -80,14 +80,14 @@ const UserView = () => {
 
   if (fetchUsers.isError) {
     if (fetchUsers.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetUsers" />
+      return <NoPermissionsPage errors={fetchUsers.error} />;
     }
     throw new Error(fetchUsers.error.message);
   }
 
   if (fetchUsersCount.isError) {
     if (fetchUsersCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetUserCount" />
+      return <NoPermissionsPage errors={fetchUsersCount.error} />;
     }
     throw new Error(fetchUsersCount.error.message);
   }
@@ -175,7 +175,9 @@ const UserView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchUsers.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchUsers.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+        }
       />
     </div>
   );

@@ -126,14 +126,14 @@ const OverViewViewPage = () => {
 
   if (currentStats.isError) {
     if (currentStats.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobs" />;
+      return <NoPermissionsPage errors={currentStats.error} />;
     }
     throw new Error(currentStats.error.message);
   }
 
   if (getLimits.isError) {
     if (getLimits.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobCount" />;
+      return <NoPermissionsPage errors={getLimits.error} />;
     }
     throw new Error(getLimits.error.message);
   }

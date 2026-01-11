@@ -18,7 +18,7 @@ export const enableApiKeyApi = {
       }) => {
         return api.post<EnableApiKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/EnableApiKeyById/${params.apiKeyId}`)
       },
-      onError: useErrorToast("EnableApiKeyById"),
+      onError: useErrorToast(),
     })
   }
 }

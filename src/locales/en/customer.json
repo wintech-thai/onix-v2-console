@@ -22,7 +22,7 @@
     "pointTransaction": "Point Transaction",
     "verifyEmail": "Update & Verify Email",
     "updateEmail": "Update Email",
-    "sendCreationEmail": "Send Creation Email",
+    "sendCreationEmail": "Create User",
     "enableUser": "Enable User",
     "disableUser": "Disable User"
   },

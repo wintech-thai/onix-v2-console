@@ -17,7 +17,7 @@ export const deletePointRuleApi = {
           `/api/PointRule/org/${params.orgId}/action/DeletePointRuleById/${params.pointRuleId}`
         );
       },
-      onError: useErrorToast("DeletePointRuleById")
+      onError: useErrorToast()
     });
   },
 };

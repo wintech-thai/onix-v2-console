@@ -61,18 +61,18 @@ export const ResetPasswordModal = ({
         data: {
           currentPassword: data.currentPassword,
           newPassword: data.newPassword,
-        }
+        },
       });
     },
     onSuccess: async (data) => {
       if (data.data.status.toUpperCase() === "SUCCESS") {
         await authApi.logout.clearCookies();
         onClose();
-        router.push(RouteConfig.LOGIN)
+        router.push(RouteConfig.LOGIN);
         return;
       }
     },
-    onError: useErrorToast("UpdatePassword")
+    onError: useErrorToast(),
   });
 
   const handleSubmit = async (formData: ResetPasswordFormType) => {
@@ -132,7 +132,10 @@ export const ResetPasswordModal = ({
                 label={t("auth:currentPassword")}
                 type="password"
                 placeholder={t("auth:currentPassword")}
-                errorMessage={errorMessageAsLangKey(errors.currentPassword?.message, t)}
+                errorMessage={errorMessageAsLangKey(
+                  errors.currentPassword?.message,
+                  t
+                )}
                 maxLength={20}
               />
             )}
@@ -146,7 +149,10 @@ export const ResetPasswordModal = ({
                 label={t("auth:newPassword")}
                 type="password"
                 placeholder={t("auth:newPassword")}
-                errorMessage={errorMessageAsLangKey(errors.newPassword?.message, t)}
+                errorMessage={errorMessageAsLangKey(
+                  errors.newPassword?.message,
+                  t
+                )}
                 maxLength={20}
               />
             )}
@@ -160,7 +166,10 @@ export const ResetPasswordModal = ({
                 label={t("auth:confirmNewPassword")}
                 type="password"
                 placeholder={t("auth:confirmNewPassword")}
-                errorMessage={errorMessageAsLangKey(errors.confirmNewPassword?.message, t)}
+                errorMessage={errorMessageAsLangKey(
+                  errors.confirmNewPassword?.message,
+                  t
+                )}
                 maxLength={20}
               />
             )}
@@ -170,8 +179,12 @@ export const ResetPasswordModal = ({
             {updatePasswordError
               ? errorsPassword.map((err, idex) => {
                   return (
-                    <div key={idex} className="pl-4 text-sm text-destructive flex items-center gap-x-2">
-                      <div className="size-1 rounded-full bg-destructive" />{err}
+                    <div
+                      key={idex}
+                      className="pl-4 text-sm text-destructive flex items-center gap-x-2"
+                    >
+                      <div className="size-1 rounded-full bg-destructive" />
+                      {err}
                     </div>
                   );
                 })

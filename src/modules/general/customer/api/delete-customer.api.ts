@@ -18,7 +18,7 @@ export const deleteCustomerApi = {
       }) => {
         return api.delete<DeleteCustomerResponse>(`/api/Customer/org/${params.orgId}/action/DeleteCustomerCascadeById/${params.customerId}`);
       },
-      onError: useErrorToast("DeleteCustomerCascadeById"),
+      onError: useErrorToast(),
     })
   }
 }

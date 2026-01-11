@@ -22,7 +22,7 @@ export const createWalletApi = {
           params.params
         );
       },
-      onError: useErrorToast("AddWallet"),
+      onError: useErrorToast(),
     });
   },
 };

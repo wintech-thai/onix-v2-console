@@ -23,7 +23,7 @@ export const updateApiKeyApi = {
           params.values
         );
       },
-      onError: useErrorToast("UpdateApiKeyById"),
+      onError: useErrorToast(),
     });
   },
 };

@@ -27,7 +27,7 @@ export const updatePointsApi = {
           params.params
         );
       },
-      onError: useErrorToast("UpdatePointById"),
+      onError: useErrorToast(),
     });
   },
 };

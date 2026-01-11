@@ -14,6 +14,19 @@ async function ensureAccessToken(): Promise<string | null> {
 }
 
 async function proxy(req: Request, path: string[]) {
+  // 🔴 TEMPORARY: Force 403 for testing permission error handling
+  // TODO: Remove this after testing
+  // return new Response(
+  //   JSON.stringify({
+  //     code: "FORBIDDEN",
+  //     message: "You do not have permission to access this resource"
+  //   }),
+  //   {
+  //     status: 403,
+  //     headers: { "Content-Type": "application/json" }
+  //   }
+  // );
+
   // เอา AT จากคุกกี้ (ถ้าไม่มีจะได้ 401 กลับไป)
   const at = await ensureAccessToken();
   if (!at) {

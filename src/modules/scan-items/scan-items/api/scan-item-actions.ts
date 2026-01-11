@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ScanItemActionSchemaType } from "../schema/scan-item-action.schema";
+import { useErrorToast } from "@/lib/utils";
 
 export interface ScanItemAction {
   id: string;
@@ -56,7 +57,8 @@ export const scanItemActionApi = {
         mutationKey: [scanItemActionApi.getScanItemDefault.key],
         mutationFn: (orgId: string) => {
           return api.get<GetScanItemDefaultResponse>(`/api/ScanItemAction/org/${orgId}/action/GetScanItemActionDefault`)
-        }
+        },
+        onError: useErrorToast(),
       })
     }
   },
@@ -69,7 +71,8 @@ export const scanItemActionApi = {
         mutationFn: (params: AddScanItemActionMutationParams) => {
           const { value, orgId } = params;
           return api.post<AddScanItemActionResponse>(`/api/ScanItemAction/org/${orgId}/action/AddScanItemAction`, value)
-        }
+        },
+        onError: useErrorToast(),
       })
     }
   },
@@ -82,7 +85,8 @@ export const scanItemActionApi = {
         mutationFn: (params: UpdateScanItemActionMutationParams) => {
           const { value, orgId, itemId } = params;
           return api.post<AddScanItemActionResponse>(`/api/ScanItemAction/org/${orgId}/action/UpdateScanItemActionById/${itemId}`, value)
-        }
+        },
+        onError: useErrorToast(),
       })
     }
   }

@@ -12,7 +12,7 @@ export const deleteWalletApi = {
           `/api/Point/org/${params.orgId}/action/DeleteWalletById/${params.walletId}`
         );
       },
-      onError: useErrorToast("DeleteWalletById"),
+      onError: useErrorToast(),
     });
   },
 };
