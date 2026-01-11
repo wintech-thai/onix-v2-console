@@ -20,7 +20,7 @@ export const updateUserApi = {
       }) => {
         return api.post<UpdateUserResponse>(`/api/OrganizationUser/org/${params.orgId}/action/UpdateUserById/${params.userId}`, params.values)
       },
-      onError: useErrorToast("UpdateUserById"),
+      onError: useErrorToast(),
     })
   }
 }

@@ -21,7 +21,7 @@ export const getLogoImageUploadPresignedUrlApi = {
           `/api/Organization/org/${params.orgId}/action/GetLogoImageUploadPresignedUrl`
         );
       },
-      onError: useErrorToast("GetLogoImageUploadPresignedUrl")
+      onError: useErrorToast()
     });
   },
 };

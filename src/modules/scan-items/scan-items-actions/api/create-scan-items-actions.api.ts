@@ -17,7 +17,7 @@ export const createScanItemsActionsApi = {
           params.values
         );
       },
-      onError: useErrorToast("AddScanItemAction")
+      onError: useErrorToast()
     });
   },
 };

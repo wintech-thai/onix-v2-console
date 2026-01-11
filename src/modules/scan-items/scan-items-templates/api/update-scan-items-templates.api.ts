@@ -18,7 +18,7 @@ export const updateScanItemsTemplatesApi = {
           params.values
         );
       },
-      onError: useErrorToast("UpdateScanItemTemplateById"),
+      onError: useErrorToast(),
     });
   },
 };

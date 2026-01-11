@@ -20,7 +20,7 @@ export const updateCustomerApi = {
       }) => {
         return api.post<UpdateCustomerResponse>(`/api/Customer/org/${params.orgId}/action/UpdateCustomerById/${params.customerId}`, params.values)
       },
-      onError: useErrorToast("UpdateCustomerById"),
+      onError: useErrorToast(),
     })
   }
 }

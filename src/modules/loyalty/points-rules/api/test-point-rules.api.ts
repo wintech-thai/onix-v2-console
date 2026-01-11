@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface TestPointRulesResponse {
@@ -25,6 +26,7 @@ export const testPointRulesApi = {
           params.values
         );
       },
+      onError: useErrorToast(),
     });
   },
 };

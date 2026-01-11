@@ -15,7 +15,7 @@ export const updatePrivilegesApi = {
       }) => {
         return api.post(`/api/Privilege/org/${params.orgId}/action/UpdatePrivilegeById/${params.privilegeId}`, params.values)
       },
-      onError: useErrorToast("UpdatePrivilegeById")
+      onError: useErrorToast()
     })
   }
 }

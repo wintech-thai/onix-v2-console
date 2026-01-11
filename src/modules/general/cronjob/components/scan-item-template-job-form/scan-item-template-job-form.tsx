@@ -95,7 +95,7 @@ export const ScanItemTemplateJobForm = ({
   // Handle template error
   if (getScanItemTemplate.isError) {
     if (getScanItemTemplate.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemTemplateById" />;
+      return <NoPermissionsPage errors={getScanItemTemplate.error} />;
     }
     throw new Error(getScanItemTemplate.error.message);
   }

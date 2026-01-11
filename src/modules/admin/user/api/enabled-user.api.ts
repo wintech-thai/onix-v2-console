@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface EnabledUserResponse {
@@ -16,6 +17,7 @@ export const enabledUserApi = {
           `/api/OrganizationUser/org/${params.orgId}/action/EnableUserById/${params.userId}`
         );
       },
+      onError: useErrorToast(),
     });
   },
 };

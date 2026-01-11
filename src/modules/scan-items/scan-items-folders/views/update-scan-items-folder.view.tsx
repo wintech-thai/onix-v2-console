@@ -41,7 +41,7 @@ const UpdateScanItemsFolderViewPage = () => {
 
   if (getScanItemFolder.isError) {
     if (getScanItemFolder.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemFolderById" />;
+      return <NoPermissionsPage errors={getScanItemFolder.error} />;
     }
 
     throw new Error(getScanItemFolder.error.message);

@@ -105,14 +105,14 @@ const ScanItemsFolderViewPage = () => {
 
   if (fetchScanItemFolders.isError) {
     if (fetchScanItemFolders.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemFolders" />;
+      return <NoPermissionsPage errors={fetchScanItemFolders.error} />;
     }
     throw new Error(fetchScanItemFolders.error.message);
   }
 
   if (fetchScanItemFoldersCount.isError) {
     if (fetchScanItemFoldersCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemFolderCount" />;
+      return <NoPermissionsPage errors={fetchScanItemFoldersCount.error} />;
     }
     throw new Error(fetchScanItemFoldersCount.error.message);
   }

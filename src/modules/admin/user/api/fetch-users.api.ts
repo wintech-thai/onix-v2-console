@@ -19,7 +19,10 @@ export interface IUser {
   orgName: string | null;
   orgDesc: string | null;
   roles: string[];
-  tags: string | null
+  tags: string | null;
+  customRoleId: string | null;
+  customRoleName: string | null;
+  customRoleDesc: string | null;
 }
 
 export type FetchUsersResponse = IUser[];

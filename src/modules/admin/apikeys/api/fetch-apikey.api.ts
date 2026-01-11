@@ -6,13 +6,16 @@ export interface IApiKey {
   keyId: string;
   apiKey: string;
   orgId: string;
-  keyName: null;
+  keyName: string | null;
   keyCreatedDate: Date;
-  keyExpiredDate: null;
-  keyDescription: null;
+  keyExpiredDate: string | null;
+  keyDescription: string | null;
   keyStatus: string;
   rolesList: string;
   roles: string[];
+  customRoleId: string | null;
+  customRoleName: string | null;
+  customRoleDesc: string | null;
 }
 
 export type FetchApiKeyResponse = IApiKey[];

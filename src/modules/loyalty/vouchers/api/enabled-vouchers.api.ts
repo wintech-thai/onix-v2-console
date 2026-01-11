@@ -17,7 +17,7 @@ export const enabledVoucherApi = {
           `/api/Voucher/org/${params.orgId}/action/EnableVoucherById/${params.voucherId}`
         );
       },
-      onError: useErrorToast("EnableVoucherById"),
+      onError: useErrorToast(),
     });
   },
 };

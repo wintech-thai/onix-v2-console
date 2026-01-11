@@ -1,12 +1,7 @@
 import { api } from "@/lib/axios";
 import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
-
-export interface UpdateAPIKeyRequest {
-  keyName: string;
-  keyDescription: string;
-  roles: string[];
-}
+import { ApiKeySchemaType } from "../schema/apikey.schema";
 
 export interface UpdateAPIKeyResponse {
   status: string;
@@ -21,14 +16,14 @@ export const updateApiKeyApi = {
       mutationFn: (params: {
         orgId: string;
         apiKeyId: string;
-        values: UpdateAPIKeyRequest;
+        values: ApiKeySchemaType;
       }) => {
         return api.post<UpdateAPIKeyResponse>(
           `/api/ApiKey/org/${params.orgId}/action/UpdateApiKeyById/${params.apiKeyId}`,
           params.values
         );
       },
-      onError: useErrorToast("UpdateApiKeyById"),
+      onError: useErrorToast(),
     });
   },
 };

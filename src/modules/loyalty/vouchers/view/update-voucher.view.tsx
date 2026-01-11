@@ -22,13 +22,13 @@ const UpdateVoucherViewPage = () => {
 
   if (getVoucher.isError) {
     if (getVoucher.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetVoucherById" />;
+      return <NoPermissionsPage errors={getVoucher.error} />;
     }
 
     throw new Error(getVoucher.error.message);
   }
 
-  const voucherPayload = getVoucher.data?.data.voucher
+  const voucherPayload = getVoucher.data?.data.voucher;
 
   if (!voucherPayload) {
     throw new Error("Voucher Not Found");

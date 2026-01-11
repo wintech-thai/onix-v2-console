@@ -14,7 +14,7 @@ export const getScanItemActionsDefaultApi = {
           `/api/ScanItemAction/org/${params.orgId}/action/GetScanItemActionDefault`
         );
       },
-      onError: useErrorToast("GetScanItemActionDefault"),
+      onError: useErrorToast(),
     });
   },
 };

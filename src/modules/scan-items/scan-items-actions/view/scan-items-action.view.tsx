@@ -104,14 +104,14 @@ const ScanItemsActionViewPage = () => {
 
   if (fetchScanItemsActions.isError) {
     if (fetchScanItemsActions.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemActions" />;
+      return <NoPermissionsPage errors={fetchScanItemsActions.error} />;
     }
     throw new Error(fetchScanItemsActions.error.message);
   }
 
   if (fetchScanItemsActionsCount.isError) {
     if (fetchScanItemsActionsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemActionsCount" />;
+      return <NoPermissionsPage errors={fetchScanItemsActionsCount.error} />;
     }
     throw new Error(fetchScanItemsActionsCount.error.message);
   }

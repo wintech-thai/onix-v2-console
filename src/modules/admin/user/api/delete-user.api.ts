@@ -10,7 +10,7 @@ export const deleteUserApi = {
       mutationFn: (params: { orgId: string; userId: string }) => {
         return api.delete(`/api/OrganizationUser/org/${params.orgId}/action/DeleteUserById/${params.userId}`);
       },
-      onError: useErrorToast("DeleteUserById"),
+      onError: useErrorToast(),
     })
   }
 }

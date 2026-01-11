@@ -19,7 +19,7 @@ export const AttachScanItemToProductApi = {
       }) => {
         return api.post<AttachScanItemToProductResponse>(`/api/ScanItem/org/${params.orgId}/action/AttachScanItemToProduct/${params.scanItemId}/${params.productId}`)
       },
-      onError: useErrorToast("AttachScanItemToProduct"),
+      onError: useErrorToast(),
     })
   }
 }

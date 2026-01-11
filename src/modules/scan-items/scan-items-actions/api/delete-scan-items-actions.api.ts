@@ -17,7 +17,7 @@ export const deleteScanItemsActionsApi = {
           `/api/ScanItemAction/org/${params.orgId}/action/DeleteScanItemActionById/${params.scanItemsActionId}`
         );
       },
-      onError: useErrorToast("DeleteScanItemActionById"),
+      onError: useErrorToast(),
     });
   },
 };

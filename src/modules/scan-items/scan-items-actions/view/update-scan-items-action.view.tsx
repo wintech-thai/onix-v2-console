@@ -20,7 +20,8 @@ const UpdateScanItemsActionViewPage = () => {
     orgId: params.orgId,
     scanItemsActionId: params.scanItemsActionId,
   });
-  const updateScanItemActionMutation = updateScanItemsActionsApi.useUpdateScanItemsActions();
+  const updateScanItemActionMutation =
+    updateScanItemsActionsApi.useUpdateScanItemsActions();
 
   if (getScanItemAction.isLoading) {
     return (
@@ -32,7 +33,7 @@ const UpdateScanItemsActionViewPage = () => {
 
   if (getScanItemAction.error) {
     if (getScanItemAction.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemActionById" />
+      return <NoPermissionsPage errors={getScanItemAction.error} />;
     }
     throw new Error(getScanItemAction.error.message);
   }
@@ -43,7 +44,9 @@ const UpdateScanItemsActionViewPage = () => {
     throw new Error("Scan Item Action Not Found");
   }
 
-  const handleUpdateScanItemAction = async (values: ScanItemsActionsSchemaType) => {
+  const handleUpdateScanItemAction = async (
+    values: ScanItemsActionsSchemaType
+  ) => {
     await updateScanItemActionMutation.mutateAsync(
       {
         orgId: params.orgId,
@@ -67,7 +70,9 @@ const UpdateScanItemsActionViewPage = () => {
             return router.back();
           }
 
-          return toast.error(data.description || "Failed to update scan item action");
+          return toast.error(
+            data.description || "Failed to update scan item action"
+          );
         },
       }
     );

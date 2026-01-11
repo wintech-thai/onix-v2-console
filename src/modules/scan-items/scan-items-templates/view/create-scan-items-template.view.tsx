@@ -20,8 +20,8 @@ const CreateScanItemTemplateViewPage = () => {
       orgId: params.orgId,
     });
 
-  const createScanItemTemplateMutation = createScanItemsTemplatesApi.useCreateScanItemsTemplates();
-
+  const createScanItemTemplateMutation =
+    createScanItemsTemplatesApi.useCreateScanItemsTemplates();
 
   if (getScanItemDefaultTemplate.isLoading) {
     return (
@@ -33,14 +33,17 @@ const CreateScanItemTemplateViewPage = () => {
 
   if (getScanItemDefaultTemplate.isError) {
     if (getScanItemDefaultTemplate.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobDefault/ScanItemGenerator" />;
+      return <NoPermissionsPage errors={getScanItemDefaultTemplate.error} />;
     }
     throw new Error(getScanItemDefaultTemplate.error.message);
   }
 
   const getScanItemDefulatPayload = getScanItemDefaultTemplate.data?.data;
 
-  const onSubmit = async (values: ScanItemTemplateSchemaType, callback: () => void) => {
+  const onSubmit = async (
+    values: ScanItemTemplateSchemaType,
+    callback: () => void
+  ) => {
     await createScanItemTemplateMutation.mutateAsync(
       {
         orgId: params.orgId,

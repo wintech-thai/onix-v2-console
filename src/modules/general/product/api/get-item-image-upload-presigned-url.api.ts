@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface GetItemImageUploadPresignURLResponse {
@@ -18,6 +19,7 @@ export const getItemImageUploadPresignedUrlApi = {
       mutationFn: async (params: { orgId: string, productId: string }) => {
         return api.get<GetItemImageUploadPresignURLResponse>(`/api/Item/org/${params.orgId}/action/GetItemImageUploadPresignedUrl/${params.productId}`)
       },
+      onError: useErrorToast(),
     })
   }
 }

@@ -37,7 +37,7 @@ export const updateOrganizationApi = {
           params.values
         );
       },
-      onError: useErrorToast("UpdateOrganization")
+      onError: useErrorToast()
     });
   },
 };

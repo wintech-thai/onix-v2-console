@@ -3,6 +3,7 @@
     "code": "Code",
     "name": "Name",
     "primaryEmail": "Email",
+    "userStatus": "User Status",
     "totalPoint": "Total Point",
     "tags": "Tags",
     "action": "Action"
@@ -20,7 +21,10 @@
   "actions": {
     "pointTransaction": "Point Transaction",
     "verifyEmail": "Update & Verify Email",
-    "updateEmail": "Update Email"
+    "updateEmail": "Update Email",
+    "sendCreationEmail": "Create User",
+    "enableUser": "Enable User",
+    "disableUser": "Disable User"
   },
   "delete": {
     "title": "Delete Customer",
@@ -78,5 +82,26 @@
     "updateError": "Update Error",
     "verifySuccess": "send email to {{email}}",
     "verifyError": "Verify Error"
+  },
+  "sendEmail": {
+    "title": "Send Creation Email",
+    "message": "Are you sure you want to send creation email to this customer?",
+    "loading": "Sending email to {{email}}...",
+    "success": "Send email to {{email}} successfully",
+    "error": "Failed to send email"
+  },
+  "enable": {
+    "title": "Enable Customer User",
+    "message": "Are you sure you want to enable this customer user?",
+    "loading": "Enabling user...",
+    "success": "User enabled successfully",
+    "error": "Failed to enable user"
+  },
+  "disable": {
+    "title": "Disable Customer User",
+    "message": "Are you sure you want to disable this customer user?",
+    "loading": "Disabling user...",
+    "success": "User disabled successfully",
+    "error": "Failed to disable user"
   }
 }

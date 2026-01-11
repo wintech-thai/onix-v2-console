@@ -15,7 +15,7 @@ const OrganizationView = () => {
   const { t } = useTranslation("organization");
 
   const getOrg = getOrganizationApi.useGetOrganization({
-    orgId: params.orgId
+    orgId: params.orgId,
   });
 
   const updateOrg = updateOrganizationApi.useUpdateOrganization();
@@ -38,38 +38,46 @@ const OrganizationView = () => {
         : [];
 
       // Convert to JSON string with capital Name and Value for addresses and channels fields
-      const addressesJsonArray = addressesArray.map(item => ({ Name: item.name, Value: item.value }));
-      const channelsJsonArray = channelsArray.map(item => ({ Name: item.name, Value: item.value }));
+      const addressesJsonArray = addressesArray.map((item) => ({
+        Name: item.name,
+        Value: item.value,
+      }));
+      const channelsJsonArray = channelsArray.map((item) => ({
+        Name: item.name,
+        Value: item.value,
+      }));
 
       const addresses = JSON.stringify(addressesJsonArray);
       const channels = JSON.stringify(channelsJsonArray);
 
-      await updateOrg.mutateAsync({
-        orgId: params.orgId,
-        values: {
-          orgId: data.orgId,
-          orgCustomId: data.orgCustomId,
-          orgName: data.orgName,
-          orgDescription: data.orgDescription,
-          tags: data.tags,
-          addresses,
-          channels,
-          logoImagePath: data.logoImagePath || "",
-          logoImageUrl: data.logoImageUrl || "",
-          addressesArray,
-          channelsArray,
+      await updateOrg.mutateAsync(
+        {
+          orgId: params.orgId,
+          values: {
+            orgId: data.orgId,
+            orgCustomId: data.orgCustomId,
+            orgName: data.orgName,
+            orgDescription: data.orgDescription,
+            tags: data.tags,
+            addresses,
+            channels,
+            logoImagePath: data.logoImagePath || "",
+            logoImageUrl: data.logoImageUrl || "",
+            addressesArray,
+            channelsArray,
+          },
         },
-      }, {
-        onSuccess: ({ data }) => {
-          if (data.status !== "OK") {
-            return toast.error(data.description)
-          }
+        {
+          onSuccess: ({ data }) => {
+            if (data.status !== "OK") {
+              return toast.error(data.description);
+            }
 
-          toast.success(t("messages.updateSuccess"));
-          return getOrg.refetch();
+            toast.success(t("messages.updateSuccess"));
+            return getOrg.refetch();
+          },
         }
-      });
-
+      );
     } catch {
       toast.error(t("messages.updateError"));
     }
@@ -85,14 +93,14 @@ const OrganizationView = () => {
 
   if (getOrg.isError) {
     if (getOrg.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetOrganization" />
+      return <NoPermissionsPage errors={getOrg.error} />;
     }
 
-    throw new Error(getOrg.error.message)
+    throw new Error(getOrg.error.message);
   }
 
   if (!getOrg.data?.data) {
-    throw new Error("Organization Not Found")
+    throw new Error("Organization Not Found");
   }
 
   // Parse addresses and channels from JSON strings to record format
@@ -102,10 +110,16 @@ const OrganizationView = () => {
   try {
     if (getOrg.data.data.addresses) {
       const addressesArray = JSON.parse(getOrg.data.data.addresses);
-      addresses = addressesArray.reduce((acc: Record<string, string>, item: { Name: string; Value: string }) => {
-        acc[item.Name] = item.Value;
-        return acc;
-      }, {});
+      addresses = addressesArray.reduce(
+        (
+          acc: Record<string, string>,
+          item: { Name: string; Value: string }
+        ) => {
+          acc[item.Name] = item.Value;
+          return acc;
+        },
+        {}
+      );
     }
   } catch (error) {
     console.error("Error parsing addresses:", error);
@@ -114,10 +128,16 @@ const OrganizationView = () => {
   try {
     if (getOrg.data.data.channels) {
       const channelsArray = JSON.parse(getOrg.data.data.channels);
-      channels = channelsArray.reduce((acc: Record<string, string>, item: { Name: string; Value: string }) => {
-        acc[item.Name] = item.Value;
-        return acc;
-      }, {});
+      channels = channelsArray.reduce(
+        (
+          acc: Record<string, string>,
+          item: { Name: string; Value: string }
+        ) => {
+          acc[item.Name] = item.Value;
+          return acc;
+        },
+        {}
+      );
     }
   } catch (error) {
     console.error("Error parsing channels:", error);

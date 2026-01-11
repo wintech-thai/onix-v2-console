@@ -17,7 +17,7 @@ export const deletePrivilegesApi = {
           `/api/Privilege/org/${params.orgId}/action/DeletePrivilegeById/${params.privilegeId}`
         );
       },
-      onError: useErrorToast("DeletePrivilegeById")
+      onError: useErrorToast()
     });
   },
 };

@@ -1,0 +1,51 @@
+{
+  "title": "Role Permissions",
+  "columns": {
+    "roleName": "Role Name",
+    "description": "Description",
+    "tags": "Tags",
+    "action": "Action"
+  },
+  "filter": {
+    "search": "Search",
+    "delete": "DELETE",
+    "add": "ADD",
+    "fullTextSearch": "Full Text Search",
+    "searchPlaceholder": "Search role permissions...",
+    "selectSearchField": "Select search field"
+  },
+  "delete": {
+    "title": "Delete Role Permissions",
+    "message": "Are you sure you want to delete the selected role permissions?",
+    "success": "Role permissions deleted successfully",
+    "error": "Failed to delete role permissions"
+  },
+  "form": {
+    "createTitle": "Create Role Permission",
+    "updateTitle": "Update Role Permission",
+    "leavePage": "Leave Page?",
+    "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "roleInformation": "Role Information",
+    "roleName": "Role Name",
+    "roleDescription": "Description",
+    "tags": "Tags",
+    "permissions": "Permissions",
+    "searchPermissions": "Search permissions...",
+    "cancel": "Cancel",
+    "save": "Save",
+    "validation": {
+      "roleNameRequired": "Role name is required",
+      "roleDescriptionRequired": "Description is required",
+      "tagsRequired": "Tags are required"
+    }
+  },
+  "create": {
+    "success": "Role permission created successfully",
+    "error": "Failed to create role permission"
+  },
+  "update": {
+    "success": "Role permission updated successfully",
+    "error": "Failed to update role permission",
+    "notFound": "Role permission not found"
+  }
+}

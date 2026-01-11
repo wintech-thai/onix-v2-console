@@ -19,7 +19,7 @@ export const inviteUserApi = {
       }) => {
         return api.post<InviteUserResponse>(`/api/OrganizationUser/org/${params.orgId}/action/InviteUser`, params.values)
       },
-      onError: useErrorToast("InviteUser"),
+      onError: useErrorToast(),
     })
   }
 }

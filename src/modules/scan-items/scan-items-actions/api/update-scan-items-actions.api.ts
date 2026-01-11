@@ -18,7 +18,7 @@ export const updateScanItemsActionsApi = {
           params.values
         );
       },
-      onError: useErrorToast("UpdateScanItemActionById"),
+      onError: useErrorToast(),
     });
   },
 };

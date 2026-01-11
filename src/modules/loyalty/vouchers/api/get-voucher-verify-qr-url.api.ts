@@ -19,7 +19,7 @@ export const getVoucherVerifyQrUrl = {
           `/api/Voucher/org/${params.orgId}/action/GetVoucherVerifyQrUrl/${params.voucherId}`
         );
       },
-      onError: useErrorToast("GetVoucherVerifyQrUrl")
+      onError: useErrorToast()
     });
   },
 };

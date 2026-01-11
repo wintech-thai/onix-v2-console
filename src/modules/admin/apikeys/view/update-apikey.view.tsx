@@ -32,7 +32,7 @@ const UpdateApiKeyView = () => {
 
   if (getApiKey.isError) {
     if (getApiKey.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetApiKeyById" />;
+      return <NoPermissionsPage errors={getApiKey.error} />;
     }
 
     throw new Error(getApiKey.error.message);
@@ -49,11 +49,7 @@ const UpdateApiKeyView = () => {
       {
         orgId: params.orgId,
         apiKeyId: params.apikeyId,
-        values: {
-          keyName: values.keyName,
-          keyDescription: values.keyDescription,
-          roles: values.roles,
-        },
+        values: values,
       },
       {
         onSuccess: async ({ data }) => {
@@ -73,7 +69,7 @@ const UpdateApiKeyView = () => {
           }
 
           return toast.error(data.description || t("messages.updateError"));
-        }
+        },
       }
     );
   };
@@ -84,6 +80,9 @@ const UpdateApiKeyView = () => {
         keyName: apiKeyPayload.keyName || "",
         keyDescription: apiKeyPayload.keyDescription || "",
         roles: apiKeyPayload.roles ?? [],
+        customRoleDesc: apiKeyPayload.customRoleDesc || null,
+        customRoleId: apiKeyPayload.customRoleId || null,
+        customRoleName: apiKeyPayload.customRoleName || null,
       }}
       isUpdate
       onSubmit={handleUpdateApiKey}

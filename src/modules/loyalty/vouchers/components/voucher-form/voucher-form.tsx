@@ -168,14 +168,14 @@ export const VoucherForm = ({
 
   if (customerQuery.isError) {
     if (customerQuery.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomers" />;
+      return <NoPermissionsPage errors={customerQuery.error} />;
     }
     throw new Error(customerQuery.error.message);
   }
 
   if (privilegeQuery.isError) {
     if (privilegeQuery.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetRedeemablePrivileges" />;
+      return <NoPermissionsPage errors={privilegeQuery.error} />;
     }
     throw new Error(privilegeQuery.error.message);
   }

@@ -31,7 +31,7 @@ const UpdateCustomerView = () => {
 
   if (getCustomer.isError) {
     if (getCustomer.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomerById" />
+      return <NoPermissionsPage errors={getCustomer.error} />;
     }
     throw new Error(getCustomer.error.message);
   }
@@ -61,8 +61,8 @@ const UpdateCustomerView = () => {
 
             await queryClient.invalidateQueries({
               queryKey: [getCustomerApi.key],
-              refetchType: "active"
-            })
+              refetchType: "active",
+            });
 
             return router.back();
           }

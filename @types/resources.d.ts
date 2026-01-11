@@ -7,6 +7,7 @@ interface Resources {
     },
     "columns": {
       "action": "Action",
+      "customRoleName": "Custom Role",
       "keyDescription": "Description",
       "keyName": "Key Name",
       "rolesList": "Roles",
@@ -48,6 +49,13 @@ interface Resources {
         "update": "Update API Key"
       },
       "createTitle": "Create API Key",
+      "customRole": {
+        "noResults": "No custom role found.",
+        "placeholder": "Select custom role...",
+        "search": "Search custom role...",
+        "selectRole": "Select Custom Role",
+        "title": "Custom Role"
+      },
       "keyInformation": {
         "keyDescription": "Key Description",
         "keyName": "Key Name",
@@ -58,7 +66,7 @@ interface Resources {
         "noAvailable": "No available roles",
         "noSelected": "No selected roles",
         "selectedRoles": "Selected Roles",
-        "title": "API Key Roles"
+        "title": "System Roles"
       },
       "leavePage": "Leave Page",
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
@@ -238,6 +246,7 @@ interface Resources {
     },
     "noPermissions": {
       "description": "You do not have permission to access this page. Please contact the administrator if you believe this is an error.",
+      "genericTitle": "No Permission to Access This Resource",
       "title": "No Permission to Access API {{apiName}}"
     },
     "not-found": {
@@ -255,9 +264,10 @@ interface Resources {
       "admin": {
         "label": "Administration",
         "sub": {
-          "1": "API Keys",
-          "2": "Users",
-          "3": "Audit Log"
+          "1": "Custom Role",
+          "2": "API Keys",
+          "3": "Users",
+          "4": "Audit Log"
         }
       },
       "dashboard": {
@@ -377,7 +387,10 @@ interface Resources {
   },
   "customer": {
     "actions": {
+      "disableUser": "Disable User",
+      "enableUser": "Enable User",
       "pointTransaction": "Point Transaction",
+      "sendCreationEmail": "Create User",
       "updateEmail": "Update Email",
       "verifyEmail": "Update & Verify Email"
     },
@@ -396,7 +409,8 @@ interface Resources {
       "name": "Name",
       "primaryEmail": "Email",
       "tags": "Tags",
-      "totalPoint": "Total Point"
+      "totalPoint": "Total Point",
+      "userStatus": "User Status"
     },
     "create": {
       "error": "Create Error",
@@ -407,6 +421,20 @@ interface Resources {
       "message": "Are you sure you want to delete this customer?",
       "success": "Deleted customer successfully",
       "title": "Delete Customer"
+    },
+    "disable": {
+      "error": "Failed to disable user",
+      "loading": "Disabling user...",
+      "message": "Are you sure you want to disable this customer user?",
+      "success": "User disabled successfully",
+      "title": "Disable Customer User"
+    },
+    "enable": {
+      "error": "Failed to enable user",
+      "loading": "Enabling user...",
+      "message": "Are you sure you want to enable this customer user?",
+      "success": "User enabled successfully",
+      "title": "Enable Customer User"
     },
     "filter": {
       "add": "ADD",
@@ -450,6 +478,13 @@ interface Resources {
       "verifyEmailTitle": "Verify Customer Email",
       "verifyError": "Verify Error",
       "verifySuccess": "send email to {{email}}"
+    },
+    "sendEmail": {
+      "error": "Failed to send email",
+      "loading": "Sending email to {{email}}...",
+      "message": "Are you sure you want to send creation email to this customer?",
+      "success": "Send email to {{email}} successfully",
+      "title": "Send Creation Email"
     },
     "update": {
       "error": "Update Error",
@@ -942,6 +977,57 @@ interface Resources {
       "descriptionRequired": "Description is required",
       "narrativeRequired": "Narrative text is required",
       "tagsRequired": "At least one tag is required"
+    }
+  },
+  "role-permissions": {
+    "columns": {
+      "action": "Action",
+      "description": "Description",
+      "roleName": "Role Name",
+      "tags": "Tags"
+    },
+    "create": {
+      "error": "Failed to create role permission",
+      "success": "Role permission created successfully"
+    },
+    "delete": {
+      "error": "Failed to delete role permissions",
+      "message": "Are you sure you want to delete the selected role permissions?",
+      "success": "Role permissions deleted successfully",
+      "title": "Delete Role Permissions"
+    },
+    "filter": {
+      "add": "ADD",
+      "delete": "DELETE",
+      "fullTextSearch": "Full Text Search",
+      "search": "Search",
+      "searchPlaceholder": "Search role permissions...",
+      "selectSearchField": "Select search field"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "createTitle": "Create Role Permission",
+      "leavePage": "Leave Page?",
+      "permissions": "Permissions",
+      "roleDescription": "Description",
+      "roleInformation": "Role Information",
+      "roleName": "Role Name",
+      "save": "Save",
+      "searchPermissions": "Search permissions...",
+      "tags": "Tags",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "updateTitle": "Update Role Permission",
+      "validation": {
+        "roleDescriptionRequired": "Description is required",
+        "roleNameRequired": "Role name is required",
+        "tagsRequired": "Tags are required"
+      }
+    },
+    "title": "Role Permissions",
+    "update": {
+      "error": "Failed to update role permission",
+      "notFound": "Role permission not found",
+      "success": "Role permission updated successfully"
     }
   },
   "scan-item": {
@@ -1483,6 +1569,7 @@ interface Resources {
     },
     "columns": {
       "action": "Action",
+      "customRoleName": "Custom Role",
       "email": "Email",
       "isOrgInitialUser": "Initial User",
       "role": "Role",
@@ -1527,6 +1614,13 @@ interface Resources {
         "update": "Update User"
       },
       "createTitle": "Create User",
+      "customRole": {
+        "noResults": "No custom role found.",
+        "placeholder": "Select custom role...",
+        "search": "Search custom role...",
+        "selectRole": "Select Custom Role",
+        "title": "Custom Role"
+      },
       "leavePage": "Leave Page",
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
       "updateTitle": "Update User",
@@ -1542,12 +1636,13 @@ interface Resources {
         "noAvailable": "No available roles",
         "noSelected": "No selected roles",
         "selectedRoles": "Selected Roles",
-        "title": "User Roles"
+        "title": "System Roles"
       },
       "validation": {
         "emailInvalid": "Invalid email format",
         "emailRequired": "Email is required",
         "rolesRequired": "At least one role is required",
+        "tagsRequired": "At least one tag is required",
         "userNameRequired": "Username is required"
       }
     },

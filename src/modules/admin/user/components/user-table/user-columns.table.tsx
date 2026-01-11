@@ -97,6 +97,13 @@ export const useUserTableColumns = (): UserTableColumns[] => {
       },
     },
     {
+      accessorKey: "customRoleName",
+      header: t("columns.customRoleName"),
+      cell: ({ row }) => {
+        return row.original.customRoleName || "-";
+      },
+    },
+    {
       accessorKey: "rolesList",
       header: t("columns.role"),
       cell: ({ row }) => {
@@ -158,7 +165,6 @@ export const useUserTableColumns = (): UserTableColumns[] => {
         const enabledUser = enabledUserApi.useEnabledUser();
         const disabledUser = disabledUserApi.useDisabledUser();
 
-
         const handleEnableUser = async (apiKeyId: string) => {
           const ok = await confirmEnable();
           if (!ok) return;
@@ -181,7 +187,7 @@ export const useUserTableColumns = (): UserTableColumns[] => {
 
                   // Invalidate query to refetch data
                   queryClient.invalidateQueries({
-                    queryKey: fetchUsersApi.key
+                    queryKey: fetchUsersApi.key,
                   });
                 },
               }
@@ -213,7 +219,7 @@ export const useUserTableColumns = (): UserTableColumns[] => {
 
                   // Invalidate query to refetch data
                   queryClient.invalidateQueries({
-                    queryKey: fetchUsersApi.key
+                    queryKey: fetchUsersApi.key,
                   });
                 },
               }
@@ -238,7 +244,7 @@ export const useUserTableColumns = (): UserTableColumns[] => {
                 <DropdownMenuItem
                   disabled={!isActive}
                   onClick={() => {
-                    handleDisableApiKey(row.original.orgUserId)
+                    handleDisableApiKey(row.original.orgUserId);
                   }}
                 >
                   {t("actions.disableUser")}
@@ -246,7 +252,7 @@ export const useUserTableColumns = (): UserTableColumns[] => {
                 <DropdownMenuItem
                   disabled={!isInactive}
                   onClick={() => {
-                    handleEnableUser(row.original.orgUserId)
+                    handleEnableUser(row.original.orgUserId);
                   }}
                 >
                   {t("actions.enableUser")}

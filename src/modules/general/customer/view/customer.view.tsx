@@ -6,7 +6,12 @@ import { fetchCustomerApi, ICustomer } from "../api/fetch-customer.api";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCustomerTableColumns } from "../components/customer-table/customer-columns.table";
 import { deleteCustomerApi } from "../api/delete-customer.api";
-import { useQueryStates, parseAsInteger, parseAsString, useQueryState } from "nuqs";
+import {
+  useQueryStates,
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "nuqs";
 import dayjs from "dayjs";
 import { Row } from "@tanstack/react-table";
 import { toast } from "sonner";
@@ -95,14 +100,14 @@ const CustomerView = () => {
 
   if (fetchCustomer.isError) {
     if (fetchCustomer.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomers" />
+      return <NoPermissionsPage errors={fetchCustomer.error} />;
     }
     throw new Error(fetchCustomer.error.message);
   }
 
   if (fetchCustomerCount.isError) {
     if (fetchCustomerCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetCustomerCount" />
+      return <NoPermissionsPage errors={fetchCustomerCount.error} />;
     }
     throw new Error(fetchCustomerCount.error.message);
   }
@@ -177,11 +182,15 @@ const CustomerView = () => {
       });
 
       if (result.data.status === "OK" || result.data.status === "SUCCESS") {
-        toast.success(result.data.description || t("attach.success"), { id: toastId });
+        toast.success(result.data.description || t("attach.success"), {
+          id: toastId,
+        });
         callback();
         router.back();
       } else {
-        toast.error(result.data.description || t("attach.error"), { id: toastId });
+        toast.error(result.data.description || t("attach.error"), {
+          id: toastId,
+        });
       }
     } catch {
       toast.dismiss(toastId);
@@ -221,7 +230,9 @@ const CustomerView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchCustomer.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchCustomer.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+        }
         scanItemId={scanItemId}
         onAttach={scanItemId ? handleAttach : undefined}
       />

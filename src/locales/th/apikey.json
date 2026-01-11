@@ -2,6 +2,7 @@
   "columns": {
     "keyName": "ชื่อคีย์",
     "keyDescription": "คำอธิบาย",
+    "customRoleName": "บทบาทกำหนดเอง",
     "rolesList": "บทบาท",
     "status": "สถานะ",
     "action": "การดำเนินการ"
@@ -48,6 +49,13 @@
       "title": "ข้อมูล API Key",
       "keyName": "ชื่อคีย์",
       "keyDescription": "คำอธิบายคีย์"
+    },
+    "customRole": {
+      "title": "บทบาทกำหนดเอง",
+      "selectRole": "เลือกบทบาทกำหนดเอง",
+      "placeholder": "เลือกบทบาทกำหนดเอง...",
+      "search": "ค้นหาบทบาทกำหนดเอง...",
+      "noResults": "ไม่พบบทบาทกำหนดเอง"
     },
     "keyRoles": {
       "title": "บทบาท API Key",

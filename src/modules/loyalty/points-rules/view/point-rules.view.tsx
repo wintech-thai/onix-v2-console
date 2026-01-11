@@ -84,14 +84,14 @@ const PointRuleViewPage = () => {
 
   if (fetchPointRules.isError) {
     if (fetchPointRules.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointRules" />;
+      return <NoPermissionsPage errors={fetchPointRules.error} />;
     }
     throw new Error(fetchPointRules.error.message);
   }
 
   if (fetchPointRulesCount.isError) {
     if (fetchPointRulesCount.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointRulesCount" />;
+      return <NoPermissionsPage errors={fetchPointRulesCount.error} />;
     }
     throw new Error(fetchPointRulesCount.error.message);
   }

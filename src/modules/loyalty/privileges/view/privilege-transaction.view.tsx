@@ -7,7 +7,10 @@ import { usePrivilegeTransactionTableColumns } from "../components/privilege-tra
 import { useQueryStates, parseAsInteger } from "nuqs";
 import { useMemo, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { IPrivilegeTx, getPrivilegeTxByIdApi } from "../api/get-privielge-tx-by-id.api";
+import {
+  IPrivilegeTx,
+  getPrivilegeTxByIdApi,
+} from "../api/get-privielge-tx-by-id.api";
 import { PrivilegeTransactionTable } from "../components/privilege-transaction-table/privilege-transaction.table";
 import { getPrivilegesApi } from "../api/get-privileges.api";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
@@ -53,16 +56,17 @@ const PrivilegeTransactionViewPage = () => {
     },
   });
 
-  const fetchTransactionsCount = getPrivilegeTxByIdApi.useGetPrivilegeTxByIdCount({
-    orgId: params.orgId,
-    privilegeId: params.privilegeId,
-    params: {
-      fromDate: dateRange.fromDate,
-      toDate: dateRange.toDate,
-      offset: (page - 1) * limit,
-      limit: limit,
-    },
-  });
+  const fetchTransactionsCount =
+    getPrivilegeTxByIdApi.useGetPrivilegeTxByIdCount({
+      orgId: params.orgId,
+      privilegeId: params.privilegeId,
+      params: {
+        fromDate: dateRange.fromDate,
+        toDate: dateRange.toDate,
+        offset: (page - 1) * limit,
+        limit: limit,
+      },
+    });
 
   useEffect(() => {
     if (fetchTransactions.data?.data) {
@@ -88,21 +92,21 @@ const PrivilegeTransactionViewPage = () => {
 
   if (getPrivilege.isError) {
     if (getPrivilege.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPrivilegeById" />;
+      return <NoPermissionsPage errors={getPrivilege.error} />;
     }
     throw new Error(getPrivilege.error.message);
   }
 
   if (fetchTransactions.isError) {
     if (fetchTransactions.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPrivilegeTxsById" />;
+      return <NoPermissionsPage errors={fetchTransactions.error} />;
     }
     throw new Error(fetchTransactions.error.message);
   }
 
   if (fetchTransactionsCount.isError) {
     if (fetchTransactionsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPrivilegeTxsCountById" />;
+      return <NoPermissionsPage errors={fetchTransactionsCount.error} />;
     }
     throw new Error(fetchTransactionsCount.error.message);
   }
@@ -117,7 +121,9 @@ const PrivilegeTransactionViewPage = () => {
         <div className="flex flex-col">
           <span className="text-2xl">
             {t("transaction.title", "Privilege Transaction")}:{" "}
-            <span className="text-2xl font-bold">({privilege?.code || "-"})</span>
+            <span className="text-2xl font-bold">
+              ({privilege?.code || "-"})
+            </span>
           </span>
 
           <span className="text-lg">
@@ -139,7 +145,8 @@ const PrivilegeTransactionViewPage = () => {
           onPageChange={handlePageChange}
           onItemsPerPageChange={handleItemsPerPageChange}
           isLoading={
-            (fetchTransactions.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+            (fetchTransactions.isLoading && !hasLoadedBefore) ||
+            isPageOrLimitChanging
           }
         />
       </div>

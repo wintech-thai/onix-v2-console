@@ -84,14 +84,14 @@ const VoucherViewPage = () => {
 
   if (fetchVouchers.isError) {
     if (fetchVouchers.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetVouchers" />;
+      return <NoPermissionsPage errors={fetchVouchers.error} />;
     }
     throw new Error(fetchVouchers.error.message);
   }
 
   if (fetchVouchersCount.isError) {
     if (fetchVouchersCount.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetVoucherCount" />;
+      return <NoPermissionsPage errors={fetchVouchersCount.error} />;
     }
     throw new Error(fetchVouchersCount.error.message);
   }
@@ -130,14 +130,10 @@ const VoucherViewPage = () => {
     const totalCount = idsToDelete.length;
 
     if (successCount > 0) {
-      toast.success(
-        `${t("delete.success")} (${successCount}/${totalCount})`
-      );
+      toast.success(`${t("delete.success")} (${successCount}/${totalCount})`);
     }
     if (errorCount > 0) {
-      toast.error(
-        `${t("delete.error")} (${errorCount}/${totalCount})`
-      );
+      toast.error(`${t("delete.error")} (${errorCount}/${totalCount})`);
     }
 
     await queryClient.invalidateQueries({
@@ -177,7 +173,9 @@ const VoucherViewPage = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchVouchers.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchVouchers.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+        }
       />
     </div>
   );

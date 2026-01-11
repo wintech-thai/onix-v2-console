@@ -32,7 +32,7 @@ export const deDuctPrivilegeQuantityApi = {
           params.body
         );
       },
-      onError: useErrorToast("DeductPrivilegeQuantity"),
+      onError: useErrorToast(),
     });
   },
 };

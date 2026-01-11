@@ -2,6 +2,7 @@
   "columns": {
     "keyName": "Key Name",
     "keyDescription": "Description",
+    "customRoleName": "Custom Role",
     "rolesList": "Roles",
     "status": "Status",
     "action": "Action"
@@ -49,8 +50,15 @@
       "keyName": "Key Name",
       "keyDescription": "Key Description"
     },
+    "customRole": {
+      "title": "Custom Role",
+      "selectRole": "Select Custom Role",
+      "placeholder": "Select custom role...",
+      "search": "Search custom role...",
+      "noResults": "No custom role found."
+    },
     "keyRoles": {
-      "title": "API Key Roles",
+      "title": "System Roles",
       "availableRoles": "Available Roles",
       "selectedRoles": "Selected Roles",
       "noAvailable": "No available roles",

@@ -1,11 +1,15 @@
+import { extractApiNameFromError } from "@/lib/utils";
+import { AxiosError } from "axios";
 import { useTranslation } from "react-i18next";
 
 interface NoPermissionsPageProps {
-  apiName: string;
+  errors: AxiosError;
 }
 
 export const NoPermissionsPage = (props: NoPermissionsPageProps) => {
   const { t } = useTranslation("common");
+
+  const apiName = extractApiNameFromError(props.errors);
 
   return (
     <div className="h-full flex flex-col items-center justify-center rounded-xl p-8 text-amber-600 shadow-md">
@@ -36,7 +40,10 @@ export const NoPermissionsPage = (props: NoPermissionsPageProps) => {
         <circle cx="12" cy="13.5" r=".7" fill="#d97706" />
       </svg>
       <h2 className="mb-2 text-2xl font-semibold">
-        {t("noPermissions.title", { apiName: props.apiName })}
+        {apiName
+          ? t("noPermissions.title", { apiName })
+          : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            t("noPermissions.genericTitle" as any)}
       </h2>
       <p className="max-w-xs text-center text-base text-amber-800">
         {t("noPermissions.description")}

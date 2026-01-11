@@ -69,25 +69,28 @@ const CronJobView = () => {
     }
   }, [fetchCronJobs.data]);
 
-  const fetchCronJobsCount = fetchCronJobApi.cronJobCount.useQuery(params.orgId, {
-    fromDate: dateRange.fromDate,
-    toDate: dateRange.toDate,
-    offset: (page - 1) * limit,
-    limit: limit,
-    fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
-    jobType: "",
-  });
+  const fetchCronJobsCount = fetchCronJobApi.cronJobCount.useQuery(
+    params.orgId,
+    {
+      fromDate: dateRange.fromDate,
+      toDate: dateRange.toDate,
+      offset: (page - 1) * limit,
+      limit: limit,
+      fullTextSearch: searchField === "fullTextSearch" ? searchValue : "",
+      jobType: "",
+    }
+  );
 
   if (fetchCronJobs.isError) {
     if (fetchCronJobs.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobs" />
+      return <NoPermissionsPage errors={fetchCronJobs.error} />;
     }
     throw new Error(fetchCronJobs.error.message);
   }
 
   if (fetchCronJobsCount.isError) {
     if (fetchCronJobsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobCount" />
+      return <NoPermissionsPage errors={fetchCronJobsCount.error} />;
     }
     throw new Error(fetchCronJobsCount.error.message);
   }
@@ -175,7 +178,9 @@ const CronJobView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchCronJobs.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchCronJobs.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+        }
       />
     </div>
   );

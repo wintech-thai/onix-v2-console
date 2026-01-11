@@ -3,16 +3,36 @@ import { apiKeySchema, ApiKeySchemaType } from "../../schema/apikey.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeftIcon,
+  Check,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronsUpDown,
   Loader,
+  X,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { fetchUserRoleApi, IUserRole } from "../../../user/api/fetch-user-role.api";
+import {
+  fetchUserRoleApi,
+  IUserRole,
+} from "../../../user/api/fetch-user-role.api";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { useDebounceValue } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Table,
   TableBody,
@@ -26,8 +46,10 @@ import { Hint } from "@/components/ui/hint";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useFormNavigationBlocker } from "@/hooks/use-form-navigation-blocker";
 import { useTranslation } from "react-i18next";
-import { errorMessageAsLangKey } from "@/lib/utils";
+import { cn, errorMessageAsLangKey } from "@/lib/utils";
 import { NoPermissionsPage } from "@/components/ui/no-permissions";
+import { useGetCustomRoles } from "../../../role-permissions/hooks/role-permissions-hooks";
+import { IRolePermissions } from "../../../role-permissions/api/role-permissions.service";
 
 interface ApiKeyFormProps {
   onSubmit: (values: ApiKeySchemaType) => Promise<void>;
@@ -64,6 +86,7 @@ export const ApiKeyForm = ({
   const [selectedRoles, setSelectedRoles] = useState<IUserRole[]>([]);
   const [leftChecked, setLeftChecked] = useState<Set<string>>(new Set());
   const [rightChecked, setRightChecked] = useState<Set<string>>(new Set());
+  const [customRoleOpen, setCustomRoleOpen] = useState(false);
 
   const dateRange = useMemo(
     () => ({
@@ -83,6 +106,21 @@ export const ApiKeyForm = ({
       fullTextSearch: "",
     },
   });
+
+  const [customRoleSearch, setCustomRoleSearch] = useState("");
+  const [debouncedCustomRoleSearch] = useDebounceValue(customRoleSearch, 500);
+
+  const customRoles = useGetCustomRoles(
+    { orgId: params.orgId },
+    {
+      offset: 0,
+      fromDate: dateRange.fromDate,
+      toDate: dateRange.toDate,
+      limit: 100,
+      fullTextSearch: debouncedCustomRoleSearch,
+      level: "",
+    }
+  );
 
   // Sync form dirty state with navigation blocker
   useEffect(() => {
@@ -126,7 +164,7 @@ export const ApiKeyForm = ({
 
   if (userRole.isError) {
     if (userRole.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetRoles" />
+      return <NoPermissionsPage errors={userRole.error} />;
     }
 
     throw new Error(userRole.error.message);
@@ -250,6 +288,44 @@ export const ApiKeyForm = ({
     }
   };
 
+  // Handle custom role selection
+  const handleCustomRoleSelect = (role: IRolePermissions) => {
+    form.setValue("customRoleId", role.roleId, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    form.setValue("customRoleName", role.roleName, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    form.setValue("customRoleDesc", role.roleDescription, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    setCustomRoleOpen(false);
+  };
+
+  // Handle custom role clear
+  const handleCustomRoleClear = () => {
+    form.setValue("customRoleId", null, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    form.setValue("customRoleName", null, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    form.setValue("customRoleDesc", null, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  // Handle custom role search
+  const handleCustomRoleSearch = (value: string) => {
+    setCustomRoleSearch(value);
+  };
+
   return (
     <form
       onSubmit={form.handleSubmit(handleSubmit)}
@@ -308,6 +384,126 @@ export const ApiKeyForm = ({
                     maxLength={500}
                     disabled={isSubmitting}
                   />
+                );
+              }}
+            />
+
+            <Controller
+              control={form.control}
+              name="customRoleId"
+              render={({ field }) => {
+                const selectedCustomRole = customRoles.data?.data?.find(
+                  (role: IRolePermissions) => role.roleId === field.value
+                );
+
+                return (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">
+                      {t("form.customRole.selectRole", "Select Custom Role")}
+                    </label>
+                    <div className="relative">
+                      <Popover
+                        open={customRoleOpen}
+                        onOpenChange={setCustomRoleOpen}
+                      >
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={customRoleOpen}
+                            className="w-full justify-between"
+                            disabled={isSubmitting}
+                          >
+                            <span
+                              className={cn(
+                                !selectedCustomRole && "text-muted-foreground"
+                              )}
+                            >
+                              {selectedCustomRole
+                                ? selectedCustomRole.roleName
+                                : t(
+                                    "form.customRole.placeholder",
+                                    "Select custom role..."
+                                  )}
+                            </span>
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full p-0" align="start">
+                          <Command shouldFilter={false}>
+                            <CommandInput
+                              placeholder={t(
+                                "form.customRole.search",
+                                "Search custom role..."
+                              )}
+                              onValueChange={handleCustomRoleSearch}
+                            />
+                            <CommandList>
+                              {customRoles.isLoading ||
+                              customRoles.isFetching ? (
+                                <div className="flex items-center justify-center py-6">
+                                  <Loader className="h-4 w-4 animate-spin" />
+                                </div>
+                              ) : (
+                                <>
+                                  <CommandEmpty>
+                                    {t(
+                                      "form.customRole.noResults",
+                                      "No custom role found."
+                                    )}
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {customRoles.data?.data?.map(
+                                      (role: IRolePermissions) => (
+                                        <CommandItem
+                                          key={role.roleId}
+                                          value={role.roleName}
+                                          onSelect={() =>
+                                            handleCustomRoleSelect(role)
+                                          }
+                                        >
+                                          <Check
+                                            className={cn(
+                                              "mr-2 h-4 w-4",
+                                              field.value === role.roleId
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                            )}
+                                          />
+                                          <div>
+                                            <div className="font-medium">
+                                              {role.roleName}
+                                            </div>
+                                            <div className="text-sm text-muted-foreground">
+                                              {role.roleDescription}
+                                            </div>
+                                          </div>
+                                        </CommandItem>
+                                      )
+                                    )}
+                                  </CommandGroup>
+                                </>
+                              )}
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      {selectedCustomRole && (
+                        <button
+                          type="button"
+                          className="absolute right-8 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50 hover:opacity-100 disabled:opacity-25"
+                          disabled={isSubmitting}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleCustomRoleClear();
+                          }}
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 );
               }}
             />

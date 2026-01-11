@@ -12,7 +12,7 @@ export const setVoucherUnusedByIdApi = {
           `/api/Voucher/org/${params.orgId}/action/SetVoucherUnusedById/${params.voucherId}`
         );
       },
-      onError: useErrorToast("SetVoucherUnusedById")
+      onError: useErrorToast()
     });
   },
 };

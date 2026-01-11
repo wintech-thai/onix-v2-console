@@ -18,11 +18,14 @@ const UpdateScanItemTemplateViewPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const getScanItemTemplate = getScanItemsTemplatesApi.useGetScanItemsTemplates({
-    orgId: params.orgId,
-    scanItemTemplateId: params.scanItemTemplateId,
-  });
-  const updateScanItemTemplateMutation = updateScanItemsTemplatesApi.useUpdateScanItemsTemplates();
+  const getScanItemTemplate = getScanItemsTemplatesApi.useGetScanItemsTemplates(
+    {
+      orgId: params.orgId,
+      scanItemTemplateId: params.scanItemTemplateId,
+    }
+  );
+  const updateScanItemTemplateMutation =
+    updateScanItemsTemplatesApi.useUpdateScanItemsTemplates();
 
   if (getScanItemTemplate.isLoading) {
     return (
@@ -34,7 +37,7 @@ const UpdateScanItemTemplateViewPage = () => {
 
   if (getScanItemTemplate.error) {
     if (getScanItemTemplate.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetScanItemTemplateById" />
+      return <NoPermissionsPage errors={getScanItemTemplate.error} />;
     }
     throw new Error(getScanItemTemplate.error.message);
   }
@@ -45,7 +48,10 @@ const UpdateScanItemTemplateViewPage = () => {
     throw new Error("Scan Item Template Not Found");
   }
 
-  const handleUpdateScanItemTemplate = async (values: ScanItemTemplateSchemaType, callback: () => void) => {
+  const handleUpdateScanItemTemplate = async (
+    values: ScanItemTemplateSchemaType,
+    callback: () => void
+  ) => {
     await updateScanItemTemplateMutation.mutateAsync(
       {
         orgId: params.orgId,

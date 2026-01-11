@@ -31,7 +31,7 @@ const PointTriggerIdViewPage = () => {
 
   if (getPointTrigger.isError) {
     if (getPointTrigger.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointTriggerByID" />;
+      return <NoPermissionsPage errors={getPointTrigger.error} />;
     }
     throw new Error(getPointTrigger.error.message);
   }

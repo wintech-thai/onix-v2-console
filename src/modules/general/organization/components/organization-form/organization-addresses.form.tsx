@@ -29,7 +29,9 @@ interface OrganizationAddressesFormProps {
   isViewMode: boolean;
 }
 
-export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesFormProps) => {
+export const OrganizationAddressesForm = ({
+  isViewMode,
+}: OrganizationAddressesFormProps) => {
   const { t } = useTranslation("organization");
   const params = useParams<{ orgId: string }>();
   const form = useFormContext<OrganizationSchemaType>();
@@ -37,12 +39,15 @@ export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesF
 
   const { addresses } = form.watch();
 
-  const [availableAddresses, setAvailableAddresses] = useState<AddressItem[]>([]);
+  const [availableAddresses, setAvailableAddresses] = useState<AddressItem[]>(
+    []
+  );
   const [selectedAddresses, setSelectedAddresses] = useState<AddressItem[]>([]);
   const [leftChecked, setLeftChecked] = useState<Set<string>>(new Set());
   const [rightChecked, setRightChecked] = useState<Set<string>>(new Set());
 
-  const fetchAddressTypesQuery = getAllowAddressTypeNamesApi.useGetAllowAddressTypesName(params);
+  const fetchAddressTypesQuery =
+    getAllowAddressTypeNamesApi.useGetAllowAddressTypesName(params);
 
   // Initialize available and selected addresses from API
   useEffect(() => {
@@ -172,9 +177,7 @@ export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesF
   if (fetchAddressTypesQuery.isLoading) {
     return (
       <div className="p-4 md:p-6 border rounded-lg">
-        <header className="text-lg font-bold">
-          {t("addresses.title")}
-        </header>
+        <header className="text-lg font-bold">{t("addresses.title")}</header>
         <div className="mt-4 text-center text-muted-foreground">
           {t("addresses.loading")}
         </div>
@@ -184,7 +187,7 @@ export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesF
 
   if (fetchAddressTypesQuery.isError) {
     if (fetchAddressTypesQuery.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetAllowAddressTypeNames" />;
+      return <NoPermissionsPage errors={fetchAddressTypesQuery.error} />;
     }
 
     throw new Error(fetchAddressTypesQuery.error.message);
@@ -192,9 +195,7 @@ export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesF
 
   return (
     <div className="p-4 md:p-6 border rounded-lg">
-      <header className="text-lg font-bold">
-        {t("addresses.title")}
-      </header>
+      <header className="text-lg font-bold">{t("addresses.title")}</header>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 mt-4">
         {/* Left Panel - Available Addresses */}
@@ -234,7 +235,10 @@ export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesF
                       <Checkbox
                         checked={leftChecked.has(addr.name)}
                         onCheckedChange={(checked) =>
-                          handleLeftCheckboxChange(addr.name, checked as boolean)
+                          handleLeftCheckboxChange(
+                            addr.name,
+                            checked as boolean
+                          )
                         }
                         disabled={isViewMode || isSubmitting}
                       />
@@ -307,7 +311,10 @@ export const OrganizationAddressesForm = ({ isViewMode }: OrganizationAddressesF
                       <Checkbox
                         checked={rightChecked.has(addr.name)}
                         onCheckedChange={(checked) =>
-                          handleRightCheckboxChange(addr.name, checked as boolean)
+                          handleRightCheckboxChange(
+                            addr.name,
+                            checked as boolean
+                          )
                         }
                         disabled={isViewMode || isSubmitting}
                       />

@@ -19,7 +19,7 @@ export const getVoucherverifyurlapi = {
           `/api/Voucher/org/${params.orgId}/action/GetVoucherVerifyUrl`
         );
       },
-      onError: useErrorToast("GetVoucherVerifyUrl")
+      onError: useErrorToast()
     });
   },
 };

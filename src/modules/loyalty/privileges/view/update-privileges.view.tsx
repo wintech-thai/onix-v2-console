@@ -32,7 +32,7 @@ const UpdatePrivilegesViewPage = () => {
 
   if (getPrivilege.isError) {
     if (getPrivilege.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPrivilegeById" />;
+      return <NoPermissionsPage errors={getPrivilege.error} />;
     }
 
     throw new Error(getPrivilege.error.message);

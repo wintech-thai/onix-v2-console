@@ -14,7 +14,7 @@ export const createVoucherApi = {
           params.values
         );
       },
-      onError: useErrorToast("AddVoucher"),
+      onError: useErrorToast(),
     });
   },
 };

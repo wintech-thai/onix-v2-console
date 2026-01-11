@@ -31,7 +31,9 @@ const CreateScanItemTemplateJobViewPage = () => {
 
   if (getScanItemTemplateDefaultValue.isError) {
     if (getScanItemTemplateDefaultValue.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetJobDefault/ScanItemGenerator" />;
+      return (
+        <NoPermissionsPage errors={getScanItemTemplateDefaultValue.error} />
+      );
     }
     throw new Error(getScanItemTemplateDefaultValue.error.message);
   }

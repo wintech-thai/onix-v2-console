@@ -18,7 +18,7 @@ export const disabledVoucherApi = {
       }) => {
         return api.post<DisabledVoucherResponse>(`/api/Voucher/org/${params.orgId}/action/DisableVoucherById/${params.voucherId}`)
       },
-      onError: useErrorToast("DisableVoucherById")
+      onError: useErrorToast()
     })
   },
 }

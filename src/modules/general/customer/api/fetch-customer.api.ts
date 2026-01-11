@@ -32,6 +32,7 @@ export interface ICustomer {
   pricingPlans: string[];
   createdDate: string;
   updatedDate: string;
+  userStatus: string | null;
 }
 
 export type FetchCustomerResponse = ICustomer[];

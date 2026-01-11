@@ -18,7 +18,7 @@ export const deleteCronJobApi = {
       }) => {
         return api.delete<DeleteCronJobResponse>(`/api/Job/org/${params.orgId}/action/DeleteJobById/${params.jobId}`)
       },
-      onError: useErrorToast("DeleteJobById"),
+      onError: useErrorToast(),
     })
   }
 }

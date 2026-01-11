@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,13 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { getWalletByCustomerIdApi } from "@/modules/loyalty/points-wallets/wallets/api/get-wallet-by-customer-id.api";
+import { useConfirm as Confirm } from "@/hooks/use-confirm";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { fetchCustomerApi } from "../../api/fetch-customer.api";
+import { sendCustomerUserCreationEmailApi } from "../../api/send-customer-user-creation-email.api";
+import { enableCustomerUserApi } from "../../api/enable-customer-user.api";
+import { disableCustomerUserApi } from "../../api/disable-customer-user.api";
 
 type CustomerTableColumns = ColumnDef<ICustomer> & {
   accessorKey?: keyof ICustomer;
@@ -27,6 +35,8 @@ type CustomerTableColumns = ColumnDef<ICustomer> & {
 export const useCustomerTableColumns = (): CustomerTableColumns[] => {
   const { t } = useTranslation("customer");
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
+  const queryClient = useQueryClient();
   const getWalletMutation = getWalletByCustomerIdApi.useGetWalletByCustomerId();
 
   return [
@@ -87,6 +97,10 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
       },
     },
     {
+      accessorKey: "userStatus",
+      header: t("columns.userStatus"),
+    },
+    {
       accessorKey: "totalPoint",
       header: t("columns.totalPoint"),
       cell: ({ row }) => {
@@ -126,14 +140,136 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
         const customerId = row.original.id;
         const [modalOpen, setModalOpen] = State(false);
         const [modalMode, setModalMode] = State<"verify" | "update">("update");
+        const isActive =
+          row.original.userStatus === "OK" ||
+          row.original.userStatus === "TRUE" ||
+          row.original.userStatus === "Active";
 
         const handleOpenModal = (mode: "verify" | "update") => {
           setModalMode(mode);
           setModalOpen(true);
         };
 
+        const [ConfirmSendEmail, confirmSendEmail] = Confirm({
+          title: t("sendEmail.title"),
+          message: t("sendEmail.message"),
+          variant: "default",
+        });
+
+        const [ConfirmEnable, confirmEnable] = Confirm({
+          title: t("enable.title"),
+          message: t("enable.message"),
+          variant: "default",
+        });
+
+        const [ConfirmDisable, confirmDisable] = Confirm({
+          title: t("disable.title"),
+          message: t("disable.message"),
+          variant: "destructive",
+        });
+
+        const sendEmailMutation =
+          sendCustomerUserCreationEmailApi.useSendCustomerUserCreationEmail();
+        const enableUserMutation =
+          enableCustomerUserApi.useEnableCustomerUser();
+        const disableUserMutation =
+          disableCustomerUserApi.useDisableCustomerUser();
+
+        const handleSendCreationEmail = async () => {
+          const ok = await confirmSendEmail();
+          if (!ok) return;
+
+          const toastId = toast.loading(
+            t("sendEmail.loading", {
+              email: row.original.primaryEmail,
+            })
+          );
+
+          try {
+            await sendEmailMutation.mutateAsync(
+              { orgId: params.orgId, entityId: customerId },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status !== "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(
+                    t("sendEmail.success", {
+                      email: row.original.primaryEmail,
+                    }),
+                    { id: toastId }
+                  );
+                  queryClient.invalidateQueries({
+                    queryKey: fetchCustomerApi.key,
+                  });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("sendEmail.error"), { id: toastId });
+          }
+        };
+
+        const handleEnableUser = async () => {
+          const ok = await confirmEnable();
+          if (!ok) return;
+
+          const toastId = toast.loading(t("enable.loading"));
+
+          try {
+            await enableUserMutation.mutateAsync(
+              { orgId: params.orgId, entityId: customerId },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status !== "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("enable.success"), { id: toastId });
+                  queryClient.invalidateQueries({
+                    queryKey: fetchCustomerApi.key,
+                  });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("enable.error"), { id: toastId });
+          }
+        };
+
+        const handleDisableUser = async () => {
+          const ok = await confirmDisable();
+          if (!ok) return;
+
+          const toastId = toast.loading(t("disable.loading"));
+
+          try {
+            await disableUserMutation.mutateAsync(
+              { orgId: params.orgId, entityId: customerId },
+              {
+                onSuccess: ({ data }) => {
+                  if (data.status !== "OK") {
+                    return toast.error(data.description, { id: toastId });
+                  }
+
+                  toast.success(t("disable.success"), { id: toastId });
+                  queryClient.invalidateQueries({
+                    queryKey: fetchCustomerApi.key,
+                  });
+                },
+              }
+            );
+          } catch {
+            toast.error(t("disable.error"), { id: toastId });
+          }
+        };
+
         return (
           <>
+            <ConfirmSendEmail />
+            <ConfirmEnable />
+            <ConfirmDisable />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -148,7 +284,10 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
                       { orgId, customerId },
                       {
                         onSuccess: ({ data }) => {
-                          if (data.status !== "OK" && data.status !== "SUCCESS") {
+                          if (
+                            data.status !== "OK" &&
+                            data.status !== "SUCCESS"
+                          ) {
                             return toast.error(data.description);
                           }
 
@@ -174,6 +313,22 @@ export const useCustomerTableColumns = (): CustomerTableColumns[] => {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleOpenModal("update")}>
                   {t("actions.updateEmail")}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSendCreationEmail}>
+                  {t("actions.sendCreationEmail")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  disabled={isActive}
+                  onClick={handleEnableUser}
+                >
+                  {t("actions.enableUser")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  disabled={!isActive}
+                  onClick={handleDisableUser}
+                >
+                  {t("actions.disableUser")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -84,14 +84,14 @@ const ApiKeyView = () => {
 
   if (fetchApiKeys.isError) {
     if (fetchApiKeys.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetApiKeys" />;
+      return <NoPermissionsPage errors={fetchApiKeys.error} />;
     }
     throw new Error(fetchApiKeys.error.message);
   }
 
   if (fetchApiKeysCount.isError) {
     if (fetchApiKeysCount.error.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetApiKeyCount" />;
+      return <NoPermissionsPage errors={fetchApiKeysCount.error} />;
     }
     throw new Error(fetchApiKeysCount.error.message);
   }
@@ -179,7 +179,9 @@ const ApiKeyView = () => {
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}
         onSearch={handleSearch}
-        isLoading={(fetchApiKeys.isLoading && !hasLoadedBefore) || isPageOrLimitChanging}
+        isLoading={
+          (fetchApiKeys.isLoading && !hasLoadedBefore) || isPageOrLimitChanging
+        }
       />
     </div>
   );

@@ -18,7 +18,7 @@ export const deleteApiKeyApi = {
       }) => {
         return api.delete<DeleteApiKeyResponse>(`/api/ApiKey/org/${params.orgId}/action/DeleteApiKeyById/${params.apiKeyId}`)
       },
-      onError: useErrorToast("DeleteApiKeyById"),
+      onError: useErrorToast(),
     })
   }
 }

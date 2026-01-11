@@ -59,7 +59,7 @@ const UpdatePointRuleViewPage = () => {
 
   if (getPointRule.isError) {
     if (getPointRule.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointRuleById" />;
+      return <NoPermissionsPage errors={getPointRule.error} />;
     }
     throw new Error(getPointRule.error.message);
   }

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@/lib/axios";
+import { useErrorToast } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 
 export interface EvaluatePointRulesResponse {
@@ -26,6 +27,7 @@ export const evaluatePointRulesApi = {
           params.values
         );
       },
+      onError: useErrorToast(),
     });
   },
 };

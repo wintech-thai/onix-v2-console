@@ -2,6 +2,7 @@
   "columns": {
     "username": "ชื่อผู้ใช้",
     "email": "อีเมล",
+    "customRoleName": "บทบาทกำหนดเอง",
     "role": "บทบาท",
     "tags": "แท็ก",
     "isOrgInitialUser": "ผู้ใช้เริ่มต้น",
@@ -53,6 +54,13 @@
       "tags": "แท็ก",
       "tagsPlaceholder": "กด Enter เพื่อเพิ่มแท็ก"
     },
+    "customRole": {
+      "title": "บทบาทกำหนดเอง",
+      "selectRole": "เลือกบทบาทกำหนดเอง",
+      "placeholder": "เลือกบทบาทกำหนดเอง...",
+      "search": "ค้นหาบทบาทกำหนดเอง...",
+      "noResults": "ไม่พบบทบาทกำหนดเอง"
+    },
     "userRoles": {
       "title": "บทบาทผู้ใช้",
       "availableRoles": "บทบาทที่มี",
@@ -71,7 +79,8 @@
       "userNameRequired": "กรุณากรอกชื่อผู้ใช้",
       "emailRequired": "กรุณากรอกอีเมล",
       "emailInvalid": "รูปแบบอีเมลไม่ถูกต้อง",
-      "rolesRequired": "กรุณาเลือกบทบาทอย่างน้อย 1 รายการ"
+      "rolesRequired": "กรุณาเลือกบทบาทอย่างน้อย 1 รายการ",
+      "tagsRequired": "กรุณาเลือกแท็กอย่างน้อย 1 รายการ"
     }
   },
   "messages": {

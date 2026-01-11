@@ -92,21 +92,21 @@ const PointViewPage = () => {
 
   if (getWallet.isError) {
     if (getWallet.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetWallets" />;
+      return <NoPermissionsPage errors={getWallet.error} />;
     }
     throw new Error(getWallet.error.message);
   }
 
   if (fetchPoints.isError) {
     if (fetchPoints.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPoints" />;
+      return <NoPermissionsPage errors={fetchPoints.error} />;
     }
     throw new Error(fetchPoints.error.message);
   }
 
   if (fetchPointsCount.isError) {
     if (fetchPointsCount.error?.response?.status === 403) {
-      return <NoPermissionsPage apiName="GetPointsCount" />;
+      return <NoPermissionsPage errors={fetchPointsCount.error} />;
     }
     throw new Error(fetchPointsCount.error.message);
   }

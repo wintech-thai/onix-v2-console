@@ -33,7 +33,7 @@ export const updatePointRuleApi = {
           params.values
         );
       },
-      onError: useErrorToast("UpdatePointRuleById"),
+      onError: useErrorToast(),
     });
   },
 };

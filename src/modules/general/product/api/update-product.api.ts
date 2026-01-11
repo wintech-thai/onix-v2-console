@@ -18,7 +18,7 @@ export const updateProductApi = {
       }) => {
         return api.post(`/api/Item/org/${orgId}/action/UpdateItemById/${productId}`, value)
       },
-      onError: useErrorToast("UpdateItemById"),
+      onError: useErrorToast(),
     })
   }
 }

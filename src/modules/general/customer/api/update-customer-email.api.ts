@@ -24,7 +24,7 @@ export const updateCustomerEmailApi = {
       }) => {
         return api.post<UpdateCustomerEmailWithConfirmationResponse>(`/api/Customer/org/${params.orgId}/action/UpdateCustomerEmailWithConfirmationById/${params.customerId}/${params.email}`)
       },
-      onError: useErrorToast("UpdateCustomerEmailWithConfirmationById"),
+      onError: useErrorToast(),
     })
   },
   useUpdateUpdateCustomerEmail: () => {
@@ -37,7 +37,7 @@ export const updateCustomerEmailApi = {
       }) => {
         return api.post<UpdateCustomerEmailResponse>(`/api/Customer/org/${params.orgId}/action/UpdateCustomerEmailById/${params.customerId}/${params.email}`)
       },
-      onError: useErrorToast("UpdateCustomerEmailById"),
+      onError: useErrorToast(),
     })
   }
 }

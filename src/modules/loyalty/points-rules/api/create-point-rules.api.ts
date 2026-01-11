@@ -32,7 +32,7 @@ export const createPointRulesApi = {
           params.values
         );
       },
-      onError: useErrorToast("AddPointRule"),
+      onError: useErrorToast(),
     });
   },
 };
