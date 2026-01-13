@@ -35,12 +35,18 @@ export async function GET(request: NextRequest) {
 
     const esClient = getESClient();
     const indexPattern = process.env.ES_INDEX_PATTERN || "onix-v2-*";
+    const envRun = process.env.ENV_RUN || process.env.NODE_ENV || "Development";
 
     // Build query with optional search
     const mustClauses: any[] = [
       {
         term: {
           "data.ContextData.OrgId.keyword": orgId,
+        },
+      },
+      {
+        term: {
+          "data.Environment.keyword": envRun,
         },
       },
       {
