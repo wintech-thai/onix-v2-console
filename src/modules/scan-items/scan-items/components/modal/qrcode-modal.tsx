@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -28,6 +27,7 @@ export const QrCodeModal = ({ open, onOpenChange, url }: IQrCodeModal) => {
           <QRCodeSVG
             value={url}
             size={256}
+            level="H"
             imageSettings={{
               src: "/logo.png",
               height: 48,
