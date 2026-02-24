@@ -29,8 +29,7 @@ export async function POST(req: Request) {
     name: COOKIE_NAMES.USER_NAME,
     value: decodedToken?.preferred_username,
     httpOnly: false,
-    secure: COOKIE_OPTIONS.secure,
-    sameSite: COOKIE_OPTIONS.sameSite,
+    maxAge: 365 * 24 * 60 * 60
   });
 
   // Set access_token cookie (use expires_in from API)
